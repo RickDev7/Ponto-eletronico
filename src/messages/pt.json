@@ -1,0 +1,3560 @@
+{
+  "common": {
+    "appName": "FeldOps",
+    "appDescription": "Gestão de serviços de campo para empresas de limpeza e manutenção",
+    "save": "Salvar",
+    "cancel": "Cancelar",
+    "delete": "Excluir",
+    "edit": "Editar",
+    "create": "Criar",
+    "export": "Exportar",
+    "import": "Importar",
+    "filter": "Filtrar",
+    "search": "Pesquisar",
+    "loading": "Carregando...",
+    "back": "Voltar",
+    "next": "Próximo",
+    "confirm": "Confirmar",
+    "close": "Fechar",
+    "view": "Visualizar",
+    "viewAll": "Ver tudo",
+    "viewAllArrow": "Ver tudo →",
+    "done": "Concluído",
+    "doneArrow": "Concluídos →",
+    "all": "Todos",
+    "none": "Nenhum",
+    "yes": "Sim",
+    "no": "Não",
+    "or": "ou",
+    "and": "e",
+    "optional": "Opcional",
+    "required": "Obrigatório",
+    "actions": "Ações",
+    "details": "Detalhes",
+    "more": "Mais",
+    "less": "Menos",
+    "refresh": "Atualizar",
+    "duplicate": "Duplicar",
+    "selectAll": "Selecionar todos",
+    "deselectAll": "Desmarcar todos",
+    "noResults": "Nenhum resultado encontrado",
+    "empty": {
+      "title": "Nenhum dado disponível",
+      "description": "Não há registros para exibir no momento.",
+      "searchTitle": "Nenhum resultado",
+      "searchDescription": "Tente outros termos de pesquisa ou ajuste os filtros.",
+      "filterTitle": "Nenhum resultado para os filtros",
+      "filterDescription": "Limpe ou altere os filtros para ver mais resultados."
+    },
+    "tryAgain": "Tentar novamente",
+    "today": "Hoje",
+    "yesterday": "Ontem",
+    "earlier": "Anterior",
+    "unknown": "Desconhecido",
+    "notAvailable": "—",
+    "entries": "{count, plural, one {# registro} other {# registros}}",
+    "showing": "Exibindo {from}–{to} de {total}",
+    "company": "Empresa",
+    "team": "Equipe",
+    "profile": "Perfil",
+    "theme": "Tema",
+    "light": "Claro",
+    "dark": "Escuro",
+    "system": "Sistema",
+    "since": "Desde",
+    "route": "Rota",
+    "activeAssignment": "Escala ativa",
+    "upcomingAssignments": "Próximas escalas",
+    "noTasksToday": "Nenhuma tarefa hoje",
+    "workHours": "Horas trabalhadas",
+    "completed": "Concluídas",
+    "checkIn": "Check-in",
+    "checkOut": "Check-out",
+    "notesOptional": "Observações (opcional)",
+    "checkInNotesPlaceholder": "Observações...",
+    "checkOutNotesPlaceholder": "O que foi realizado?",
+    "statusTones": {
+      "success": "Sucesso",
+      "warning": "Aviso",
+      "danger": "Erro",
+      "info": "Info",
+      "neutral": "Neutro",
+      "pending": "Pendente"
+    }
+  },
+  "navigation": {
+    "dashboard": "Painel",
+    "myTasks": "Minhas tarefas",
+    "tasks": "Tarefas",
+    "calendar": "Calendário",
+    "employees": "Colaboradores",
+    "schedule": "Escala de serviços",
+    "clients": "Clientes",
+    "operations": "Operação",
+    "operationsDashboard": "Dashboard Operacional",
+    "operationsClients": "Clientes",
+    "operationsProperties": "Imóveis",
+    "operationsServices": "Serviços",
+    "operationsScheduling": "Planejamento",
+    "operationsCalendar": "Calendário",
+    "operationsTeams": "Equipas",
+    "operationsRoutes": "Rotas",
+    "operationsJobs": "Execuções",
+    "workforce": "Workforce",
+    "workforceDashboard": "Dashboard Workforce",
+    "workforceEmployees": "Funcionários",
+    "workforcePlanning": "Planeamento",
+    "workforceShifts": "Escalas",
+    "workforceAbsences": "Ausências",
+    "workforceVacations": "Férias",
+    "workforceTimeAccount": "Banco de Horas",
+    "workforceTimesheets": "Timesheets",
+    "workforceWorktime": "Jornadas",
+    "workforceDocuments": "Documentos",
+    "crm": "CRM",
+    "crmDashboard": "Dashboard Comercial",
+    "crmLeads": "Leads",
+    "crmPipeline": "Pipeline",
+    "crmContacts": "Contactos",
+    "crmCompanies": "Empresas",
+    "finance": "Financeiro",
+    "financeOverview": "Dashboard",
+    "financeQuotes": "Orçamentos",
+    "financeInvoices": "Faturas",
+    "financeContracts": "Contratos",
+    "financePayments": "Recebimentos",
+    "financeCashflow": "Fluxo de Caixa",
+    "financeCosts": "Custos",
+    "financeProfitability": "Rentabilidade",
+    "financeForecast": "Forecast",
+    "properties": "Endereços",
+    "reports": "Relatórios",
+    "activity": "Atividades",
+    "audits": "Auditorias",
+    "settings": "Configurações",
+    "automations": "Automações",
+    "appearance": "Aparência",
+    "series": "Séries recorrentes",
+    "templates": "Modelos",
+    "timesheet": "Folha de ponto",
+    "collapseSidebar": "Recolher menu",
+    "expandSidebar": "Expandir menu",
+    "switchCompany": "Trocar empresa",
+    "allWorkspaces": "Todos os workspaces",
+    "search": "Pesquisar",
+    "searchShortcut": "⌘K",
+    "executiveSubtitle": "Visão executiva da operação",
+    "notifications": "Notificações",
+    "profile": "Perfil",
+    "logout": "Sair",
+    "noEmployeeProfile": "Nenhum perfil de colaborador vinculado a esta conta.",
+    "openMenu": "Abrir menu",
+    "closeMenu": "Fechar menu",
+    "menuTitle": "Navegação"
+  },
+  "dashboard": {
+    "title": "Painel",
+    "greeting": {
+      "morning": "Bom dia, {name}",
+      "afternoon": "Boa tarde, {name}",
+      "evening": "Boa noite, {name}"
+    },
+    "kpis": {
+      "slaOverdue": "SLA em atraso",
+      "today": "Hoje",
+      "inProgress": "Em andamento",
+      "openCheckIns": "Check-ins abertos",
+      "activeTeam": "Equipe ativa",
+      "activeTasks": "Tarefas ativas",
+      "completionRate": "Taxa de conclusão",
+      "activeEmployees": "Colaboradores ativos"
+    },
+    "sections": {
+      "attention": "Atenção",
+      "operations": "Operações",
+      "schedule": "Escala de serviços",
+      "weeklyTrend": "Tendência de 7 dias",
+      "monthlyCompletion": "Conclusão mensal",
+      "liveCheckIns": "Check-ins em tempo real",
+      "recentTasks": "Tarefas recentes",
+      "onboarding": "Primeiros passos"
+    },
+    "alerts": {
+      "sla": "SLA",
+      "gps": "GPS",
+      "radius": "Raio",
+      "overdue": "{count, plural, one {# tarefa em atraso} other {# tarefas em atraso}}",
+      "gpsMissing": "{count, plural, one {# check-in sem GPS} other {# check-ins sem GPS}}",
+      "outOfRadius": "{count, plural, one {# fora do raio} other {# fora do raio}}"
+    },
+    "taskGroups": {
+      "inProgress": "Em andamento",
+      "overdue": "Em atraso",
+      "today": "Hoje",
+      "upcoming": "Agendadas"
+    },
+    "completion": {
+      "percentCompleted": "{rate}% concluído",
+      "monthlyProgress": "{completed}/{total} neste mês"
+    },
+    "quickActions": {
+      "tasks": "Tarefas",
+      "calendar": "Calendário",
+      "team": "Equipe",
+      "activity": "Atividades",
+      "audits": "Auditorias"
+    },
+    "onboarding": {
+      "title": "Configure sua operação",
+      "description": "Complete os passos abaixo para começar a usar o FeldOps.",
+      "addEmployee": {
+        "label": "Cadastrar primeiro colaborador",
+        "description": "Adicione o primeiro membro da sua equipe de campo"
+      },
+      "addClient": {
+        "label": "Cadastrar primeiro cliente",
+        "description": "Crie seu primeiro cliente e endereço de serviço"
+      },
+      "createTask": {
+        "label": "Criar primeira tarefa",
+        "description": "Agende sua primeira tarefa de serviço"
+      }
+    },
+    "empty": {
+      "noOpenTasks": "Nenhuma tarefa em aberto",
+      "noOpenTasksDescription": "Todas as tarefas foram concluídas ou ainda não há agendamentos."
+    },
+    "chart": {
+      "scheduled": "Agendadas",
+      "completed": "Concluídas"
+    },
+    "executive": {
+      "kpis": {
+        "todayServices": "Serviços Hoje",
+        "completedToday": "Serviços Concluídos",
+        "activeEmployees": "Funcionários Ativos",
+        "hoursWorked": "Horas Trabalhadas",
+        "monthlyRevenue": "Receita do Mês",
+        "openInvoices": "Faturas Abertas"
+      },
+      "panels": {
+        "todayServices": "Serviços de Hoje",
+        "weekPlanning": "Planejamento da Semana",
+        "operationalMap": "Mapa Operacional",
+        "taskStatus": "Status das Tarefas",
+        "financeSummary": "Resumo Financeiro",
+        "workforceAllocation": "Alocação de Funcionários",
+        "alerts": "Alertas e Exceções",
+        "recentActivity": "Atividades Recentes",
+        "revenueForecast": "Receita Prevista"
+      },
+      "chart": {
+        "scheduled": "Planejado",
+        "inProgress": "Em andamento",
+        "completed": "Concluído",
+        "overdue": "Atrasado"
+      },
+      "taskStatus": {
+        "completed": "Concluídas",
+        "in_progress": "Em andamento",
+        "scheduled": "Planejadas",
+        "overdue": "Atrasadas"
+      },
+      "finance": {
+        "monthlyRevenue": "Receita mês",
+        "projected": "Receita prevista",
+        "openInvoices": "Faturas abertas",
+        "overdueInvoices": "Faturas vencidas",
+        "forecast": "Previsão"
+      },
+      "workforce": {
+        "onService": "Em serviço",
+        "available": "Disponíveis",
+        "absent": "Ausentes",
+        "vacation": "Férias"
+      },
+      "alerts": {
+        "overdueServices": "{count, plural, one {# serviço atrasado} other {# serviços atrasados}}",
+        "absentEmployees": "{count, plural, one {# funcionário ausente} other {# funcionários ausentes}}",
+        "unassignedJobs": "{count, plural, one {# job sem atribuição} other {# jobs sem atribuição}}",
+        "overdueInvoices": "{count, plural, one {# fatura vencida} other {# faturas vencidas}}",
+        "expiringContracts": "{count, plural, one {# contrato a expirar} other {# contratos a expirar}}"
+      },
+      "activityTypes": {
+        "task": "Serviço",
+        "invoice": "Fatura",
+        "client": "Cliente",
+        "contract": "Contrato"
+      },
+      "empty": {
+        "todayServices": "Nenhum serviço agendado para hoje.",
+        "noData": "Sem dados no período.",
+        "financeRestricted": "Dados financeiros disponíveis para supervisores.",
+        "noAlerts": "Nenhum alerta crítico.",
+        "noActivity": "Sem atividades recentes.",
+        "noForecast": "Sem previsão disponível."
+      }
+    }
+  },
+  "tasks": {
+    "title": "Tarefas",
+    "description": "Planeje e acompanhe todas as tarefas de serviço",
+    "descriptionWithCount": "{count, plural, one {# tarefa encontrada} other {# tarefas encontradas}}",
+    "create": "Nova tarefa",
+    "createRecurring": "Criar tarefas recorrentes",
+    "series": "Séries recorrentes",
+    "tabs": {
+      "active": "Ativas",
+      "completed": "Concluídas",
+      "all": "Todas",
+      "cancelled": "Canceladas"
+    },
+    "columns": {
+      "task": "Tarefa",
+      "team": "Equipe",
+      "status": "Status",
+      "service": "Serviço",
+      "priority": "Prioridade",
+      "date": "Data",
+      "client": "Cliente",
+      "address": "Endereço",
+      "assignee": "Responsável",
+      "tags": "Etiquetas"
+    },
+    "form": {
+      "title": "Título",
+      "titlePlaceholder": "Ex.: Limpeza semanal — Edifício Central",
+      "description": "Descrição",
+      "descriptionPlaceholder": "Instruções e observações para a equipe",
+      "serviceType": "Tipo de serviço",
+      "address": "Endereço",
+      "selectAddress": "Selecionar endereço",
+      "scheduledDate": "Data agendada",
+      "scheduledTime": "Horário",
+      "priority": "Prioridade",
+      "assignees": "Responsáveis",
+      "selectAssignees": "Selecionar colaboradores",
+      "recurrence": "Recorrência",
+      "tags": "Etiquetas"
+    },
+    "actions": {
+      "start": "Iniciar",
+      "complete": "Concluir",
+      "cancel": "Cancelar tarefa",
+      "schedule": "Agendar",
+      "reopen": "Reabrir",
+      "duplicate": "Duplicar",
+      "assign": "Atribuir",
+      "changeStatus": "Alterar status",
+      "bulkCancel": "Cancelar selecionadas",
+      "bulkAssign": "Atribuir selecionadas"
+    },
+    "bulk": {
+      "selected": "{count, plural, one {# selecionada} other {# selecionadas}}",
+      "clearSelection": "Limpar seleção",
+      "updated": "{count, plural, one {# tarefa atualizada} other {# tarefas atualizadas}}"
+    },
+    "filters": {
+      "searchPlaceholder": "Pesquisar tarefa...",
+      "allStatus": "Todos os status",
+      "allServices": "Todos os serviços",
+      "allEmployees": "Todos os colaboradores",
+      "allTags": "Todas as etiquetas",
+      "service": "Serviço",
+      "employee": "Colaborador",
+      "tag": "Etiqueta",
+      "dateFrom": "Data inicial",
+      "dateTo": "Data final",
+      "reset": "Limpar"
+    },
+    "savedFilters": {
+      "namePlaceholder": "Nome do filtro...",
+      "save": "Salvar",
+      "nameRequired": "Informe um nome",
+      "filterSaved": "Filtro salvo",
+      "delete": "Excluir",
+      "filterTooltip": "Filtro: {params}"
+    },
+    "selection": {
+      "select": "Selecionar",
+      "deselect": "Desmarcar"
+    },
+    "overdue": {
+      "daysShort": "+{days}d"
+    },
+    "dialogs": {
+      "createTitle": "Criar tarefa",
+      "serviceObject": "Local de serviço",
+      "selectObject": "Selecionar local...",
+      "selectServiceType": "Selecionar tipo...",
+      "startTime": "Horário de início",
+      "endTime": "Horário de término",
+      "assignEmployees": "Atribuir colaboradores",
+      "createSeries": "Criar série recorrente"
+    },
+    "checkIn": {
+      "checkIn": "Check-in",
+      "checkOut": "Check-out",
+      "confirmCheckIn": "Confirmar check-in",
+      "confirmCheckOut": "Confirmar check-out",
+      "locating": "Obtendo localização...",
+      "distanceMeters": "{distance} m do local",
+      "distanceKm": "{distance} km do local",
+      "locationCaptured": "Localização registrada",
+      "gpsUnavailable": "GPS indisponível",
+      "gpsNoAccess": "Sem acesso ao GPS — localização não registrada",
+      "tooFarForCheckIn": "Muito longe do local para fazer check-in.",
+      "notAtSite": "Parece que você não está no local",
+      "somewhatFar": "Um pouco distante do local",
+      "confirmStart": "Confirme o início do trabalho nesta tarefa.",
+      "confirmEnd": "Confirme o término do trabalho nesta tarefa.",
+      "notesOptional": "Observações (opcional)",
+      "whatDone": "O que foi feito?",
+      "startNotes": "Observações sobre o início...",
+      "notes": "Observações",
+      "active": "Ativo",
+      "stillActive": "ainda ativo",
+      "durationHours": "{hours}h {minutes}min",
+      "durationMinutes": "{minutes}min",
+      "history": "Histórico de check-in",
+      "in": "Entrada:",
+      "out": "Saída:",
+      "completion": "Encerramento:"
+    },
+    "checklist": {
+      "progress": "{checked}/{total} concluídos",
+      "markDone": "Marcar como concluído",
+      "markUndone": "Desmarcar conclusão",
+      "newStepPlaceholder": "Novo passo...",
+      "add": "Adicionar",
+      "empty": "Nenhum item na checklist"
+    },
+    "tags": {
+      "tag": "Etiqueta",
+      "manage": "Gerenciar etiquetas",
+      "newTag": "Nova etiqueta",
+      "namePlaceholder": "Nome da etiqueta...",
+      "color": "Cor {color}",
+      "none": "Sem etiquetas",
+      "remove": "Remover"
+    },
+    "comments": {
+      "title": "Comentários ({count})",
+      "placeholder": "Escrever comentário...",
+      "hint": "Enter para enviar · Shift+Enter para nova linha",
+      "send": "Enviar",
+      "delete": "Excluir comentário",
+      "unknownAuthor": "Desconhecido",
+      "todayAt": "Hoje, {time}",
+      "yesterdayAt": "Ontem, {time}"
+    },
+    "recurrence": {
+      "setup": "Configurar tarefa recorrente",
+      "repeatType": "Tipo de repetição",
+      "daily": "Diária",
+      "weekly": "Semanal",
+      "monthly": "Mensal",
+      "everyDays": "dias",
+      "everyWeeks": "semanas",
+      "everyMonths": "meses",
+      "every": "A cada",
+      "occurrences": "Ocorrências",
+      "weekdays": "Dias da semana",
+      "endDate": "Data final (opcional)",
+      "preview": "Cria {count} tarefas: {label}",
+      "until": " até {date}",
+      "dailyInterval": "A cada {interval} dias",
+      "dailySingle": "Diariamente",
+      "weeklyInterval": "A cada {interval} semanas",
+      "weeklySingle": "Semanalmente{days}",
+      "monthlyInterval": "A cada {interval} meses",
+      "monthlySingle": "Mensalmente"
+    },
+    "empty": {
+      "title": "Nenhuma tarefa",
+      "description": "Ajuste os filtros ou crie uma nova tarefa.",
+      "noActive": "Nenhuma tarefa ativa no momento.",
+      "noCompleted": "Nenhuma tarefa concluída ainda."
+    },
+    "series": {
+      "title": "Séries recorrentes",
+      "description": "Gerencie agendamentos recorrentes e séries de tarefas",
+      "cancelSeries": "Cancelar série",
+      "backToTasks": "Voltar às tarefas",
+      "instances": "ocorrências",
+      "completedCount": "concluídas",
+      "openCount": "abertas",
+      "next": "Próxima:",
+      "open": "Abrir",
+      "stopSeries": "Parar série",
+      "stopSeriesTitle": "Parar série?",
+      "stopSeriesDescription": "Todas as ocorrências futuras desta série serão canceladas. Ocorrências concluídas permanecem inalteradas.",
+      "empty": {
+        "title": "Nenhuma série recorrente",
+        "description": "Crie uma série ao adicionar uma nova tarefa com recorrência."
+      }
+    },
+    "detail": {
+      "pageTitle": "Tarefa",
+      "overview": "Visão geral",
+      "checkIns": "Check-ins",
+      "photos": "Fotos",
+      "photosCount": "Fotos ({count})",
+      "history": "Histórico",
+      "notes": "Observações",
+      "backToTasks": "Tarefas",
+      "route": "Rota",
+      "takePhoto": "Tirar foto",
+      "serviceObject": "Local de serviço",
+      "access": "Acesso:",
+      "assignedEmployees": "Colaboradores atribuídos ({count})",
+      "noPhotos": "Nenhuma foto ainda",
+      "before": "Antes",
+      "after": "Depois",
+      "photoAlt": "Foto",
+      "activities": "Atividades",
+      "deletePhotoTitle": "Excluir foto?",
+      "deletePhotoDescription": "A foto será excluída permanentemente e não poderá ser recuperada.",
+      "takeOrSelect": "Tirar ou selecionar foto",
+      "fileTypes": "JPG, PNG, WEBP · máx. 10 MB",
+      "activityActions": {
+        "created": "Criada",
+        "updated": "Atualizada",
+        "assigned": "Atribuída",
+        "check_in": "Check-in",
+        "check_out": "Check-out",
+        "photo_uploaded": "Foto enviada",
+        "status_changed": "Status alterado",
+        "deleted": "Excluída"
+      },
+      "statusChangeFrom": " de {from} → {to}"
+    }
+  },
+  "clients": {
+    "title": "Clientes",
+    "description": "Gerencie clientes e contratos de serviço",
+    "descriptionWithCount": "{count, plural, one {# cliente} other {# clientes}} · {active} ativos",
+    "sectionLabel": "CRM",
+    "create": "Novo cliente",
+    "createFirst": "Criar primeiro cliente",
+    "openDetails": "Abrir detalhes do cliente",
+    "noProperties": "Nenhum endereço de serviço",
+    "addProperty": "Adicionar endereço",
+    "columns": {
+      "name": "Nome",
+      "client": "Cliente",
+      "status": "Status",
+      "properties": "Endereços",
+      "tasks": "Tarefas",
+      "contact": "Contato",
+      "email": "E-mail",
+      "createdAt": "Cadastrado em"
+    },
+    "dialogs": {
+      "createClient": "Criar cliente",
+      "addProperty": "Adicionar endereço"
+    },
+    "form": {
+      "name": "Nome do cliente",
+      "nameRequired": "Nome do cliente *",
+      "namePlaceholder": "Ex.: Condomínio Residencial Aurora",
+      "contactName": "Contato",
+      "contactNamePlaceholder": "Nome do contato",
+      "email": "E-mail",
+      "phone": "Telefone",
+      "notes": "Observações",
+      "notesPlaceholder": "Observações internas...",
+      "status": "Status",
+      "services": "Tipos de serviço *",
+      "accessNotes": "Observações de acesso",
+      "accessNotesPlaceholder": "Código, chave no escritório..."
+    },
+    "toasts": {
+      "created": "Cliente criado",
+      "propertyCreated": "Endereço criado"
+    },
+    "status": {
+      "active": "Ativo",
+      "inactive": "Inativo",
+      "archived": "Arquivado"
+    },
+    "empty": {
+      "title": "Nenhum cliente cadastrado",
+      "description": "Adicione seu primeiro cliente para começar a gerenciar endereços e tarefas."
+    },
+    "detail": {
+      "pageTitle": "Cliente",
+      "overview": "Visão geral",
+      "properties": "Endereços",
+      "tasks": "Tarefas",
+      "reports": "Relatórios",
+      "stats": {
+        "properties": "Locais de serviço",
+        "activeTasks": "Tarefas ativas",
+        "completed": "Concluídas"
+      },
+      "propertiesHeading": "Locais de serviço ({count})",
+      "add": "Adicionar",
+      "noProperties": "Nenhum local de serviço",
+      "floorSuffix": "{floor}º andar",
+      "tasksHeading": "Tarefas ({count})"
+    }
+  },
+  "properties": {
+    "title": "Endereços",
+    "description": "Gerencie locais de serviço e propriedades dos clientes",
+    "descriptionWithCount": "{count} locais ativos",
+    "sectionLabel": "Ativos",
+    "create": "Novo endereço",
+    "openDetails": "Abrir detalhes do endereço",
+    "filters": {
+      "searchPlaceholder": "Pesquisar logradouro, cidade ou identificação...",
+      "city": "Cidade",
+      "allCities": "Todas as cidades",
+      "service": "Tipo de serviço",
+      "allServices": "Todos os serviços",
+      "clear": "Limpar"
+    },
+    "columns": {
+      "label": "Identificação",
+      "property": "Endereço",
+      "location": "Localização",
+      "street": "Logradouro",
+      "city": "Cidade",
+      "client": "Cliente",
+      "serviceTypes": "Tipos de serviço",
+      "services": "Serviços",
+      "tasks": "Tarefas",
+      "status": "Status"
+    },
+    "form": {
+      "label": "Identificação",
+      "labelPlaceholder": "Ex.: Bloco A — Entrada principal",
+      "street": "Logradouro",
+      "houseNumber": "Número",
+      "postalCode": "CEP",
+      "city": "Cidade",
+      "client": "Cliente",
+      "selectClient": "Selecionar cliente",
+      "serviceTypes": "Tipos de serviço",
+      "latitude": "Latitude",
+      "longitude": "Longitude",
+      "notes": "Observações de acesso"
+    },
+    "empty": {
+      "title": "Nenhum endereço cadastrado",
+      "description": "Cadastre endereços de serviço vinculados aos seus clientes.",
+      "filteredTitle": "Nenhum resultado",
+      "filteredDescription": "Nenhum endereço corresponde aos filtros."
+    },
+    "detail": {
+      "pageTitle": "Endereço de serviço",
+      "overview": "Visão geral",
+      "tasks": "Tarefas",
+      "map": "Localização",
+      "newTask": "Tarefa",
+      "maps": "Maps",
+      "accessNotes": "Observações de acesso",
+      "stats": {
+        "activeTasks": "Tarefas ativas",
+        "completed": "Concluídas",
+        "checkIns90Days": "Check-ins (90d)",
+        "hours90Days": "Horas (90d)"
+      },
+      "floor": "Andar: {floor}",
+      "unit": "Unidade: {unit}",
+      "allTasks": "Todas as tarefas",
+      "tasksHeading": "Tarefas ({count})",
+      "noTasksYet": "Ainda não há tarefas para este local",
+      "checkInsHeading": "Check-ins (últimos 90 dias · {count})",
+      "photosHeading": "Fotos ({count})",
+      "photoAlt": "Foto",
+      "before": "Antes",
+      "after": "Depois"
+    },
+    "list": {
+      "entries": "{count} registros",
+      "openDetailsAria": "Abrir detalhes do endereço"
+    }
+  },
+  "employees": {
+    "title": "Colaboradores",
+    "description": "Gerencie a equipe de campo e permissões de acesso",
+    "descriptionWithCount": "{count} na equipe · {active} ativos",
+    "sectionLabel": "Equipe",
+    "create": "Novo colaborador",
+    "createFirst": "Criar colaborador",
+    "invite": "Convidar colaborador",
+    "columns": {
+      "name": "Nome",
+      "employee": "Colaborador",
+      "email": "E-mail",
+      "phone": "Telefone",
+      "employeeNumber": "Matrícula",
+      "role": "Função",
+      "status": "Status",
+      "tasks": "Tarefas",
+      "lastActive": "Última atividade"
+    },
+    "actions": {
+      "edit": "Editar",
+      "deactivate": "Desativar"
+    },
+    "dialogs": {
+      "create": {
+        "title": "Criar colaborador"
+      },
+      "edit": {
+        "title": "Editar colaborador"
+      }
+    },
+    "form": {
+      "fullName": "Nome completo",
+      "fullNameRequired": "Nome completo *",
+      "fullNamePlaceholder": "Nome completo",
+      "email": "E-mail",
+      "phone": "Telefone",
+      "role": "Função",
+      "status": "Status",
+      "employeeId": "Matrícula",
+      "employeeNumber": "Matrícula",
+      "employeeNumberPlaceholder": "EMP-001",
+      "hireDate": "Data de admissão",
+      "notes": "Observações",
+      "notesPlaceholder": "Observações internas...",
+      "update": "Atualizar",
+      "submitCreate": "Criar"
+    },
+    "toasts": {
+      "created": "Colaborador criado",
+      "updated": "Colaborador atualizado",
+      "deactivated": "Colaborador desativado"
+    },
+    "status": {
+      "active": "Ativo",
+      "inactive": "Inativo",
+      "terminated": "Desligado",
+      "invited": "Convidado",
+      "suspended": "Suspenso"
+    },
+    "empty": {
+      "title": "Nenhum colaborador cadastrado",
+      "description": "Convide ou cadastre colaboradores para atribuir tarefas de campo."
+    },
+    "timesheet": {
+      "title": "Folha de ponto",
+      "description": "Registros de check-in e check-out do colaborador",
+      "stats": {
+        "total": "Total",
+        "workingDays": "Dias trabalhados",
+        "avgPerDay": "Média por dia",
+        "checkIns": "Check-ins"
+      },
+      "exportCsv": "Exportar CSV",
+      "emptyMonth": "Nenhum check-in em {month}",
+      "checkInsCount": "{count, plural, one {# check-in} other {# check-ins}}",
+      "active": "Ativo",
+      "monthlyTotal": "Total de horas em {month}"
+    },
+    "detail": {
+      "pageTitle": "Colaborador",
+      "viewTimesheet": "Ver folha de ponto",
+      "stats": {
+        "totalTasks": "Tarefas no total",
+        "activeTasks": "Ativas",
+        "completed": "Concluídas",
+        "completionRate": "Taxa de conclusão",
+        "hours30Days": "Horas (30 dias)",
+        "avgCheckIn90Days": "Média check-in (90 dias)"
+      },
+      "completionSummary": "{completed} de {total} tarefas concluídas",
+      "tasksHeading": "Tarefas ({count})",
+      "noTasksAssigned": "Nenhuma tarefa atribuída",
+      "checkInsHeading": "Check-ins (últimos 30 dias · {count})",
+      "totalHoursLastMonth": "Total: {hours}h {minutes}min no último mês"
+    }
+  },
+  "calendar": {
+    "title": "Calendário",
+    "description": "Visualize e planeje tarefas por dia, semana ou mês",
+    "views": {
+      "day": "Dia",
+      "week": "Semana",
+      "month": "Mês",
+      "agenda": "Agenda"
+    },
+    "navigation": {
+      "today": "Hoje",
+      "previous": "Anterior",
+      "next": "Próximo"
+    },
+    "filters": {
+      "title": "Filtros",
+      "serviceType": "Tipo de serviço",
+      "employee": "Colaborador",
+      "status": "Status",
+      "clear": "Limpar filtros"
+    },
+    "kpis": {
+      "scheduled": "Agendadas",
+      "inProgress": "Em andamento",
+      "completed": "Concluídas",
+      "overdue": "Em atraso"
+    },
+    "weekdays": {
+      "mon": "Seg",
+      "tue": "Ter",
+      "wed": "Qua",
+      "thu": "Qui",
+      "fri": "Sex",
+      "sat": "Sáb",
+      "sun": "Dom"
+    },
+    "months": {
+      "january": "Janeiro",
+      "february": "Fevereiro",
+      "march": "Março",
+      "april": "Abril",
+      "may": "Maio",
+      "june": "Junho",
+      "july": "Julho",
+      "august": "Agosto",
+      "september": "Setembro",
+      "october": "Outubro",
+      "november": "Novembro",
+      "december": "Dezembro"
+    },
+    "empty": {
+      "title": "Nenhuma tarefa neste período",
+      "description": "Selecione outro intervalo ou crie uma nova tarefa."
+    },
+    "delayed": "Atrasada",
+    "planning": {
+      "title": "Planejamento de serviços",
+      "quickPlan": "Planejar rápido",
+      "newTask": "Tarefa",
+      "filter": "Filtrar",
+      "serviceType": "Tipo de serviço",
+      "allDay": "Dia inteiro",
+      "unassigned": "Não atribuído",
+      "moreTasks": "+{count} mais",
+      "free": "Livre",
+      "noTasks": "Nenhuma tarefa",
+      "weekLabel": "Sem. {week} · {start}–{end} {month}",
+      "kpis": {
+        "scheduled": "Tarefas agendadas",
+        "openSlots": "Vagas abertas",
+        "openSlotsHint": "Sem atribuição",
+        "teamToday": "Equipe hoje",
+        "teamTodayHint": "Colaboradores em campo",
+        "overdue": "Em atraso"
+      },
+      "panel": {
+        "today": "Hoje",
+        "teamAvailability": "Disponibilidade da equipe",
+        "noAssignmentsToday": "Nenhuma atribuição hoje",
+        "unassigned": "Não atribuídas",
+        "openCount": "{count} em aberto",
+        "allAssigned": "Todas as tarefas atribuídas",
+        "showMore": "+{count} ver mais"
+      },
+      "timeBuckets": {
+        "morning": "Manhã",
+        "morningRange": "06:00 – 12:00",
+        "afternoon": "Tarde",
+        "afternoonRange": "12:00 – 17:00",
+        "evening": "Noite",
+        "eveningRange": "17:00 – 22:00"
+      }
+    }
+  },
+  "reports": {
+    "title": "Relatórios",
+    "description": "Gere e exporte relatórios operacionais e de conformidade",
+    "create": "Gerar relatório",
+    "types": {
+      "daily": "Diário",
+      "weekly": "Semanal",
+      "monthly": "Mensal",
+      "client": "Por cliente",
+      "employee": "Por colaborador",
+      "custom": "Personalizado"
+    },
+    "columns": {
+      "name": "Relatório",
+      "type": "Tipo",
+      "period": "Período",
+      "generatedAt": "Gerado em",
+      "generatedBy": "Gerado por",
+      "status": "Status"
+    },
+    "form": {
+      "type": "Tipo de relatório",
+      "periodStart": "Data inicial",
+      "periodEnd": "Data final",
+      "client": "Cliente",
+      "employee": "Colaborador",
+      "format": "Formato"
+    },
+    "empty": {
+      "title": "Nenhum relatório gerado",
+      "description": "Gere seu primeiro relatório para acompanhar a operação."
+    },
+    "monthly": {
+      "title": "Relatório mensal",
+      "description": "Resumo consolidado do mês",
+      "exportCsv": "CSV folha de ponto",
+      "stats": {
+        "totalTasks": "Tarefas no total",
+        "completed": "Concluídas",
+        "completionRate": "Taxa de conclusão",
+        "totalHours": "Horas totais"
+      },
+      "byService": "Por tipo de serviço",
+      "noData": "Sem dados",
+      "serviceStats": "{tasks} tarefas · {completed} concluídas",
+      "byEmployee": "Por colaborador",
+      "checkInsCount": "{count} check-ins",
+      "allTasksInMonth": "Todas as tarefas em {month}"
+    },
+    "intelligence": {
+      "title": "Intelligence",
+      "description": "{company} · análise operacional",
+      "monthlyReport": "Relatório mensal",
+      "pdfReport": "Relatório PDF",
+      "savedViews": {
+        "7d": "7 dias",
+        "30d": "30 dias",
+        "mtd": "Este mês",
+        "prev": "Mês anterior"
+      },
+      "export": "Exportar",
+      "kpis": {
+        "orderVolume": "Volume de tarefas",
+        "completed": "Concluídas",
+        "completionRate": "Taxa de conclusão",
+        "teamUtilization": "Utilização da equipe",
+        "utilizationHint": "Tarefas com check-in",
+        "fieldHours": "Horas de campo",
+        "checkIns": "{count} check-ins",
+        "serviceEfficiency": "Eficiência de serviço"
+      },
+      "insights": "Insights",
+      "insightsEmpty": "Selecione um período com tarefas para gerar insights",
+      "insightsCompletionUp": "Conclusão de tarefas aumentou {percent}% em relação ao período anterior",
+      "insightsCompletionDown": "Conclusão de tarefas caiu {percent}% em relação ao período anterior",
+      "insightsRateUp": "A taxa de conclusão melhorou {points} pontos percentuais",
+      "insightsRateDown": "A taxa de conclusão caiu {points} pontos percentuais",
+      "insightsTopService": "{service} teve o melhor desempenho com {count} tarefas concluídas",
+      "taskTrend": "Tendência de tarefas",
+      "serviceMix": "Mix de serviços",
+      "noData": "Sem dados no período",
+      "legendOpen": "Abertas",
+      "legendCompleted": "Concluídas",
+      "completionRate": "{rate}% conclusão · {duration}",
+      "topCards": {
+        "topEmployee": "Top colaborador",
+        "topProperty": "Endereço mais ativo",
+        "topService": "Top serviço",
+        "checkInActivity": "Atividade de check-in",
+        "noData": "Sem dados",
+        "tasks": "{count} tarefas",
+        "completed": "{count} concluídas",
+        "periodTotal": "Total no período"
+      },
+      "metricsTable": "Métricas operacionais",
+      "metricsColumns": {
+        "service": "Serviço",
+        "tasks": "Tarefas",
+        "completion": "Conclusão",
+        "avgDuration": "Duração média"
+      },
+      "exportSection": "Exportar e relatórios",
+      "hoursReport": "Relatório de horas",
+      "taskList": "Lista de tarefas",
+      "newReport": "Novo relatório",
+      "reportTitlePlaceholder": "Relatório Julho 2025",
+      "generate": "Gerar",
+      "errors": {
+        "titleRequired": "Título obrigatório",
+        "invalidPeriod": "A data final deve ser posterior à inicial",
+        "noPeriod": "Nenhum período salvo para este relatório"
+      },
+      "reportCreated": "Relatório criado",
+      "defaultTitle": "Relatório {date}"
+    }
+  },
+  "audits": {
+    "title": "Auditorias",
+    "description": "Monitore conformidade de check-ins, GPS e evidências de campo",
+    "create": "Nova auditoria",
+    "kpis": {
+      "pending": "Pendentes",
+      "passed": "Aprovadas",
+      "failed": "Reprovadas",
+      "inReview": "Em revisão"
+    },
+    "types": {
+      "gps_missing": "GPS ausente",
+      "outside_radius": "Fora do raio",
+      "all": "Todos os tipos"
+    },
+    "columns": {
+      "status": "Status",
+      "type": "Tipo",
+      "employee": "Colaborador",
+      "task": "Tarefa",
+      "address": "Endereço",
+      "checkInAt": "Check-in",
+      "distance": "Distância",
+      "score": "Pontuação"
+    },
+    "filters": {
+      "period": "Período",
+      "days": "Últimos {days} dias",
+      "periodDays": "{days}d",
+      "type": "Tipo de auditoria",
+      "status": "Status"
+    },
+    "compliance": {
+      "title": "Conformidade",
+      "gpsRequired": "GPS obrigatório no check-in",
+      "radiusLimit": "Raio máximo de {meters}m",
+      "photoEvidence": "Evidência fotográfica",
+      "recommendations": "Recomendações"
+    },
+    "detail": {
+      "evidence": "Evidências",
+      "timeline": "Linha do tempo",
+      "location": "Localização",
+      "resolution": "Resolução",
+      "checklist": "Checklist",
+      "notes": "Notas",
+      "findings": "Constatações",
+      "photos": "Fotos",
+      "recommendations": "Recomendações",
+      "property": "Endereço",
+      "noPhotos": "Nenhuma foto vinculada a este check-in.",
+      "reviewNote": "Auditoria em {date} por {employee}. Status: {status}. Pontuação: {score}/100.",
+      "gpsFinding": "Nenhuma localização GPS foi registrada no check-in.",
+      "radiusFinding": "A localização do check-in difere em {distance} do endereço de serviço.",
+      "gpsRecommendation": "Oriente o colaborador a ativar a permissão de localização e refazer o check-in.",
+      "radiusRecommendation": "Agende verificação presencial e revise o processo de check-in com a equipe.",
+      "checklistItems": {
+        "gps": "Comprovante GPS presente",
+        "radius": "Localização dentro do raio de 1 km",
+        "documented": "Check-in documentado"
+      }
+    },
+    "empty": {
+      "title": "Nenhuma auditoria encontrada",
+      "description": "Não há registros de não conformidade no período selecionado.",
+      "noViolations": "Nenhuma violação",
+      "noViolationsDescription": "Nenhuma violação de conformidade encontrada no período selecionado."
+    },
+    "complianceTitle": "Conformidade",
+    "periodDescription": "Verificações de GPS e raio · últimos {days} dias",
+    "createDisabled": "Em breve",
+    "searchPlaceholder": "Buscar auditoria, endereço ou colaborador...",
+    "exportCsv": "Exportar CSV",
+    "entries": "{count} registros",
+    "tableColumns": {
+      "audit": "Auditoria",
+      "property": "Endereço",
+      "client": "Cliente",
+      "inspector": "Colaborador",
+      "date": "Data",
+      "status": "Status",
+      "score": "Pontuação"
+    },
+    "rowTypes": {
+      "gpsMissing": "Comprovante GPS ausente",
+      "outsideRadius": "Localização fora do raio"
+    },
+    "timelineTitle": "Histórico de auditorias",
+    "statusLabels": {
+      "passed": "Aprovada",
+      "failed": "Reprovada",
+      "pending": "Pendente",
+      "review": "Em revisão"
+    }
+  },
+  "activity": {
+    "title": "Atividades",
+    "description": "Feed em tempo real de eventos e alertas operacionais",
+    "searchPlaceholder": "Pesquisar atividades...",
+    "categories": {
+      "all": "Todas",
+      "tasks": "Tarefas",
+      "employees": "Colaboradores",
+      "clients": "Clientes",
+      "properties": "Endereços",
+      "audits": "Auditorias",
+      "financial": "Financeiro"
+    },
+    "groups": {
+      "today": "Hoje",
+      "yesterday": "Ontem",
+      "earlier": "Anterior"
+    },
+    "actions": {
+      "created": "criou",
+      "updated": "atualizou",
+      "deleted": "excluiu",
+      "assigned": "atribuiu",
+      "check_in": "fez check-in em",
+      "check_out": "fez check-out de",
+      "photo_uploaded": "enviou foto em",
+      "status_changed": "alterou o status de",
+      "report_generated": "gerou relatório de"
+    },
+    "alerts": {
+      "title": "Alertas",
+      "overdue": "Tarefas em atraso",
+      "failedAudits": "Auditorias reprovadas",
+      "schedulingConflicts": "Conflitos de agendamento",
+      "noAlerts": "Nenhum alerta no momento"
+    },
+    "health": {
+      "title": "Saúde operacional",
+      "activeTasks": "Tarefas ativas",
+      "openCheckIns": "Check-ins abertos",
+      "completionRate": "Taxa de conclusão",
+      "activeEmployees": "Colaboradores ativos"
+    },
+    "empty": {
+      "title": "Nenhuma atividade registrada",
+      "description": "Eventos da operação aparecerão aqui conforme a equipe trabalha.",
+      "filtered": "Nenhum registro para estes filtros."
+    },
+    "live": "Ao vivo",
+    "eventCount": "{count, plural, one {# evento na operação} other {# eventos na operação}}",
+    "warningsTitle": "Alertas atuais",
+    "openIntelligence": "Abrir intelligence →",
+    "systemStatus": "Status do sistema",
+    "entityFallback": "Registro",
+    "relative": {
+      "justNow": "Agora mesmo",
+      "minutes": "há {count} min.",
+      "hours": "há {count} h",
+      "days": "{count, plural, one {há # dia} other {há # dias}}"
+    },
+    "alertEmpty": {
+      "overdue": "Nenhuma tarefa em atraso",
+      "failedAudits": "Nenhuma violação de auditoria",
+      "conflicts": "Nenhum conflito detectado"
+    },
+    "verbs": {
+      "createdClient": "cadastrou o cliente",
+      "completed": "concluiu",
+      "cancelled": "cancelou",
+      "statusChanged": "alterou o status de",
+      "commented": "comentou em"
+    },
+    "entities": {
+      "task": "Tarefa",
+      "client": "Cliente",
+      "employee": "Colaborador",
+      "address": "Endereço",
+      "company": "Empresa",
+      "report": "Relatório",
+      "checkIn": "Check-in"
+    },
+    "alertMeta": {
+      "due": "Vencimento {date}",
+      "outsideRadius": "{name} · {distance} m fora do raio",
+      "assignmentsOnDate": "{count} escalas em {date}"
+    }
+  },
+  "settings": {
+    "title": "Configurações",
+    "description": "Gerencie empresa, equipe e preferências da conta",
+    "sections": {
+      "company": "Empresa",
+      "team": "Equipe",
+      "billing": "Faturamento",
+      "notifications": "Notificações",
+      "security": "Segurança",
+      "integrations": "Integrações",
+      "appearance": "Aparência"
+    },
+    "company": {
+      "title": "Dados da empresa",
+      "description": "Informações gerais e identidade visual",
+      "name": "Nome da empresa",
+      "slug": "Identificador (slug)",
+      "timezone": "Fuso horário",
+      "country": "País",
+      "logo": "Logotipo",
+      "masterDataTitle": "Dados principais",
+      "masterDataDescription": "Nome, identificação fiscal e contato da empresa",
+      "displayName": "Nome da empresa",
+      "displayNameDescription": "Nome exibido publicamente no workspace",
+      "legalName": "Razão social",
+      "legalNameDescription": "Nome empresarial registrado completo",
+      "businessAddress": "Endereço comercial",
+      "businessAddressPlaceholder": "Ainda não cadastrado. Gestão de endereços em breve",
+      "businessAddressHint": "Endereços de serviço são gerenciados na área de endereços da empresa.",
+      "manageAddresses": "Gerenciar endereços",
+      "taxId": "CNPJ / Inscrição fiscal",
+      "taxIdDescription": "Para faturas e exportações de conformidade",
+      "contactEmail": "E-mail de contato",
+      "contactEmailDescription": "Canal central de comunicação da empresa",
+      "phone": "Telefone",
+      "phoneDescription": "Telefone principal para contato em campo",
+      "workspaceUrl": "URL do workspace",
+      "workspaceUrlDescription": "Link permanente para seu workspace",
+      "slugLocked": "Não pode ser alterado",
+      "saveChanges": "Salvar alterações",
+      "updated": "Dados da empresa atualizados",
+      "regional": {
+        "title": "Região e formato",
+        "description": "Fuso horário, idioma operacional e moeda para relatórios",
+        "locale": "Idioma operacional",
+        "localeDescription": "Formato de datas e relatórios internos da empresa",
+        "localePt": "Português (Brasil)",
+        "localeEn": "English (US)",
+        "localeDe": "Deutsch",
+        "timezone": "Fuso horário",
+        "timezoneDescription": "Referência para escalas, check-ins e exportações",
+        "currency": "Moeda",
+        "currencyDescription": "Usada em faturamento e exportações futuras",
+        "currencyBrl": "Real (BRL)",
+        "currencyEur": "Euro (EUR)",
+        "currencyUsd": "Dólar (USD)",
+        "saveChanges": "Salvar região",
+        "updated": "Preferências regionais atualizadas"
+      }
+    },
+    "team": {
+      "title": "Membros da equipe",
+      "description": "Convide e gerencie funções e permissões",
+      "invite": "Convidar membro",
+      "inviteEmail": "E-mail do convite",
+      "role": "Função",
+      "removeMember": "Remover membro",
+      "pendingInvites": "Convites pendentes",
+      "membersTitle": "Membros",
+      "membersDescription": "Convide colegas e gerencie funções no workspace",
+      "rolesPermissionsTitle": "Funções e permissões",
+      "rolesPermissionsDescription": "Visão geral dos direitos de acesso por função. Permissões são definidas pelo sistema",
+      "memberCount": "{count, plural, one {# membro} other {# membros}}",
+      "noMembers": "Nenhum membro",
+      "inviteDialogTitle": "Convidar membro",
+      "changeRole": "Alterar função",
+      "remove": "Remover",
+      "you": "(você)",
+      "pendingInvite": "Convite pendente",
+      "inviteEmailPlaceholder": "colaborador@empresa.com"
+    },
+    "billing": {
+      "title": "Faturamento",
+      "description": "Plano, uso e métodos de pagamento",
+      "currentPlan": "Plano atual",
+      "usage": "Uso",
+      "employees": "Colaboradores",
+      "tasks": "Tarefas",
+      "clients": "Clientes",
+      "upgrade": "Fazer upgrade",
+      "manageBilling": "Gerenciar faturamento",
+      "planName": "Professional",
+      "planActive": "Ativo",
+      "planDescription": "Acesso completo a planejamento, conformidade e intelligence",
+      "perMonth": "/mês",
+      "taxNote": "impostos não incluídos",
+      "usageTitle": "Uso",
+      "usageDescription": "Ocupação atual do plano neste período de faturamento",
+      "deployments": "Tarefas",
+      "deploymentsDescription": "Tarefas agendadas e ativas",
+      "teamSlots": "Vagas da equipe",
+      "teamSlotsDescription": "Colaboradores ativos no sistema",
+      "usageOf": "{used} de {limit}",
+      "invoices": "Faturas",
+      "invoicesDescription": "Faturas para download e histórico de pagamentos",
+      "invoicesPlaceholder": "Nenhuma fatura ainda. A cobrança será sincronizada automaticamente quando o módulo de pagamento for ativado"
+    },
+    "notifications": {
+      "title": "Notificações",
+      "description": "Configure alertas por e-mail e no aplicativo",
+      "email": "Notificações por e-mail",
+      "push": "Notificações push",
+      "taskAssigned": "Tarefa atribuída",
+      "taskOverdue": "Tarefa em atraso",
+      "auditFailed": "Auditoria reprovada",
+      "weeklyDigest": "Resumo semanal",
+      "emailSection": "Notificações por e-mail",
+      "emailSectionDescription": "Controle quando receber alertas por e-mail",
+      "overdueTasks": "Tarefas em atraso",
+      "overdueTasksDescription": "Resumo diário de tarefas em aberto",
+      "checkInWarnings": "Alertas de check-in",
+      "checkInWarningsDescription": "Desvios de GPS ou raio em campo",
+      "newInvites": "Novos convites da equipe",
+      "newInvitesDescription": "Quando um membro entra no seu workspace",
+      "weeklyReport": "Relatório semanal",
+      "weeklyReportDescription": "Resumo compacto de KPIs toda segunda-feira",
+      "inAppSection": "No aplicativo",
+      "inAppSectionDescription": "Notificações dentro do FeldOps",
+      "activityFeed": "Feed de atividades",
+      "activityFeedDescription": "Atualizações em tempo real no feed operacional",
+      "taskAssignments": "Atribuições de tarefas",
+      "taskAssignmentsDescription": "Quando uma tarefa for atribuída a você",
+      "localStorageNote": "As preferências são salvas automaticamente neste navegador"
+    },
+    "security": {
+      "title": "Segurança",
+      "description": "Senha, sessões e autenticação",
+      "changePassword": "Alterar senha",
+      "resetPassword": "Redefinir senha",
+      "twoFactor": "Autenticação em dois fatores",
+      "sessions": "Sessões ativas",
+      "signOutAll": "Encerrar todas as sessões",
+      "profileSection": "Perfil",
+      "profileSectionDescription": "Seus dados pessoais de contato no workspace",
+      "passwordSection": "Senha",
+      "passwordSectionDescription": "Gerencie o acesso à sua conta",
+      "passwordChangeDescription": "Você receberá um link seguro por e-mail",
+      "mfaLabel": "MFA",
+      "mfaDescription": "Proteja o acesso com um segundo fator",
+      "mfaInactive": "Inativo",
+      "mfaEnableAria": "Ativar MFA",
+      "sessionsDescription": "Sessões ativas nos seus dispositivos",
+      "currentSession": "Sessão atual",
+      "currentSessionDescription": "Este dispositivo · Conectado como {name}",
+      "sessionActive": "Ativa",
+      "remoteSignOutNote": "Encerramento remoto de outras sessões virá em uma versão futura",
+      "emailSent": "E-mail enviado",
+      "requestLink": "Solicitar link"
+    },
+    "integrations": {
+      "title": "Integrações",
+      "description": "Conecte ferramentas externas à sua operação",
+      "comingSoon": "Em breve",
+      "api": "API",
+      "webhooks": "Webhooks",
+      "connectedServices": "Serviços conectados",
+      "connectedServicesDescription": "Estenda o FeldOps com ferramentas externas",
+      "connect": "Conectar",
+      "googleCalendar": "Sincronizar tarefas com o calendário da equipe",
+      "slack": "Atualizações de atividade nos seus canais",
+      "datev": "Exportação para contabilidade e folha de pagamento",
+      "templatesSection": "Modelos de tarefas",
+      "templatesSectionDescription": "Modelos reutilizáveis com checklist e valores padrão",
+      "manageTemplates": "Gerenciar modelos",
+      "dataExport": "Exportação de dados",
+      "dataExportDescription": "Baixe dados da empresa em CSV",
+      "exportTasks": "Tarefas",
+      "exportEmployees": "Colaboradores",
+      "exportClients": "Clientes",
+      "exportAddresses": "Endereços",
+      "operationalReports": "Relatórios operacionais",
+      "exportReportCheckins": "Horas (check-ins)",
+      "exportReportTasks": "Tarefas (período)",
+      "dataExportLocaleHint": "Os cabeçalhos CSV seguem o idioma da interface (/pt ou /en)"
+    },
+    "brand": {
+      "title": "Identidade visual",
+      "description": "Logotipo e identidade pública da empresa",
+      "uploadLogo": "Enviar logotipo",
+      "logoHint": "PNG ou SVG, máx. 2 MB — em breve"
+    },
+    "appearance": {
+      "title": "Aparência",
+      "description": "Tema e preferências visuais",
+      "theme": "Tema",
+      "language": "Idioma",
+      "density": "Densidade da interface",
+      "colorScheme": "Esquema de cores",
+      "colorSchemeDescription": "Escolha a aparência da interface para sua conta",
+      "lightDescription": "Interface clara",
+      "darkDescription": "Menos cansaço visual",
+      "currentMode": "Atual: {mode}",
+      "darkMode": "Modo escuro",
+      "lightMode": "Modo claro",
+      "densityDescription": "Controla o espaçamento em tabelas e listas",
+      "densityComfortable": "Confortável",
+      "densityComfortableDescription": "Mais espaço entre linhas e seções",
+      "densityCompact": "Compacto",
+      "densityCompactDescription": "Mais informação visível por tela",
+      "densityCurrent": "Atual: {mode}",
+      "languageDescription": "Idioma da interface e dos exportações CSV",
+      "languageSaved": "Preferência salva no perfil",
+      "languageSwitchHint": "Clique para alternar"
+    },
+    "permissionsMatrix": {
+      "title": "Permissão",
+      "allowed": "Permitido",
+      "denied": "Não permitido"
+    },
+    "profile": {
+      "title": "Perfil pessoal",
+      "fullName": "Nome completo",
+      "email": "E-mail",
+      "phone": "Telefone",
+      "avatar": "Avatar",
+      "avatarDescription": "Exibido em comentários e atribuições",
+      "fullNameDescription": "Seu nome em todo o workspace",
+      "phoneDescription": "Opcional para contato sobre tarefas",
+      "saveProfile": "Salvar perfil"
+    },
+    "permissions": {
+      "title": "Permissões",
+      "companyRead": "Visualizar empresa",
+      "companyUpdate": "Editar empresa",
+      "membersManage": "Gerenciar equipe",
+      "employeesRead": "Visualizar colaboradores",
+      "employeesWrite": "Editar colaboradores",
+      "employeesDelete": "Excluir colaboradores",
+      "clientsRead": "Visualizar clientes",
+      "clientsWrite": "Editar clientes",
+      "clientsDelete": "Excluir clientes",
+      "addressesRead": "Visualizar endereços",
+      "addressesWrite": "Editar endereços",
+      "addressesDelete": "Excluir endereços",
+      "tasksRead": "Visualizar tarefas",
+      "tasksWrite": "Editar tarefas",
+      "tasksDelete": "Excluir tarefas",
+      "tasksAssign": "Atribuir tarefas",
+      "checkinsRead": "Visualizar check-ins",
+      "checkinsWrite": "Registrar check-ins",
+      "photosUpload": "Enviar fotos",
+      "photosDelete": "Excluir fotos",
+      "reportsRead": "Visualizar relatórios",
+      "reportsGenerate": "Gerar relatórios",
+      "reportsDelete": "Excluir relatórios",
+      "activityRead": "Visualizar atividades",
+      "invitesManage": "Gerenciar convites"
+    }
+  },
+  "forms": {
+    "labels": {
+      "email": "E-mail",
+      "password": "Senha",
+      "confirmPassword": "Confirmar senha",
+      "fullName": "Nome completo",
+      "phone": "Telefone",
+      "companyName": "Nome da empresa",
+      "search": "Pesquisar",
+      "date": "Data",
+      "time": "Horário",
+      "from": "De",
+      "to": "Até",
+      "notes": "Observações",
+      "description": "Descrição",
+      "status": "Status",
+      "role": "Função",
+      "type": "Tipo"
+    },
+    "placeholders": {
+      "search": "Pesquisar...",
+      "email": "seu@email.com",
+      "password": "Sua senha",
+      "fullName": "Seu nome completo",
+      "phone": "+55 (00) 00000-0000",
+      "select": "Selecionar...",
+      "optional": "Opcional"
+    },
+    "hints": {
+      "passwordMinLength": "Mínimo de 8 caracteres",
+      "slugFormat": "Apenas letras minúsculas, números e hífens"
+    }
+  },
+  "validation": {
+    "required": "Este campo é obrigatório",
+    "email": "Informe um e-mail válido",
+    "minLength": "Mínimo de {min} caracteres",
+    "maxLength": "Máximo de {max} caracteres",
+    "passwordMismatch": "As senhas não coincidem",
+    "invalidDate": "Data inválida",
+    "invalidTime": "Horário inválido",
+    "invalidPhone": "Telefone inválido",
+    "invalidUrl": "URL inválida",
+    "invalidNumber": "Número inválido",
+    "positiveNumber": "Informe um número positivo",
+    "selectAtLeastOne": "Selecione pelo menos uma opção",
+    "futureDate": "A data deve ser futura",
+    "pastDate": "A data deve ser passada",
+    "uniqueEmail": "Este e-mail já está em uso",
+    "uniqueSlug": "Este identificador já está em uso"
+  },
+  "errors": {
+    "generic": "Ocorreu um erro inesperado. Tente novamente.",
+    "notFound": "Recurso não encontrado",
+    "unauthorized": "Você não tem permissão para esta ação",
+    "forbidden": "Acesso negado",
+    "network": "Erro de conexão. Verifique sua internet.",
+    "server": "Erro no servidor. Tente novamente mais tarde.",
+    "sessionExpired": "Sua sessão expirou. Faça login novamente.",
+    "loadFailed": "Falha ao carregar dados",
+    "saveFailed": "Falha ao salvar alterações",
+    "deleteFailed": "Falha ao excluir",
+    "uploadFailed": "Falha no envio do arquivo",
+    "signOutFailed": "Falha ao encerrar sessão",
+    "offline": "Você está offline. Algumas funções podem estar indisponíveis.",
+    "actions": {
+      "invalidInput": "Dados inválidos. Verifique os campos e tente novamente.",
+      "nameTooShort": "O nome deve ter pelo menos 2 caracteres.",
+      "invalidEmail": "E-mail inválido.",
+      "cannotChangeOwnRole": "Você não pode alterar sua própria função.",
+      "cannotRemoveSelf": "Você não pode remover a si mesmo da equipe.",
+      "emailAlreadyInvited": "Este e-mail já foi convidado.",
+      "invalidEmailAddress": "Endereço de e-mail inválido.",
+      "passwordTooShort": "A senha deve ter pelo menos 8 caracteres.",
+      "authFailed": "Falha na autenticação. Tente novamente.",
+      "notAuthenticated": "Você precisa estar autenticado.",
+      "subscriptionInactive": "Sua assinatura está inativa. Atualize o billing para continuar.",
+      "planLimitEmployees": "Limite de colaboradores atingido ({limit} vagas no seu plano). Faça upgrade para adicionar mais.",
+      "planLimitTasks": "Limite mensal de tarefas atingido ({limit} tarefas no seu plano). Faça upgrade para criar mais.",
+      "acceptTermsRequired": "Você precisa aceitar os Termos de Uso e a Política de Privacidade para continuar."
+    }
+  },
+  "status": {
+    "draft": "Rascunho",
+    "scheduled": "Agendada",
+    "in_progress": "Em andamento",
+    "completed": "Concluída",
+    "cancelled": "Cancelada",
+    "overdue": "Em atraso",
+    "pending": "Pendente",
+    "passed": "Aprovada",
+    "failed": "Reprovada",
+    "review": "Em revisão",
+    "active": "Ativo",
+    "inactive": "Inativo",
+    "archived": "Arquivado",
+    "invited": "Convidado",
+    "suspended": "Suspenso",
+    "terminated": "Desligado",
+    "delayed": "Atrasada",
+    "priorities": {
+      "low": "Baixa",
+      "normal": "Normal",
+      "high": "Alta",
+      "urgent": "Urgente"
+    }
+  },
+  "auth": {
+    "login": {
+      "title": "Entrar",
+      "description": "Acesse sua conta FeldOps",
+      "submit": "Entrar",
+      "signingIn": "Entrando...",
+      "forgotPassword": "Esqueceu a senha?",
+      "noAccount": "Não tem conta?",
+      "register": "Criar conta",
+      "createAccount": "Criar conta",
+      "welcomeBack": "Bem-vindo de volta",
+      "subtitle": "Entre na sua conta",
+      "welcomeDescription": "Acesse seu workspace.",
+      "passwordPlaceholder": "Digite sua senha",
+      "alreadySignedIn": "Você está conectado como {email}.",
+      "continueOnboarding": "Continuar configuração",
+      "continueToWorkspace": "Ir para o workspace",
+      "backToSite": "Voltar ao site",
+      "rememberMe": "Lembrar meu e-mail",
+      "showPassword": "Mostrar senha",
+      "hidePassword": "Ocultar senha",
+      "features": {
+        "clients": {
+          "title": "Clientes",
+          "description": "Mantenha todos os clientes organizados com histórico completo, contatos e informações essenciais sempre acessíveis."
+        },
+        "operations": {
+          "title": "Operações",
+          "description": "Coordene serviços, cronogramas e tarefas diárias em uma única plataforma operacional."
+        },
+        "employees": {
+          "title": "Colaboradores",
+          "description": "Distribua responsabilidades, acompanhe atividades e mantenha sua equipe alinhada em tempo real."
+        },
+        "reports": {
+          "title": "Relatórios",
+          "description": "Monitore resultados, identifique tendências e tome decisões com base em dados confiáveis."
+        },
+        "audits": {
+          "title": "Auditorias",
+          "description": "Garanta qualidade e conformidade através de inspeções estruturadas e acompanhamento contínuo."
+        }
+      }
+    },
+    "register": {
+      "title": "Criar conta",
+      "description": "Comece a gerenciar sua operação de campo",
+      "submit": "Criar conta",
+      "hasAccount": "Já tem conta?",
+      "login": "Entrar",
+      "subtitle": "Teste grátis por 14 dias"
+    },
+    "reset": {
+      "title": "Redefinir senha",
+      "description": "Enviaremos um link para o seu e-mail",
+      "submit": "Enviar link",
+      "backToLogin": "Voltar ao login",
+      "subtitle": "Informe seu e-mail. Você receberá um link para redefinir a senha.",
+      "emailLabel": "Endereço de e-mail",
+      "emailSentTitle": "E-mail enviado",
+      "emailSentDescription": "Se existir uma conta com <strong>{email}</strong>, você receberá um link em instantes. Verifique sua caixa de entrada."
+    },
+    "updatePassword": {
+      "title": "Nova senha",
+      "description": "Defina sua nova senha de acesso",
+      "submit": "Atualizar senha",
+      "subtitle": "Escolha uma senha forte com pelo menos 8 caracteres.",
+      "newPassword": "Nova senha",
+      "confirmPlaceholder": "Repita a senha",
+      "passwordMismatch": "As senhas não coincidem",
+      "passwordTooWeak": "Senha muito fraca",
+      "strength": {
+        "weak": "Fraca",
+        "fair": "Razoável",
+        "strong": "Forte",
+        "veryStrong": "Muito forte"
+      }
+    },
+    "invite": {
+      "title": "Aceitar convite",
+      "description": "Você foi convidado para participar de uma equipe",
+      "submit": "Aceitar convite",
+      "invalidTitle": "Convite inválido",
+      "invalidDescription": "Este convite expirou ou já foi utilizado.",
+      "goHome": "Ir para início",
+      "invitedBy": "Convite de",
+      "role": "Função",
+      "invitedByPerson": "Convidado por",
+      "validFor": "Válido por",
+      "days": "{count, plural, one {# dia} other {# dias}}",
+      "signInPrompt": "Faça login para aceitar o convite",
+      "signInAccept": "Entrar e aceitar",
+      "registerNew": "Criar nova conta",
+      "expiresOn": "Este convite expira em {date}."
+    },
+    "onboarding": {
+      "title": "Configurar empresa",
+      "description": "Complete o cadastro da sua organização",
+      "submit": "Criar empresa",
+      "pageDescription": "Crie sua empresa. Depois você poderá convidar colaboradores e gerenciar tarefas.",
+      "companyNamePlaceholder": "Serviços de Limpeza Ltda.",
+      "slugLabel": "Identificador na URL",
+      "slugPlaceholder": "minha-empresa",
+      "legalNameLabel": "Razão social",
+      "legalNamePlaceholder": "Serviços de Limpeza Ltda.",
+      "backToSite": "Voltar ao site",
+      "switchAccount": "Entrar com outra conta",
+      "wizard": {
+        "stepLabel": "Configuração",
+        "welcome": {
+          "title": "Bem-vindo ao FeldOps",
+          "description": "Vamos criar seu workspace operacional em poucos passos.",
+          "continue": "Começar"
+        },
+        "workspace": {
+          "title": "Crie seu workspace",
+          "description": "Escolha um nome e URL para sua empresa."
+        }
+      }
+    },
+    "branding": {
+      "tagline": "Gerencie serviços de campo com eficiência.",
+      "headline": "Gestão operacional feita para empresas de serviço.",
+      "featuresTitle": "Tudo o que sua operação precisa",
+      "description": "Gerencie clientes, propriedades, colaboradores e operações diárias a partir de um único workspace.",
+      "multiTenant": "Multi-tenant",
+      "offline": "Funciona offline",
+      "gdpr": "Conforme LGPD",
+      "missionControl": {
+        "title": "Mission Control",
+        "subtitle": "Visão geral das operações de hoje",
+        "live": "Ao vivo",
+        "scheduleTitle": "Agenda de hoje",
+        "activityTitle": "Feed de atividades",
+        "statusTitle": "Status do sistema",
+        "overview": {
+          "scheduledTasks": "Tarefas agendadas",
+          "activeEmployees": "Colaboradores ativos",
+          "propertiesUnderService": "Propriedades em serviço",
+          "pendingAudits": "Auditorias pendentes"
+        },
+        "schedule": {
+          "item1": { "time": "08:00", "label": "Inspeção de propriedade" },
+          "item2": { "time": "09:30", "label": "Manutenção de jardim" },
+          "item3": { "time": "11:00", "label": "Limpeza predial" },
+          "item4": { "time": "13:30", "label": "Verificação de instalações" },
+          "item5": { "time": "15:00", "label": "Revisão de auditoria" }
+        },
+        "activity": {
+          "employeeAssigned": "Colaborador atribuído",
+          "taskCompleted": "Tarefa concluída",
+          "auditSubmitted": "Auditoria enviada",
+          "propertyUpdated": "Propriedade atualizada",
+          "clientRequest": "Solicitação de cliente recebida"
+        },
+        "status": {
+          "operationalCapacity": "Capacidade operacional",
+          "taskCompletion": "Conclusão de tarefas",
+          "serviceAvailability": "Disponibilidade de serviço"
+        }
+      }
+    },
+    "signOut": "Sair",
+    "signingOut": "Saindo..."
+  },
+  "selectCompany": {
+    "title": "Escolher empresa",
+    "description": "Você tem acesso a vários workspaces. Selecione qual deseja abrir.",
+    "createHint": "Precisa de um workspace novo?",
+    "createCompany": "Criar empresa"
+  },
+  "meWorkTime": {
+    "title": "Jornada hoje",
+    "active": "Ativo",
+    "durationHoursMinutes": "{hours}h {minutes}min",
+    "durationMinutes": "{minutes}min",
+    "overDailyLimit": "Jornada diária de 10h excedida (CLT Art. 59)",
+    "break45Required": "Intervalo mínimo de 45 min. obrigatório (CLT Art. 71)",
+    "break30Suggested": "Planeje ao menos 30 min. de intervalo (CLT Art. 71)",
+    "timeUntilBreak": "Faltam {time} para o intervalo recomendado"
+  },
+  "roles": {
+    "admin": "Administrador",
+    "supervisor": "Supervisor",
+    "employee": "Colaborador",
+    "descriptions": {
+      "admin": "Acesso total à empresa, equipe e configurações",
+      "supervisor": "Gerencia operações, equipe e relatórios",
+      "employee": "Executa tarefas e registra atividades de campo"
+    }
+  },
+  "serviceTypes": {
+    "treppenhausreinigung": "Limpeza de escadas",
+    "gartenpflege": "Jardinagem",
+    "winterdienst": "Serviço de inverno",
+    "glasreinigung": "Limpeza de vidros"
+  },
+  "commandPalette": {
+    "placeholder": "Buscar tarefas, clientes, colaboradores...",
+    "noResults": "Nenhum resultado para \"{query}\"",
+    "quickAccess": "Acesso rápido",
+    "navigate": "Navegar",
+    "open": "Abrir",
+    "footer": "Busca FeldOps",
+    "types": {
+      "task": "Tarefa",
+      "client": "Cliente",
+      "employee": "Colaborador",
+      "address": "Endereço"
+    },
+    "shortcuts": {
+      "tasks": "Tarefas",
+      "clients": "Clientes",
+      "employees": "Colaboradores",
+      "myTasks": "Minhas tarefas",
+      "reports": "Relatórios",
+      "audits": "Auditorias",
+      "activity": "Atividades",
+      "calendar": "Calendário"
+    }
+  },
+  "notificationBell": {
+    "title": "Notificações",
+    "markAllRead": "Marcar todas como lidas",
+    "empty": "Nenhuma notificação",
+    "markRead": "Marcar como lida",
+    "delete": "Excluir",
+    "relative": {
+      "justNow": "Agora mesmo",
+      "minutes": "há {count} min",
+      "hours": "há {count}h",
+      "days": "há {count}d"
+    }
+  },
+  "schedule": {
+    "title": "Escala de serviços",
+    "today": "Hoje",
+    "noActiveEmployees": "Nenhum colaborador ativo",
+    "employeesColumn": "Colaboradores",
+    "taskCount": "{count} tarefas",
+    "moreTasks": "+{count} mais"
+  },
+  "templates": {
+    "pageTitle": "Modelos de tarefa",
+    "pageDescription": "Defina modelos reutilizáveis com checklist e valores padrão",
+    "create": "Criar modelo",
+    "empty": "Nenhum modelo ainda. Crie seu primeiro modelo!",
+    "collapse": "Recolher",
+    "expand": "Expandir",
+    "delete": "Excluir",
+    "steps": "{count} etapas",
+    "minutes": "{count} min",
+    "noDetails": "Sem detalhes",
+    "newTemplate": "Novo modelo",
+    "name": "Nome",
+    "namePlaceholder": "Ex.: Limpeza de escadas padrão",
+    "serviceType": "Tipo de serviço",
+    "serviceTypePlaceholder": "Selecionar tipo de serviço...",
+    "description": "Descrição",
+    "descriptionPlaceholder": "Descrição opcional...",
+    "defaultDuration": "Duração padrão (minutos)",
+    "durationPlaceholder": "Ex.: 60",
+    "checklist": "Checklist",
+    "newStep": "Nova etapa...",
+    "add": "Adicionar",
+    "remove": "Remover",
+    "errors": {
+      "nameAndServiceRequired": "Nome e tipo de serviço são obrigatórios"
+    },
+    "created": "Modelo criado",
+    "deleted": "Modelo excluído"
+  },
+  "pagination": {
+    "previous": "Anterior",
+    "next": "Próximo",
+    "first": "Primeira",
+    "last": "Última",
+    "page": "Página {page}",
+    "pageOf": "Página {page} de {total}",
+    "perPage": "Por página",
+    "showing": "Exibindo {from}–{to} de {total}",
+    "noResults": "Nenhum resultado nesta página"
+  },
+  "dialogs": {
+    "confirmDelete": {
+      "title": "Confirmar exclusão",
+      "description": "Esta ação não pode ser desfeita. Deseja continuar?",
+      "confirm": "Excluir",
+      "cancel": "Cancelar"
+    },
+    "confirmCancel": {
+      "title": "Confirmar cancelamento",
+      "description": "Deseja cancelar esta tarefa? Ela não poderá ser retomada.",
+      "confirm": "Cancelar tarefa",
+      "cancel": "Voltar"
+    },
+    "unsavedChanges": {
+      "title": "Alterações não salvas",
+      "description": "Você tem alterações não salvas. Deseja sair sem salvar?",
+      "confirm": "Sair sem salvar",
+      "cancel": "Continuar editando"
+    },
+    "removeMember": {
+      "title": "Remover membro",
+      "description": "O membro perderá acesso à empresa. Deseja continuar?",
+      "confirm": "Remover",
+      "cancel": "Cancelar"
+    },
+    "cancelSeries": {
+      "title": "Cancelar série",
+      "description": "Todas as ocorrências futuras desta série serão canceladas.",
+      "confirm": "Cancelar série",
+      "cancel": "Voltar"
+    },
+    "deactivateEmployee": {
+      "title": "Desativar colaborador?",
+      "description": "O colaborador será desativado e não poderá mais fazer login. Os dados históricos serão mantidos.",
+      "confirm": "Desativar",
+      "cancel": "Cancelar"
+    }
+  },
+  "toasts": {
+    "saved": "Alterações salvas com sucesso",
+    "created": "Criado com sucesso",
+    "updated": "Atualizado com sucesso",
+    "deleted": "Excluído com sucesso",
+    "copied": "Copiado para a área de transferência",
+    "statusUpdated": "Status atualizado",
+    "taskCreated": "Tarefa criada",
+    "taskCancelled": "Tarefa cancelada",
+    "taskDuplicated": "Tarefa duplicada",
+    "recurringTasksCreated": "{count, plural, one {# tarefa recorrente criada} other {# tarefas recorrentes criadas}}",
+    "seriesCancelled": "{count, plural, one {# ocorrência cancelada} other {# ocorrências canceladas}}",
+    "profileUpdated": "Perfil atualizado",
+    "roleUpdated": "Função atualizada",
+    "memberRemoved": "Membro removido",
+    "inviteSent": "Convite enviado para {email}",
+    "passwordResetSent": "Link de redefinição enviado",
+    "checkedIn": "Check-in registrado!",
+    "checkedOut": "Check-out registrado!",
+    "signOutFailed": "Falha ao encerrar sessão",
+    "error": "Ocorreu um erro. Tente novamente.",
+    "offline": "Sem conexão com a internet",
+    "bulkTasksUpdated": "{count, plural, one {# tarefa atualizada} other {# tarefas atualizadas}}",
+    "filterSaved": "Filtro salvo",
+    "filterNameRequired": "Informe um nome",
+    "tagDeleted": "Etiqueta excluída",
+    "photoUploaded": "Foto enviada",
+    "photoDeleted": "Foto excluída",
+    "tooFarForCheckIn": "Muito longe do local para fazer check-in.",
+    "accountCreated": "Conta criada! Continue a configuração.",
+    "companyCreated": "Empresa criada!",
+    "passwordChanged": "Senha alterada com sucesso"
+  },
+  "landing": {
+    "nav": {
+      "features": "Recursos",
+      "services": "Setores",
+      "pricing": "Preços",
+      "demo": "Demo",
+      "contact": "Contato",
+      "login": "Entrar",
+      "register": "Começar grátis"
+    },
+    "hero": {
+      "badge": "Para empresas de serviços de campo",
+      "title": "Gestão de serviços",
+      "titleHighlight": "simplificada",
+      "description": "FeldOps é a plataforma completa para limpeza de escadas, jardinagem, serviço de inverno e limpeza de vidros. Do planejamento de tarefas à faturamento — tudo em um só lugar.",
+      "ctaPrimary": "Teste grátis agora",
+      "ctaSecondary": "Ver demo",
+      "footnote": "Sem cartão de crédito · Grátis para até 3 colaboradores"
+    },
+    "features": {
+      "title": "Tudo o que você precisa",
+      "description": "Da gestão de tarefas à captura de horas com GPS — o FeldOps cobre todo o ciclo de serviço.",
+      "viewAll": "Ver todos os recursos",
+      "items": {
+        "taskManagement": {
+          "title": "Gestão de tarefas",
+          "description": "Crie, atribua e acompanhe tarefas. Prioridades, prazos e atualizações de status em tempo real."
+        },
+        "gpsCheckIn": {
+          "title": "Check-in/out com GPS",
+          "description": "Colaboradores fazem check-in e check-out no local. Localização e horário são registrados automaticamente."
+        },
+        "photos": {
+          "title": "Fotos antes/depois",
+          "description": "Documente cada serviço com fotos direto do app — antes e depois do trabalho."
+        },
+        "recurring": {
+          "title": "Tarefas recorrentes",
+          "description": "Configure serviços diários, semanais ou mensais — agendados automaticamente."
+        },
+        "reports": {
+          "title": "Relatórios e exportação",
+          "description": "Relatórios em PDF e folhas de horas em CSV para clientes e contabilidade com um clique."
+        },
+        "team": {
+          "title": "Gestão de equipe",
+          "description": "Gerencie colaboradores, supervisores e administradores com acesso por função."
+        },
+        "pwa": {
+          "title": "App mobile (PWA)",
+          "description": "Instale na tela inicial. Funciona offline em áreas sem internet."
+        },
+        "gdpr": {
+          "title": "Conforme LGPD",
+          "description": "Dados na UE, isolamento completo por empresa e autenticação segura."
+        },
+        "multiTenant": {
+          "title": "Multi-empresa",
+          "description": "Gerencie várias unidades ou empresas com uma única conta."
+        }
+      }
+    },
+    "services": {
+      "title": "Feito para o seu setor",
+      "description": "Desenvolvido para prestadores de serviços de campo.",
+      "items": {
+        "stairwell": {
+          "title": "Limpeza de escadas",
+          "description": "Limpeza semanal com documentação fotográfica e assinatura do cliente."
+        },
+        "garden": {
+          "title": "Jardinagem",
+          "description": "Planeje trabalhos sazonais e acompanhe o histórico de manutenção por endereço."
+        },
+        "winter": {
+          "title": "Serviço de inverno",
+          "description": "Remoção de neve e salga com comprovantes GPS e registro de horas."
+        },
+        "windows": {
+          "title": "Limpeza de vidros",
+          "description": "Limpeza de janelas com fotos antes/depois e relatório automático."
+        }
+      }
+    },
+    "pricing": {
+      "title": "Preços simples, sem surpresas",
+      "description": "Comece grátis. Escale conforme crescer.",
+      "viewPlans": "Ver todos os planos",
+      "popular": "Popular",
+      "plans": {
+        "starter": {
+          "name": "Starter",
+          "price": "Grátis",
+          "period": "para sempre",
+          "features": [
+            "Até 3 colaboradores",
+            "50 tarefas/mês",
+            "5 GB de fotos",
+            "Relatórios em PDF"
+          ],
+          "cta": "Começar grátis"
+        },
+        "professional": {
+          "name": "Professional",
+          "price": "€49",
+          "period": "por mês",
+          "features": [
+            "Até 25 colaboradores",
+            "Tarefas ilimitadas",
+            "50 GB de fotos",
+            "Exportação CSV",
+            "Tarefas recorrentes",
+            "Suporte prioritário"
+          ],
+          "cta": "14 dias grátis"
+        },
+        "enterprise": {
+          "name": "Enterprise",
+          "price": "€149",
+          "period": "por mês",
+          "features": [
+            "Colaboradores ilimitados",
+            "Tarefas ilimitadas",
+            "500 GB de fotos",
+            "Multi-empresa",
+            "Acesso à API",
+            "Suporte dedicado"
+          ],
+          "cta": "Fale conosco"
+        }
+      }
+    },
+    "cta": {
+      "title": "Pronto para digitalizar sua operação de serviços?",
+      "description": "Mais de 500 prestadores de serviço já confiam no FeldOps. Comece hoje — grátis e sem cartão de crédito.",
+      "button": "Começar grátis agora"
+    },
+    "footer": {
+      "tagline": "Plataforma operacional para empresas de serviço de campo.",
+      "product": "Produto",
+      "company": "Empresa",
+      "legal": "Legal",
+      "gdpr": "Conforme LGPD",
+      "security": "Segurança de ponta a ponta",
+      "euServers": "Servidores na UE",
+      "privacy": "Política de Privacidade",
+      "terms": "Termos de Uso",
+      "impressum": "Impressum",
+      "cookies": "Política de Cookies",
+      "login": "Entrar",
+      "register": "Criar conta"
+    }
+  },
+  "marketing": {
+    "contact": {
+      "title": "Fale conosco",
+      "description": "Dúvidas sobre o FeldOps? Respondemos em até um dia útil.",
+      "name": "Nome",
+      "email": "E-mail",
+      "message": "Mensagem",
+      "submit": "Enviar mensagem",
+      "sending": "Enviando…",
+      "success": "Mensagem enviada. Entraremos em contato em breve."
+    },
+    "demo": {
+      "title": "Veja o FeldOps em ação",
+      "description": "Inicie um teste grátis ou agende uma demonstração com nossa equipe.",
+      "startTrial": "Iniciar teste grátis",
+      "bookCall": "Agendar conversa"
+    },
+    "legal": {
+      "privacy": {
+        "eyebrow": "Legal",
+        "title": "Política de Privacidade",
+        "description": "Como o FeldOps coleta, utiliza e protege dados pessoais quando você usa nossa plataforma B2B de serviços de campo.",
+        "lastUpdated": "Última atualização: {date}",
+        "lastUpdatedDate": "16 de junho de 2026",
+        "sections": [
+          {
+            "title": "1. Controlador dos dados",
+            "paragraphs": [
+              "FeldOps GmbH (placeholder — atualize com a entidade jurídica registrada) é o controlador dos dados pessoais processados pela plataforma FeldOps em feldops.com e serviços relacionados.",
+              "Contato para privacidade: privacy@feldops.com"
+            ]
+          },
+          {
+            "title": "2. Escopo e papéis",
+            "paragraphs": [
+              "O FeldOps é um produto SaaS B2B. Sua organização (cliente) é normalmente controladora dos dados de colaboradores, clientes e operações inseridos no workspace. O FeldOps atua como operador desses dados conforme suas instruções e nosso Acordo de Tratamento de Dados (DPA), quando aplicável.",
+              "O FeldOps é controlador independente para dados de conta, faturamento, segurança e analytics necessários à operação do serviço."
+            ]
+          },
+          {
+            "title": "3. Categorias de dados tratados",
+            "paragraphs": [
+              "Dados de conta: nome, e-mail, função, identificadores de autenticação e vínculo com a empresa.",
+              "Dados operacionais: tarefas, agendas, clientes, endereços, fotos, relatórios e logs de auditoria enviados pela equipe.",
+              "Dados técnicos: endereço IP, metadados de dispositivo/navegador, cookies de sessão e logs de erro para segurança e confiabilidade.",
+              "Dados de faturamento: plano, status de pagamento e contato de cobrança (dados de cartão são tratados pela Stripe, não armazenados em nossos servidores)."
+            ]
+          },
+          {
+            "title": "4. Finalidades e bases legais (LGPD e GDPR)",
+            "paragraphs": [
+              "Executamos o contrato e prestamos o serviço (LGPD art. 7, V; GDPR art. 6(1)(b)).",
+              "Processamos logs de segurança e prevenção a fraudes com base em interesse legítimo (LGPD art. 7, IX; GDPR art. 6(1)(f)).",
+              "Comunicações essenciais do serviço não exigem consentimento de marketing.",
+              "Quando exigido, usamos consentimento para cookies não essenciais ou comunicações opcionais (LGPD art. 7, I; GDPR art. 6(1)(a))."
+            ]
+          },
+          {
+            "title": "5. Suboperadores e transferências internacionais",
+            "paragraphs": [
+              "Utilizamos provedores como Supabase (banco, auth, storage) e Stripe (pagamentos), vinculados por acordos de proteção de dados.",
+              "Os dados são hospedados prioritariamente na União Europeia. Transferências fora do EEE utilizam salvaguardas como Cláusulas Contratuais Padrão."
+            ]
+          },
+          {
+            "title": "6. Retenção",
+            "paragraphs": [
+              "Mantemos dados enquanto a conta estiver ativa e conforme necessário para cumprir obrigações legais, resolver disputas e fazer valer acordos.",
+              "Após encerramento, dados do workspace são excluídos ou anonimizados em prazo razoável, salvo retenção legal ou ciclos de backup."
+            ]
+          },
+          {
+            "title": "7. Seus direitos",
+            "paragraphs": [
+              "Você pode solicitar confirmação, acesso, correção, anonimização, portabilidade, eliminação, informação sobre compartilhamento e revogação de consentimento, nos termos da LGPD e GDPR.",
+              "Titulares na UE podem reclamar à autoridade supervisora local. Pedidos: privacy@feldops.com — respondemos nos prazos legais."
+            ]
+          },
+          {
+            "title": "8. Segurança",
+            "paragraphs": [
+              "Aplicamos medidas técnicas e organizacionais: criptografia em trânsito, controle de acesso por função, isolamento multi-tenant e auditoria. Nenhum método é 100% seguro; melhoramos continuamente nossos controles."
+            ]
+          }
+        ]
+      },
+      "terms": {
+        "eyebrow": "Legal",
+        "title": "Termos de Uso",
+        "description": "Condições de acesso e uso da plataforma FeldOps por empresas e usuários autorizados.",
+        "lastUpdated": "Última atualização: {date}",
+        "lastUpdatedDate": "16 de junho de 2026",
+        "sections": [
+          {
+            "title": "1. Acordo",
+            "paragraphs": [
+              "Estes Termos de Uso (\"Termos\") vinculam a FeldOps GmbH (\"FeldOps\", \"nós\") e a pessoa jurídica que se cadastra ou utiliza o serviço (\"Cliente\", \"você\").",
+              "Ao criar conta, aceitar convite ou usar o FeldOps, você declara ter poderes para representar sua organização e aceita estes Termos."
+            ]
+          },
+          {
+            "title": "2. Descrição do serviço",
+            "paragraphs": [
+              "O FeldOps oferece software em nuvem para operações de campo: gestão de tarefas, equipes, relatórios e funcionalidades do plano contratado.",
+              "Podemos atualizar recursos para melhoria, segurança ou conformidade. Mudanças materiais adversas serão comunicadas com aviso razoável quando possível."
+            ]
+          },
+          {
+            "title": "3. Contas e uso aceitável",
+            "paragraphs": [
+              "Você é responsável por informações corretas no cadastro, proteção de credenciais e atividades no workspace.",
+              "É proibido uso ilícito, engenharia reversa, interferência em outros tenants, burlar limites do plano ou violar direitos de terceiros.",
+              "Você garante que dados inseridos (incluindo de colaboradores e clientes) foram obtidos em conformidade com a legislação de privacidade."
+            ]
+          },
+          {
+            "title": "4. Assinaturas, trial e cobrança",
+            "paragraphs": [
+              "Planos pagos, limites de assentos e quotas estão definidos no checkout e na documentação do plano. Trials convertem em assinatura paga se não cancelados antes do fim.",
+              "Cobrança antecipada via Stripe, salvo acordo diverso. Impostos podem incidir. Inadimplência pode levar à suspensão após aviso.",
+              "Reembolsos seguem a lei aplicável e a política informada na compra."
+            ]
+          },
+          {
+            "title": "5. Propriedade intelectual",
+            "paragraphs": [
+              "O FeldOps detém direitos sobre a plataforma, marca e documentação. Você recebe licença limitada, não exclusiva e intransferível durante a assinatura ativa.",
+              "Você mantém a titularidade dos dados operacionais e concede ao FeldOps licença para hospedar e processá-los apenas para prestar o serviço."
+            ]
+          },
+          {
+            "title": "6. Confidencialidade e proteção de dados",
+            "paragraphs": [
+              "Cada parte protegerá informações confidenciais da outra com cuidado razoável.",
+              "Quando o FeldOps tratar dados pessoais em seu nome, aplicam-se o DPA e a Política de Privacidade."
+            ]
+          },
+          {
+            "title": "7. Disponibilidade e isenções",
+            "paragraphs": [
+              "Buscamos alta disponibilidade, mas não garantimos serviço ininterrupto. Manutenções e força maior podem causar indisponibilidade temporária.",
+              "O serviço é fornecido \"no estado em que se encontra\", na medida permitida por lei."
+            ]
+          },
+          {
+            "title": "8. Responsabilidade e rescisão",
+            "paragraphs": [
+              "Na medida permitida por lei, nenhuma parte responde por danos indiretos ou consequenciais. Nossa responsabilidade agregada limita-se às taxas pagas nos doze meses anteriores ao evento.",
+              "Qualquer parte pode rescindir por violação material não sanada em 30 dias. Ao encerrar, o acesso cessa e exportação/exclusão segue nossa política de retenção."
+            ]
+          },
+          {
+            "title": "9. Lei aplicável",
+            "paragraphs": [
+              "Estes Termos regem-se pelas leis da Alemanha, com foro em Berlim para clientes empresariais, salvo disposição legal imperativa em contrário.",
+              "Dúvidas: legal@feldops.com"
+            ]
+          }
+        ]
+      },
+      "impressum": {
+        "eyebrow": "Legal",
+        "title": "Impressum",
+        "description": "Informações legais conforme § 5 TMG (Alemanha) e requisitos de transparência na UE.",
+        "lastUpdated": "Última atualização: {date}",
+        "lastUpdatedDate": "16 de junho de 2026",
+        "sections": [
+          {
+            "title": "Prestador do serviço",
+            "paragraphs": [
+              "FeldOps GmbH",
+              "Musterstraße 1",
+              "10115 Berlim",
+              "Alemanha"
+            ]
+          },
+          {
+            "title": "Representação",
+            "paragraphs": [
+              "Diretores: [Nome, Nome]",
+              "Nota: substitua os dados placeholder pelas informações reais da empresa antes de publicar."
+            ]
+          },
+          {
+            "title": "Contato",
+            "paragraphs": [
+              "E-mail: hello@feldops.com",
+              "Telefone: +49 (0) 30 0000000",
+              "Site: https://feldops.com"
+            ]
+          },
+          {
+            "title": "Registro comercial",
+            "paragraphs": [
+              "Registrada em: Amtsgericht Charlottenburg (Berlim)",
+              "Número: HRB [XXXXX]",
+              "ID de IVA (USt-IdNr.): DE[XXXXXXXXX]"
+            ]
+          },
+          {
+            "title": "Responsável pelo conteúdo (§ 55 Abs. 2 RStV)",
+            "paragraphs": [
+              "[Nome]",
+              "Endereço conforme acima"
+            ]
+          },
+          {
+            "title": "Resolução de conflitos",
+            "paragraphs": [
+              "A Comissão Europeia oferece plataforma ODR: https://ec.europa.eu/consumers/odr",
+              "Não somos obrigados nem dispostos a participar de procedimentos de arbitragem de consumo, salvo exigência legal."
+            ]
+          },
+          {
+            "title": "Responsabilidade por conteúdo e links",
+            "paragraphs": [
+              "Criamos o conteúdo com cuidado, mas não garantimos exatidão, integridade ou atualidade.",
+              "Links externos são de responsabilidade dos respectivos provedores."
+            ]
+          }
+        ]
+      },
+      "cookies": {
+        "eyebrow": "Legal",
+        "title": "Política de Cookies",
+        "description": "Informações sobre cookies e tecnologias similares no site e aplicativo FeldOps.",
+        "lastUpdated": "Última atualização: {date}",
+        "lastUpdatedDate": "16 de junho de 2026",
+        "sections": [
+          {
+            "title": "1. O que são cookies?",
+            "paragraphs": [
+              "Cookies são pequenos arquivos de texto armazenados no seu dispositivo ao visitar um site. Tecnologias similares incluem local storage e session storage para autenticação."
+            ]
+          },
+          {
+            "title": "2. Como usamos cookies",
+            "paragraphs": [
+              "Estritamente necessários: sessão de login, segurança, idioma e empresa ativa. Sem eles, o serviço não funciona corretamente.",
+              "Funcionais: preferências de interface e usabilidade.",
+              "Analytics (se habilitados): uso agregado para melhorar o produto, com configuração respeitosa à privacidade."
+            ]
+          },
+          {
+            "title": "3. Cookies de terceiros",
+            "paragraphs": [
+              "O checkout Stripe pode definir cookies durante a assinatura.",
+              "Provedores de auth e hospedagem (ex.: Supabase) podem definir cookies de sessão no login."
+            ]
+          },
+          {
+            "title": "4. Gerenciar cookies",
+            "paragraphs": [
+              "Você pode controlar cookies nas configurações do navegador. Bloquear cookies essenciais pode impedir o login.",
+              "Dúvidas: privacy@feldops.com"
+            ]
+          }
+        ]
+      },
+      "consent": {
+        "label": "Concordo com os <terms>Termos de Uso</terms>, a <privacy>Política de Privacidade</privacy> e a <cookies>Política de Cookies</cookies>.",
+        "checkoutLabel": "Concordo com os <terms>Termos de Uso</terms> e a <privacy>Política de Privacidade</privacy>, e autorizo a cobrança recorrente do plano selecionado.",
+        "required": "Você precisa aceitar os termos para continuar."
+      }
+    }
+  },
+  "finance": {
+    "title": "Financeiro",
+    "description": "Orçamentos, faturas, contratos e fluxo de caixa da sua operação.",
+    "dashboard": {
+      "subtitle": "Visão geral financeira da empresa",
+      "exportStarted": "Relatório exportado",
+      "actions": {
+        "newInvoice": "Nova Fatura",
+        "newQuote": "Novo Orçamento",
+        "exportReport": "Exportar Relatório",
+        "send": "Enviar"
+      },
+      "kpi": {
+        "trendUp": "+{pct}% vs mês anterior",
+        "trendDown": "-{pct}% vs mês anterior",
+        "fromContracts": "Baseado em contratos ativos",
+        "potential": "Valor potencial: {amount}",
+        "conversionRate": "Taxa de Conversão",
+        "conversionHint": "Orçamentos → Clientes",
+        "revenueTooltip": "Receita confirmada por pagamentos recebidos",
+        "projectedTooltip": "Receita mensal recorrente estimada",
+        "mrrHint": "Receita recorrente mensal",
+        "arrHint": "MRR × 12",
+        "cashflowHint": "Saldo acumulado (12 meses)"
+      },
+      "chart": {
+        "title": "Receita vs Despesas",
+        "subtitle": "Evolução financeira ao longo do tempo",
+        "revenue": "Receita",
+        "expenses": "Despesas",
+        "profit": "Lucro",
+        "empty": "Sem dados para o período",
+        "range30d": "30 dias",
+        "range90d": "90 dias",
+        "range12m": "12 meses",
+        "rangeYtd": "Ano atual"
+      },
+      "cashflow": {
+        "title": "Fluxo de Caixa",
+        "subtitle": "Entradas e saídas mensais",
+        "inflow": "Entradas",
+        "outflow": "Saídas",
+        "balance": "Saldo"
+      },
+      "recentInvoices": {
+        "title": "Faturas Recentes",
+        "subtitle": "Últimas emissões e status",
+        "viewAll": "Ver todas",
+        "empty": "Nenhuma fatura recente"
+      },
+      "contracts": {
+        "title": "Contratos Recorrentes",
+        "subtitle": "Próximas cobranças automáticas",
+        "viewAll": "Ver todos",
+        "empty": "Nenhum contrato ativo",
+        "active": "Ativo",
+        "paused": "Pausado"
+      },
+      "forecast": {
+        "title": "Previsão Financeira",
+        "subtitle": "Baseado em contratos e faturas futuras",
+        "days30": "Próximos 30 dias",
+        "days60": "Próximos 60 dias",
+        "days90": "Próximos 90 dias",
+        "annual": "Receita anual estimada",
+        "contractRecurring": "Recorrente (contratos · 30d)",
+        "receivables": "A receber (30d)",
+        "pipelinePotential": "Receita potencial (pipeline)",
+        "pipelineClosed": "Receita fechada (CRM)"
+      },
+      "quotes": {
+        "title": "Orçamentos",
+        "viewAll": "Ver todos",
+        "sent": "Enviados",
+        "accepted": "Aceitos",
+        "rejected": "Rejeitados",
+        "pending": "Pendentes",
+        "conversion": "Taxa de conversão"
+      },
+      "activity": {
+        "title": "Atividade Financeira",
+        "empty": "Nenhuma atividade recente",
+        "paymentReceived": "Pagamento recebido — {number}",
+        "contractCreated": "Novo contrato — {client}",
+        "quoteAccepted": "Orçamento {number} aprovado",
+        "clientOverdue": "Cliente em atraso — {client}"
+      },
+      "columns": {
+        "number": "Número",
+        "client": "Cliente",
+        "date": "Data",
+        "dueDate": "Vencimento",
+        "amount": "Valor",
+        "status": "Status"
+      }
+    },
+    "search": "Buscar…",
+    "filters": { "all": "Todos" },
+    "kpis": {
+      "monthlyRevenue": "Receita do mês",
+      "projectedRevenue": "Receita prevista",
+      "pendingInvoices": "Faturas abertas",
+      "overdueInvoices": "Faturas vencidas",
+      "receivedThisMonth": "Receita recebida",
+      "openQuotes": "Orçamentos em aberto",
+      "mrr": "MRR",
+      "arr": "ARR",
+      "cashflow": "Fluxo de caixa"
+    },
+    "columns": {
+      "number": "Número",
+      "client": "Cliente",
+      "company": "Empresa",
+      "date": "Data",
+      "validUntil": "Validade",
+      "amount": "Valor",
+      "status": "Status",
+      "service": "Serviço",
+      "frequency": "Frequência",
+      "startDate": "Início",
+      "endDate": "Fim",
+      "active": "Ativo",
+      "inactive": "Inativo",
+      "period": "Período",
+      "issueDate": "Emissão",
+      "dueDate": "Vencimento",
+      "invoice": "Fatura",
+      "method": "Método",
+      "reference": "Referência"
+    },
+    "status": {
+      "quote": {
+        "draft": "Rascunho",
+        "sent": "Enviado",
+        "under_review": "Em análise",
+        "accepted": "Aceito",
+        "rejected": "Rejeitado",
+        "expired": "Expirado"
+      },
+      "invoice": {
+        "draft": "Rascunho",
+        "sent": "Enviada",
+        "paid": "Paga",
+        "partial": "Parcial",
+        "overdue": "Atrasada",
+        "cancelled": "Cancelada"
+      },
+      "contract": {
+        "active": "Ativo",
+        "pending": "Pendente",
+        "suspended": "Suspenso",
+        "expired": "Expirado",
+        "cancelled": "Cancelado",
+        "renewing": "Em Renovação"
+      }
+    },
+    "frequency": {
+      "monthly": "Mensal",
+      "bimonthly": "Bimestral",
+      "quarterly": "Trimestral",
+      "semiannual": "Semestral",
+      "annual": "Anual"
+    },
+    "paymentMethod": {
+      "bank_transfer": "Transferência",
+      "cash": "Dinheiro",
+      "card": "Cartão",
+      "other": "Outro"
+    },
+    "actions": {
+      "newQuote": "Novo orçamento",
+      "viewInvoices": "Ver faturas",
+      "viewCashflow": "Fluxo de caixa",
+      "pdf": "Gerar PDF",
+      "duplicate": "Duplicar",
+      "sendEmail": "Enviar por e-mail",
+      "convertContract": "Converter em contrato",
+      "markSent": "Marcar como enviada"
+    },
+    "toast": {
+      "saved": "Salvo com sucesso",
+      "quoteCreated": "Orçamento criado",
+      "quoteUpdated": "Orçamento atualizado",
+      "quoteDeleted": "Orçamento excluído",
+      "contractCreated": "Contrato criado",
+      "contractUpdated": "Contrato atualizado",
+      "contractDeleted": "Contrato excluído",
+      "paymentRecorded": "Recebimento registrado",
+      "invoicesGenerated": "{count} faturas geradas",
+      "invoiceCreated": "Fatura criada",
+      "invoiceDeleted": "Fatura excluída",
+      "emailQueued": "E-mail enfileirado para envio"
+    },
+    "quotes": {
+      "title": "Orçamentos",
+      "description": "Propostas comerciais para clientes.",
+      "listDescription": "Gerencie propostas comerciais e acompanhe oportunidades de negócio.",
+      "new": "Novo orçamento",
+      "newTitle": "Criar orçamento",
+      "editTitle": "Editar orçamento",
+      "newDescription": "Monte a proposta com preview em tempo real.",
+      "save": "Salvar orçamento",
+      "export": "Exportar",
+      "searchPlaceholder": "Pesquisar cliente, empresa ou número…",
+      "selectClient": "Selecionar cliente existente",
+      "selectLead": "Selecionar lead",
+      "noLead": "Sem lead vinculado",
+      "newClient": "Novo cliente (manual)",
+      "issueDate": "Data de emissão",
+      "paymentTerms": "Condições de pagamento",
+      "paymentTermsPlaceholder": "Ex.: 30 dias após emissão",
+      "internalNotes": "Notas internas",
+      "timelineTitle": "Histórico",
+      "timelineEmpty": "Nenhum evento registrado.",
+      "autosaving": "Salvando…",
+      "back": "Voltar",
+      "next": "Continuar",
+      "prev": "Anterior",
+      "pagination": "{from}–{to} de {total}",
+      "empty": "Nenhum orçamento",
+      "emptyHint": "Crie o primeiro orçamento para sua operação.",
+      "kpi": {
+        "total": "Total de orçamentos",
+        "underReview": "Em análise",
+        "accepted": "Aceitos",
+        "rejected": "Rejeitados",
+        "potential": "Valor potencial",
+        "conversion": "Taxa de conversão"
+      },
+      "filters": {
+        "assignee": "Responsável",
+        "periodFrom": "Período início",
+        "periodTo": "Período fim",
+        "minAmount": "Mín. €",
+        "maxAmount": "Máx. €"
+      },
+      "columns": {
+        "assignee": "Responsável",
+        "updated": "Última atualização"
+      },
+      "actions": {
+        "view": "Visualizar",
+        "edit": "Editar",
+        "accept": "Marcar como aceito",
+        "reject": "Marcar como rejeitado",
+        "delete": "Excluir"
+      },
+      "steps": {
+        "client": "Cliente",
+        "items": "Itens",
+        "summary": "Resumo financeiro",
+        "details": "Informações adicionais"
+      },
+      "timeline": {
+        "created": "Orçamento criado",
+        "updated": "Orçamento atualizado",
+        "sent": "Enviado ao cliente",
+        "viewed": "Visualizado pelo cliente",
+        "accepted": "Aceito pelo cliente",
+        "rejected": "Rejeitado",
+        "duplicated": "Duplicado",
+        "converted": "Convertido em contrato",
+        "deleted": "Excluído"
+      }
+    },
+    "contracts": {
+      "title": "Contratos",
+      "description": "Gerencie contratos ativos, faturação recorrente e receitas futuras.",
+      "listDescription": "Gerencie contratos ativos, faturação recorrente e receitas futuras.",
+      "new": "Novo Contrato",
+      "newTitle": "Criar contrato",
+      "editTitle": "Editar contrato",
+      "newDescription": "Configure cliente, serviços, recorrência e faturação automática.",
+      "edit": "Editar contrato",
+      "save": "Salvar contrato",
+      "export": "Exportar",
+      "import": "Importar",
+      "importSoon": "Importação em breve",
+      "generateInvoices": "Gerar faturas recorrentes",
+      "searchPlaceholder": "Pesquisar cliente, empresa, número ou serviço…",
+      "bulkSelected": "{count} selecionados",
+      "empty": "Nenhum contrato",
+      "emptyHint": "Cadastre contratos para gerar faturas automaticamente.",
+      "kpi": {
+        "active": "Contratos Ativos",
+        "mrr": "Receita Mensal Recorrente (MRR)",
+        "arr": "Receita Anual Prevista (ARR)",
+        "renewals": "Renovações Próximas",
+        "expiring": "Contratos Expirando",
+        "forecast12m": "Receita Prevista 12 Meses"
+      },
+      "columns": {
+        "nextBilling": "Próxima Cobrança"
+      },
+      "sections": {
+        "client": "Cliente",
+        "services": "Serviços contratados",
+        "financial": "Resumo financeiro",
+        "recurrence": "Recorrência",
+        "billing": "Faturação automática"
+      },
+      "form": {
+        "titlePlaceholder": "Ex.: Limpeza mensal — Edifício Central",
+        "autoRenew": "Renovação automática",
+        "renewalNotice": "Aviso antes do vencimento",
+        "days": "dias",
+        "autoInvoice": "Gerar faturas automaticamente",
+        "autoEmail": "Enviar faturas por e-mail",
+        "autoPdf": "Gerar PDF automaticamente",
+        "paymentReminder": "Criar lembrete de pagamento",
+        "property": "Imóvel",
+        "noProperty": "Nenhum imóvel selecionado",
+        "noPropertiesHint": "Este cliente não tem imóveis cadastrados. Adicione endereços no módulo Clientes."
+      },
+      "preview": {
+        "title": "Resumo",
+        "nextBilling": "Próxima cobrança",
+        "monthly": "Valor mensal",
+        "annual": "Valor anual"
+      },
+      "actions": {
+        "view": "Visualizar",
+        "edit": "Editar",
+        "renew": "Renovar",
+        "suspend": "Suspender",
+        "cancel": "Cancelar",
+        "delete": "Excluir"
+      },
+      "detail": {
+        "overview": "Informações gerais",
+        "timeline": "Histórico",
+        "invoices": "Faturas relacionadas",
+        "forecast": "Previsão de receita",
+        "forecastTotal": "Receita total prevista (12 meses)",
+        "revenueGenerated": "Receita gerada",
+        "noInvoices": "Nenhuma fatura gerada ainda",
+        "noEvents": "Nenhum evento registrado"
+      },
+      "timeline": {
+        "created": "Contrato criado",
+        "updated": "Contrato editado",
+        "invoiceGenerated": "Fatura gerada",
+        "paymentReceived": "Pagamento recebido",
+        "renewed": "Renovação realizada",
+        "suspended": "Contrato suspenso",
+        "cancelled": "Contrato cancelado",
+        "duplicated": "Contrato duplicado",
+        "deleted": "Contrato excluído",
+        "comment": "Comentário"
+      }
+    },
+    "invoices": {
+      "title": "Faturas",
+      "description": "Faturação mensal com navegação por período.",
+      "listDescription": "Gerencie todas as faturas, pagamentos e cobranças da sua empresa.",
+      "new": "Nova fatura",
+      "save": "Salvar fatura",
+      "generate": "Gerar faturas",
+      "export": "Exportar",
+      "exportMonth": "Exportar mês atual",
+      "moreActions": "Mais ações",
+      "bulkMarkSent": "Marcar selecionadas como enviadas",
+      "searchPlaceholder": "Pesquisar número, cliente, empresa ou e-mail…",
+      "paid": "Pago",
+      "balance": "Saldo",
+      "paymentAmount": "Valor do pagamento",
+      "empty": "Nenhuma fatura neste mês",
+      "emptyHint": "Contratos ativos geram faturas automaticamente.",
+      "kpi": {
+        "monthlyRevenue": "Receita do mês",
+        "issued": "Faturas emitidas",
+        "pending": "Pendentes",
+        "paid": "Pagas",
+        "overdue": "Em atraso",
+        "projected": "Receita prevista",
+        "vsPrevious": "vs mês anterior"
+      },
+      "columns": {
+        "contract": "Contrato",
+        "updated": "Última atualização"
+      },
+      "actions": {
+        "recordPayment": "Registrar pagamento",
+        "markPaid": "Marcar como paga",
+        "cancel": "Cancelar",
+        "delete": "Excluir"
+      },
+      "views": {
+        "table": "Tabela",
+        "calendar": "Calendário",
+        "monthly": "Mensal"
+      },
+      "monthly": {
+        "issued": "Emitido",
+        "received": "Recebido",
+        "pending": "Pendências",
+        "overdue": "Atrasos"
+      },
+      "calendar": {
+        "due": "venc."
+      },
+      "sidebar": {
+        "title": "Resumo",
+        "monthlyRevenue": "Receita do mês",
+        "projected": "Receita prevista",
+        "dueThisWeek": "Vencendo esta semana",
+        "overdue": "Faturas em atraso",
+        "recentPayments": "Últimos pagamentos",
+        "none": "Nenhum registro"
+      },
+      "stats": {
+        "issued": "Emitidas",
+        "revenue": "Receita",
+        "paid": "Pagas",
+        "pending": "Pendentes"
+      }
+    },
+    "payments": {
+      "title": "Recebimentos",
+      "description": "Pagamentos recebidos de clientes.",
+      "record": "Registrar recebimento",
+      "save": "Salvar recebimento",
+      "empty": "Nenhum recebimento",
+      "emptyHint": "Registre pagamentos conforme forem recebidos."
+    },
+    "cashflow": {
+      "title": "Fluxo de Caixa",
+      "description": "Tendência de receita dos últimos 12 meses.",
+      "issued": "Emitido",
+      "received": "Recebido",
+      "pending": "Pendente",
+      "received12m": "Recebido (12 meses)",
+      "pending12m": "Pendente (12 meses)",
+      "months": "Meses"
+    },
+    "costs": {
+      "title": "Custos",
+      "description": "Obrigações fiscais, descontos comerciais e execuções operacionais derivadas de contratos e serviços.",
+      "kpi": {
+        "tax": "IVA sobre faturas (ano)",
+        "discounts": "Descontos em contratos",
+        "unbilled": "Execuções não faturadas",
+        "operationalLoad": "Carga operacional",
+        "approvedTasks": "{count} tarefas aprovadas"
+      },
+      "chart": {
+        "taxTitle": "IVA por mês",
+        "taxHint": "Obrigações fiscais derivadas de faturas emitidas"
+      },
+      "executions": {
+        "title": "Serviços executados",
+        "hint": "Dados de operações ligados a contratos e faturas",
+        "approved": "Execuções aprovadas",
+        "billed": "Já faturadas",
+        "unbilled": "Aprovadas sem fatura",
+        "atRisk": "Valor contratual em risco"
+      }
+    },
+    "profitability": {
+      "title": "Rentabilidade",
+      "description": "Ranking de receita por cliente, contrato, serviço e imóvel — baseado em faturas e recebimentos.",
+      "kpi": {
+        "received": "Receita recebida (ano)",
+        "invoiced": "Receita faturada (ano)"
+      },
+      "topClient": "Cliente mais lucrativo",
+      "topContract": "Contrato mais lucrativo",
+      "byService": "Receita por serviço",
+      "byProperty": "Receita por imóvel",
+      "invoiced": "Faturado",
+      "empty": "Sem dados no período"
+    },
+    "forecastPage": {
+      "title": "Forecast",
+      "description": "Previsão de receita com base em contratos recorrentes e faturas a receber.",
+      "kpi": {
+        "mrr": "MRR atual",
+        "breakdown": "Contratos {contracts} · A receber {receivables}"
+      },
+      "periods": {
+        "days30": "30 dias",
+        "days60": "60 dias",
+        "days90": "90 dias"
+      },
+      "chart": {
+        "title": "Previsão trimestral",
+        "hint": "Contratos recorrentes vs contas a receber",
+        "contracts": "Contratos",
+        "receivables": "A receber"
+      },
+      "sources": {
+        "contracts": "Contratos recorrentes",
+        "receivables": "Faturas a receber"
+      }
+    },
+    "form": {
+      "clientSection": "Dados do cliente",
+      "servicesSection": "Serviços",
+      "clientName": "Nome",
+      "clientCompany": "Empresa",
+      "clientEmail": "E-mail",
+      "clientPhone": "Telefone",
+      "clientAddress": "Morada",
+      "description": "Descrição",
+      "quantity": "Qtd.",
+      "unitPrice": "Valor unitário",
+      "addLine": "Adicionar linha",
+      "notes": "Observações",
+      "signature": "Assinatura",
+      "preview": "Preview",
+      "subtotal": "Subtotal",
+      "tax": "IVA",
+      "discount": "Desconto",
+      "total": "Total"
+    },
+    "pdf": {
+      "quoteTitle": "Orçamento",
+      "invoiceTitle": "Fatura",
+      "contractTitle": "Contrato",
+      "from": "De",
+      "to": "Para",
+      "date": "Data",
+      "dueDate": "Vencimento",
+      "validUntil": "Validade",
+      "description": "Descrição",
+      "quantity": "Qtd.",
+      "unitPrice": "Preço unit.",
+      "total": "Total",
+      "subtotal": "Subtotal",
+      "tax": "IVA",
+      "grandTotal": "Total geral",
+      "notes": "Observações",
+      "bankDetails": "Dados bancários"
+    }
+  },
+  "automations": {
+    "title": "Automações",
+    "description": "Configure fluxos Trigger → Condição → Ação para automatizar operações e comunicações.",
+    "kpi": {
+      "activeRules": "Regras ativas",
+      "runsToday": "Execuções hoje",
+      "queued": "Entregas na fila"
+    },
+    "channels": {
+      "title": "Canais de entrega",
+      "hint": "Arquitetura preparada para integração com provedores externos.",
+      "email": "E-mail",
+      "whatsapp": "WhatsApp",
+      "sms": "SMS",
+      "push": "Push",
+      "in_app": "In-app",
+      "ready": "Configurado",
+      "pending": "Pendente"
+    },
+    "rules": {
+      "title": "Regras configuradas",
+      "empty": "Nenhuma automação. Crie uma regra ou carregue os exemplos."
+    },
+    "runs": {
+      "title": "Histórico de execuções",
+      "empty": "Nenhuma execução registada."
+    },
+    "deliveries": {
+      "title": "Fila de entregas",
+      "empty": "Nenhuma entrega registada."
+    },
+    "runStatus": {
+      "success": "Sucesso",
+      "failed": "Falhou",
+      "skipped": "Ignorada",
+      "running": "A executar",
+      "pending": "Pendente"
+    },
+    "status": {
+      "active": "Ativa",
+      "paused": "Pausada"
+    },
+    "flow": {
+      "conditions": "{count} condição(ões)"
+    },
+    "actions": {
+      "new": "Nova automação",
+      "edit": "Editar",
+      "delete": "Excluir",
+      "pause": "Pausar",
+      "enable": "Ativar",
+      "loadExamples": "Carregar exemplos",
+      "generateService": "Gerar serviço",
+      "generateServiceDesc": "Cria tarefas de serviço a partir do contrato",
+      "generateReport": "Gerar relatório",
+      "generateReportDesc": "Notifica supervisores para gerar relatório",
+      "sendReminder": "Enviar lembrete",
+      "sendReminderDesc": "Lembrete de pagamento ou follow-up",
+      "sendNotification": "Enviar notificação",
+      "sendNotificationDesc": "Notificação in-app ou push",
+      "createTask": "Criar tarefa",
+      "createTaskDesc": "Agenda nova tarefa operacional"
+    },
+    "triggers": {
+      "contractCreated": "Contrato criado",
+      "contractCreatedDesc": "Dispara quando um novo contrato é criado",
+      "contractRenewed": "Contrato renovado",
+      "contractRenewedDesc": "Dispara na renovação de contrato",
+      "serviceCompleted": "Serviço concluído",
+      "serviceCompletedDesc": "Dispara quando um serviço é concluído/aprovado",
+      "serviceApproved": "Serviço aprovado",
+      "serviceApprovedDesc": "Dispara na aprovação de execução",
+      "invoiceOverdue": "Fatura vencida",
+      "invoiceOverdueDesc": "Dispara quando a fatura passa do vencimento",
+      "invoiceSent": "Fatura enviada",
+      "invoiceSentDesc": "Dispara ao enviar fatura ao cliente",
+      "leadWon": "Lead ganho",
+      "leadWonDesc": "Dispara quando lead é convertido",
+      "leadStatusChanged": "Status do lead alterado",
+      "leadStatusChangedDesc": "Dispara em mudanças de status CRM",
+      "shiftEmpty": "Turno vazio",
+      "shiftEmptyDesc": "Dispara quando uma tarefa fica sem colaborador atribuído",
+      "weeklyHoursExceeded": "Horas semanais excedidas",
+      "weeklyHoursExceededDesc": "Dispara quando um colaborador ultrapassa o contrato semanal"
+    },
+    "fields": {
+      "frequency": "Frequência",
+      "amount": "Valor",
+      "hasAddress": "Tem imóvel",
+      "autoRenew": "Renovação automática",
+      "serviceType": "Tipo de serviço",
+      "hasContract": "Tem contrato",
+      "daysOverdue": "Dias em atraso",
+      "balance": "Saldo",
+      "status": "Status",
+      "employeeName": "Colaborador",
+      "scheduledDate": "Data",
+      "location": "Local",
+      "excessMinutes": "Minutos excedidos"
+    },
+    "operators": {
+      "eq": "Igual a",
+      "neq": "Diferente de",
+      "gt": "Maior que",
+      "lt": "Menor que",
+      "contains": "Contém",
+      "empty": "Vazio",
+      "notEmpty": "Não vazio"
+    },
+    "examples": {
+      "contractToService": "Contrato criado → Gerar serviço",
+      "serviceToReport": "Serviço concluído → Gerar relatório",
+      "invoiceReminder": "Fatura vencida → Enviar lembrete",
+      "contractRenewed": "Contrato renovado",
+      "serviceApproved": "Serviço aprovado",
+      "invoiceSent": "Fatura enviada",
+      "leadWon": "Lead ganho",
+      "leadStatus": "Status do lead",
+      "shiftEmpty": "Turno vazio → Notificar gestor",
+      "weeklyHours": "Horas excedidas → Alerta"
+    },
+    "form": {
+      "newTitle": "Nova automação",
+      "editTitle": "Editar automação",
+      "name": "Nome",
+      "description": "Descrição",
+      "trigger": "Trigger (gatilho)",
+      "conditions": "Condições",
+      "actions": "Ações",
+      "addCondition": "Condição",
+      "addAction": "Ação",
+      "noConditions": "Sem condições — executa sempre que o trigger ocorrer.",
+      "value": "Valor",
+      "enabled": "Regra ativa",
+      "save": "Salvar automação"
+    },
+    "toasts": {
+      "created": "Automação criada",
+      "updated": "Automação atualizada",
+      "deleted": "Automação excluída",
+      "seeded": "{count} exemplos carregados",
+      "alreadySeeded": "Já existem automações configuradas"
+    }
+  },
+  "crm": {
+    "title": "CRM",
+    "dashboard": {
+      "title": "Dashboard Comercial",
+      "description": "Pipeline, conversão e receita potencial da operação comercial.",
+      "recentLeads": "Leads recentes",
+      "viewAll": "Ver todos",
+      "kpi": {
+        "active": "Leads ativos",
+        "proposals": "Propostas enviadas",
+        "conversion": "Taxa de conversão",
+        "potential": "Receita potencial",
+        "closed": "Receita fechada",
+        "wonMonth": "Negócios ganhos (mês)"
+      },
+      "activity": "Atividade comercial",
+      "noActivity": "Sem atividade registada."
+    },
+    "leads": {
+      "title": "Leads",
+      "description": "Oportunidades comerciais antes da conversão em cliente.",
+      "new": "Novo lead",
+      "edit": "Editar lead",
+      "empty": "Nenhum lead",
+      "emptyHint": "Cadastre leads para alimentar o pipeline comercial.",
+      "searchPlaceholder": "Pesquisar empresa, contacto, e-mail ou telefone…",
+      "noContact": "Sem contacto principal",
+      "readonlyHint": "Lead convertido — registo em modo somente leitura. O cliente foi criado no módulo Clientes."
+    },
+    "pipeline": {
+      "title": "Pipeline",
+      "description": "Arraste leads entre etapas do funil comercial.",
+      "columns": {
+        "new": "Novo",
+        "contacted": "Contactado",
+        "qualified": "Qualificado",
+        "proposal_sent": "Proposta",
+        "negotiation": "Negociação",
+        "won": "Ganho",
+        "lost": "Perdido"
+      }
+    },
+    "contacts": {
+      "title": "Contactos",
+      "description": "Contactos associados a leads do pipeline.",
+      "searchPlaceholder": "Pesquisar nome, e-mail ou telefone…",
+      "empty": "Nenhum contacto",
+      "emptyHint": "Adicione contactos aos leads para gestão comercial.",
+      "primary": "Principal",
+      "role": "Função",
+      "new": "Novo contacto",
+      "created": "Contacto adicionado",
+      "selectLead": "Lead associado"
+    },
+    "companies": {
+      "title": "Empresas",
+      "description": "Empresas prospectivas ainda não convertidas em clientes.",
+      "searchPlaceholder": "Pesquisar empresa, cidade ou website…",
+      "empty": "Nenhuma empresa prospectiva",
+      "emptyHint": "Empresas aparecem a partir dos leads comerciais.",
+      "website": "Website",
+      "leads": "Leads"
+    },
+    "columns": {
+      "company": "Empresa",
+      "contact": "Contacto",
+      "value": "Valor estimado",
+      "status": "Status",
+      "created": "Criado em"
+    },
+    "status": {
+      "new": "Novo",
+      "contacted": "Contactado",
+      "qualified": "Qualificado",
+      "proposal_sent": "Proposta enviada",
+      "negotiation": "Negociação",
+      "won": "Ganho",
+      "lost": "Perdido"
+    },
+    "form": {
+      "companyName": "Empresa",
+      "contactName": "Contacto",
+      "email": "E-mail",
+      "phone": "Telefone",
+      "city": "Cidade",
+      "owner": "Responsável",
+      "estimatedValue": "Valor estimado",
+      "website": "Website",
+      "intendedService": "Serviço pretendido",
+      "leadSource": "Origem do lead",
+      "notes": "Observações",
+      "save": "Salvar"
+    },
+    "filters": {
+      "all": "Todos"
+    },
+    "actions": {
+      "view": "Visualizar",
+      "delete": "Excluir",
+      "createQuote": "Criar orçamento",
+      "createContract": "Criar contrato",
+      "generateInvoice": "Gerar primeira fatura",
+      "viewClient": "Ver cliente",
+      "markWon": "Marcar como ganho"
+    },
+    "detail": {
+      "overview": "Informações gerais",
+      "timeline": "Histórico",
+      "noEvents": "Nenhum evento registrado"
+    },
+    "timeline": {
+      "created": "Lead criado",
+      "updated": "Lead atualizado",
+      "contacted": "Contato realizado",
+      "qualified": "Lead qualificado",
+      "quoteSent": "Orçamento enviado",
+      "negotiation": "Negociação iniciada",
+      "won": "Negócio ganho",
+      "lost": "Negócio perdido",
+      "clientConverted": "Cliente convertido",
+      "contractCreated": "Contrato criado"
+    },
+    "automations": {
+      "title": "Fluxo comercial sugerido",
+      "quote": "Criar orçamento a partir deste lead",
+      "client": "Ao ganhar → converter automaticamente em Cliente",
+      "contract": "Após conversão → criar Contrato",
+      "invoice": "Após contrato → gerar primeira Fatura"
+    },
+    "toasts": {
+      "created": "Lead criado",
+      "updated": "Lead atualizado",
+      "deleted": "Lead excluído",
+      "converted": "Lead convertido em cliente"
+    }
+  },
+  "operations": {
+    "nav": {
+      "properties": "Imóveis",
+      "services": "Serviços",
+      "scheduling": "Planejamento",
+      "jobs": "Execuções",
+      "teams": "Equipas",
+      "routes": "Rotas",
+      "clients": "Clientes"
+    },
+    "dashboard": {
+      "title": "Operação",
+      "description": "Visão operacional de serviços, imóveis e equipas em tempo real.",
+      "todayJobs": "Serviços de hoje",
+      "viewAll": "Ver todas",
+      "noJobsToday": "Nenhum serviço agendado para hoje.",
+      "quickLinks": "Acesso rápido",
+      "kpi": {
+        "today": "Hoje",
+        "week": "Esta semana",
+        "completed": "Concluídos",
+        "overdue": "Atrasados",
+        "completionRate": "Taxa conclusão",
+        "properties": "Imóveis ativos",
+        "teams": "Equipas ativas"
+      }
+    },
+    "executionStatus": {
+      "planned": "Planeado",
+      "in_progress": "Em andamento",
+      "completed": "Concluído",
+      "approved": "Aprovado",
+      "billed": "Faturado"
+    },
+    "properties": {
+      "title": "Imóveis",
+      "description": "{count} imóveis activos na operação.",
+      "viewClients": "Ver clientes",
+      "empty": {
+        "title": "Nenhum imóvel",
+        "description": "Cadastre endereços nos clientes para iniciar a operação."
+      },
+      "columns": {
+        "property": "Imóvel",
+        "client": "Cliente",
+        "type": "Tipo",
+        "area": "Área",
+        "status": "Status"
+      },
+      "types": {
+        "office": "Escritório",
+        "condominium": "Condomínio",
+        "retail": "Loja",
+        "hotel": "Hotel",
+        "school": "Escola",
+        "warehouse": "Armazém",
+        "other": "Outro"
+      }
+    },
+    "propertyDetail": {
+      "back": "Voltar",
+      "upcoming": "Próximas visitas",
+      "noUpcoming": "Sem visitas agendadas.",
+      "history": "Histórico",
+      "client": "Cliente",
+      "contracts": "Contratos activos",
+      "noContracts": "Sem contratos vinculados a este imóvel.",
+      "assigned": "Operação"
+    },
+    "services": {
+      "title": "Catálogo de Serviços",
+      "description": "Serviços padrão para limpeza, facility e jardinagem.",
+      "new": "Novo serviço",
+      "created": "Serviço criado",
+      "duration": "Duração",
+      "frequency": "Frequência",
+      "empty": {
+        "title": "Catálogo vazio",
+        "description": "Os serviços padrão serão criados automaticamente."
+      },
+      "form": {
+        "name": "Nome",
+        "description": "Descrição",
+        "duration": "Duração (min)",
+        "color": "Cor",
+        "submit": "Criar serviço"
+      }
+    },
+    "scheduling": {
+      "title": "Planejamento",
+      "today": "Hoje",
+      "empty": "Nenhum serviço no período.",
+      "unassigned": "Não atribuído",
+      "views": {
+        "day": "Dia",
+        "week": "Semana",
+        "month": "Mês"
+      }
+    },
+    "teams": {
+      "title": "Equipas",
+      "description": "Supervisor, colaboradores e veículos por equipa.",
+      "new": "Nova equipa",
+      "created": "Equipa criada",
+      "supervisor": "Supervisor",
+      "empty": {
+        "title": "Nenhuma equipa",
+        "description": "Crie equipas para organizar a operação de campo."
+      },
+      "form": {
+        "name": "Nome da equipa",
+        "supervisor": "Supervisor",
+        "selectSupervisor": "Seleccionar supervisor",
+        "vehicle": "Veículo",
+        "members": "Membros",
+        "submit": "Criar equipa"
+      }
+    },
+    "routes": {
+      "title": "Rotas",
+      "description": "Sequência optimizada de serviços por colaborador.",
+      "mapsPlaceholder": "Integração com Google Maps em breve — mapa, distância e tempo estimado.",
+      "estimated": "~{minutes} min estimados",
+      "empty": {
+        "title": "Sem rotas",
+        "description": "Não há serviços atribuídos para esta data."
+      }
+    },
+    "jobs": {
+      "title": "Execuções",
+      "description": "Cada serviço executado no terreno.",
+      "empty": {
+        "title": "Nenhuma execução",
+        "description": "As execuções aparecem quando serviços são planeados ou concluídos."
+      },
+      "columns": {
+        "service": "Serviço",
+        "property": "Imóvel",
+        "date": "Data",
+        "status": "Status"
+      }
+    }
+  },
+  "workforce": {
+    "nav": {
+      "employees": "Funcionários",
+      "shifts": "Escalas",
+      "vacations": "Férias",
+      "timeAccount": "Banco de Horas",
+      "timesheets": "Timesheets"
+    },
+    "status": {
+      "active": "Ativo",
+      "inactive": "Inativo",
+      "terminated": "Desligado",
+      "on_vacation": "Férias",
+      "absent": "Ausente"
+    },
+    "dashboard": {
+      "title": "Workforce",
+      "description": "Gestão de colaboradores, escalas, horas e conformidade laboral.",
+      "teamOverview": "Equipa",
+      "quickLinks": "Acesso rápido",
+      "noRole": "Sem cargo",
+      "kpi": {
+        "active": "Ativos",
+        "vacation": "Em férias",
+        "hoursToday": "Horas hoje",
+        "overtime": "Horas extras",
+        "absences": "Ausências (semana)",
+        "shifts": "Escalas (semana)"
+      }
+    },
+    "employees": {
+      "title": "Funcionários",
+      "description": "{count} colaboradores na operação.",
+      "empty": { "title": "Sem funcionários", "description": "Adicione colaboradores para gerir escalas e horas." },
+      "columns": { "name": "Nome", "role": "Cargo", "supervisor": "Supervisor", "hours": "Horas/semana", "status": "Status" }
+    },
+    "profile": {
+      "back": "Voltar",
+      "noRole": "Sem cargo definido",
+      "email": "E-mail",
+      "phone": "Telefone",
+      "supervisor": "Supervisor",
+      "team": "Equipa",
+      "contract": "Tipo de contrato",
+      "weeklyHours": "Horas semanais",
+      "hireDate": "Admissão",
+      "timeAccount": "Banco de horas",
+      "balance": "Saldo",
+      "upcomingShifts": "Próximas escalas",
+      "noShifts": "Sem escalas agendadas.",
+      "vacations": "Férias",
+      "absences": "Ausências",
+      "documents": "Documentos",
+      "noDocuments": "Sem documentos.",
+      "contractTypes": {
+        "full_time": "Tempo integral",
+        "part_time": "Meio período",
+        "mini_job": "Mini-job",
+        "temporary": "Temporário"
+      },
+      "hrForm": {
+        "title": "Dados RH",
+        "edit": "Editar RH",
+        "cancel": "Cancelar",
+        "save": "Guardar alterações",
+        "saved": "Perfil atualizado",
+        "fullName": "Nome completo",
+        "jobTitle": "Cargo",
+        "supervisor": "Supervisor",
+        "noSupervisor": "Sem supervisor",
+        "contractType": "Tipo de contrato",
+        "weeklyHours": "Horas semanais",
+        "status": "Status",
+        "email": "E-mail",
+        "phone": "Telefone",
+        "employeeNumber": "Nº funcionário",
+        "hireDate": "Data de admissão",
+        "notes": "Notas"
+      }
+    },
+    "shifts": {
+      "title": "Escalas",
+      "today": "Hoje",
+      "employee": "Funcionário",
+      "dragHint": "Arraste escalas entre dias ou funcionários para reagendar.",
+      "moved": "Escala reagendada",
+      "noShiftsDay": "Sem escalas neste dia.",
+      "views": { "day": "Dia", "week": "Semana", "month": "Mês" },
+      "conflictsAlert": "{count} escalas com conflitos detectados.",
+      "empty": { "title": "Sem escalas", "description": "As escalas são geradas a partir de serviços atribuídos." },
+      "conflicts": {
+        "vacation": "Férias",
+        "absence": "Ausência",
+        "overload": "Sobrecarga",
+        "weekly_hours": "Excesso semanal"
+      }
+    },
+    "planning": {
+      "title": "Planeamento de Pessoal",
+      "description": "Planeie, atribua e otimize equipas em tempo real.",
+      "kpi": {
+        "scheduledToday": "Agendados hoje",
+        "openShifts": "Turnos abertos",
+        "missing": "Em falta",
+        "vacation": "Férias",
+        "sick": "Baixa médica",
+        "unassigned": "Tarefas sem atribuição",
+        "plannedHours": "Horas planeadas",
+        "actualHours": "Horas reais",
+        "utilization": "Utilização"
+      },
+      "employees": {
+        "title": "Equipa",
+        "hint": "Disponibilidade na semana atual",
+        "noRole": "Sem cargo",
+        "week": "sem",
+        "planned": "Plan.",
+        "actual": "Real"
+      },
+      "actions": {
+        "copyWeek": "Copiar semana anterior",
+        "copyMonth": "Copiar mês anterior",
+        "repeatSchedule": "Repetir escalas",
+        "reports": "Relatórios"
+      },
+      "toasts": {
+        "copiedWeek": "{count} escalas copiadas para a próxima semana",
+        "copiedMonth": "{count} escalas copiadas do mês anterior",
+        "repeated": "{count} escalas criadas em {weeks} semanas"
+      },
+      "repeat": {
+        "title": "Repetir escalas automaticamente",
+        "weeks": "Número de semanas",
+        "hint": "Copia o padrão da semana atual para as próximas semanas.",
+        "cancel": "Cancelar",
+        "confirm": "Repetir",
+        "invalid": "Indique um número de semanas válido (1–12)"
+      },
+      "ai": {
+        "title": "Assistente de planeamento",
+        "description": "Balanceamento automático de carga e preenchimento de turnos.",
+        "optimizeWeek": "Otimizar semana",
+        "noChanges": "Nenhuma alteração sugerida para esta semana.",
+        "applied": "{count} alterações aplicadas"
+      },
+      "recs": {
+        "title": "Recomendações",
+        "empty": "Sem recomendações — a equipa está equilibrada.",
+        "moveEmployee": "Mover {from} → {to} em {location}",
+        "overtimeRisk": "{name} com risco de horas extra",
+        "understaffed": "{date}: {name} disponível para reforço",
+        "available": "{name} disponível sem escalas"
+      },
+      "monthly": {
+        "planned": "Horas planeadas",
+        "worked": "Horas trabalhadas",
+        "employees": "Colaboradores",
+        "utilization": "Utilização média"
+      },
+      "shift": {
+        "type": "Tipo de turno",
+        "break": "Pausa",
+        "travel": "Deslocação",
+        "viewContract": "Ver contrato",
+        "viewTask": "Ver tarefa",
+        "duplicate": "Duplicar turno",
+        "duplicated": "Turno duplicado para o dia seguinte",
+        "types": {
+          "morning": "Manhã",
+          "afternoon": "Tarde",
+          "night": "Noite",
+          "custom": "Personalizado"
+        }
+      },
+      "reports": {
+        "title": "Relatórios de planeamento",
+        "description": "Período: {from} — {to}",
+        "back": "Voltar ao planeamento",
+        "planned": "Horas planeadas",
+        "worked": "Horas trabalhadas",
+        "employees": "Colaboradores",
+        "utilization": "Utilização média",
+        "export": {
+          "pdf": "Exportar PDF",
+          "utilizationCsv": "Exportar utilização (CSV)",
+          "shiftsCsv": "Exportar escalas (CSV)",
+          "shiftsLabel": "Escalas",
+          "employee": "Funcionário",
+          "weeklyHours": "Horas/semana",
+          "planned": "Planeado",
+          "worked": "Trabalhado",
+          "utilization": "Utilização",
+          "date": "Data",
+          "task": "Tarefa",
+          "client": "Cliente",
+          "location": "Local",
+          "revenue": "Receita",
+          "labor": "Custo mão-de-obra",
+          "margin": "Margem"
+        }
+      },
+      "profitability": {
+        "totalMargin": "Margem total estimada",
+        "byEmployee": "Rentabilidade por colaborador",
+        "byClient": "Rentabilidade por cliente",
+        "empty": "Sem dados de rentabilidade no período.",
+        "shifts": "turnos",
+        "labor": "custo",
+        "employee": "Colaborador",
+        "client": "Cliente"
+      },
+      "mobile": {
+        "title": "Minha agenda",
+        "subtitle": "Escalas da semana e serviços de hoje",
+        "today": "hoje",
+        "noShiftsToday": "Sem escalas para hoje."
+      }
+    },
+    "vacations": {
+      "title": "Férias",
+      "description": "Pedidos, aprovações e impacto nas escalas.",
+      "new": "Novo pedido",
+      "approve": "Aprovar",
+      "reject": "Rejeitar",
+      "created": "Pedido criado",
+      "updated": "Estado atualizado",
+      "empty": { "title": "Sem pedidos", "description": "Registe pedidos de férias dos colaboradores." },
+      "form": { "employee": "Funcionário", "start": "Início", "end": "Fim", "submit": "Submeter" }
+    },
+    "absences": {
+      "title": "Ausências",
+      "description": "Doença, licenças e faltas registadas.",
+      "new": "Registar ausência",
+      "created": "Ausência registada",
+      "empty": { "title": "Sem ausências", "description": "Registe ausências para bloquear escalas automaticamente." },
+      "form": { "employee": "Funcionário", "type": "Tipo", "start": "Início", "end": "Fim", "submit": "Guardar" },
+      "types": { "sick": "Doença", "leave": "Licença", "absence": "Falta", "training": "Treinamento", "other": "Outro" }
+    },
+    "timeAccount": {
+      "title": "Banco de Horas",
+      "description": "Sollstunden vs Iststunden — saldo por colaborador.",
+      "empty": { "title": "Sem dados", "description": "Horas são calculadas automaticamente via check-in/out." },
+      "columns": { "employee": "Funcionário", "contracted": "Contratadas", "worked": "Trabalhadas", "overtime": "Extras", "balance": "Saldo" }
+    },
+    "timesheets": {
+      "title": "Timesheets",
+      "description": "Horas derivadas de execuções e check-ins — sem digitação manual.",
+      "empty": { "title": "Sem registos", "description": "Timesheets aparecem após check-out nas execuções." }
+    },
+    "worktime": {
+      "title": "Jornadas",
+      "description": "Regras de horário, pausas e limites legais.",
+      "saved": "Configuração guardada",
+      "form": {
+        "start": "Início",
+        "end": "Fim",
+        "break": "Pausa (min)",
+        "maxDaily": "Máx. diário (h)",
+        "maxWeekly": "Máx. semanal (h)",
+        "overtime": "Limite extras (h)",
+        "save": "Guardar"
+      }
+    },
+    "documents": {
+      "title": "Documentos RH",
+      "description": "Contratos, certificados e formações por colaborador.",
+      "new": "Novo documento",
+      "created": "Documento registado",
+      "empty": { "title": "Sem documentos", "description": "Associe documentos aos colaboradores." },
+      "form": { "employee": "Funcionário", "type": "Tipo", "title": "Título", "file": "Ficheiro", "submit": "Enviar", "fileRequired": "Título e ficheiro são obrigatórios." },
+      "download": "Descarregar",
+      "types": { "contract": "Contrato", "certificate": "Certificado", "training": "Formação", "other": "Outro" }
+    }
+  },
+  "billing": {
+    "checkout": {
+      "title": "Finalizar assinatura",
+      "description": "Pagamento seguro via Stripe.",
+      "selectedPlan": "Plano selecionado",
+      "month": "mês",
+      "trial": "Teste grátis de {days} dias incluído",
+      "cancelAnytime": "Cancele quando quiser",
+      "securePayment": "Pagamento seguro via Stripe",
+      "continue": "Continuar para pagamento",
+      "processing": "Processando…"
+    },
+    "success": {
+      "title": "Assinatura confirmada",
+      "description": "Seu workspace está pronto. Complete a configuração para começar.",
+      "demoDescription": "Modo demo de billing — configure o Stripe para pagamentos reais.",
+      "continueSetup": "Continuar configuração",
+      "planLabel": "Plano"
+    }
+  }
+}

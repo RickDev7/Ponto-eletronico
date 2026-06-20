@@ -1,0 +1,3560 @@
+{
+  "common": {
+    "appName": "FeldOps",
+    "appDescription": "Field service management for cleaning and maintenance companies",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "create": "Create",
+    "export": "Export",
+    "import": "Import",
+    "filter": "Filter",
+    "search": "Search",
+    "loading": "Loading...",
+    "back": "Back",
+    "next": "Next",
+    "confirm": "Confirm",
+    "close": "Close",
+    "view": "View",
+    "viewAll": "View all",
+    "viewAllArrow": "View all →",
+    "done": "Done",
+    "doneArrow": "Completed →",
+    "all": "All",
+    "none": "None",
+    "yes": "Yes",
+    "no": "No",
+    "or": "or",
+    "and": "and",
+    "optional": "Optional",
+    "required": "Required",
+    "actions": "Actions",
+    "details": "Details",
+    "more": "More",
+    "less": "Less",
+    "refresh": "Refresh",
+    "duplicate": "Duplicate",
+    "selectAll": "Select all",
+    "deselectAll": "Deselect all",
+    "noResults": "No results found",
+    "empty": {
+      "title": "No data available",
+      "description": "There are no records to display at this time.",
+      "searchTitle": "No results",
+      "searchDescription": "Try different search terms or adjust your filters.",
+      "filterTitle": "No results for current filters",
+      "filterDescription": "Clear or change filters to see more results."
+    },
+    "tryAgain": "Try again",
+    "today": "Today",
+    "yesterday": "Yesterday",
+    "earlier": "Earlier",
+    "unknown": "Unknown",
+    "notAvailable": "—",
+    "entries": "{count, plural, one {# entry} other {# entries}}",
+    "showing": "Showing {from}–{to} of {total}",
+    "company": "Company",
+    "team": "Team",
+    "profile": "Profile",
+    "theme": "Theme",
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System",
+    "since": "Since",
+    "route": "Route",
+    "activeAssignment": "Active assignment",
+    "upcomingAssignments": "Upcoming assignments",
+    "noTasksToday": "No tasks today",
+    "workHours": "Hours worked",
+    "completed": "Completed",
+    "checkIn": "Check in",
+    "checkOut": "Check out",
+    "notesOptional": "Notes (optional)",
+    "checkInNotesPlaceholder": "Notes...",
+    "checkOutNotesPlaceholder": "What was completed?",
+    "statusTones": {
+      "success": "Success",
+      "warning": "Warning",
+      "danger": "Error",
+      "info": "Info",
+      "neutral": "Neutral",
+      "pending": "Pending"
+    }
+  },
+  "navigation": {
+    "dashboard": "Dashboard",
+    "myTasks": "My tasks",
+    "tasks": "Tasks",
+    "calendar": "Calendar",
+    "employees": "Employees",
+    "schedule": "Service schedule",
+    "clients": "Clients",
+    "operations": "Operations",
+    "operationsDashboard": "Operations Dashboard",
+    "operationsClients": "Clients",
+    "operationsProperties": "Properties",
+    "operationsServices": "Services",
+    "operationsScheduling": "Scheduling",
+    "operationsCalendar": "Calendar",
+    "operationsTeams": "Teams",
+    "operationsRoutes": "Routes",
+    "operationsJobs": "Executions",
+    "workforce": "Workforce",
+    "workforceDashboard": "Workforce Dashboard",
+    "workforceEmployees": "Employees",
+    "workforcePlanning": "Personnel Planning",
+    "workforceShifts": "Shifts",
+    "workforceAbsences": "Absences",
+    "workforceVacations": "Vacations",
+    "workforceTimeAccount": "Time Account",
+    "workforceTimesheets": "Timesheets",
+    "workforceWorktime": "Work Schedules",
+    "workforceDocuments": "Documents",
+    "crm": "CRM",
+    "crmDashboard": "Sales Dashboard",
+    "crmLeads": "Leads",
+    "crmPipeline": "Pipeline",
+    "crmContacts": "Contacts",
+    "crmCompanies": "Companies",
+    "finance": "Finance",
+    "financeOverview": "Dashboard",
+    "financeQuotes": "Quotes",
+    "financeInvoices": "Invoices",
+    "financeContracts": "Contracts",
+    "financePayments": "Payments",
+    "financeCashflow": "Cash Flow",
+    "financeCosts": "Costs",
+    "financeProfitability": "Profitability",
+    "financeForecast": "Forecast",
+    "properties": "Addresses",
+    "reports": "Reports",
+    "activity": "Activity",
+    "audits": "Audits",
+    "settings": "Settings",
+    "automations": "Automations",
+    "appearance": "Appearance",
+    "series": "Recurring series",
+    "templates": "Templates",
+    "timesheet": "Timesheet",
+    "collapseSidebar": "Collapse sidebar",
+    "expandSidebar": "Expand sidebar",
+    "switchCompany": "Switch company",
+    "allWorkspaces": "All workspaces",
+    "search": "Search",
+    "searchShortcut": "⌘K",
+    "executiveSubtitle": "Executive operations overview",
+    "notifications": "Notifications",
+    "profile": "Profile",
+    "logout": "Log out",
+    "noEmployeeProfile": "No employee profile linked to this account.",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "menuTitle": "Navigation"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "greeting": {
+      "morning": "Good morning, {name}",
+      "afternoon": "Good afternoon, {name}",
+      "evening": "Good evening, {name}"
+    },
+    "kpis": {
+      "slaOverdue": "SLA overdue",
+      "today": "Today",
+      "inProgress": "In progress",
+      "openCheckIns": "Open check-ins",
+      "activeTeam": "Active team",
+      "activeTasks": "Active tasks",
+      "completionRate": "Completion rate",
+      "activeEmployees": "Active employees"
+    },
+    "sections": {
+      "attention": "Attention",
+      "operations": "Operations",
+      "schedule": "Service schedule",
+      "weeklyTrend": "7-day trend",
+      "monthlyCompletion": "Monthly completion",
+      "liveCheckIns": "Live check-ins",
+      "recentTasks": "Recent tasks",
+      "onboarding": "Getting started"
+    },
+    "alerts": {
+      "sla": "SLA",
+      "gps": "GPS",
+      "radius": "Radius",
+      "overdue": "{count, plural, one {# overdue task} other {# overdue tasks}}",
+      "gpsMissing": "{count, plural, one {# check-in without GPS} other {# check-ins without GPS}}",
+      "outOfRadius": "{count, plural, one {# out of radius} other {# out of radius}}"
+    },
+    "taskGroups": {
+      "inProgress": "In progress",
+      "overdue": "Overdue",
+      "today": "Today",
+      "upcoming": "Scheduled"
+    },
+    "completion": {
+      "percentCompleted": "{rate}% completed",
+      "monthlyProgress": "{completed}/{total} this month"
+    },
+    "quickActions": {
+      "tasks": "Tasks",
+      "calendar": "Calendar",
+      "team": "Team",
+      "activity": "Activity",
+      "audits": "Audits"
+    },
+    "onboarding": {
+      "title": "Set up your operation",
+      "description": "Complete the steps below to get started with FeldOps.",
+      "addEmployee": {
+        "label": "Add your first employee",
+        "description": "Add the first member of your field team"
+      },
+      "addClient": {
+        "label": "Add your first client",
+        "description": "Create your first client and service address"
+      },
+      "createTask": {
+        "label": "Create your first task",
+        "description": "Schedule your first service task"
+      }
+    },
+    "empty": {
+      "noOpenTasks": "No open tasks",
+      "noOpenTasksDescription": "All tasks are completed or there are no scheduled items yet."
+    },
+    "chart": {
+      "scheduled": "Scheduled",
+      "completed": "Completed"
+    },
+    "executive": {
+      "kpis": {
+        "todayServices": "Services Today",
+        "completedToday": "Completed Services",
+        "activeEmployees": "Active Employees",
+        "hoursWorked": "Hours Worked",
+        "monthlyRevenue": "Monthly Revenue",
+        "openInvoices": "Open Invoices"
+      },
+      "panels": {
+        "todayServices": "Today's Services",
+        "weekPlanning": "Weekly Planning",
+        "operationalMap": "Operational Map",
+        "taskStatus": "Task Status",
+        "financeSummary": "Financial Summary",
+        "workforceAllocation": "Workforce Allocation",
+        "alerts": "Alerts & Exceptions",
+        "recentActivity": "Recent Activity",
+        "revenueForecast": "Revenue Forecast"
+      },
+      "chart": {
+        "scheduled": "Scheduled",
+        "inProgress": "In progress",
+        "completed": "Completed",
+        "overdue": "Overdue"
+      },
+      "taskStatus": {
+        "completed": "Completed",
+        "in_progress": "In progress",
+        "scheduled": "Scheduled",
+        "overdue": "Overdue"
+      },
+      "finance": {
+        "monthlyRevenue": "Monthly revenue",
+        "projected": "Projected revenue",
+        "openInvoices": "Open invoices",
+        "overdueInvoices": "Overdue invoices",
+        "forecast": "Forecast"
+      },
+      "workforce": {
+        "onService": "On service",
+        "available": "Available",
+        "absent": "Absent",
+        "vacation": "On vacation"
+      },
+      "alerts": {
+        "overdueServices": "{count, plural, one {# overdue service} other {# overdue services}}",
+        "absentEmployees": "{count, plural, one {# absent employee} other {# absent employees}}",
+        "unassignedJobs": "{count, plural, one {# unassigned job} other {# unassigned jobs}}",
+        "overdueInvoices": "{count, plural, one {# overdue invoice} other {# overdue invoices}}",
+        "expiringContracts": "{count, plural, one {# expiring contract} other {# expiring contracts}}"
+      },
+      "activityTypes": {
+        "task": "Service",
+        "invoice": "Invoice",
+        "client": "Client",
+        "contract": "Contract"
+      },
+      "empty": {
+        "todayServices": "No services scheduled for today.",
+        "noData": "No data for this period.",
+        "financeRestricted": "Financial data available to supervisors.",
+        "noAlerts": "No critical alerts.",
+        "noActivity": "No recent activity.",
+        "noForecast": "No forecast available."
+      }
+    }
+  },
+  "tasks": {
+    "title": "Tasks",
+    "description": "Plan and track all service tasks",
+    "descriptionWithCount": "{count, plural, one {# task found} other {# tasks found}}",
+    "create": "New task",
+    "createRecurring": "Create recurring tasks",
+    "series": "Recurring series",
+    "tabs": {
+      "active": "Active",
+      "completed": "Completed",
+      "all": "All",
+      "cancelled": "Cancelled"
+    },
+    "columns": {
+      "task": "Task",
+      "team": "Team",
+      "status": "Status",
+      "service": "Service",
+      "priority": "Priority",
+      "date": "Date",
+      "client": "Client",
+      "address": "Address",
+      "assignee": "Assignee",
+      "tags": "Tags"
+    },
+    "form": {
+      "title": "Title",
+      "titlePlaceholder": "e.g. Weekly cleaning — Central Building",
+      "description": "Description",
+      "descriptionPlaceholder": "Instructions and notes for the team",
+      "serviceType": "Service type",
+      "address": "Address",
+      "selectAddress": "Select address",
+      "scheduledDate": "Scheduled date",
+      "scheduledTime": "Time",
+      "priority": "Priority",
+      "assignees": "Assignees",
+      "selectAssignees": "Select employees",
+      "recurrence": "Recurrence",
+      "tags": "Tags"
+    },
+    "actions": {
+      "start": "Start",
+      "complete": "Complete",
+      "cancel": "Cancel task",
+      "schedule": "Schedule",
+      "reopen": "Reopen",
+      "duplicate": "Duplicate",
+      "assign": "Assign",
+      "changeStatus": "Change status",
+      "bulkCancel": "Cancel selected",
+      "bulkAssign": "Assign selected"
+    },
+    "bulk": {
+      "selected": "{count, plural, one {# selected} other {# selected}}",
+      "clearSelection": "Clear selection",
+      "updated": "{count, plural, one {# task updated} other {# tasks updated}}"
+    },
+    "filters": {
+      "searchPlaceholder": "Search tasks...",
+      "allStatus": "All statuses",
+      "allServices": "All services",
+      "allEmployees": "All employees",
+      "allTags": "All tags",
+      "service": "Service",
+      "employee": "Employee",
+      "tag": "Tag",
+      "dateFrom": "From date",
+      "dateTo": "To date",
+      "reset": "Reset"
+    },
+    "savedFilters": {
+      "namePlaceholder": "Filter name...",
+      "save": "Save",
+      "nameRequired": "Enter a name",
+      "filterSaved": "Filter saved",
+      "delete": "Delete",
+      "filterTooltip": "Filter: {params}"
+    },
+    "selection": {
+      "select": "Select",
+      "deselect": "Deselect"
+    },
+    "overdue": {
+      "daysShort": "+{days}d"
+    },
+    "dialogs": {
+      "createTitle": "Create task",
+      "serviceObject": "Service location",
+      "selectObject": "Select location...",
+      "selectServiceType": "Select type...",
+      "startTime": "Start time",
+      "endTime": "End time",
+      "assignEmployees": "Assign employees",
+      "createSeries": "Create recurring series"
+    },
+    "checkIn": {
+      "checkIn": "Check in",
+      "checkOut": "Check out",
+      "confirmCheckIn": "Confirm check-in",
+      "confirmCheckOut": "Confirm check-out",
+      "locating": "Getting location...",
+      "distanceMeters": "{distance} m from site",
+      "distanceKm": "{distance} km from site",
+      "locationCaptured": "Location captured",
+      "gpsUnavailable": "GPS unavailable",
+      "gpsNoAccess": "No GPS access — location not captured",
+      "tooFarForCheckIn": "Too far from the site for check-in.",
+      "notAtSite": "You do not appear to be at the site",
+      "somewhatFar": "Somewhat far from the site",
+      "confirmStart": "Confirm the start of your work on this task.",
+      "confirmEnd": "Confirm the end of your work on this task.",
+      "notesOptional": "Notes (optional)",
+      "whatDone": "What was completed?",
+      "startNotes": "Notes about the start...",
+      "notes": "Notes",
+      "active": "Active",
+      "stillActive": "still active",
+      "durationHours": "{hours}h {minutes}min",
+      "durationMinutes": "{minutes}min",
+      "history": "Check-in history",
+      "in": "In:",
+      "out": "Out:",
+      "completion": "Completion:"
+    },
+    "checklist": {
+      "progress": "{checked}/{total} done",
+      "markDone": "Mark as done",
+      "markUndone": "Mark as not done",
+      "newStepPlaceholder": "New step...",
+      "add": "Add",
+      "empty": "No checklist items yet"
+    },
+    "tags": {
+      "tag": "Tag",
+      "manage": "Manage tags",
+      "newTag": "New tag",
+      "namePlaceholder": "Tag name...",
+      "color": "Color {color}",
+      "none": "No tags",
+      "remove": "Remove"
+    },
+    "comments": {
+      "title": "Comments ({count})",
+      "placeholder": "Write a comment...",
+      "hint": "Enter to send · Shift+Enter for new line",
+      "send": "Send",
+      "delete": "Delete comment",
+      "unknownAuthor": "Unknown",
+      "todayAt": "Today, {time}",
+      "yesterdayAt": "Yesterday, {time}"
+    },
+    "recurrence": {
+      "setup": "Set up recurring task",
+      "repeatType": "Repeat type",
+      "daily": "Daily",
+      "weekly": "Weekly",
+      "monthly": "Monthly",
+      "everyDays": "days",
+      "everyWeeks": "weeks",
+      "everyMonths": "months",
+      "every": "Every",
+      "occurrences": "Occurrences",
+      "weekdays": "Weekdays",
+      "endDate": "End date (optional)",
+      "preview": "Creates {count} tasks: {label}",
+      "until": " until {date}",
+      "dailyInterval": "Every {interval} days",
+      "dailySingle": "Daily",
+      "weeklyInterval": "Every {interval} weeks",
+      "weeklySingle": "Weekly{days}",
+      "monthlyInterval": "Every {interval} months",
+      "monthlySingle": "Monthly"
+    },
+    "empty": {
+      "title": "No tasks",
+      "description": "Adjust filters or create a new task.",
+      "noActive": "No active tasks at the moment.",
+      "noCompleted": "No completed tasks yet."
+    },
+    "series": {
+      "title": "Recurring series",
+      "description": "Manage recurring schedules and task series",
+      "cancelSeries": "Cancel series",
+      "backToTasks": "Back to tasks",
+      "instances": "occurrences",
+      "completedCount": "completed",
+      "openCount": "open",
+      "next": "Next:",
+      "open": "Open",
+      "stopSeries": "Stop series",
+      "stopSeriesTitle": "Stop series?",
+      "stopSeriesDescription": "All future occurrences of this series will be cancelled. Completed occurrences remain unchanged.",
+      "empty": {
+        "title": "No recurring series",
+        "description": "Create a series when adding a new task with recurrence."
+      }
+    },
+    "detail": {
+      "pageTitle": "Task",
+      "overview": "Overview",
+      "checkIns": "Check-ins",
+      "photos": "Photos",
+      "photosCount": "Photos ({count})",
+      "history": "History",
+      "notes": "Notes",
+      "backToTasks": "Tasks",
+      "route": "Route",
+      "takePhoto": "Take photo",
+      "serviceObject": "Service location",
+      "access": "Access:",
+      "assignedEmployees": "Assigned employees ({count})",
+      "noPhotos": "No photos yet",
+      "before": "Before",
+      "after": "After",
+      "photoAlt": "Photo",
+      "activities": "Activity",
+      "deletePhotoTitle": "Delete photo?",
+      "deletePhotoDescription": "The photo will be permanently deleted and cannot be recovered.",
+      "takeOrSelect": "Take or select photo",
+      "fileTypes": "JPG, PNG, WEBP · max. 10 MB",
+      "activityActions": {
+        "created": "Created",
+        "updated": "Updated",
+        "assigned": "Assigned",
+        "check_in": "Checked in",
+        "check_out": "Checked out",
+        "photo_uploaded": "Photo uploaded",
+        "status_changed": "Status changed",
+        "deleted": "Deleted"
+      },
+      "statusChangeFrom": " from {from} → {to}"
+    }
+  },
+  "clients": {
+    "title": "Clients",
+    "description": "Manage clients and service contracts",
+    "descriptionWithCount": "{count, plural, one {# client} other {# clients}} · {active} active",
+    "sectionLabel": "CRM",
+    "create": "New client",
+    "createFirst": "Create first client",
+    "openDetails": "Open client details",
+    "noProperties": "No service addresses",
+    "addProperty": "Add address",
+    "columns": {
+      "name": "Name",
+      "client": "Client",
+      "status": "Status",
+      "properties": "Addresses",
+      "tasks": "Tasks",
+      "contact": "Contact",
+      "email": "Email",
+      "createdAt": "Created"
+    },
+    "dialogs": {
+      "createClient": "Create client",
+      "addProperty": "Add address"
+    },
+    "form": {
+      "name": "Client name",
+      "nameRequired": "Client name *",
+      "namePlaceholder": "e.g. Aurora Residential Condominium",
+      "contactName": "Contact person",
+      "contactNamePlaceholder": "Contact name",
+      "email": "Email",
+      "phone": "Phone",
+      "notes": "Notes",
+      "notesPlaceholder": "Internal notes...",
+      "status": "Status",
+      "services": "Service types *",
+      "accessNotes": "Access notes",
+      "accessNotesPlaceholder": "Code, key in office..."
+    },
+    "toasts": {
+      "created": "Client created",
+      "propertyCreated": "Address created"
+    },
+    "status": {
+      "active": "Active",
+      "inactive": "Inactive",
+      "archived": "Archived"
+    },
+    "empty": {
+      "title": "No clients yet",
+      "description": "Add your first client to start managing addresses and tasks."
+    },
+    "detail": {
+      "pageTitle": "Client",
+      "overview": "Overview",
+      "properties": "Addresses",
+      "tasks": "Tasks",
+      "reports": "Reports",
+      "stats": {
+        "properties": "Service locations",
+        "activeTasks": "Active tasks",
+        "completed": "Completed"
+      },
+      "propertiesHeading": "Service locations ({count})",
+      "add": "Add",
+      "noProperties": "No service locations",
+      "floorSuffix": "{floor}. floor",
+      "tasksHeading": "Tasks ({count})"
+    }
+  },
+  "properties": {
+    "title": "Addresses",
+    "description": "Manage service locations and client properties",
+    "descriptionWithCount": "{count} active locations",
+    "sectionLabel": "Assets",
+    "create": "New address",
+    "openDetails": "Open address details",
+    "filters": {
+      "searchPlaceholder": "Search street, city, or label...",
+      "city": "City",
+      "allCities": "All cities",
+      "service": "Service type",
+      "allServices": "All services",
+      "clear": "Clear"
+    },
+    "columns": {
+      "label": "Label",
+      "property": "Address",
+      "location": "Location",
+      "street": "Street",
+      "city": "City",
+      "client": "Client",
+      "serviceTypes": "Service types",
+      "services": "Services",
+      "tasks": "Tasks",
+      "status": "Status"
+    },
+    "form": {
+      "label": "Label",
+      "labelPlaceholder": "e.g. Block A — Main entrance",
+      "street": "Street",
+      "houseNumber": "Number",
+      "postalCode": "Postal code",
+      "city": "City",
+      "client": "Client",
+      "selectClient": "Select client",
+      "serviceTypes": "Service types",
+      "latitude": "Latitude",
+      "longitude": "Longitude",
+      "notes": "Access notes"
+    },
+    "empty": {
+      "title": "No addresses yet",
+      "description": "Register service addresses linked to your clients.",
+      "filteredTitle": "No results",
+      "filteredDescription": "No address matches the current filters."
+    },
+    "detail": {
+      "pageTitle": "Service address",
+      "overview": "Overview",
+      "tasks": "Tasks",
+      "map": "Location",
+      "newTask": "Task",
+      "maps": "Maps",
+      "accessNotes": "Access notes",
+      "stats": {
+        "activeTasks": "Active tasks",
+        "completed": "Completed",
+        "checkIns90Days": "Check-ins (90d)",
+        "hours90Days": "Hours (90d)"
+      },
+      "floor": "Floor: {floor}",
+      "unit": "Unit: {unit}",
+      "allTasks": "All tasks",
+      "tasksHeading": "Tasks ({count})",
+      "noTasksYet": "No tasks for this location yet",
+      "checkInsHeading": "Check-ins (last 90 days · {count})",
+      "photosHeading": "Photos ({count})",
+      "photoAlt": "Photo",
+      "before": "Before",
+      "after": "After"
+    },
+    "list": {
+      "entries": "{count} entries",
+      "openDetailsAria": "Open address details"
+    }
+  },
+  "employees": {
+    "title": "Employees",
+    "description": "Manage your field team and access permissions",
+    "descriptionWithCount": "{count} on team · {active} active",
+    "sectionLabel": "Team",
+    "create": "New employee",
+    "createFirst": "Create employee",
+    "invite": "Invite employee",
+    "columns": {
+      "name": "Name",
+      "employee": "Employee",
+      "email": "Email",
+      "phone": "Phone",
+      "employeeNumber": "Employee ID",
+      "role": "Role",
+      "status": "Status",
+      "tasks": "Tasks",
+      "lastActive": "Last active"
+    },
+    "actions": {
+      "edit": "Edit",
+      "deactivate": "Deactivate"
+    },
+    "dialogs": {
+      "create": {
+        "title": "Create employee"
+      },
+      "edit": {
+        "title": "Edit employee"
+      }
+    },
+    "form": {
+      "fullName": "Full name",
+      "fullNameRequired": "Full name *",
+      "fullNamePlaceholder": "Full name",
+      "email": "Email",
+      "phone": "Phone",
+      "role": "Role",
+      "status": "Status",
+      "employeeId": "Employee ID",
+      "employeeNumber": "Employee ID",
+      "employeeNumberPlaceholder": "EMP-001",
+      "hireDate": "Hire date",
+      "notes": "Notes",
+      "notesPlaceholder": "Internal notes...",
+      "update": "Update",
+      "submitCreate": "Create"
+    },
+    "toasts": {
+      "created": "Employee created",
+      "updated": "Employee updated",
+      "deactivated": "Employee deactivated"
+    },
+    "status": {
+      "active": "Active",
+      "inactive": "Inactive",
+      "terminated": "Terminated",
+      "invited": "Invited",
+      "suspended": "Suspended"
+    },
+    "empty": {
+      "title": "No employees yet",
+      "description": "Invite or add employees to assign field tasks."
+    },
+    "timesheet": {
+      "title": "Timesheet",
+      "description": "Check-in and check-out records for this employee",
+      "stats": {
+        "total": "Total",
+        "workingDays": "Working days",
+        "avgPerDay": "Avg per day",
+        "checkIns": "Check-ins"
+      },
+      "exportCsv": "Export CSV",
+      "emptyMonth": "No check-ins in {month}",
+      "checkInsCount": "{count, plural, one {# check-in} other {# check-ins}}",
+      "active": "Active",
+      "monthlyTotal": "Total hours in {month}"
+    },
+    "detail": {
+      "pageTitle": "Employee",
+      "viewTimesheet": "View timesheet",
+      "stats": {
+        "totalTasks": "Total tasks",
+        "activeTasks": "Active",
+        "completed": "Completed",
+        "completionRate": "Completion rate",
+        "hours30Days": "Hours (30 days)",
+        "avgCheckIn90Days": "Avg. check-in (90 days)"
+      },
+      "completionSummary": "{completed} of {total} tasks completed",
+      "tasksHeading": "Tasks ({count})",
+      "noTasksAssigned": "No tasks assigned",
+      "checkInsHeading": "Check-ins (last 30 days · {count})",
+      "totalHoursLastMonth": "Total: {hours}h {minutes}min in the last month"
+    }
+  },
+  "calendar": {
+    "title": "Calendar",
+    "description": "View and plan tasks by day, week, or month",
+    "views": {
+      "day": "Day",
+      "week": "Week",
+      "month": "Month",
+      "agenda": "Agenda"
+    },
+    "navigation": {
+      "today": "Today",
+      "previous": "Previous",
+      "next": "Next"
+    },
+    "filters": {
+      "title": "Filters",
+      "serviceType": "Service type",
+      "employee": "Employee",
+      "status": "Status",
+      "clear": "Clear filters"
+    },
+    "kpis": {
+      "scheduled": "Scheduled",
+      "inProgress": "In progress",
+      "completed": "Completed",
+      "overdue": "Overdue"
+    },
+    "weekdays": {
+      "mon": "Mon",
+      "tue": "Tue",
+      "wed": "Wed",
+      "thu": "Thu",
+      "fri": "Fri",
+      "sat": "Sat",
+      "sun": "Sun"
+    },
+    "months": {
+      "january": "January",
+      "february": "February",
+      "march": "March",
+      "april": "April",
+      "may": "May",
+      "june": "June",
+      "july": "July",
+      "august": "August",
+      "september": "September",
+      "october": "October",
+      "november": "November",
+      "december": "December"
+    },
+    "empty": {
+      "title": "No tasks in this period",
+      "description": "Select another range or create a new task."
+    },
+    "delayed": "Delayed",
+    "planning": {
+      "title": "Service planning",
+      "quickPlan": "Quick plan",
+      "newTask": "Task",
+      "filter": "Filter",
+      "serviceType": "Service type",
+      "allDay": "All day",
+      "unassigned": "Unassigned",
+      "moreTasks": "+{count} more",
+      "free": "Free",
+      "noTasks": "No tasks",
+      "weekLabel": "Wk {week} · {start}–{end} {month}",
+      "kpis": {
+        "scheduled": "Scheduled tasks",
+        "openSlots": "Open slots",
+        "openSlotsHint": "Unassigned",
+        "teamToday": "Team today",
+        "teamTodayHint": "Employees in the field",
+        "overdue": "Overdue"
+      },
+      "panel": {
+        "today": "Today",
+        "teamAvailability": "Team availability",
+        "noAssignmentsToday": "No assignments today",
+        "unassigned": "Unassigned",
+        "openCount": "{count} open",
+        "allAssigned": "All tasks assigned",
+        "showMore": "+{count} show more"
+      },
+      "timeBuckets": {
+        "morning": "Morning",
+        "morningRange": "06:00 – 12:00",
+        "afternoon": "Afternoon",
+        "afternoonRange": "12:00 – 17:00",
+        "evening": "Evening",
+        "eveningRange": "17:00 – 22:00"
+      }
+    }
+  },
+  "reports": {
+    "title": "Reports",
+    "description": "Generate and export operational and compliance reports",
+    "create": "Generate report",
+    "types": {
+      "daily": "Daily",
+      "weekly": "Weekly",
+      "monthly": "Monthly",
+      "client": "By client",
+      "employee": "By employee",
+      "custom": "Custom"
+    },
+    "columns": {
+      "name": "Report",
+      "type": "Type",
+      "period": "Period",
+      "generatedAt": "Generated",
+      "generatedBy": "Generated by",
+      "status": "Status"
+    },
+    "form": {
+      "type": "Report type",
+      "periodStart": "Start date",
+      "periodEnd": "End date",
+      "client": "Client",
+      "employee": "Employee",
+      "format": "Format"
+    },
+    "empty": {
+      "title": "No reports generated",
+      "description": "Generate your first report to track operations."
+    },
+    "monthly": {
+      "title": "Monthly report",
+      "description": "Consolidated monthly summary",
+      "exportCsv": "CSV timesheet",
+      "stats": {
+        "totalTasks": "Total tasks",
+        "completed": "Completed",
+        "completionRate": "Completion rate",
+        "totalHours": "Total hours"
+      },
+      "byService": "By service type",
+      "noData": "No data",
+      "serviceStats": "{tasks} tasks · {completed} completed",
+      "byEmployee": "By employee",
+      "checkInsCount": "{count} check-ins",
+      "allTasksInMonth": "All tasks in {month}"
+    },
+    "intelligence": {
+      "title": "Intelligence",
+      "description": "{company} · operational analytics",
+      "monthlyReport": "Monthly report",
+      "pdfReport": "PDF report",
+      "savedViews": {
+        "7d": "7 days",
+        "30d": "30 days",
+        "mtd": "This month",
+        "prev": "Last month"
+      },
+      "export": "Export",
+      "kpis": {
+        "orderVolume": "Task volume",
+        "completed": "Completed",
+        "completionRate": "Completion rate",
+        "teamUtilization": "Team utilization",
+        "utilizationHint": "Tasks with check-in",
+        "fieldHours": "Field hours",
+        "checkIns": "{count} check-ins",
+        "serviceEfficiency": "Service efficiency"
+      },
+      "insights": "Insights",
+      "insightsEmpty": "Select a period with tasks to generate insights",
+      "insightsCompletionUp": "Task completion rose {percent}% vs. the previous period",
+      "insightsCompletionDown": "Task completion fell {percent}% vs. the previous period",
+      "insightsRateUp": "Completion rate improved by {points} percentage points",
+      "insightsRateDown": "Completion rate fell by {points} percentage points",
+      "insightsTopService": "{service} delivered the highest output with {count} completed tasks",
+      "taskTrend": "Task trend",
+      "serviceMix": "Service mix",
+      "noData": "No data in period",
+      "legendOpen": "Open",
+      "legendCompleted": "Completed",
+      "completionRate": "{rate}% completion · {duration}",
+      "topCards": {
+        "topEmployee": "Top employee",
+        "topProperty": "Most active address",
+        "topService": "Top service",
+        "checkInActivity": "Check-in activity",
+        "noData": "No data",
+        "tasks": "{count} tasks",
+        "completed": "{count} completed",
+        "periodTotal": "Total in period"
+      },
+      "metricsTable": "Operational metrics",
+      "metricsColumns": {
+        "service": "Service",
+        "tasks": "Tasks",
+        "completion": "Completion",
+        "avgDuration": "Avg. duration"
+      },
+      "exportSection": "Export & reports",
+      "hoursReport": "Hours report",
+      "taskList": "Task list",
+      "newReport": "New report",
+      "reportTitlePlaceholder": "Report July 2025",
+      "generate": "Generate",
+      "errors": {
+        "titleRequired": "Title required",
+        "invalidPeriod": "End date must be after start date",
+        "noPeriod": "No period saved for this report"
+      },
+      "reportCreated": "Report created",
+      "defaultTitle": "Report {date}"
+    }
+  },
+  "audits": {
+    "title": "Audits",
+    "description": "Monitor check-in compliance, GPS, and field evidence",
+    "create": "New audit",
+    "kpis": {
+      "pending": "Pending",
+      "passed": "Passed",
+      "failed": "Failed",
+      "inReview": "In review"
+    },
+    "types": {
+      "gps_missing": "GPS missing",
+      "outside_radius": "Outside radius",
+      "all": "All types"
+    },
+    "columns": {
+      "status": "Status",
+      "type": "Type",
+      "employee": "Employee",
+      "task": "Task",
+      "address": "Address",
+      "checkInAt": "Check-in",
+      "distance": "Distance",
+      "score": "Score"
+    },
+    "filters": {
+      "period": "Period",
+      "days": "Last {days} days",
+      "periodDays": "{days}d",
+      "type": "Audit type",
+      "status": "Status"
+    },
+    "compliance": {
+      "title": "Compliance",
+      "gpsRequired": "GPS required on check-in",
+      "radiusLimit": "Maximum radius of {meters}m",
+      "photoEvidence": "Photo evidence",
+      "recommendations": "Recommendations"
+    },
+    "detail": {
+      "evidence": "Evidence",
+      "timeline": "Timeline",
+      "location": "Location",
+      "resolution": "Resolution",
+      "checklist": "Checklist",
+      "notes": "Notes",
+      "findings": "Findings",
+      "photos": "Photos",
+      "recommendations": "Recommendations",
+      "property": "Address",
+      "noPhotos": "No photos linked to this check-in.",
+      "reviewNote": "Review on {date} by {employee}. Status: {status}. Score: {score}/100.",
+      "gpsFinding": "No GPS location was recorded at check-in.",
+      "radiusFinding": "Check-in location differs by {distance} from the service address.",
+      "gpsRecommendation": "Instruct the employee to enable location access and check in again.",
+      "radiusRecommendation": "Schedule an on-site review and discuss the check-in process with the team.",
+      "checklistItems": {
+        "gps": "GPS evidence present",
+        "radius": "Location within 1 km radius",
+        "documented": "Check-in documented"
+      }
+    },
+    "empty": {
+      "title": "No audits found",
+      "description": "There are no non-compliance records in the selected period.",
+      "noViolations": "No violations",
+      "noViolationsDescription": "No compliance violations found in the selected period."
+    },
+    "complianceTitle": "Compliance",
+    "periodDescription": "GPS and radius checks · last {days} days",
+    "createDisabled": "Coming soon",
+    "searchPlaceholder": "Search audit, address, or employee...",
+    "exportCsv": "Export CSV",
+    "entries": "{count} entries",
+    "tableColumns": {
+      "audit": "Audit",
+      "property": "Address",
+      "client": "Client",
+      "inspector": "Employee",
+      "date": "Date",
+      "status": "Status",
+      "score": "Score"
+    },
+    "rowTypes": {
+      "gpsMissing": "GPS evidence missing",
+      "outsideRadius": "Location outside radius"
+    },
+    "timelineTitle": "Audit timeline",
+    "statusLabels": {
+      "passed": "Passed",
+      "failed": "Failed",
+      "pending": "Pending",
+      "review": "In review"
+    }
+  },
+  "activity": {
+    "title": "Activity",
+    "description": "Real-time feed of operational events and alerts",
+    "searchPlaceholder": "Search activity...",
+    "categories": {
+      "all": "All",
+      "tasks": "Tasks",
+      "employees": "Employees",
+      "clients": "Clients",
+      "properties": "Addresses",
+      "audits": "Audits",
+      "financial": "Financial"
+    },
+    "groups": {
+      "today": "Today",
+      "yesterday": "Yesterday",
+      "earlier": "Earlier"
+    },
+    "actions": {
+      "created": "created",
+      "updated": "updated",
+      "deleted": "deleted",
+      "assigned": "assigned",
+      "check_in": "checked in to",
+      "check_out": "checked out of",
+      "photo_uploaded": "uploaded photo to",
+      "status_changed": "changed status of",
+      "report_generated": "generated report for"
+    },
+    "alerts": {
+      "title": "Alerts",
+      "overdue": "Overdue tasks",
+      "failedAudits": "Failed audits",
+      "schedulingConflicts": "Scheduling conflicts",
+      "noAlerts": "No alerts at this time"
+    },
+    "health": {
+      "title": "Operational health",
+      "activeTasks": "Active tasks",
+      "openCheckIns": "Open check-ins",
+      "completionRate": "Completion rate",
+      "activeEmployees": "Active employees"
+    },
+    "empty": {
+      "title": "No activity recorded",
+      "description": "Operation events will appear here as your team works.",
+      "filtered": "No entries for these filters."
+    },
+    "live": "Live",
+    "eventCount": "{count, plural, one {# event in operations} other {# events in operations}}",
+    "warningsTitle": "Current warnings",
+    "openIntelligence": "Open intelligence →",
+    "systemStatus": "System status",
+    "entityFallback": "Entry",
+    "relative": {
+      "justNow": "Just now",
+      "minutes": "{count} min ago",
+      "hours": "{count}h ago",
+      "days": "{count, plural, one {# day ago} other {# days ago}}"
+    },
+    "alertEmpty": {
+      "overdue": "No overdue tasks",
+      "failedAudits": "No audit violations",
+      "conflicts": "No conflicts detected"
+    },
+    "verbs": {
+      "createdClient": "created client",
+      "completed": "completed",
+      "cancelled": "cancelled",
+      "statusChanged": "changed status of",
+      "commented": "commented on"
+    },
+    "entities": {
+      "task": "Task",
+      "client": "Client",
+      "employee": "Employee",
+      "address": "Address",
+      "company": "Company",
+      "report": "Report",
+      "checkIn": "Check-in"
+    },
+    "alertMeta": {
+      "due": "Due {date}",
+      "outsideRadius": "{name} · {distance} m outside radius",
+      "assignmentsOnDate": "{count} assignments on {date}"
+    }
+  },
+  "settings": {
+    "title": "Settings",
+    "description": "Manage company, team, and account preferences",
+    "sections": {
+      "company": "Company",
+      "team": "Team",
+      "billing": "Billing",
+      "notifications": "Notifications",
+      "security": "Security",
+      "integrations": "Integrations",
+      "appearance": "Appearance"
+    },
+    "company": {
+      "title": "Company details",
+      "description": "General information and branding",
+      "name": "Company name",
+      "slug": "Identifier (slug)",
+      "timezone": "Timezone",
+      "country": "Country",
+      "logo": "Logo",
+      "masterDataTitle": "Master data",
+      "masterDataDescription": "Company name, tax ID, and contact details",
+      "displayName": "Company name",
+      "displayNameDescription": "Public display name in the workspace",
+      "legalName": "Legal name",
+      "legalNameDescription": "Full registered business name",
+      "businessAddress": "Business address",
+      "businessAddressPlaceholder": "Not set yet. Address management coming in a future release",
+      "businessAddressHint": "Service addresses are managed in the company addresses area.",
+      "manageAddresses": "Manage addresses",
+      "taxId": "Tax ID / VAT number",
+      "taxIdDescription": "For invoices and compliance exports",
+      "contactEmail": "Contact email",
+      "contactEmailDescription": "Central company contact channel",
+      "phone": "Phone",
+      "phoneDescription": "Main phone number for field inquiries",
+      "workspaceUrl": "Workspace URL",
+      "workspaceUrlDescription": "Permanent link to your workspace",
+      "slugLocked": "Cannot be changed",
+      "saveChanges": "Save changes",
+      "updated": "Company details updated",
+      "regional": {
+        "title": "Region & format",
+        "description": "Timezone, operational language, and currency for reports",
+        "locale": "Operational language",
+        "localeDescription": "Date format and internal company reports",
+        "localePt": "Portuguese (Brazil)",
+        "localeEn": "English (US)",
+        "localeDe": "German",
+        "timezone": "Timezone",
+        "timezoneDescription": "Reference for schedules, check-ins, and exports",
+        "currency": "Currency",
+        "currencyDescription": "Used in billing and future exports",
+        "currencyBrl": "Brazilian Real (BRL)",
+        "currencyEur": "Euro (EUR)",
+        "currencyUsd": "US Dollar (USD)",
+        "saveChanges": "Save region",
+        "updated": "Regional preferences updated"
+      }
+    },
+    "team": {
+      "title": "Team members",
+      "description": "Invite and manage roles and permissions",
+      "invite": "Invite member",
+      "inviteEmail": "Invite email",
+      "role": "Role",
+      "removeMember": "Remove member",
+      "pendingInvites": "Pending invites",
+      "membersTitle": "Members",
+      "membersDescription": "Invite colleagues and manage roles in the workspace",
+      "rolesPermissionsTitle": "Roles & permissions",
+      "rolesPermissionsDescription": "Access rights overview per role. Permissions are system-defined",
+      "memberCount": "{count, plural, one {# member} other {# members}}",
+      "noMembers": "No members",
+      "inviteDialogTitle": "Invite member",
+      "changeRole": "Change role",
+      "remove": "Remove",
+      "you": "(you)",
+      "pendingInvite": "Invite pending",
+      "inviteEmailPlaceholder": "employee@company.com"
+    },
+    "billing": {
+      "title": "Billing",
+      "description": "Plan, usage, and payment methods",
+      "currentPlan": "Current plan",
+      "usage": "Usage",
+      "employees": "Employees",
+      "tasks": "Tasks",
+      "clients": "Clients",
+      "upgrade": "Upgrade plan",
+      "manageBilling": "Manage billing",
+      "planName": "Professional",
+      "planActive": "Active",
+      "planDescription": "Full access to scheduling, compliance, and intelligence",
+      "perMonth": "/month",
+      "taxNote": "excl. tax",
+      "usageTitle": "Usage",
+      "usageDescription": "Current plan occupancy in this billing period",
+      "deployments": "Tasks",
+      "deploymentsDescription": "Scheduled and active tasks",
+      "teamSlots": "Team seats",
+      "teamSlotsDescription": "Active employees in the system",
+      "usageOf": "{used} of {limit}",
+      "invoices": "Invoices",
+      "invoicesDescription": "Downloadable invoices and payment history",
+      "invoicesPlaceholder": "No invoices yet. Billing will sync automatically when the payment module is enabled"
+    },
+    "notifications": {
+      "title": "Notifications",
+      "description": "Configure email and in-app alerts",
+      "email": "Email notifications",
+      "push": "Push notifications",
+      "taskAssigned": "Task assigned",
+      "taskOverdue": "Task overdue",
+      "auditFailed": "Audit failed",
+      "weeklyDigest": "Weekly digest",
+      "emailSection": "Email notifications",
+      "emailSectionDescription": "Control when you receive email alerts",
+      "overdueTasks": "Overdue tasks",
+      "overdueTasksDescription": "Daily summary of open tasks",
+      "checkInWarnings": "Check-in warnings",
+      "checkInWarningsDescription": "GPS or radius deviations in the field",
+      "newInvites": "New team invites",
+      "newInvitesDescription": "When a member joins your workspace",
+      "weeklyReport": "Weekly report",
+      "weeklyReportDescription": "Compact KPI summary every Monday",
+      "inAppSection": "In-app",
+      "inAppSectionDescription": "Notifications within FeldOps",
+      "activityFeed": "Activity feed",
+      "activityFeedDescription": "Real-time updates in the operations feed",
+      "taskAssignments": "Task assignments",
+      "taskAssignmentsDescription": "When a task is assigned to you",
+      "localStorageNote": "Preferences are saved automatically in this browser"
+    },
+    "security": {
+      "title": "Security",
+      "description": "Password, sessions, and authentication",
+      "changePassword": "Change password",
+      "resetPassword": "Reset password",
+      "twoFactor": "Two-factor authentication",
+      "sessions": "Active sessions",
+      "signOutAll": "Sign out all sessions",
+      "profileSection": "Profile",
+      "profileSectionDescription": "Your personal contact details in the workspace",
+      "passwordSection": "Password",
+      "passwordSectionDescription": "Manage access to your account",
+      "passwordChangeDescription": "You will receive a secure link by email",
+      "mfaLabel": "MFA",
+      "mfaDescription": "Protect access with a second factor",
+      "mfaInactive": "Inactive",
+      "mfaEnableAria": "Enable MFA",
+      "sessionsDescription": "Active sign-ins on your devices",
+      "currentSession": "Current session",
+      "currentSessionDescription": "This device · Signed in as {name}",
+      "sessionActive": "Active",
+      "remoteSignOutNote": "Remote sign-out of other sessions will follow in a future release",
+      "emailSent": "Email sent",
+      "requestLink": "Request link"
+    },
+    "integrations": {
+      "title": "Integrations",
+      "description": "Connect external tools to your operation",
+      "comingSoon": "Coming soon",
+      "api": "API",
+      "webhooks": "Webhooks",
+      "connectedServices": "Connected services",
+      "connectedServicesDescription": "Extend FeldOps with external tools",
+      "connect": "Connect",
+      "googleCalendar": "Sync tasks with the team calendar",
+      "slack": "Activity updates in your channels",
+      "datev": "Export for accounting and payroll",
+      "templatesSection": "Task templates",
+      "templatesSectionDescription": "Reusable templates with checklist and default values",
+      "manageTemplates": "Manage templates",
+      "dataExport": "Data export",
+      "dataExportDescription": "Download company data as CSV",
+      "exportTasks": "Tasks",
+      "exportEmployees": "Employees",
+      "exportClients": "Clients",
+      "exportAddresses": "Addresses",
+      "operationalReports": "Operational reports",
+      "exportReportCheckins": "Hours (check-ins)",
+      "exportReportTasks": "Tasks (period)",
+      "dataExportLocaleHint": "CSV headers follow the interface language (/pt or /en)"
+    },
+    "brand": {
+      "title": "Branding",
+      "description": "Logo and public company identity",
+      "uploadLogo": "Upload logo",
+      "logoHint": "PNG or SVG, max. 2 MB — coming soon"
+    },
+    "appearance": {
+      "title": "Appearance",
+      "description": "Theme and visual preferences",
+      "theme": "Theme",
+      "language": "Language",
+      "density": "Interface density",
+      "colorScheme": "Color scheme",
+      "colorSchemeDescription": "Choose the interface appearance for your account",
+      "lightDescription": "Bright interface",
+      "darkDescription": "Reduced eye strain",
+      "currentMode": "Current: {mode}",
+      "darkMode": "Dark mode",
+      "lightMode": "Light mode",
+      "densityDescription": "Controls spacing in tables and lists",
+      "densityComfortable": "Comfortable",
+      "densityComfortableDescription": "More space between rows and sections",
+      "densityCompact": "Compact",
+      "densityCompactDescription": "More information visible on screen",
+      "densityCurrent": "Current: {mode}",
+      "languageDescription": "Interface language and CSV export headers",
+      "languageSaved": "Saved to your profile",
+      "languageSwitchHint": "Click to switch"
+    },
+    "permissionsMatrix": {
+      "title": "Permission",
+      "allowed": "Allowed",
+      "denied": "Not allowed"
+    },
+    "profile": {
+      "title": "Personal profile",
+      "fullName": "Full name",
+      "email": "Email",
+      "phone": "Phone",
+      "avatar": "Avatar",
+      "avatarDescription": "Shown in comments and assignments",
+      "fullNameDescription": "Your name across the workspace",
+      "phoneDescription": "Optional for task-related contact",
+      "saveProfile": "Save profile"
+    },
+    "permissions": {
+      "title": "Permissions",
+      "companyRead": "View company",
+      "companyUpdate": "Edit company",
+      "membersManage": "Manage team",
+      "employeesRead": "View employees",
+      "employeesWrite": "Edit employees",
+      "employeesDelete": "Delete employees",
+      "clientsRead": "View clients",
+      "clientsWrite": "Edit clients",
+      "clientsDelete": "Delete clients",
+      "addressesRead": "View addresses",
+      "addressesWrite": "Edit addresses",
+      "addressesDelete": "Delete addresses",
+      "tasksRead": "View tasks",
+      "tasksWrite": "Edit tasks",
+      "tasksDelete": "Delete tasks",
+      "tasksAssign": "Assign tasks",
+      "checkinsRead": "View check-ins",
+      "checkinsWrite": "Record check-ins",
+      "photosUpload": "Upload photos",
+      "photosDelete": "Delete photos",
+      "reportsRead": "View reports",
+      "reportsGenerate": "Generate reports",
+      "reportsDelete": "Delete reports",
+      "activityRead": "View activity",
+      "invitesManage": "Manage invites"
+    }
+  },
+  "forms": {
+    "labels": {
+      "email": "Email",
+      "password": "Password",
+      "confirmPassword": "Confirm password",
+      "fullName": "Full name",
+      "phone": "Phone",
+      "companyName": "Company name",
+      "search": "Search",
+      "date": "Date",
+      "time": "Time",
+      "from": "From",
+      "to": "To",
+      "notes": "Notes",
+      "description": "Description",
+      "status": "Status",
+      "role": "Role",
+      "type": "Type"
+    },
+    "placeholders": {
+      "search": "Search...",
+      "email": "you@email.com",
+      "password": "Your password",
+      "fullName": "Your full name",
+      "phone": "+1 (000) 000-0000",
+      "select": "Select...",
+      "optional": "Optional"
+    },
+    "hints": {
+      "passwordMinLength": "Minimum 8 characters",
+      "slugFormat": "Lowercase letters, numbers, and hyphens only"
+    }
+  },
+  "validation": {
+    "required": "This field is required",
+    "email": "Enter a valid email address",
+    "minLength": "Minimum {min} characters",
+    "maxLength": "Maximum {max} characters",
+    "passwordMismatch": "Passwords do not match",
+    "invalidDate": "Invalid date",
+    "invalidTime": "Invalid time",
+    "invalidPhone": "Invalid phone number",
+    "invalidUrl": "Invalid URL",
+    "invalidNumber": "Invalid number",
+    "positiveNumber": "Enter a positive number",
+    "selectAtLeastOne": "Select at least one option",
+    "futureDate": "Date must be in the future",
+    "pastDate": "Date must be in the past",
+    "uniqueEmail": "This email is already in use",
+    "uniqueSlug": "This identifier is already in use"
+  },
+  "errors": {
+    "generic": "An unexpected error occurred. Please try again.",
+    "notFound": "Resource not found",
+    "unauthorized": "You do not have permission for this action",
+    "forbidden": "Access denied",
+    "network": "Connection error. Check your internet.",
+    "server": "Server error. Please try again later.",
+    "sessionExpired": "Your session has expired. Please sign in again.",
+    "loadFailed": "Failed to load data",
+    "saveFailed": "Failed to save changes",
+    "deleteFailed": "Failed to delete",
+    "uploadFailed": "Failed to upload file",
+    "signOutFailed": "Failed to sign out",
+    "offline": "You are offline. Some features may be unavailable.",
+    "actions": {
+      "invalidInput": "Invalid data. Check the fields and try again.",
+      "nameTooShort": "Name must be at least 2 characters.",
+      "invalidEmail": "Invalid email address.",
+      "cannotChangeOwnRole": "You cannot change your own role.",
+      "cannotRemoveSelf": "You cannot remove yourself from the team.",
+      "emailAlreadyInvited": "This email has already been invited.",
+      "invalidEmailAddress": "Invalid email address.",
+      "passwordTooShort": "Password must be at least 8 characters.",
+      "authFailed": "Authentication failed. Please try again.",
+      "notAuthenticated": "You must be signed in.",
+      "subscriptionInactive": "Your subscription is inactive. Update billing to continue.",
+      "planLimitEmployees": "Employee limit reached ({limit} seats on your plan). Upgrade to add more.",
+      "planLimitTasks": "Monthly task limit reached ({limit} tasks on your plan). Upgrade to create more.",
+      "acceptTermsRequired": "You must accept the Terms of Service and Privacy Policy to continue."
+    }
+  },
+  "status": {
+    "draft": "Draft",
+    "scheduled": "Scheduled",
+    "in_progress": "In progress",
+    "completed": "Completed",
+    "cancelled": "Cancelled",
+    "overdue": "Overdue",
+    "pending": "Pending",
+    "passed": "Passed",
+    "failed": "Failed",
+    "review": "In review",
+    "active": "Active",
+    "inactive": "Inactive",
+    "archived": "Archived",
+    "invited": "Invited",
+    "suspended": "Suspended",
+    "terminated": "Terminated",
+    "delayed": "Delayed",
+    "priorities": {
+      "low": "Low",
+      "normal": "Normal",
+      "high": "High",
+      "urgent": "Urgent"
+    }
+  },
+  "auth": {
+    "login": {
+      "title": "Sign in",
+      "description": "Access your FeldOps account",
+      "submit": "Sign in",
+      "signingIn": "Signing in...",
+      "forgotPassword": "Forgot password?",
+      "noAccount": "Don't have an account?",
+      "register": "Create account",
+      "createAccount": "Create account",
+      "welcomeBack": "Welcome back",
+      "subtitle": "Sign in to your account",
+      "welcomeDescription": "Access your workspace.",
+      "passwordPlaceholder": "Enter your password",
+      "alreadySignedIn": "You are signed in as {email}.",
+      "continueOnboarding": "Continue setup",
+      "continueToWorkspace": "Go to workspace",
+      "backToSite": "Back to site",
+      "rememberMe": "Remember my email",
+      "showPassword": "Show password",
+      "hidePassword": "Hide password",
+      "features": {
+        "clients": {
+          "title": "Clients",
+          "description": "Keep every client organized with full history, contacts, and essential information always at hand."
+        },
+        "operations": {
+          "title": "Operations",
+          "description": "Coordinate services, schedules, and daily tasks in one operational platform."
+        },
+        "employees": {
+          "title": "Employees",
+          "description": "Assign responsibilities, track activity, and keep your team aligned in real time."
+        },
+        "reports": {
+          "title": "Reports",
+          "description": "Monitor results, spot trends, and make decisions backed by reliable data."
+        },
+        "audits": {
+          "title": "Audits",
+          "description": "Ensure quality and compliance through structured inspections and continuous follow-up."
+        }
+      }
+    },
+    "register": {
+      "title": "Create account",
+      "description": "Start managing your field operation",
+      "submit": "Create account",
+      "hasAccount": "Already have an account?",
+      "login": "Sign in",
+      "subtitle": "Start your 14-day free trial"
+    },
+    "reset": {
+      "title": "Reset password",
+      "description": "We will send a link to your email",
+      "submit": "Send link",
+      "backToLogin": "Back to sign in",
+      "subtitle": "Enter your email address. You will receive a reset link.",
+      "emailLabel": "Email address",
+      "emailSentTitle": "Email sent",
+      "emailSentDescription": "If an account exists for <strong>{email}</strong>, you will receive a reset link shortly. Please check your inbox."
+    },
+    "updatePassword": {
+      "title": "New password",
+      "description": "Set your new access password",
+      "submit": "Update password",
+      "subtitle": "Choose a strong password with at least 8 characters.",
+      "newPassword": "New password",
+      "confirmPlaceholder": "Repeat password",
+      "passwordMismatch": "Passwords do not match",
+      "passwordTooWeak": "Password is too weak",
+      "strength": {
+        "weak": "Weak",
+        "fair": "Fair",
+        "strong": "Strong",
+        "veryStrong": "Very strong"
+      }
+    },
+    "invite": {
+      "title": "Accept invite",
+      "description": "You have been invited to join a team",
+      "submit": "Accept invite",
+      "invalidTitle": "Invalid invite",
+      "invalidDescription": "This invite has expired or was already used.",
+      "goHome": "Go to home",
+      "invitedBy": "Invite from",
+      "role": "Role",
+      "invitedByPerson": "Invited by",
+      "validFor": "Valid for",
+      "days": "{count, plural, one {# day} other {# days}}",
+      "signInPrompt": "Please sign in to accept the invite",
+      "signInAccept": "Sign in & accept",
+      "registerNew": "Register new account",
+      "expiresOn": "This invite expires on {date}."
+    },
+    "onboarding": {
+      "title": "Set up company",
+      "description": "Complete your organization setup",
+      "submit": "Create company",
+      "pageDescription": "Create your company. You can then invite employees and manage tasks.",
+      "companyNamePlaceholder": "Cleaning Services Ltd.",
+      "slugLabel": "URL identifier",
+      "slugPlaceholder": "my-company",
+      "legalNameLabel": "Legal name",
+      "legalNamePlaceholder": "Cleaning Services Ltd.",
+      "backToSite": "Back to site",
+      "switchAccount": "Sign in with another account",
+      "wizard": {
+        "stepLabel": "Setup",
+        "welcome": {
+          "title": "Welcome to FeldOps",
+          "description": "Let's create your operational workspace in a few steps.",
+          "continue": "Get started"
+        },
+        "workspace": {
+          "title": "Create your workspace",
+          "description": "Choose a name and URL for your company."
+        }
+      }
+    },
+    "branding": {
+      "tagline": "Manage field services efficiently.",
+      "headline": "Operational management built for service companies.",
+      "featuresTitle": "Everything your operation needs",
+      "description": "Manage clients, properties, employees and daily operations from a single workspace.",
+      "multiTenant": "Multi-tenant",
+      "offline": "Offline-capable",
+      "gdpr": "GDPR compliant",
+      "missionControl": {
+        "title": "Mission Control",
+        "subtitle": "Today's Operations Overview",
+        "live": "Live",
+        "scheduleTitle": "Today's Schedule",
+        "activityTitle": "Activity Feed",
+        "statusTitle": "System Status",
+        "overview": {
+          "scheduledTasks": "Scheduled Tasks",
+          "activeEmployees": "Active Employees",
+          "propertiesUnderService": "Properties Under Service",
+          "pendingAudits": "Pending Audits"
+        },
+        "schedule": {
+          "item1": { "time": "08:00", "label": "Property Inspection" },
+          "item2": { "time": "09:30", "label": "Garden Maintenance" },
+          "item3": { "time": "11:00", "label": "Building Cleaning" },
+          "item4": { "time": "13:30", "label": "Facility Check" },
+          "item5": { "time": "15:00", "label": "Audit Review" }
+        },
+        "activity": {
+          "employeeAssigned": "Employee assigned",
+          "taskCompleted": "Task completed",
+          "auditSubmitted": "Audit submitted",
+          "propertyUpdated": "Property updated",
+          "clientRequest": "Client request received"
+        },
+        "status": {
+          "operationalCapacity": "Operational Capacity",
+          "taskCompletion": "Task Completion",
+          "serviceAvailability": "Service Availability"
+        }
+      }
+    },
+    "signOut": "Log out",
+    "signingOut": "Signing out..."
+  },
+  "selectCompany": {
+    "title": "Choose company",
+    "description": "You have access to multiple workspaces. Select one to open.",
+    "createHint": "Need a new workspace?",
+    "createCompany": "Create company"
+  },
+  "meWorkTime": {
+    "title": "Work time today",
+    "active": "Active",
+    "durationHoursMinutes": "{hours}h {minutes}min",
+    "durationMinutes": "{minutes}min",
+    "overDailyLimit": "Daily work limit of 10h exceeded (labor regulations)",
+    "break45Required": "Minimum 45 min. break required (labor regulations)",
+    "break30Suggested": "Plan at least 30 min. break (labor regulations)",
+    "timeUntilBreak": "{time} until recommended break"
+  },
+  "roles": {
+    "admin": "Administrator",
+    "supervisor": "Supervisor",
+    "employee": "Employee",
+    "descriptions": {
+      "admin": "Full access to company, team, and settings",
+      "supervisor": "Manages operations, team, and reports",
+      "employee": "Executes tasks and records field activity"
+    }
+  },
+  "serviceTypes": {
+    "treppenhausreinigung": "Stairwell cleaning",
+    "gartenpflege": "Garden maintenance",
+    "winterdienst": "Winter service",
+    "glasreinigung": "Window cleaning"
+  },
+  "commandPalette": {
+    "placeholder": "Search tasks, clients, employees...",
+    "noResults": "No results for \"{query}\"",
+    "quickAccess": "Quick access",
+    "navigate": "Navigate",
+    "open": "Open",
+    "footer": "FeldOps search",
+    "types": {
+      "task": "Task",
+      "client": "Client",
+      "employee": "Employee",
+      "address": "Address"
+    },
+    "shortcuts": {
+      "tasks": "Tasks",
+      "clients": "Clients",
+      "employees": "Employees",
+      "myTasks": "My tasks",
+      "reports": "Reports",
+      "audits": "Audits",
+      "activity": "Activity",
+      "calendar": "Calendar"
+    }
+  },
+  "notificationBell": {
+    "title": "Notifications",
+    "markAllRead": "Mark all read",
+    "empty": "No notifications",
+    "markRead": "Mark as read",
+    "delete": "Delete",
+    "relative": {
+      "justNow": "Just now",
+      "minutes": "{count} min ago",
+      "hours": "{count}h ago",
+      "days": "{count}d ago"
+    }
+  },
+  "schedule": {
+    "title": "Service schedule",
+    "today": "Today",
+    "noActiveEmployees": "No active employees",
+    "employeesColumn": "Employees",
+    "taskCount": "{count} tasks",
+    "moreTasks": "+{count} more"
+  },
+  "templates": {
+    "pageTitle": "Task templates",
+    "pageDescription": "Define reusable templates with checklist and default values",
+    "create": "Create template",
+    "empty": "No templates yet. Create your first template!",
+    "collapse": "Collapse",
+    "expand": "Expand",
+    "delete": "Delete",
+    "steps": "{count} steps",
+    "minutes": "{count} min",
+    "noDetails": "No details",
+    "newTemplate": "New template",
+    "name": "Name",
+    "namePlaceholder": "e.g. Standard stairwell cleaning",
+    "serviceType": "Service type",
+    "serviceTypePlaceholder": "Select service type...",
+    "description": "Description",
+    "descriptionPlaceholder": "Optional description...",
+    "defaultDuration": "Default duration (minutes)",
+    "durationPlaceholder": "e.g. 60",
+    "checklist": "Checklist",
+    "newStep": "New step...",
+    "add": "Add",
+    "remove": "Remove",
+    "errors": {
+      "nameAndServiceRequired": "Name and service type are required"
+    },
+    "created": "Template created",
+    "deleted": "Template deleted"
+  },
+  "pagination": {
+    "previous": "Previous",
+    "next": "Next",
+    "first": "First",
+    "last": "Last",
+    "page": "Page {page}",
+    "pageOf": "Page {page} of {total}",
+    "perPage": "Per page",
+    "showing": "Showing {from}–{to} of {total}",
+    "noResults": "No results on this page"
+  },
+  "dialogs": {
+    "confirmDelete": {
+      "title": "Confirm deletion",
+      "description": "This action cannot be undone. Do you want to continue?",
+      "confirm": "Delete",
+      "cancel": "Cancel"
+    },
+    "confirmCancel": {
+      "title": "Confirm cancellation",
+      "description": "Do you want to cancel this task? It cannot be resumed.",
+      "confirm": "Cancel task",
+      "cancel": "Go back"
+    },
+    "unsavedChanges": {
+      "title": "Unsaved changes",
+      "description": "You have unsaved changes. Leave without saving?",
+      "confirm": "Leave without saving",
+      "cancel": "Keep editing"
+    },
+    "removeMember": {
+      "title": "Remove member",
+      "description": "This member will lose access to the company. Continue?",
+      "confirm": "Remove",
+      "cancel": "Cancel"
+    },
+    "cancelSeries": {
+      "title": "Cancel series",
+      "description": "All future occurrences of this series will be cancelled.",
+      "confirm": "Cancel series",
+      "cancel": "Go back"
+    },
+    "deactivateEmployee": {
+      "title": "Deactivate employee?",
+      "description": "The employee will be deactivated and will no longer be able to sign in. Historical data will be preserved.",
+      "confirm": "Deactivate",
+      "cancel": "Cancel"
+    }
+  },
+  "toasts": {
+    "saved": "Changes saved successfully",
+    "created": "Created successfully",
+    "updated": "Updated successfully",
+    "deleted": "Deleted successfully",
+    "copied": "Copied to clipboard",
+    "statusUpdated": "Status updated",
+    "taskCreated": "Task created",
+    "taskCancelled": "Task cancelled",
+    "taskDuplicated": "Task duplicated",
+    "recurringTasksCreated": "{count, plural, one {# recurring task created} other {# recurring tasks created}}",
+    "seriesCancelled": "{count, plural, one {# occurrence cancelled} other {# occurrences cancelled}}",
+    "profileUpdated": "Profile updated",
+    "roleUpdated": "Role updated",
+    "memberRemoved": "Member removed",
+    "inviteSent": "Invite sent to {email}",
+    "passwordResetSent": "Reset link sent",
+    "checkedIn": "Checked in!",
+    "checkedOut": "Checked out!",
+    "signOutFailed": "Failed to sign out",
+    "error": "An error occurred. Please try again.",
+    "offline": "No internet connection",
+    "bulkTasksUpdated": "{count, plural, one {# task updated} other {# tasks updated}}",
+    "filterSaved": "Filter saved",
+    "filterNameRequired": "Enter a name",
+    "tagDeleted": "Tag deleted",
+    "photoUploaded": "Photo uploaded",
+    "photoDeleted": "Photo deleted",
+    "tooFarForCheckIn": "Too far from the site for check-in.",
+    "accountCreated": "Account created! Continue setup.",
+    "companyCreated": "Company created!",
+    "passwordChanged": "Password changed successfully"
+  },
+  "landing": {
+    "nav": {
+      "features": "Features",
+      "services": "Industries",
+      "pricing": "Pricing",
+      "demo": "Demo",
+      "contact": "Contact",
+      "login": "Sign in",
+      "register": "Start for free"
+    },
+    "hero": {
+      "badge": "For field service companies",
+      "title": "Service management",
+      "titleHighlight": "made simple",
+      "description": "FeldOps is the all-in-one platform for stairwell cleaning, garden maintenance, winter service, and window cleaning. From task planning to billing — everything in one app.",
+      "ctaPrimary": "Start free trial",
+      "ctaSecondary": "Watch demo",
+      "footnote": "No credit card required · Free for up to 3 employees"
+    },
+    "features": {
+      "title": "Everything you need",
+      "description": "From task management to GPS time tracking — FeldOps covers the entire service cycle.",
+      "viewAll": "View all features",
+      "items": {
+        "taskManagement": {
+          "title": "Task management",
+          "description": "Create, assign, and track tasks. Priorities, due dates, and status updates in real time."
+        },
+        "gpsCheckIn": {
+          "title": "GPS check-in/out",
+          "description": "Employees check in and out on site. Location and time are captured automatically."
+        },
+        "photos": {
+          "title": "Before/after photos",
+          "description": "Document every job with photos straight from the app — before and after the work."
+        },
+        "recurring": {
+          "title": "Recurring tasks",
+          "description": "Set up daily, weekly, or monthly jobs — scheduled automatically."
+        },
+        "reports": {
+          "title": "Reports & export",
+          "description": "PDF reports and CSV timesheets for clients and accounting with one click."
+        },
+        "team": {
+          "title": "Team management",
+          "description": "Manage employees, supervisors, and admins with role-based access."
+        },
+        "pwa": {
+          "title": "Mobile app (PWA)",
+          "description": "Installable on the home screen. Offline-capable for areas without internet."
+        },
+        "gdpr": {
+          "title": "GDPR compliant",
+          "description": "EU data hosting, full data isolation per company, secure authentication."
+        },
+        "multiTenant": {
+          "title": "Multi-tenant",
+          "description": "Manage multiple locations or companies with a single account."
+        }
+      }
+    },
+    "services": {
+      "title": "Built for your industry",
+      "description": "Purpose-built for field service providers.",
+      "items": {
+        "stairwell": {
+          "title": "Stairwell cleaning",
+          "description": "Weekly stair cleaning with photo documentation and client sign-off."
+        },
+        "garden": {
+          "title": "Garden maintenance",
+          "description": "Plan seasonal garden work and track maintenance history per property."
+        },
+        "winter": {
+          "title": "Winter service",
+          "description": "Snow removal and gritting with GPS proof and time tracking."
+        },
+        "windows": {
+          "title": "Window cleaning",
+          "description": "Window cleaning with before/after photos and automatic reporting."
+        }
+      }
+    },
+    "pricing": {
+      "title": "Simple pricing, no surprises",
+      "description": "Start for free. Scale as you grow.",
+      "viewPlans": "Compare all plans",
+      "popular": "Popular",
+      "plans": {
+        "starter": {
+          "name": "Starter",
+          "price": "Free",
+          "period": "forever",
+          "features": [
+            "Up to 3 employees",
+            "50 tasks/month",
+            "5 GB photo storage",
+            "PDF reports"
+          ],
+          "cta": "Start for free"
+        },
+        "professional": {
+          "name": "Professional",
+          "price": "€49",
+          "period": "per month",
+          "features": [
+            "Up to 25 employees",
+            "Unlimited tasks",
+            "50 GB photo storage",
+            "CSV export",
+            "Recurring tasks",
+            "Priority support"
+          ],
+          "cta": "14-day free trial"
+        },
+        "enterprise": {
+          "name": "Enterprise",
+          "price": "€149",
+          "period": "per month",
+          "features": [
+            "Unlimited employees",
+            "Unlimited tasks",
+            "500 GB photo storage",
+            "Multi-company",
+            "API access",
+            "Dedicated support"
+          ],
+          "cta": "Contact us"
+        }
+      }
+    },
+    "cta": {
+      "title": "Ready to digitize your service business?",
+      "description": "Over 500 service providers already trust FeldOps. Start today — free and no credit card required.",
+      "button": "Start for free now"
+    },
+    "footer": {
+      "tagline": "Operational platform for field service companies.",
+      "product": "Product",
+      "company": "Company",
+      "legal": "Legal",
+      "gdpr": "GDPR compliant",
+      "security": "End-to-end security",
+      "euServers": "EU server location",
+      "privacy": "Privacy Policy",
+      "terms": "Terms of Service",
+      "impressum": "Impressum",
+      "cookies": "Cookie Policy",
+      "login": "Sign in",
+      "register": "Register"
+    }
+  },
+  "marketing": {
+    "contact": {
+      "title": "Contact us",
+      "description": "Questions about FeldOps? Our team will respond within one business day.",
+      "name": "Name",
+      "email": "Email",
+      "message": "Message",
+      "submit": "Send message",
+      "sending": "Sending…",
+      "success": "Message sent. We'll be in touch soon."
+    },
+    "demo": {
+      "title": "See FeldOps in action",
+      "description": "Start a free trial or schedule a walkthrough with our team.",
+      "startTrial": "Start free trial",
+      "bookCall": "Book a call"
+    },
+    "legal": {
+      "privacy": {
+        "eyebrow": "Legal",
+        "title": "Privacy Policy",
+        "description": "How FeldOps collects, uses, and protects personal data when you use our B2B field service platform.",
+        "lastUpdated": "Last updated: {date}",
+        "lastUpdatedDate": "June 16, 2026",
+        "sections": [
+          {
+            "title": "1. Data controller",
+            "paragraphs": [
+              "FeldOps GmbH (placeholder — update with your registered legal entity) is the data controller for personal data processed through the FeldOps platform at feldops.com and related services.",
+              "Contact for privacy matters: privacy@feldops.com"
+            ]
+          },
+          {
+            "title": "2. Scope and roles",
+            "paragraphs": [
+              "FeldOps is a business-to-business SaaS product. Your organization (the customer) is typically the data controller for employee, client, and operational data you enter into the workspace. FeldOps acts as a data processor for that content under your instructions and our Data Processing Agreement (DPA), where applicable.",
+              "FeldOps is an independent controller for account, billing, security, and product analytics data necessary to operate the service."
+            ]
+          },
+          {
+            "title": "3. Categories of data we process",
+            "paragraphs": [
+              "Account data: name, email, role, authentication identifiers, and company affiliation.",
+              "Operational data: tasks, schedules, clients, addresses, photos, reports, and audit logs submitted by your team.",
+              "Technical data: IP address, device/browser metadata, session cookies, and error logs for security and reliability.",
+              "Billing data: subscription plan, payment status, and billing contact details (payment card data is handled by Stripe, not stored on our servers)."
+            ]
+          },
+          {
+            "title": "4. Purposes and legal bases (GDPR)",
+            "paragraphs": [
+              "We process data to provide and improve the service (Art. 6(1)(b) GDPR — contract performance).",
+              "We process security and fraud-prevention logs (Art. 6(1)(f) GDPR — legitimate interests).",
+              "We send essential service communications without marketing consent (Art. 6(1)(b)/(f) GDPR).",
+              "Where required, we rely on consent for non-essential cookies or optional communications (Art. 6(1)(a) GDPR)."
+            ]
+          },
+          {
+            "title": "5. Sub-processors and international transfers",
+            "paragraphs": [
+              "We use infrastructure and service providers including Supabase (database, auth, storage) and Stripe (payments). Sub-processors are bound by data protection agreements.",
+              "Data is primarily hosted in the European Union. If data is transferred outside the EEA, we implement appropriate safeguards such as Standard Contractual Clauses."
+            ]
+          },
+          {
+            "title": "6. Retention",
+            "paragraphs": [
+              "We retain personal data for as long as your account is active and as needed to provide the service, comply with law, resolve disputes, and enforce agreements.",
+              "After account termination, workspace data is deleted or anonymized within a reasonable period unless longer retention is required by law or backup cycles."
+            ]
+          },
+          {
+            "title": "7. Your rights",
+            "paragraphs": [
+              "Depending on applicable law (GDPR, LGPD where relevant), you may have rights to access, rectify, erase, restrict, port, or object to processing, and to withdraw consent where processing is consent-based.",
+              "EU/EEA users may lodge a complaint with their local supervisory authority. Requests: privacy@feldops.com — we respond within statutory timeframes."
+            ]
+          },
+          {
+            "title": "8. Security",
+            "paragraphs": [
+              "We apply technical and organizational measures including encryption in transit, role-based access control, tenant isolation, and audit logging. No method of transmission or storage is 100% secure; we continuously improve our controls."
+            ]
+          }
+        ]
+      },
+      "terms": {
+        "eyebrow": "Legal",
+        "title": "Terms of Service",
+        "description": "Terms governing access to and use of the FeldOps platform by businesses and authorized users.",
+        "lastUpdated": "Last updated: {date}",
+        "lastUpdatedDate": "June 16, 2026",
+        "sections": [
+          {
+            "title": "1. Agreement",
+            "paragraphs": [
+              "These Terms of Service (\"Terms\") form a binding agreement between FeldOps GmbH (\"FeldOps\", \"we\") and the legal entity registering for or using the service (\"Customer\", \"you\").",
+              "By creating an account, accepting an invite, or using FeldOps, you confirm that you have authority to bind your organization and agree to these Terms."
+            ]
+          },
+          {
+            "title": "2. Service description",
+            "paragraphs": [
+              "FeldOps provides cloud software for field service operations including task management, workforce coordination, reporting, and related features as described on our website and in your subscription plan.",
+              "We may update features for improvement, security, or compliance. Material adverse changes to core functionality will be communicated with reasonable notice where practicable."
+            ]
+          },
+          {
+            "title": "3. Accounts and acceptable use",
+            "paragraphs": [
+              "You are responsible for accurate registration information, safeguarding credentials, and all activity under your workspace.",
+              "You must not misuse the service: no unlawful content, reverse engineering, interference with other tenants, circumvention of plan limits, or use that violates third-party rights.",
+              "You ensure that data you upload (including employee and client data) is collected and used in compliance with applicable privacy laws."
+            ]
+          },
+          {
+            "title": "4. Subscriptions, trials, and billing",
+            "paragraphs": [
+              "Paid plans, seat limits, and usage quotas are defined at checkout and in your plan documentation. Trials convert to paid subscriptions unless cancelled before the trial ends.",
+              "Fees are billed in advance via Stripe unless otherwise agreed. Taxes may apply. Failure to pay may result in suspension after notice.",
+              "Refunds are handled according to applicable consumer/business law and our billing policy stated at purchase."
+            ]
+          },
+          {
+            "title": "5. Intellectual property",
+            "paragraphs": [
+              "FeldOps retains all rights in the platform, branding, and documentation. You receive a limited, non-exclusive, non-transferable license to use the service during an active subscription.",
+              "You retain ownership of your operational data. You grant FeldOps a license to host, process, and display that data solely to provide the service."
+            ]
+          },
+          {
+            "title": "6. Confidentiality and data protection",
+            "paragraphs": [
+              "Each party will protect the other's confidential information with reasonable care.",
+              "Where FeldOps processes personal data on your behalf, our Data Processing Agreement and Privacy Policy apply."
+            ]
+          },
+          {
+            "title": "7. Availability and disclaimers",
+            "paragraphs": [
+              "We strive for high availability but do not guarantee uninterrupted service. Maintenance windows and force majeure may cause temporary disruption.",
+              "The service is provided \"as is\" to the maximum extent permitted by law. We disclaim implied warranties of merchantability, fitness for a particular purpose, and non-infringement where allowed."
+            ]
+          },
+          {
+            "title": "8. Liability and termination",
+            "paragraphs": [
+              "To the extent permitted by law, neither party is liable for indirect or consequential damages. Our aggregate liability is limited to fees paid by you in the twelve months preceding the claim.",
+              "Either party may terminate for material breach if uncured within 30 days of notice. You may cancel subscriptions per billing terms. Upon termination, access ends and data export/deletion follows our retention policy."
+            ]
+          },
+          {
+            "title": "9. Governing law",
+            "paragraphs": [
+              "These Terms are governed by the laws of Germany, excluding conflict-of-law rules. Courts in Berlin, Germany shall have exclusive jurisdiction for business customers, unless mandatory law provides otherwise.",
+              "Questions: legal@feldops.com"
+            ]
+          }
+        ]
+      },
+      "impressum": {
+        "eyebrow": "Legal",
+        "title": "Impressum",
+        "description": "Legal notice pursuant to § 5 TMG (Germany) and applicable EU information requirements.",
+        "lastUpdated": "Last updated: {date}",
+        "lastUpdatedDate": "June 16, 2026",
+        "sections": [
+          {
+            "title": "Service provider",
+            "paragraphs": [
+              "FeldOps GmbH",
+              "Musterstraße 1",
+              "10115 Berlin",
+              "Germany"
+            ]
+          },
+          {
+            "title": "Represented by",
+            "paragraphs": [
+              "Managing directors: [Name, Name]",
+              "Note: Replace placeholder details with your registered company information before going live."
+            ]
+          },
+          {
+            "title": "Contact",
+            "paragraphs": [
+              "Email: hello@feldops.com",
+              "Phone: +49 (0) 30 0000000",
+              "Web: https://feldops.com"
+            ]
+          },
+          {
+            "title": "Commercial register",
+            "paragraphs": [
+              "Registered at: Amtsgericht Charlottenburg (Berlin)",
+              "Registration number: HRB [XXXXX]",
+              "VAT identification number (USt-IdNr.): DE[XXXXXXXXX]"
+            ]
+          },
+          {
+            "title": "Responsible for content (§ 55 Abs. 2 RStV)",
+            "paragraphs": [
+              "[Name]",
+              "Address as above"
+            ]
+          },
+          {
+            "title": "Dispute resolution",
+            "paragraphs": [
+              "The European Commission provides a platform for online dispute resolution (ODR): https://ec.europa.eu/consumers/odr",
+              "We are not obliged or willing to participate in dispute resolution proceedings before a consumer arbitration board unless required by law."
+            ]
+          },
+          {
+            "title": "Liability for content and links",
+            "paragraphs": [
+              "We carefully create content on these pages but assume no liability for accuracy, completeness, or timeliness.",
+              "Our site may contain links to external websites. We have no influence over their content and accept no liability. The respective provider is responsible for linked pages."
+            ]
+          }
+        ]
+      },
+      "cookies": {
+        "eyebrow": "Legal",
+        "title": "Cookie Policy",
+        "description": "Information about cookies and similar technologies used on the FeldOps website and application.",
+        "lastUpdated": "Last updated: {date}",
+        "lastUpdatedDate": "June 16, 2026",
+        "sections": [
+          {
+            "title": "1. What are cookies?",
+            "paragraphs": [
+              "Cookies are small text files stored on your device when you visit a website. Similar technologies include local storage and session storage used for authentication state."
+            ]
+          },
+          {
+            "title": "2. How we use cookies",
+            "paragraphs": [
+              "Strictly necessary cookies: required for login sessions, security, locale preference, and active company selection. These cannot be disabled without breaking core functionality.",
+              "Functional cookies: remember UI preferences and improve usability.",
+              "Analytics cookies (if enabled): help us understand aggregate usage to improve the product. We use privacy-respecting configuration and avoid unnecessary tracking."
+            ]
+          },
+          {
+            "title": "3. Third-party cookies",
+            "paragraphs": [
+              "Payment checkout may set cookies from Stripe when you complete a subscription.",
+              "Authentication and hosting providers (e.g. Supabase) may set session-related cookies during sign-in."
+            ]
+          },
+          {
+            "title": "4. Managing cookies",
+            "paragraphs": [
+              "You can control cookies through your browser settings. Blocking strictly necessary cookies may prevent you from signing in or using the application.",
+              "For questions: privacy@feldops.com"
+            ]
+          }
+        ]
+      },
+      "consent": {
+        "label": "I agree to the <terms>Terms of Service</terms>, <privacy>Privacy Policy</privacy>, and <cookies>Cookie Policy</cookies>.",
+        "checkoutLabel": "I agree to the <terms>Terms of Service</terms> and <privacy>Privacy Policy</privacy>, and authorize recurring billing for the selected plan.",
+        "required": "You must accept the terms to continue."
+      }
+    }
+  },
+  "finance": {
+    "title": "Finance",
+    "description": "Quotes, invoices, contracts, and cash flow for your operation.",
+    "dashboard": {
+      "subtitle": "Company financial overview",
+      "exportStarted": "Report exported",
+      "actions": {
+        "newInvoice": "New Invoice",
+        "newQuote": "New Quote",
+        "exportReport": "Export Report",
+        "send": "Send"
+      },
+      "kpi": {
+        "trendUp": "+{pct}% vs last month",
+        "trendDown": "-{pct}% vs last month",
+        "fromContracts": "Based on active contracts",
+        "potential": "Potential value: {amount}",
+        "conversionRate": "Conversion Rate",
+        "conversionHint": "Quotes → Clients",
+        "revenueTooltip": "Revenue confirmed by received payments",
+        "projectedTooltip": "Estimated monthly recurring revenue",
+        "mrrHint": "Monthly recurring revenue",
+        "arrHint": "MRR × 12",
+        "cashflowHint": "Running balance (12 months)"
+      },
+      "chart": {
+        "title": "Revenue vs Expenses",
+        "subtitle": "Financial performance over time",
+        "revenue": "Revenue",
+        "expenses": "Expenses",
+        "profit": "Profit",
+        "empty": "No data for this period",
+        "range30d": "30 days",
+        "range90d": "90 days",
+        "range12m": "12 months",
+        "rangeYtd": "Year to date"
+      },
+      "cashflow": {
+        "title": "Cash Flow",
+        "subtitle": "Monthly inflows and outflows",
+        "inflow": "Inflows",
+        "outflow": "Outflows",
+        "balance": "Balance"
+      },
+      "recentInvoices": {
+        "title": "Recent Invoices",
+        "subtitle": "Latest issued invoices and status",
+        "viewAll": "View all",
+        "empty": "No recent invoices"
+      },
+      "contracts": {
+        "title": "Recurring Contracts",
+        "subtitle": "Upcoming automatic billing",
+        "viewAll": "View all",
+        "empty": "No active contracts",
+        "active": "Active",
+        "paused": "Paused"
+      },
+      "forecast": {
+        "title": "Financial Forecast",
+        "subtitle": "Based on contracts and upcoming invoices",
+        "days30": "Next 30 days",
+        "days60": "Next 60 days",
+        "days90": "Next 90 days",
+        "annual": "Estimated annual revenue",
+        "contractRecurring": "Recurring (contracts · 30d)",
+        "receivables": "Receivables (30d)",
+        "pipelinePotential": "Pipeline potential revenue",
+        "pipelineClosed": "Closed revenue (CRM)"
+      },
+      "quotes": {
+        "title": "Quotes",
+        "viewAll": "View all",
+        "sent": "Sent",
+        "accepted": "Accepted",
+        "rejected": "Rejected",
+        "pending": "Pending",
+        "conversion": "Conversion rate"
+      },
+      "activity": {
+        "title": "Financial Activity",
+        "empty": "No recent activity",
+        "paymentReceived": "Payment received — {number}",
+        "contractCreated": "New contract — {client}",
+        "quoteAccepted": "Quote {number} approved",
+        "clientOverdue": "Client overdue — {client}"
+      },
+      "columns": {
+        "number": "Number",
+        "client": "Client",
+        "date": "Date",
+        "dueDate": "Due date",
+        "amount": "Amount",
+        "status": "Status"
+      }
+    },
+    "search": "Search…",
+    "filters": { "all": "All" },
+    "kpis": {
+      "monthlyRevenue": "Monthly revenue",
+      "projectedRevenue": "Projected revenue",
+      "pendingInvoices": "Open invoices",
+      "overdueInvoices": "Overdue invoices",
+      "receivedThisMonth": "Received revenue",
+      "openQuotes": "Open quotes",
+      "mrr": "MRR",
+      "arr": "ARR",
+      "cashflow": "Cash flow"
+    },
+    "columns": {
+      "number": "Number",
+      "client": "Client",
+      "company": "Company",
+      "date": "Date",
+      "validUntil": "Valid until",
+      "amount": "Amount",
+      "status": "Status",
+      "service": "Service",
+      "frequency": "Frequency",
+      "startDate": "Start",
+      "endDate": "End",
+      "active": "Active",
+      "inactive": "Inactive",
+      "period": "Period",
+      "issueDate": "Issue date",
+      "dueDate": "Due date",
+      "invoice": "Invoice",
+      "method": "Method",
+      "reference": "Reference"
+    },
+    "status": {
+      "quote": {
+        "draft": "Draft",
+        "sent": "Sent",
+        "under_review": "Under review",
+        "accepted": "Accepted",
+        "rejected": "Rejected",
+        "expired": "Expired"
+      },
+      "invoice": {
+        "draft": "Draft",
+        "sent": "Sent",
+        "paid": "Paid",
+        "partial": "Partial",
+        "overdue": "Overdue",
+        "cancelled": "Cancelled"
+      },
+      "contract": {
+        "active": "Active",
+        "pending": "Pending",
+        "suspended": "Suspended",
+        "expired": "Expired",
+        "cancelled": "Cancelled",
+        "renewing": "Renewing"
+      }
+    },
+    "frequency": {
+      "monthly": "Monthly",
+      "bimonthly": "Bimonthly",
+      "quarterly": "Quarterly",
+      "semiannual": "Semiannual",
+      "annual": "Annual"
+    },
+    "paymentMethod": {
+      "bank_transfer": "Bank transfer",
+      "cash": "Cash",
+      "card": "Card",
+      "other": "Other"
+    },
+    "actions": {
+      "newQuote": "New quote",
+      "viewInvoices": "View invoices",
+      "viewCashflow": "Cash flow",
+      "pdf": "Generate PDF",
+      "duplicate": "Duplicate",
+      "sendEmail": "Send by email",
+      "convertContract": "Convert to contract",
+      "markSent": "Mark as sent"
+    },
+    "toast": {
+      "saved": "Saved successfully",
+      "quoteCreated": "Quote created",
+      "quoteUpdated": "Quote updated",
+      "quoteDeleted": "Quote deleted",
+      "contractCreated": "Contract created",
+      "contractUpdated": "Contract updated",
+      "contractDeleted": "Contract deleted",
+      "paymentRecorded": "Payment recorded",
+      "invoicesGenerated": "{count} invoices generated",
+      "invoiceCreated": "Invoice created",
+      "invoiceDeleted": "Invoice deleted",
+      "emailQueued": "Email queued for delivery"
+    },
+    "quotes": {
+      "title": "Quotes",
+      "description": "Commercial proposals for clients.",
+      "listDescription": "Manage commercial proposals and track business opportunities.",
+      "new": "New quote",
+      "newTitle": "Create quote",
+      "editTitle": "Edit quote",
+      "newDescription": "Build the proposal with live preview.",
+      "save": "Save quote",
+      "export": "Export",
+      "searchPlaceholder": "Search client, company or number…",
+      "selectClient": "Select existing client",
+      "selectLead": "Select lead",
+      "noLead": "No lead linked",
+      "newClient": "New client (manual)",
+      "issueDate": "Issue date",
+      "paymentTerms": "Payment terms",
+      "paymentTermsPlaceholder": "e.g. Net 30 days",
+      "internalNotes": "Internal notes",
+      "timelineTitle": "Timeline",
+      "timelineEmpty": "No events recorded.",
+      "autosaving": "Saving…",
+      "back": "Back",
+      "next": "Continue",
+      "prev": "Previous",
+      "pagination": "{from}–{to} of {total}",
+      "empty": "No quotes",
+      "emptyHint": "Create your first quote to get started.",
+      "kpi": {
+        "total": "Total quotes",
+        "underReview": "Under review",
+        "accepted": "Accepted",
+        "rejected": "Rejected",
+        "potential": "Potential value",
+        "conversion": "Conversion rate"
+      },
+      "filters": {
+        "assignee": "Assignee",
+        "periodFrom": "Period from",
+        "periodTo": "Period to",
+        "minAmount": "Min €",
+        "maxAmount": "Max €"
+      },
+      "columns": {
+        "assignee": "Assignee",
+        "updated": "Last updated"
+      },
+      "actions": {
+        "view": "View",
+        "edit": "Edit",
+        "accept": "Mark as accepted",
+        "reject": "Mark as rejected",
+        "delete": "Delete"
+      },
+      "steps": {
+        "client": "Client",
+        "items": "Items",
+        "summary": "Financial summary",
+        "details": "Additional information"
+      },
+      "timeline": {
+        "created": "Quote created",
+        "updated": "Quote updated",
+        "sent": "Sent to client",
+        "viewed": "Viewed by client",
+        "accepted": "Accepted by client",
+        "rejected": "Rejected",
+        "duplicated": "Duplicated",
+        "converted": "Converted to contract",
+        "deleted": "Deleted"
+      }
+    },
+    "contracts": {
+      "title": "Contracts",
+      "description": "Manage active contracts, recurring billing and future revenue.",
+      "listDescription": "Manage active contracts, recurring billing and future revenue.",
+      "new": "New Contract",
+      "newTitle": "Create contract",
+      "editTitle": "Edit contract",
+      "newDescription": "Configure client, services, recurrence and automatic billing.",
+      "edit": "Edit contract",
+      "save": "Save contract",
+      "export": "Export",
+      "import": "Import",
+      "importSoon": "Import coming soon",
+      "generateInvoices": "Generate recurring invoices",
+      "searchPlaceholder": "Search client, company, number or service…",
+      "bulkSelected": "{count} selected",
+      "empty": "No contracts",
+      "emptyHint": "Add contracts to generate invoices automatically.",
+      "kpi": {
+        "active": "Active Contracts",
+        "mrr": "Monthly Recurring Revenue (MRR)",
+        "arr": "Annual Recurring Revenue (ARR)",
+        "renewals": "Upcoming Renewals",
+        "expiring": "Expiring Contracts",
+        "forecast12m": "12-Month Forecast"
+      },
+      "columns": {
+        "nextBilling": "Next Billing"
+      },
+      "sections": {
+        "client": "Client",
+        "services": "Contracted services",
+        "financial": "Financial summary",
+        "recurrence": "Recurrence",
+        "billing": "Automatic billing"
+      },
+      "form": {
+        "titlePlaceholder": "e.g. Monthly cleaning — Central Building",
+        "autoRenew": "Auto renewal",
+        "renewalNotice": "Renewal notice",
+        "days": "days",
+        "autoInvoice": "Generate invoices automatically",
+        "autoEmail": "Send invoices by email",
+        "autoPdf": "Generate PDF automatically",
+        "paymentReminder": "Create payment reminder",
+        "property": "Property",
+        "noProperty": "No property selected",
+        "noPropertiesHint": "This client has no properties. Add addresses in the Clients module."
+      },
+      "preview": {
+        "title": "Summary",
+        "nextBilling": "Next billing",
+        "monthly": "Monthly value",
+        "annual": "Annual value"
+      },
+      "actions": {
+        "view": "View",
+        "edit": "Edit",
+        "renew": "Renew",
+        "suspend": "Suspend",
+        "cancel": "Cancel",
+        "delete": "Delete"
+      },
+      "detail": {
+        "overview": "General information",
+        "timeline": "History",
+        "invoices": "Related invoices",
+        "forecast": "Revenue forecast",
+        "forecastTotal": "Total forecast (12 months)",
+        "revenueGenerated": "Revenue generated",
+        "noInvoices": "No invoices generated yet",
+        "noEvents": "No events recorded"
+      },
+      "timeline": {
+        "created": "Contract created",
+        "updated": "Contract updated",
+        "invoiceGenerated": "Invoice generated",
+        "paymentReceived": "Payment received",
+        "renewed": "Renewal completed",
+        "suspended": "Contract suspended",
+        "cancelled": "Contract cancelled",
+        "duplicated": "Contract duplicated",
+        "deleted": "Contract deleted",
+        "comment": "Comment"
+      }
+    },
+    "invoices": {
+      "title": "Invoices",
+      "description": "Monthly billing with period navigation.",
+      "listDescription": "Manage all invoices, payments and collections for your company.",
+      "new": "New invoice",
+      "save": "Save invoice",
+      "generate": "Generate invoices",
+      "export": "Export",
+      "exportMonth": "Export current month",
+      "moreActions": "More actions",
+      "bulkMarkSent": "Mark selected as sent",
+      "searchPlaceholder": "Search number, client, company or email…",
+      "paid": "Paid",
+      "balance": "Balance",
+      "paymentAmount": "Payment amount",
+      "empty": "No invoices this month",
+      "emptyHint": "Active contracts generate invoices automatically.",
+      "kpi": {
+        "monthlyRevenue": "Monthly revenue",
+        "issued": "Invoices issued",
+        "pending": "Pending",
+        "paid": "Paid",
+        "overdue": "Overdue",
+        "projected": "Projected revenue",
+        "vsPrevious": "vs previous month"
+      },
+      "columns": {
+        "contract": "Contract",
+        "updated": "Last updated"
+      },
+      "actions": {
+        "recordPayment": "Record payment",
+        "markPaid": "Mark as paid",
+        "cancel": "Cancel",
+        "delete": "Delete"
+      },
+      "views": {
+        "table": "Table",
+        "calendar": "Calendar",
+        "monthly": "Monthly"
+      },
+      "monthly": {
+        "issued": "Issued",
+        "received": "Received",
+        "pending": "Pending",
+        "overdue": "Overdue"
+      },
+      "calendar": {
+        "due": "due"
+      },
+      "sidebar": {
+        "title": "Summary",
+        "monthlyRevenue": "Monthly revenue",
+        "projected": "Projected revenue",
+        "dueThisWeek": "Due this week",
+        "overdue": "Overdue invoices",
+        "recentPayments": "Recent payments",
+        "none": "No records"
+      },
+      "stats": {
+        "issued": "Issued",
+        "revenue": "Revenue",
+        "paid": "Paid",
+        "pending": "Pending"
+      }
+    },
+    "payments": {
+      "title": "Payments",
+      "description": "Payments received from clients.",
+      "record": "Record payment",
+      "save": "Save payment",
+      "empty": "No payments",
+      "emptyHint": "Record payments as they are received."
+    },
+    "cashflow": {
+      "title": "Cash Flow",
+      "description": "12-month revenue trend.",
+      "issued": "Issued",
+      "received": "Received",
+      "pending": "Pending",
+      "received12m": "Received (12 mo)",
+      "pending12m": "Pending (12 mo)",
+      "months": "Months"
+    },
+    "costs": {
+      "title": "Costs",
+      "description": "Tax obligations, commercial discounts and operational executions from contracts and services.",
+      "kpi": {
+        "tax": "VAT on invoices (YTD)",
+        "discounts": "Contract discounts",
+        "unbilled": "Unbilled executions",
+        "operationalLoad": "Operational load",
+        "approvedTasks": "{count} approved tasks"
+      },
+      "chart": {
+        "taxTitle": "VAT by month",
+        "taxHint": "Tax obligations from issued invoices"
+      },
+      "executions": {
+        "title": "Executed services",
+        "hint": "Operations data linked to contracts and invoices",
+        "approved": "Approved executions",
+        "billed": "Already invoiced",
+        "unbilled": "Approved without invoice",
+        "atRisk": "Contract value at risk"
+      }
+    },
+    "profitability": {
+      "title": "Profitability",
+      "description": "Revenue ranking by client, contract, service and property — from invoices and payments.",
+      "kpi": {
+        "received": "Received revenue (YTD)",
+        "invoiced": "Invoiced revenue (YTD)"
+      },
+      "topClient": "Most profitable client",
+      "topContract": "Most profitable contract",
+      "byService": "Revenue by service",
+      "byProperty": "Revenue by property",
+      "invoiced": "Invoiced",
+      "empty": "No data for this period"
+    },
+    "forecastPage": {
+      "title": "Forecast",
+      "description": "Revenue forecast based on recurring contracts and receivables.",
+      "kpi": {
+        "mrr": "Current MRR",
+        "breakdown": "Contracts {contracts} · Receivables {receivables}"
+      },
+      "periods": {
+        "days30": "30 days",
+        "days60": "60 days",
+        "days90": "90 days"
+      },
+      "chart": {
+        "title": "Quarterly forecast",
+        "hint": "Recurring contracts vs receivables",
+        "contracts": "Contracts",
+        "receivables": "Receivables"
+      },
+      "sources": {
+        "contracts": "Recurring contracts",
+        "receivables": "Outstanding invoices"
+      }
+    },
+    "form": {
+      "clientSection": "Client details",
+      "servicesSection": "Services",
+      "clientName": "Name",
+      "clientCompany": "Company",
+      "clientEmail": "Email",
+      "clientPhone": "Phone",
+      "clientAddress": "Address",
+      "description": "Description",
+      "quantity": "Qty",
+      "unitPrice": "Unit price",
+      "addLine": "Add line",
+      "notes": "Notes",
+      "signature": "Signature",
+      "preview": "Preview",
+      "subtotal": "Subtotal",
+      "tax": "VAT",
+      "discount": "Discount",
+      "total": "Total"
+    },
+    "pdf": {
+      "quoteTitle": "Quote",
+      "invoiceTitle": "Invoice",
+      "contractTitle": "Contract",
+      "from": "From",
+      "to": "To",
+      "date": "Date",
+      "dueDate": "Due date",
+      "validUntil": "Valid until",
+      "description": "Description",
+      "quantity": "Qty",
+      "unitPrice": "Unit price",
+      "total": "Total",
+      "subtotal": "Subtotal",
+      "tax": "VAT",
+      "grandTotal": "Grand total",
+      "notes": "Notes",
+      "bankDetails": "Bank details"
+    }
+  },
+  "automations": {
+    "title": "Automations",
+    "description": "Configure Trigger → Condition → Action flows to automate operations and communications.",
+    "kpi": {
+      "activeRules": "Active rules",
+      "runsToday": "Runs today",
+      "queued": "Queued deliveries"
+    },
+    "channels": {
+      "title": "Delivery channels",
+      "hint": "Architecture ready for external provider integration.",
+      "email": "Email",
+      "whatsapp": "WhatsApp",
+      "sms": "SMS",
+      "push": "Push",
+      "in_app": "In-app",
+      "ready": "Configured",
+      "pending": "Pending"
+    },
+    "rules": {
+      "title": "Configured rules",
+      "empty": "No automations yet. Create a rule or load examples."
+    },
+    "runs": {
+      "title": "Execution history",
+      "empty": "No runs recorded."
+    },
+    "deliveries": {
+      "title": "Delivery queue",
+      "empty": "No deliveries recorded."
+    },
+    "runStatus": {
+      "success": "Success",
+      "failed": "Failed",
+      "skipped": "Skipped",
+      "running": "Running",
+      "pending": "Pending"
+    },
+    "status": {
+      "active": "Active",
+      "paused": "Paused"
+    },
+    "flow": {
+      "conditions": "{count} condition(s)"
+    },
+    "actions": {
+      "new": "New automation",
+      "edit": "Edit",
+      "delete": "Delete",
+      "pause": "Pause",
+      "enable": "Enable",
+      "loadExamples": "Load examples",
+      "generateService": "Generate service",
+      "generateServiceDesc": "Creates service tasks from contract",
+      "generateReport": "Generate report",
+      "generateReportDesc": "Notifies supervisors to generate report",
+      "sendReminder": "Send reminder",
+      "sendReminderDesc": "Payment or follow-up reminder",
+      "sendNotification": "Send notification",
+      "sendNotificationDesc": "In-app or push notification",
+      "createTask": "Create task",
+      "createTaskDesc": "Schedule new operational task"
+    },
+    "triggers": {
+      "contractCreated": "Contract created",
+      "contractCreatedDesc": "Fires when a new contract is created",
+      "contractRenewed": "Contract renewed",
+      "contractRenewedDesc": "Fires on contract renewal",
+      "serviceCompleted": "Service completed",
+      "serviceCompletedDesc": "Fires when service is completed/approved",
+      "serviceApproved": "Service approved",
+      "serviceApprovedDesc": "Fires on execution approval",
+      "invoiceOverdue": "Invoice overdue",
+      "invoiceOverdueDesc": "Fires when invoice is past due",
+      "invoiceSent": "Invoice sent",
+      "invoiceSentDesc": "Fires when invoice is sent to client",
+      "leadWon": "Lead won",
+      "leadWonDesc": "Fires when lead is converted",
+      "leadStatusChanged": "Lead status changed",
+      "leadStatusChangedDesc": "Fires on CRM status changes",
+      "shiftEmpty": "Empty shift",
+      "shiftEmptyDesc": "Fires when a task has no assigned employee",
+      "weeklyHoursExceeded": "Weekly hours exceeded",
+      "weeklyHoursExceededDesc": "Fires when an employee exceeds weekly contract hours"
+    },
+    "fields": {
+      "frequency": "Frequency",
+      "amount": "Amount",
+      "hasAddress": "Has property",
+      "autoRenew": "Auto renew",
+      "serviceType": "Service type",
+      "hasContract": "Has contract",
+      "daysOverdue": "Days overdue",
+      "balance": "Balance",
+      "status": "Status",
+      "employeeName": "Employee",
+      "scheduledDate": "Date",
+      "location": "Location",
+      "excessMinutes": "Excess minutes"
+    },
+    "operators": {
+      "eq": "Equals",
+      "neq": "Not equals",
+      "gt": "Greater than",
+      "lt": "Less than",
+      "contains": "Contains",
+      "empty": "Empty",
+      "notEmpty": "Not empty"
+    },
+    "examples": {
+      "contractToService": "Contract created → Generate service",
+      "serviceToReport": "Service completed → Generate report",
+      "invoiceReminder": "Invoice overdue → Send reminder",
+      "contractRenewed": "Contract renewed",
+      "serviceApproved": "Service approved",
+      "invoiceSent": "Invoice sent",
+      "leadWon": "Lead won",
+      "leadStatus": "Lead status",
+      "shiftEmpty": "Empty shift → Notify manager",
+      "weeklyHours": "Hours exceeded → Alert"
+    },
+    "form": {
+      "newTitle": "New automation",
+      "editTitle": "Edit automation",
+      "name": "Name",
+      "description": "Description",
+      "trigger": "Trigger",
+      "conditions": "Conditions",
+      "actions": "Actions",
+      "addCondition": "Condition",
+      "addAction": "Action",
+      "noConditions": "No conditions — runs whenever the trigger fires.",
+      "value": "Value",
+      "enabled": "Rule enabled",
+      "save": "Save automation"
+    },
+    "toasts": {
+      "created": "Automation created",
+      "updated": "Automation updated",
+      "deleted": "Automation deleted",
+      "seeded": "{count} examples loaded",
+      "alreadySeeded": "Automations already configured"
+    }
+  },
+  "crm": {
+    "title": "CRM",
+    "dashboard": {
+      "title": "Sales Dashboard",
+      "description": "Pipeline, conversion and potential revenue from commercial operations.",
+      "recentLeads": "Recent leads",
+      "viewAll": "View all",
+      "kpi": {
+        "active": "Active leads",
+        "proposals": "Proposals sent",
+        "conversion": "Conversion rate",
+        "potential": "Potential revenue",
+        "closed": "Closed revenue",
+        "wonMonth": "Deals won (month)"
+      },
+      "activity": "Commercial activity",
+      "noActivity": "No activity recorded."
+    },
+    "leads": {
+      "title": "Leads",
+      "description": "Commercial opportunities before client conversion.",
+      "new": "New lead",
+      "edit": "Edit lead",
+      "empty": "No leads",
+      "emptyHint": "Add leads to feed the sales pipeline.",
+      "searchPlaceholder": "Search company, contact, email or phone…",
+      "noContact": "No primary contact",
+      "readonlyHint": "Converted lead — read-only. Client was created in the Clients module."
+    },
+    "pipeline": {
+      "title": "Pipeline",
+      "description": "Drag leads across funnel stages.",
+      "columns": {
+        "new": "New",
+        "contacted": "Contacted",
+        "qualified": "Qualified",
+        "proposal_sent": "Proposal",
+        "negotiation": "Negotiation",
+        "won": "Won",
+        "lost": "Lost"
+      }
+    },
+    "contacts": {
+      "title": "Contacts",
+      "description": "Contacts linked to pipeline leads.",
+      "searchPlaceholder": "Search name, email or phone…",
+      "empty": "No contacts",
+      "emptyHint": "Add contacts to leads for commercial management.",
+      "primary": "Primary",
+      "role": "Role",
+      "new": "New contact",
+      "created": "Contact added",
+      "selectLead": "Associated lead"
+    },
+    "companies": {
+      "title": "Companies",
+      "description": "Prospective companies not yet converted to clients.",
+      "searchPlaceholder": "Search company, city or website…",
+      "empty": "No prospective companies",
+      "emptyHint": "Companies appear from commercial leads.",
+      "website": "Website",
+      "leads": "Leads"
+    },
+    "columns": {
+      "company": "Company",
+      "contact": "Contact",
+      "value": "Estimated value",
+      "status": "Status",
+      "created": "Created"
+    },
+    "status": {
+      "new": "New",
+      "contacted": "Contacted",
+      "qualified": "Qualified",
+      "proposal_sent": "Proposal sent",
+      "negotiation": "Negotiation",
+      "won": "Won",
+      "lost": "Lost"
+    },
+    "form": {
+      "companyName": "Company",
+      "contactName": "Contact",
+      "email": "Email",
+      "phone": "Phone",
+      "city": "City",
+      "owner": "Owner",
+      "estimatedValue": "Estimated value",
+      "website": "Website",
+      "intendedService": "Intended service",
+      "leadSource": "Lead source",
+      "notes": "Notes",
+      "save": "Save"
+    },
+    "filters": {
+      "all": "All"
+    },
+    "actions": {
+      "view": "View",
+      "delete": "Delete",
+      "createQuote": "Create quote",
+      "createContract": "Create contract",
+      "generateInvoice": "Generate first invoice",
+      "viewClient": "View client",
+      "markWon": "Mark as won"
+    },
+    "detail": {
+      "overview": "Overview",
+      "timeline": "Timeline",
+      "noEvents": "No events recorded"
+    },
+    "timeline": {
+      "created": "Lead created",
+      "updated": "Lead updated",
+      "contacted": "Contact made",
+      "qualified": "Lead qualified",
+      "quoteSent": "Quote sent",
+      "negotiation": "Negotiation started",
+      "won": "Deal won",
+      "lost": "Deal lost",
+      "clientConverted": "Client converted",
+      "contractCreated": "Contract created"
+    },
+    "automations": {
+      "title": "Suggested commercial flow",
+      "quote": "Create quote from this lead",
+      "client": "On win → auto-convert to Client",
+      "contract": "After conversion → create Contract",
+      "invoice": "After contract → generate first Invoice"
+    },
+    "toasts": {
+      "created": "Lead created",
+      "updated": "Lead updated",
+      "deleted": "Lead deleted",
+      "converted": "Lead converted to client"
+    }
+  },
+  "operations": {
+    "nav": {
+      "properties": "Properties",
+      "services": "Services",
+      "scheduling": "Scheduling",
+      "jobs": "Executions",
+      "teams": "Teams",
+      "routes": "Routes",
+      "clients": "Clients"
+    },
+    "dashboard": {
+      "title": "Operations",
+      "description": "Real-time view of services, properties and field teams.",
+      "todayJobs": "Today's services",
+      "viewAll": "View all",
+      "noJobsToday": "No services scheduled for today.",
+      "quickLinks": "Quick links",
+      "kpi": {
+        "today": "Today",
+        "week": "This week",
+        "completed": "Completed",
+        "overdue": "Overdue",
+        "completionRate": "Completion rate",
+        "properties": "Active properties",
+        "teams": "Active teams"
+      }
+    },
+    "executionStatus": {
+      "planned": "Planned",
+      "in_progress": "In progress",
+      "completed": "Completed",
+      "approved": "Approved",
+      "billed": "Billed"
+    },
+    "properties": {
+      "title": "Properties",
+      "description": "{count} active properties in operations.",
+      "viewClients": "View clients",
+      "empty": {
+        "title": "No properties",
+        "description": "Add addresses to clients to start operations."
+      },
+      "columns": {
+        "property": "Property",
+        "client": "Client",
+        "type": "Type",
+        "area": "Area",
+        "status": "Status"
+      },
+      "types": {
+        "office": "Office",
+        "condominium": "Condominium",
+        "retail": "Retail",
+        "hotel": "Hotel",
+        "school": "School",
+        "warehouse": "Warehouse",
+        "other": "Other"
+      }
+    },
+    "propertyDetail": {
+      "back": "Back",
+      "upcoming": "Upcoming visits",
+      "noUpcoming": "No scheduled visits.",
+      "history": "History",
+      "client": "Client",
+      "contracts": "Active contracts",
+      "noContracts": "No contracts linked to this property.",
+      "assigned": "Operations"
+    },
+    "services": {
+      "title": "Service Catalog",
+      "description": "Standard services for cleaning, facility and landscaping.",
+      "new": "New service",
+      "created": "Service created",
+      "duration": "Duration",
+      "frequency": "Frequency",
+      "empty": {
+        "title": "Empty catalog",
+        "description": "Default services will be created automatically."
+      },
+      "form": {
+        "name": "Name",
+        "description": "Description",
+        "duration": "Duration (min)",
+        "color": "Color",
+        "submit": "Create service"
+      }
+    },
+    "scheduling": {
+      "title": "Scheduling",
+      "today": "Today",
+      "empty": "No services in this period.",
+      "unassigned": "Unassigned",
+      "views": {
+        "day": "Day",
+        "week": "Week",
+        "month": "Month"
+      }
+    },
+    "teams": {
+      "title": "Teams",
+      "description": "Supervisor, members and vehicles per team.",
+      "new": "New team",
+      "created": "Team created",
+      "supervisor": "Supervisor",
+      "empty": {
+        "title": "No teams",
+        "description": "Create teams to organize field operations."
+      },
+      "form": {
+        "name": "Team name",
+        "supervisor": "Supervisor",
+        "selectSupervisor": "Select supervisor",
+        "vehicle": "Vehicle",
+        "members": "Members",
+        "submit": "Create team"
+      }
+    },
+    "routes": {
+      "title": "Routes",
+      "description": "Optimized service sequence per employee.",
+      "mapsPlaceholder": "Google Maps integration coming soon — map, distance and estimated time.",
+      "estimated": "~{minutes} min estimated",
+      "empty": {
+        "title": "No routes",
+        "description": "No assigned services for this date."
+      }
+    },
+    "jobs": {
+      "title": "Executions",
+      "description": "Each service executed in the field.",
+      "empty": {
+        "title": "No executions",
+        "description": "Executions appear when services are scheduled or completed."
+      },
+      "columns": {
+        "service": "Service",
+        "property": "Property",
+        "date": "Date",
+        "status": "Status"
+      }
+    }
+  },
+  "workforce": {
+    "nav": {
+      "employees": "Employees",
+      "shifts": "Shifts",
+      "vacations": "Vacations",
+      "timeAccount": "Time Account",
+      "timesheets": "Timesheets"
+    },
+    "status": {
+      "active": "Active",
+      "inactive": "Inactive",
+      "terminated": "Terminated",
+      "on_vacation": "On vacation",
+      "absent": "Absent"
+    },
+    "dashboard": {
+      "title": "Workforce",
+      "description": "Employee management, shifts, hours and labor compliance.",
+      "teamOverview": "Team",
+      "quickLinks": "Quick links",
+      "noRole": "No role",
+      "kpi": {
+        "active": "Active",
+        "vacation": "On vacation",
+        "hoursToday": "Hours today",
+        "overtime": "Overtime",
+        "absences": "Absences (week)",
+        "shifts": "Shifts (week)"
+      }
+    },
+    "employees": {
+      "title": "Employees",
+      "description": "{count} employees in operations.",
+      "empty": { "title": "No employees", "description": "Add employees to manage shifts and hours." },
+      "columns": { "name": "Name", "role": "Role", "supervisor": "Supervisor", "hours": "Hours/week", "status": "Status" }
+    },
+    "profile": {
+      "back": "Back",
+      "noRole": "No role defined",
+      "email": "Email",
+      "phone": "Phone",
+      "supervisor": "Supervisor",
+      "team": "Team",
+      "contract": "Contract type",
+      "weeklyHours": "Weekly hours",
+      "hireDate": "Hire date",
+      "timeAccount": "Time account",
+      "balance": "Balance",
+      "upcomingShifts": "Upcoming shifts",
+      "noShifts": "No scheduled shifts.",
+      "vacations": "Vacations",
+      "absences": "Absences",
+      "documents": "Documents",
+      "noDocuments": "No documents.",
+      "contractTypes": {
+        "full_time": "Full-time",
+        "part_time": "Part-time",
+        "mini_job": "Mini-job",
+        "temporary": "Temporary"
+      },
+      "hrForm": {
+        "title": "HR data",
+        "edit": "Edit HR",
+        "cancel": "Cancel",
+        "save": "Save changes",
+        "saved": "Profile updated",
+        "fullName": "Full name",
+        "jobTitle": "Job title",
+        "supervisor": "Supervisor",
+        "noSupervisor": "No supervisor",
+        "contractType": "Contract type",
+        "weeklyHours": "Weekly hours",
+        "status": "Status",
+        "email": "Email",
+        "phone": "Phone",
+        "employeeNumber": "Employee number",
+        "hireDate": "Hire date",
+        "notes": "Notes"
+      }
+    },
+    "shifts": {
+      "title": "Shifts",
+      "today": "Today",
+      "employee": "Employee",
+      "dragHint": "Drag shifts between days or employees to reschedule.",
+      "moved": "Shift rescheduled",
+      "noShiftsDay": "No shifts on this day.",
+      "views": { "day": "Day", "week": "Week", "month": "Month" },
+      "conflictsAlert": "{count} shifts with detected conflicts.",
+      "empty": { "title": "No shifts", "description": "Shifts are generated from assigned services." },
+      "conflicts": {
+        "vacation": "Vacation",
+        "absence": "Absence",
+        "overload": "Overload",
+        "weekly_hours": "Weekly excess"
+      }
+    },
+    "planning": {
+      "title": "Personnel Planning",
+      "description": "Plan, assign and optimize teams in real time.",
+      "kpi": {
+        "scheduledToday": "Scheduled today",
+        "openShifts": "Open shifts",
+        "missing": "Missing",
+        "vacation": "On vacation",
+        "sick": "Sick leave",
+        "unassigned": "Unassigned tasks",
+        "plannedHours": "Planned hours",
+        "actualHours": "Actual hours",
+        "utilization": "Utilization"
+      },
+      "employees": {
+        "title": "Team",
+        "hint": "Availability for current week",
+        "noRole": "No role",
+        "week": "wk",
+        "planned": "Plan.",
+        "actual": "Act."
+      },
+      "actions": {
+        "copyWeek": "Copy previous week",
+        "copyMonth": "Copy previous month",
+        "repeatSchedule": "Repeat schedules",
+        "reports": "Reports"
+      },
+      "toasts": {
+        "copiedWeek": "{count} shifts copied to next week",
+        "copiedMonth": "{count} shifts copied from previous month",
+        "repeated": "{count} shifts created over {weeks} weeks"
+      },
+      "repeat": {
+        "title": "Repeat schedules automatically",
+        "weeks": "Number of weeks",
+        "hint": "Copies the current week pattern to upcoming weeks.",
+        "cancel": "Cancel",
+        "confirm": "Repeat",
+        "invalid": "Enter a valid number of weeks (1–12)"
+      },
+      "ai": {
+        "title": "Planning assistant",
+        "description": "Automatic workload balancing and shift filling.",
+        "optimizeWeek": "Optimize week",
+        "noChanges": "No changes suggested for this week.",
+        "applied": "{count} changes applied"
+      },
+      "recs": {
+        "title": "Recommendations",
+        "empty": "No recommendations — team is balanced.",
+        "moveEmployee": "Move {from} → {to} at {location}",
+        "overtimeRisk": "{name} at overtime risk",
+        "understaffed": "{date}: {name} available for backup",
+        "available": "{name} available with no shifts"
+      },
+      "monthly": {
+        "planned": "Planned hours",
+        "worked": "Hours worked",
+        "employees": "Employees",
+        "utilization": "Avg. utilization"
+      },
+      "shift": {
+        "type": "Shift type",
+        "break": "Break",
+        "travel": "Travel",
+        "viewContract": "View contract",
+        "viewTask": "View task",
+        "duplicate": "Duplicate shift",
+        "duplicated": "Shift duplicated to next day",
+        "types": {
+          "morning": "Morning",
+          "afternoon": "Afternoon",
+          "night": "Night",
+          "custom": "Custom"
+        }
+      },
+      "reports": {
+        "title": "Planning reports",
+        "description": "Period: {from} — {to}",
+        "back": "Back to planning",
+        "planned": "Planned hours",
+        "worked": "Hours worked",
+        "employees": "Employees",
+        "utilization": "Avg. utilization",
+        "export": {
+          "pdf": "Export PDF",
+          "utilizationCsv": "Export utilization (CSV)",
+          "shiftsCsv": "Export shifts (CSV)",
+          "shiftsLabel": "Shifts",
+          "employee": "Employee",
+          "weeklyHours": "Hours/week",
+          "planned": "Planned",
+          "worked": "Worked",
+          "utilization": "Utilization",
+          "date": "Date",
+          "task": "Task",
+          "client": "Client",
+          "location": "Location",
+          "revenue": "Revenue",
+          "labor": "Labor cost",
+          "margin": "Margin"
+        }
+      },
+      "profitability": {
+        "totalMargin": "Estimated total margin",
+        "byEmployee": "Profitability by employee",
+        "byClient": "Profitability by client",
+        "empty": "No profitability data for this period.",
+        "shifts": "shifts",
+        "labor": "cost",
+        "employee": "Employee",
+        "client": "Client"
+      },
+      "mobile": {
+        "title": "My schedule",
+        "subtitle": "Weekly shifts and today's services",
+        "today": "today",
+        "noShiftsToday": "No shifts scheduled for today."
+      }
+    },
+    "vacations": {
+      "title": "Vacations",
+      "description": "Requests, approvals and schedule impact.",
+      "new": "New request",
+      "approve": "Approve",
+      "reject": "Reject",
+      "created": "Request created",
+      "updated": "Status updated",
+      "empty": { "title": "No requests", "description": "Register employee vacation requests." },
+      "form": { "employee": "Employee", "start": "Start", "end": "End", "submit": "Submit" }
+    },
+    "absences": {
+      "title": "Absences",
+      "description": "Sick leave, licenses and recorded absences.",
+      "new": "Register absence",
+      "created": "Absence registered",
+      "empty": { "title": "No absences", "description": "Register absences to block shifts automatically." },
+      "form": { "employee": "Employee", "type": "Type", "start": "Start", "end": "End", "submit": "Save" },
+      "types": { "sick": "Sick", "leave": "Leave", "absence": "Absence", "training": "Training", "other": "Other" }
+    },
+    "timeAccount": {
+      "title": "Time Account",
+      "description": "Target vs actual hours — balance per employee.",
+      "empty": { "title": "No data", "description": "Hours are calculated automatically via check-in/out." },
+      "columns": { "employee": "Employee", "contracted": "Contracted", "worked": "Worked", "overtime": "Overtime", "balance": "Balance" }
+    },
+    "timesheets": {
+      "title": "Timesheets",
+      "description": "Hours derived from executions and check-ins — no manual entry.",
+      "empty": { "title": "No records", "description": "Timesheets appear after check-out on executions." }
+    },
+    "worktime": {
+      "title": "Work Schedules",
+      "description": "Schedule rules, breaks and legal limits.",
+      "saved": "Settings saved",
+      "form": {
+        "start": "Start",
+        "end": "End",
+        "break": "Break (min)",
+        "maxDaily": "Max daily (h)",
+        "maxWeekly": "Max weekly (h)",
+        "overtime": "Overtime threshold (h)",
+        "save": "Save"
+      }
+    },
+    "documents": {
+      "title": "HR Documents",
+      "description": "Contracts, certificates and training per employee.",
+      "new": "New document",
+      "created": "Document registered",
+      "empty": { "title": "No documents", "description": "Associate documents with employees." },
+      "form": { "employee": "Employee", "type": "Type", "title": "Title", "file": "File", "submit": "Upload", "fileRequired": "Title and file are required." },
+      "download": "Download",
+      "types": { "contract": "Contract", "certificate": "Certificate", "training": "Training", "other": "Other" }
+    }
+  },
+  "billing": {
+    "checkout": {
+      "title": "Complete checkout",
+      "description": "Secure subscription powered by Stripe.",
+      "selectedPlan": "Selected plan",
+      "month": "month",
+      "trial": "{days}-day free trial included",
+      "cancelAnytime": "Cancel anytime",
+      "securePayment": "Secure payment via Stripe",
+      "continue": "Continue to payment",
+      "processing": "Processing…"
+    },
+    "success": {
+      "title": "Subscription confirmed",
+      "description": "Your workspace is ready. Complete setup to start operating.",
+      "demoDescription": "Billing demo mode — configure Stripe to enable live payments.",
+      "continueSetup": "Continue setup",
+      "planLabel": "Plan"
+    }
+  }
+}
