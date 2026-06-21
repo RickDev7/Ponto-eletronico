@@ -17,6 +17,7 @@ interface FieldScheduleViewProps {
   openCheckIn: { id: string; task_id: string } | null;
   activeTaskId: string | null;
   locale: string;
+  variant?: "field" | "mobile";
 }
 
 function getTaskAddress(task: ScheduleTaskRow) {
@@ -33,12 +34,16 @@ export function FieldScheduleView({
   today,
   todayTasks,
   upcomingTasks,
+  weekTasks,
   openCheckIn,
   activeTaskId,
   locale,
+  variant = "field",
 }: FieldScheduleViewProps) {
   const t = useTranslations("fieldExecution.schedule");
   const dateLocale = locale === "en" ? "en-US" : "pt-BR";
+  const serviceHref = (taskId: string) =>
+    variant === "mobile" ? ROUTES.mobileService(slug, taskId) : ROUTES.fieldExecute(slug, taskId);
 
   function TaskCard({ task, highlight }: { task: ScheduleTaskRow; highlight?: boolean }) {
     const addr = getTaskAddress(task);
@@ -47,7 +52,7 @@ export function FieldScheduleView({
 
     return (
       <Link
-        href={ROUTES.fieldExecute(slug, task.id)}
+        href={serviceHref(task.id)}
         className={cn(
           "flex items-start gap-3 rounded-2xl border p-4 transition-colors active:scale-[0.99]",
           highlight ? "border-primary bg-primary/5" : "border-border bg-card hover:bg-muted/30",
@@ -82,6 +87,7 @@ export function FieldScheduleView({
               rel="noopener noreferrer"
               onClick={(e) => e.stopPropagation()}
               className="inline-flex size-9 items-center justify-center rounded-full border bg-background"
+              aria-label={t("openNavigation")}
             >
               <Navigation className="size-4" />
             </a>
@@ -139,6 +145,28 @@ export function FieldScheduleView({
               <TaskCard key={task.id} task={task} />
             ))}
           </div>
+        </section>
+      )}
+
+      {weekTasks.length > 0 && (
+        <section className="space-y-3">
+          <h2 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">{t("thisWeek")}</h2>
+          {weekTasks.map(({ date, tasks }) => (
+            <div key={date} className="space-y-2">
+              <p className="text-xs font-medium text-muted-foreground">
+                {new Date(date + "T12:00:00").toLocaleDateString(dateLocale, {
+                  weekday: "short",
+                  day: "numeric",
+                  month: "short",
+                })}
+              </p>
+              <div className="space-y-2">
+                {tasks.map((task) => (
+                  <TaskCard key={task.id} task={task} highlight={task.id === activeTaskId} />
+                ))}
+              </div>
+            </div>
+          ))}
         </section>
       )}
     </div>

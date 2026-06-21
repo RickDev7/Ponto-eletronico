@@ -34,6 +34,9 @@ interface FieldExecutionViewProps {
   slug: string;
   taskId: string;
   context: ExecutionContext;
+  variant?: "field" | "mobile";
+  /** Mobile execute flow — skips check-in step (handled on /mobile/check-in). */
+  mode?: "full" | "execute";
 }
 
 async function getGeo() {
@@ -50,9 +53,24 @@ async function getGeo() {
   }
 }
 
-export function FieldExecutionView({ slug, taskId, context }: FieldExecutionViewProps) {
+export function FieldExecutionView({
+  slug,
+  taskId,
+  context,
+  variant = "field",
+  mode = "full",
+}: FieldExecutionViewProps) {
   const t = useTranslations("fieldExecution");
   const router = useRouter();
+  const isMobileExecute = variant === "mobile" && mode === "execute";
+  const scheduleHref =
+    variant === "mobile"
+      ? isMobileExecute
+        ? ROUTES.mobileService(slug, taskId)
+        : ROUTES.mobileSchedule(slug)
+      : ROUTES.fieldSchedule(slug);
+  const homeAfterCheckout =
+    variant === "mobile" ? ROUTES.mobile(slug) : scheduleHref;
   const fileRef = useRef<HTMLInputElement>(null);
   const [pending, startTransition] = useTransition();
   const [step, setStep] = useState<Step>(context.openCheckIn ? "checklist" : "checkin");
@@ -66,7 +84,10 @@ export function FieldExecutionView({ slug, taskId, context }: FieldExecutionView
   const addr = Array.isArray(task.address) ? task.address[0] : task.address;
   const client = addr?.client ? (Array.isArray(addr.client) ? addr.client[0] : addr.client) : null;
 
-  const steps: Step[] = ["checkin", "checklist", "photos", "sign", "checkout"];
+  const allSteps: Step[] = ["checkin", "checklist", "photos", "sign", "checkout"];
+  const steps: Step[] = isMobileExecute
+    ? allSteps.filter((s) => s !== "checkin")
+    : allSteps;
   const stepIndex = steps.indexOf(step);
 
   async function handleCheckInOut() {
@@ -87,7 +108,7 @@ export function FieldExecutionView({ slug, taskId, context }: FieldExecutionView
       if (openCheckIn) {
         toast.success(t("checkout.done"));
         router.refresh();
-        router.push(ROUTES.fieldSchedule(slug));
+        router.push(homeAfterCheckout);
       } else {
         toast.success(t("checkin.done"));
         setStep("checklist");
@@ -146,7 +167,7 @@ export function FieldExecutionView({ slug, taskId, context }: FieldExecutionView
     <div className="mx-auto max-w-lg space-y-4 pb-28">
       <div className="flex items-center gap-2">
         <Link
-          href={ROUTES.fieldSchedule(slug)}
+          href={scheduleHref}
           className="inline-flex size-9 items-center justify-center rounded-full border"
         >
           <ArrowLeft className="size-4" />
@@ -177,7 +198,7 @@ export function FieldExecutionView({ slug, taskId, context }: FieldExecutionView
         ))}
       </nav>
 
-      {step === "checkin" && (
+      {step === "checkin" && !isMobileExecute && (
         <section className="space-y-4 rounded-2xl border bg-card p-4">
           <div className="flex items-center gap-2 text-sm font-medium">
             <LogIn className="size-4 text-primary" />
@@ -309,7 +330,12 @@ export function FieldExecutionView({ slug, taskId, context }: FieldExecutionView
       )}
 
       {openCheckIn && step !== "checkin" && (
-        <div className="fixed bottom-16 left-0 right-0 z-30 border-t bg-background/95 p-3 backdrop-blur-sm lg:hidden">
+        <div
+          className={cn(
+            "fixed left-0 right-0 z-30 border-t bg-background/95 p-3 backdrop-blur-sm",
+            variant === "mobile" ? "bottom-0" : "bottom-16 lg:hidden",
+          )}
+        >
           <div className="mx-auto flex max-w-lg gap-2">
             {stepIndex > 0 && (
               <Button variant="outline" className="flex-1" onClick={() => setStep(steps[stepIndex - 1]!)}>

@@ -40,6 +40,7 @@ import {
   type WorktimePolicyInput,
 } from "@/lib/validations/workforce";
 import type { ActionResult } from "@/actions/auth/actions";
+import { revalidateEmployeeMobilePaths } from "@/lib/employee/revalidate-mobile";
 
 function workforcePaths(slug: string) {
   return [
@@ -73,6 +74,7 @@ function revalidateWorkforce(slug: string, employeeId?: string) {
     revalidatePath(`/${slug}/workforce/employees/${employeeId}`);
   }
   revalidatePath(`/${slug}/workforce`, "layout");
+  revalidateEmployeeMobilePaths(slug, employeeId);
 }
 
 export async function syncWorkforceAvailabilityAction(slug: string): Promise<void> {

@@ -83,10 +83,16 @@ export function LoginForm() {
   }
 
   const isPending = form.formState.isSubmitting;
+  const isMobileRedirect = redirectParam?.includes("/mobile");
 
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
+        {isMobileRedirect ? (
+          <p className="rounded-xl border border-primary/20 bg-primary/10 px-4 py-3 text-sm text-primary">
+            {t("mobileRedirectHint")}
+          </p>
+        ) : null}
         <FormField
           control={form.control}
           name="email"

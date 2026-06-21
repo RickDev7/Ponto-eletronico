@@ -2,11 +2,13 @@
 
 import { revalidatePath } from "next/cache";
 import { requireCompanyContext } from "@/lib/auth/guards";
+import { actionError } from "@/lib/i18n/action-error";
 import { createClient } from "@/lib/supabase/server";
 import type { ActionResult } from "@/actions/auth/actions";
 import { recordTimeAccountFromCheckIn } from "@/actions/workforce/actions";
 import { logTaskEvent } from "@/lib/operations/task-events";
 import { generateServiceReport } from "@/lib/field-execution/generate-service-report";
+import { revalidateEmployeeMobilePaths } from "@/lib/employee/revalidate-mobile";
 
 function haversineMeters(
   lat1: number,
@@ -33,7 +35,7 @@ export async function checkIn(
   const ctx = await requireCompanyContext({ slug });
 
   if (!ctx.employee) {
-    return { success: false, error: "Kein Mitarbeiterdatensatz gefunden" };
+    return { success: false, error: await actionError("checkInNoEmployee") };
   }
 
   const supabase = await createClient();
@@ -46,7 +48,7 @@ export async function checkIn(
     .maybeSingle();
 
   if (existing) {
-    return { success: false, error: "Sie sind bereits eingecheckt. Bitte zuerst auschecken." };
+    return { success: false, error: await actionError("checkInAlreadyActive") };
   }
 
   const { data: taskAddress } = await supabase
@@ -65,7 +67,7 @@ export async function checkIn(
   // If company mapped this service address, require and validate field GPS.
   if (addressLat != null && addressLng != null) {
     if (opts?.latitude == null || opts?.longitude == null) {
-      return { success: false, error: "Standortzugriff erforderlich für Check-in." };
+      return { success: false, error: await actionError("checkInLocationRequired") };
     }
 
     const distance = haversineMeters(
@@ -76,10 +78,7 @@ export async function checkIn(
     );
 
     if (distance > 1000) {
-      return {
-        success: false,
-        error: "Zu weit vom Einsatzort entfernt (über 1 km).",
-      };
+      return { success: false, error: await actionError("checkInTooFar") };
     }
   }
 
@@ -118,8 +117,8 @@ export async function checkIn(
   revalidatePath(`/${slug}/tasks/${taskId}`);
   revalidatePath(`/${slug}/field/schedule`);
   revalidatePath(`/${slug}/field/tasks/${taskId}`);
-  revalidatePath(`/${slug}/minha-area`);
   revalidatePath(`/${slug}`);
+  revalidateEmployeeMobilePaths(slug, taskId);
   return { success: true, data: { checkInId: data.id } };
 }
 
@@ -135,7 +134,7 @@ export async function checkOut(
   },
 ): Promise<ActionResult> {
   const ctx = await requireCompanyContext({ slug });
-  if (!ctx.employee) return { success: false, error: "Kein Mitarbeiterdatensatz" };
+  if (!ctx.employee) return { success: false, error: await actionError("checkOutNoEmployee") };
 
   const supabase = await createClient();
   const { data: checkInRow, error } = await supabase
@@ -184,10 +183,10 @@ export async function checkOut(
     revalidatePath(`/${slug}/field/tasks/${checkInRow.task_id}`);
   }
   revalidatePath(`/${slug}/field/schedule`);
-  revalidatePath(`/${slug}/minha-area`);
   revalidatePath(`/${slug}`);
   revalidatePath(`/${slug}/workforce/time-account`);
   revalidatePath(`/${slug}/workforce/timesheets`);
   revalidatePath(`/${slug}/workforce/time-tracking`);
+  revalidateEmployeeMobilePaths(slug, checkInRow?.task_id as string | undefined);
   return { success: true, data: undefined };
 }

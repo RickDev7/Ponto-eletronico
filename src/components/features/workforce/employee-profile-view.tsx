@@ -17,7 +17,15 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
 
-type ProfileTab = "personal" | "contract" | "schedule" | "hours" | "history";
+type ProfileTab =
+  | "overview"
+  | "planning"
+  | "hours"
+  | "documents"
+  | "skills"
+  | "vacations"
+  | "absences"
+  | "history";
 
 interface EmployeeProfileViewProps {
   slug: string;
@@ -54,7 +62,16 @@ interface EmployeeProfileViewProps {
   canWrite: boolean;
 }
 
-const TAB_KEYS: ProfileTab[] = ["personal", "contract", "schedule", "hours", "history"];
+const TAB_KEYS: ProfileTab[] = [
+  "overview",
+  "planning",
+  "hours",
+  "documents",
+  "skills",
+  "vacations",
+  "absences",
+  "history",
+];
 
 export function EmployeeProfileView({
   slug,
@@ -95,7 +112,7 @@ export function EmployeeProfileView({
   const ist = timeEntries.reduce((a, e) => a + (e.ist_minutes ?? 0), 0);
 
   function tabHref(tab: ProfileTab) {
-    return tab === "personal"
+    return tab === "overview"
       ? ROUTES.workforceEmployee(slug, employeeId)
       : `${ROUTES.workforceEmployee(slug, employeeId)}?tab=${tab}`;
   }
@@ -185,13 +202,16 @@ export function EmployeeProfileView({
         ))}
       </nav>
 
-      {activeTab === "personal" && (
+      {activeTab === "overview" && (
           <OperationsWorkspace className="space-y-4 p-4">
             <dl className="grid gap-3 sm:grid-cols-2">
               <div><dt className="text-muted-foreground">{t("email")}</dt><dd>{employee.email ?? "—"}</dd></div>
               <div><dt className="text-muted-foreground">{t("phone")}</dt><dd>{employee.phone ?? "—"}</dd></div>
               <div><dt className="text-muted-foreground">{t("employeeNumber")}</dt><dd>{employee.employee_number ?? "—"}</dd></div>
               <div><dt className="text-muted-foreground">{t("team")}</dt><dd>{teamName ?? "—"}</dd></div>
+              <div><dt className="text-muted-foreground">{t("contract")}</dt><dd>{employee.contract_type ? tContract(employee.contract_type as "full_time") : "—"}</dd></div>
+              <div><dt className="text-muted-foreground">{t("weeklyHours")}</dt><dd>{employee.weekly_hours ?? 40}h</dd></div>
+              <div><dt className="text-muted-foreground">{t("supervisor")}</dt><dd>{supervisor ?? "—"}</dd></div>
               {employee.hire_date && (
                 <div><dt className="text-muted-foreground">{t("hireDate")}</dt><dd>{new Date(employee.hire_date + "T12:00:00").toLocaleDateString(locale)}</dd></div>
               )}
@@ -202,74 +222,86 @@ export function EmployeeProfileView({
                 <p className="mt-1 text-sm">{employee.notes}</p>
               </div>
             )}
-            {skills.length > 0 && (
-              <div>
-                <p className="mb-2 text-sm font-semibold">{t("skills")}</p>
-                <div className="flex flex-wrap gap-2">
-                  {skills.map((row) => {
-                    const skill = Array.isArray(row.skill) ? row.skill[0] : row.skill;
-                    return (
-                      <span key={row.skill_id} className="rounded-full border px-2.5 py-0.5 text-xs">
-                        {skill?.name ?? "—"} · {row.level}/5
-                      </span>
-                    );
-                  })}
-                </div>
+          </OperationsWorkspace>
+      )}
+
+      {activeTab === "documents" && (
+          <OperationsWorkspace className="space-y-4 p-4">
+            <div className="mb-2 flex items-center justify-between">
+              <h3 className="text-sm font-semibold">{t("documents")}</h3>
+              {canWrite && (
+                <Button size="sm" variant="outline" onClick={() => setDocOpen(true)}>
+                  <Plus className="mr-1.5 size-3.5" />
+                  {tDocs("new")}
+                </Button>
+              )}
+            </div>
+            <DocumentList documents={documents} tDocs={tDocs} t={t} />
+          </OperationsWorkspace>
+      )}
+
+      {activeTab === "skills" && (
+          <OperationsWorkspace className="p-4">
+            {skills.length === 0 ? (
+              <p className="text-sm text-muted-foreground">{t("skills")} —</p>
+            ) : (
+              <div className="flex flex-wrap gap-2">
+                {skills.map((row) => {
+                  const skill = Array.isArray(row.skill) ? row.skill[0] : row.skill;
+                  return (
+                    <span key={row.skill_id} className="rounded-full border px-2.5 py-0.5 text-xs">
+                      {skill?.name ?? "—"} · {row.level}/5
+                    </span>
+                  );
+                })}
               </div>
             )}
-            <div>
-              <div className="mb-2 flex items-center justify-between">
-                <h3 className="text-sm font-semibold">{t("documents")}</h3>
-                {canWrite && (
-                  <Button size="sm" variant="outline" onClick={() => setDocOpen(true)}>
-                    <Plus className="mr-1.5 size-3.5" />
-                    {tDocs("new")}
-                  </Button>
-                )}
-              </div>
-              <DocumentList documents={documents} tDocs={tDocs} t={t} />
-            </div>
           </OperationsWorkspace>
       )}
 
-      {activeTab === "contract" && (
-          <OperationsWorkspace className="space-y-3 p-4">
-            <dl className="grid gap-3 sm:grid-cols-2">
-              <div><dt className="text-muted-foreground">{t("contract")}</dt><dd>{employee.contract_type ? tContract(employee.contract_type as "full_time") : "—"}</dd></div>
-              <div><dt className="text-muted-foreground">{t("weeklyHours")}</dt><dd>{employee.weekly_hours ?? 40}h</dd></div>
-              <div><dt className="text-muted-foreground">{t("supervisor")}</dt><dd>{supervisor ?? "—"}</dd></div>
-              <div><dt className="text-muted-foreground">{t("jobTitle")}</dt><dd>{employee.job_title ?? "—"}</dd></div>
-            </dl>
-            <div className="flex flex-wrap gap-2 pt-2">
-              <Link href={ROUTES.workforceVacations(slug)} className="text-xs text-primary hover:underline">{t("viewVacations")}</Link>
-              <span className="text-muted-foreground">·</span>
-              <Link href={ROUTES.workforceAbsences(slug)} className="text-xs text-primary hover:underline">{t("viewAbsences")}</Link>
-            </div>
-            <section>
-              <h3 className="mb-2 text-sm font-semibold">{t("vacations")}</h3>
-              <ul className="divide-y rounded-lg border">
-                {vacations.length === 0 ? (
-                  <li className="p-4 text-sm text-muted-foreground">{t("noVacations")}</li>
-                ) : (
-                  vacations.slice(0, 8).map((v) => (
-                    <li key={v.id} className="flex justify-between px-3 py-2 text-sm">
-                      <span>{v.start_date} → {v.end_date}</span>
-                      <span className="text-muted-foreground">{v.status}</span>
-                    </li>
-                  ))
-                )}
-              </ul>
-            </section>
+      {activeTab === "vacations" && (
+          <OperationsWorkspace className="p-4">
+            <ul className="divide-y rounded-lg border">
+              {vacations.length === 0 ? (
+                <li className="p-4 text-sm text-muted-foreground">{t("noVacations")}</li>
+              ) : (
+                vacations.map((v) => (
+                  <li key={v.id} className="flex justify-between px-3 py-2 text-sm">
+                    <span>{v.start_date} → {v.end_date}</span>
+                    <span className="text-muted-foreground">{v.status}</span>
+                  </li>
+                ))
+              )}
+            </ul>
           </OperationsWorkspace>
       )}
 
-      {activeTab === "schedule" && (
+      {activeTab === "absences" && (
+          <OperationsWorkspace className="p-4">
+            <ul className="divide-y rounded-lg border">
+              {absences.length === 0 ? (
+                <li className="p-4 text-sm text-muted-foreground">{t("absences")} —</li>
+              ) : (
+                absences.map((a) => (
+                  <li key={a.id} className="flex justify-between px-3 py-2 text-sm">
+                    <span>{a.start_date} → {a.end_date}</span>
+                    <span className="text-muted-foreground">{a.absence_type}</span>
+                  </li>
+                ))
+              )}
+            </ul>
+          </OperationsWorkspace>
+      )}
+
+      {activeTab === "planning" && (
           <OperationsWorkspace className="space-y-3 p-4">
-            <div className="flex items-center justify-between">
+            <div className="flex flex-wrap items-center justify-between gap-2">
               <h3 className="text-sm font-semibold">{t("upcomingShifts")}</h3>
-              <Link href={ROUTES.workforcePlanning(slug)} className="inline-flex items-center gap-1 text-xs text-primary hover:underline">
-                {t("openPlanning")} <ArrowRight className="size-3" />
-              </Link>
+              <Button asChild size="sm" variant="outline">
+                <Link href={ROUTES.workforcePlanning(slug, { employee: employeeId })}>
+                  {t("openPlanning")} <ArrowRight className="ml-1 size-3" />
+                </Link>
+              </Button>
             </div>
             <ul className="divide-y rounded-lg border">
               {upcomingShifts.length === 0 ? (

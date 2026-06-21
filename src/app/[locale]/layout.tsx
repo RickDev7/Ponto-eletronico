@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { hasLocale } from "next-intl";
 import { routing } from "@/i18n/routing";
 import { SetHtmlLang } from "@/components/locale/set-html-lang";
+import { PwaInit } from "@/components/pwa/pwa-init";
 
 interface LocaleLayoutProps {
   children: React.ReactNode;
@@ -28,6 +29,7 @@ export default async function LocaleLayout({ children, params }: LocaleLayoutPro
     <NextIntlClientProvider locale={locale} messages={messages}>
       <SetHtmlLang locale={locale} />
       {children}
+      <PwaInit />
     </NextIntlClientProvider>
   );
 }

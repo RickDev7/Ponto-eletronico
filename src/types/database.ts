@@ -72,9 +72,38 @@ export interface Employee {
   full_name: string;
   email: string | null;
   phone: string | null;
+  job_title?: string | null;
   status: EmployeeStatus;
   hire_date: string | null;
   notes: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface EmployeeNotification {
+  id: string;
+  company_id: string;
+  employee_id: string;
+  kind: string;
+  title: string;
+  body: string | null;
+  payload: Json;
+  entity_type: string | null;
+  entity_id: string | null;
+  read_at: string | null;
+  push_sent_at: string | null;
+  created_at: string;
+}
+
+export interface EmployeePushSubscription {
+  id: string;
+  company_id: string;
+  employee_id: string;
+  user_id: string;
+  endpoint: string;
+  p256dh: string;
+  auth_key: string;
+  user_agent: string | null;
   created_at: string;
   updated_at: string;
 }

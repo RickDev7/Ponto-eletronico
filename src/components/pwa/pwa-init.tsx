@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useTranslations } from "next-intl";
 import { Download, X } from "lucide-react";
 
 interface BeforeInstallPromptEvent extends Event {
@@ -9,6 +10,7 @@ interface BeforeInstallPromptEvent extends Event {
 }
 
 export function PwaInit() {
+  const t = useTranslations("employee.mobile.pwa");
   const [installPrompt, setInstallPrompt] =
     useState<BeforeInstallPromptEvent | null>(null);
   const [showBanner, setShowBanner] = useState(false);
@@ -63,27 +65,27 @@ export function PwaInit() {
   if (!showBanner) return null;
 
   return (
-    <div className="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 w-[calc(100vw-2rem)] max-w-sm">
-      <div className="flex items-center gap-3 rounded-2xl border bg-background/95 backdrop-blur-sm shadow-lg p-3.5">
-        <div className="size-9 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
+    <div className="fixed bottom-[calc(4.5rem+env(safe-area-inset-bottom))] left-1/2 z-50 w-[calc(100vw-2rem)] max-w-sm md:bottom-6">
+      <div className="flex items-center gap-3 rounded-2xl border bg-background/95 p-3.5 shadow-lg backdrop-blur-sm">
+        <div className="flex size-9 shrink-0 items-center justify-center rounded-xl bg-primary/10">
           <Download className="size-4 text-primary" />
         </div>
-        <div className="flex-1 min-w-0">
-          <p className="text-sm font-medium">App installieren</p>
-          <p className="text-xs text-muted-foreground">
-            FeldOps zum Startbildschirm hinzufügen
-          </p>
+        <div className="min-w-0 flex-1">
+          <p className="text-sm font-medium">{t("installTitle")}</p>
+          <p className="text-xs text-muted-foreground">{t("installDescription")}</p>
         </div>
-        <div className="flex items-center gap-1 shrink-0">
+        <div className="flex shrink-0 items-center gap-1">
           <button
+            type="button"
             onClick={handleInstall}
-            className="rounded-lg bg-primary px-3 py-1.5 text-xs font-medium text-primary-foreground hover:bg-primary/90 transition-colors"
+            className="rounded-lg bg-primary px-3 py-1.5 text-xs font-medium text-primary-foreground transition-colors hover:bg-primary/90"
           >
-            Installieren
+            {t("installAction")}
           </button>
           <button
+            type="button"
             onClick={handleDismiss}
-            className="rounded-lg p-1.5 hover:bg-muted transition-colors"
+            className="rounded-lg p-1.5 transition-colors hover:bg-muted"
           >
             <X className="size-3.5 text-muted-foreground" />
           </button>

@@ -1708,7 +1708,20 @@
       "subscriptionInactive": "Sua assinatura está inativa. Atualize o billing para continuar.",
       "planLimitEmployees": "Limite de colaboradores atingido ({limit} vagas no seu plano). Faça upgrade para adicionar mais.",
       "planLimitTasks": "Limite mensal de tarefas atingido ({limit} tarefas no seu plano). Faça upgrade para criar mais.",
-      "acceptTermsRequired": "Você precisa aceitar os Termos de Uso e a Política de Privacidade para continuar."
+      "acceptTermsRequired": "Você precisa aceitar os Termos de Uso e a Política de Privacidade para continuar.",
+      "checkInNoEmployee": "Nenhum perfil de colaborador vinculado a esta conta.",
+      "checkInAlreadyActive": "Já tem um check-in ativo. Faça check-out primeiro.",
+      "checkInLocationRequired": "É necessário permitir a localização para fazer check-in.",
+      "checkInTooFar": "Está a mais de 1 km do local do serviço.",
+      "checkOutNoEmployee": "Nenhum perfil de colaborador vinculado a esta conta.",
+      "employeeAlreadyHasAccess": "Este funcionário já tem acesso ao app mobile.",
+      "emailLinkedToOtherEmployee": "Este e-mail já está vinculado a outro colaborador nesta empresa."
+    },
+    "page": {
+      "title": "Erro inesperado",
+      "description": "Ocorreu um erro inesperado. Tente novamente ou contacte o suporte.",
+      "retry": "Tentar novamente",
+      "home": "Início"
     }
   },
   "status": {
@@ -1757,6 +1770,7 @@
       "rememberMe": "Lembrar meu e-mail",
       "showPassword": "Mostrar senha",
       "hidePassword": "Ocultar senha",
+      "mobileRedirectHint": "Entre com a conta do colaborador (não a conta de gestor) para aceder ao app mobile.",
       "features": {
         "clients": {
           "title": "Clientes",
@@ -1843,6 +1857,13 @@
       "legalNamePlaceholder": "Serviços de Limpeza Ltda.",
       "backToSite": "Voltar ao site",
       "switchAccount": "Entrar com outra conta",
+      "employeePending": {
+        "title": "Conta de colaborador pendente",
+        "description": "A sua conta existe, mas ainda não está ligada à empresa. Peça ao gestor para concluir «Registar acesso mobile» em Funcionários.",
+        "emailHint": "Conta: {email}",
+        "tryAgain": "Tentar entrar novamente",
+        "contactAdmin": "Se o gestor já fez o registo, termine sessão e volte a entrar."
+      },
       "wizard": {
         "stepLabel": "Configuração",
         "welcome": {
@@ -4547,9 +4568,171 @@
     },
     "employees": {
       "title": "Funcionários",
+      "subtitle": "Gerencie colaboradores, equipas, competências, documentos, escalas e horas.",
       "description": "{count} colaboradores na operação.",
-      "empty": { "title": "Sem funcionários", "description": "Adicione colaboradores para gerir escalas e horas." },
-      "columns": { "name": "Nome", "role": "Cargo", "supervisor": "Supervisor", "hours": "Horas/semana", "status": "Status" }
+      "noRole": "Sem cargo",
+      "searchPlaceholder": "Pesquisar por nome, email, cargo ou equipa…",
+      "planningRedirect": "Abra o centro de planeamento para ver a grelha completa de escalas.",
+      "kpi": {
+        "total": "Total funcionários",
+        "active": "Funcionários ativos",
+        "onVacation": "Em férias",
+        "absentToday": "Ausentes hoje",
+        "plannedHours": "Horas planeadas",
+        "workedHours": "Horas trabalhadas"
+      },
+      "actions": {
+        "create": "Novo Funcionário",
+        "invite": "Convidar Funcionário",
+        "registerMobile": "Registar acesso mobile",
+        "import": "Importar Excel",
+        "profile": "Ver Perfil",
+        "edit": "Editar",
+        "plan": "Planejar",
+        "documents": "Documentos",
+        "delete": "Excluir funcionário",
+        "openPlanning": "Abrir planeamento"
+      },
+      "dialogs": {
+        "deleteDescription": "O funcionário {name} será desativado e não poderá mais aceder ao app. Os dados históricos serão mantidos."
+      },
+      "toasts": {
+        "deleted": "Funcionário excluído"
+      },
+      "views": {
+        "cards": "Cartões",
+        "table": "Tabela",
+        "planning": "Planeamento"
+      },
+      "filters": {
+        "all": "Todos",
+        "status": "Status",
+        "team": "Equipa",
+        "supervisor": "Supervisor",
+        "skill": "Competência",
+        "availability": "Disponibilidade"
+      },
+      "availability": {
+        "available": "Disponível",
+        "limited": "Parcialmente ocupado",
+        "overbooked": "Sobrecarregado",
+        "unavailable": "Indisponível"
+      },
+      "card": {
+        "supervisor": "Supervisor"
+      },
+      "empty": {
+        "title": "Nenhum funcionário cadastrado",
+        "description": "Adicione colaboradores para gerir operações, planeamento, escalas, horas e documentos.",
+        "primary": "Cadastrar Funcionário",
+        "secondary": "Importar Excel"
+      },
+      "emptyFiltered": {
+        "title": "Nenhum resultado",
+        "description": "Ajuste os filtros ou a pesquisa para encontrar colaboradores."
+      },
+      "columns": {
+        "name": "Nome",
+        "role": "Cargo",
+        "team": "Equipa",
+        "supervisor": "Supervisor",
+        "hours": "Horas/semana",
+        "status": "Status",
+        "mobile": "App mobile"
+      },
+      "form": {
+        "createTitle": "Novo funcionário",
+        "fullName": "Nome completo",
+        "email": "E-mail",
+        "phone": "Telefone",
+        "jobTitle": "Cargo",
+        "department": "Departamento",
+        "team": "Equipa",
+        "teamPlaceholder": "Selecionar equipa",
+        "supervisor": "Supervisor",
+        "supervisorPlaceholder": "Selecionar supervisor",
+        "hireDate": "Data de admissão",
+        "weeklyHours": "Horas semanais contratadas",
+        "contractType": "Tipo de contrato",
+        "accessRole": "Função de acesso",
+        "status": "Status",
+        "statusActive": "Ativo",
+        "statusInactive": "Inativo",
+        "skills": "Competências",
+        "notes": "Notas",
+        "sendInvite": "Enviar convite por e-mail para acesso ao app",
+        "cancel": "Cancelar",
+        "submit": "Cadastrar funcionário",
+        "created": "Funcionário cadastrado",
+        "roles": {
+          "employee": "Colaborador",
+          "supervisor": "Supervisor",
+          "manager": "Gestor"
+        }
+      },
+      "invite": {
+        "title": "Convidar funcionário",
+        "description": "Cria o registo e envia um convite para definir a palavra-passe e aceder ao app mobile.",
+        "fullName": "Nome completo",
+        "email": "E-mail",
+        "jobTitle": "Cargo",
+        "role": "Função",
+        "team": "Equipa",
+        "cancel": "Cancelar",
+        "submit": "Enviar convite",
+        "success": "Convite enviado com sucesso",
+        "roles": {
+          "employee": "Colaborador",
+          "supervisor": "Supervisor",
+          "manager": "Gestor"
+        }
+      },
+      "registerPwa": {
+        "title": "Registar acesso mobile",
+        "description": "Crie credenciais de login para um colaborador existente aceder ao PWA de campo, sem enviar e-mail de convite.",
+        "employee": "Funcionário",
+        "employeePlaceholder": "Selecionar colaborador",
+        "email": "E-mail de login",
+        "password": "Palavra-passe",
+        "confirmPassword": "Confirmar palavra-passe",
+        "role": "Função de acesso",
+        "mobileUrlHint": "Após o registo, o colaborador pode entrar em {url}",
+        "cancel": "Cancelar",
+        "submit": "Registar acesso",
+        "success": "Acesso mobile criado para {email}",
+        "successHint": "Partilhe o e-mail e a palavra-passe com o colaborador para o primeiro login.",
+        "noEligible": "Todos os colaboradores já têm acesso mobile.",
+        "mobileActive": "App ativo",
+        "mobilePending": "Sem app",
+        "validation": {
+          "passwordUppercase": "A palavra-passe deve incluir pelo menos uma letra maiúscula",
+          "passwordNumber": "A palavra-passe deve incluir pelo menos um número",
+          "passwordMismatch": "As palavras-passe não coincidem"
+        },
+        "roles": {
+          "employee": "Colaborador",
+          "supervisor": "Supervisor",
+          "manager": "Gestor"
+        }
+      },
+      "import": {
+        "title": "Importar colaboradores",
+        "description": "Carregue um ficheiro CSV ou Excel exportado como CSV. Mapeie as colunas antes de importar.",
+        "dropLabel": "Clique para selecionar ficheiro",
+        "formats": "CSV, TSV ou Excel exportado como CSV",
+        "fields": {
+          "fullName": "Nome",
+          "email": "E-mail",
+          "phone": "Telefone",
+          "jobTitle": "Cargo",
+          "teamName": "Equipa",
+          "weeklyHours": "Horas contratadas"
+        },
+        "cancel": "Cancelar",
+        "import": "Importar {count} colaboradores",
+        "noRows": "Nenhuma linha válida encontrada no ficheiro.",
+        "success": "{created} importados · {failed} falharam"
+      }
     },
     "vehicles": {
       "title": "Veículos",
@@ -4694,11 +4877,17 @@
       "documents": "Documentos",
       "noDocuments": "Sem documentos.",
       "tabs": {
-        "personal": "Pessoal",
-        "contract": "Contrato",
-        "schedule": "Agenda",
+        "overview": "Visão Geral",
+        "planning": "Planejamento",
         "hours": "Horas",
-        "history": "Histórico"
+        "documents": "Documentos",
+        "skills": "Competências",
+        "vacations": "Férias",
+        "absences": "Ausências",
+        "history": "Histórico",
+        "personal": "Visão Geral",
+        "contract": "Contrato",
+        "schedule": "Planejamento"
       },
       "historyKinds": {
         "activity": "Atividade",
@@ -4710,7 +4899,7 @@
       "contractTypes": {
         "full_time": "Tempo integral",
         "part_time": "Meio período",
-        "mini_job": "Mini-job",
+        "mini_job": "Freelancer",
         "temporary": "Temporário"
       },
       "hrForm": {
@@ -4815,6 +5004,7 @@
       "grid": {
         "title": "Grelha de planeamento",
         "dragHint": "Arraste turnos entre colaboradores e dias para reagendar.",
+        "addTask": "Atribuir tarefa",
         "markers": {
           "vacation": "Férias",
           "sick": "Baixa",
@@ -4861,7 +5051,8 @@
         "copyWeek": "Copiar semana anterior",
         "copyMonth": "Copiar mês anterior",
         "repeatSchedule": "Repetir escalas",
-        "reports": "Relatórios"
+        "reports": "Relatórios",
+        "newTask": "Nova tarefa"
       },
       "toasts": {
         "copiedWeek": "{count} escalas copiadas para a próxima semana",
@@ -4965,6 +5156,7 @@
         "title": "Minha agenda",
         "subtitle": "Escalas da semana e serviços de hoje",
         "today": "hoje",
+        "viewAll": "Ver tudo",
         "noShiftsToday": "Sem escalas para hoje."
       }
     },
@@ -5069,9 +5261,11 @@
       "title": "Agenda de Campo",
       "today": "Hoje",
       "upcoming": "Próximos",
+      "thisWeek": "Esta semana",
       "continue": "Continuar serviço",
       "activeSession": "Sessão ativa",
-      "emptyToday": "Sem serviços agendados para hoje."
+      "emptyToday": "Sem serviços agendados para hoje.",
+      "openNavigation": "Abrir navegação"
     },
     "checkin": {
       "title": "Check-in no local",
@@ -5138,6 +5332,166 @@
     "empty": {
       "title": "Sem registos no período",
       "description": "Os dados aparecem após check-ins concluídos ou escalas planeadas."
+    }
+  },
+  "employee": {
+    "mobile": {
+      "access": {
+        "pageTitle": "Acesso mobile",
+        "adminTitle": "App mobile só para colaboradores",
+        "adminDescription": "Está autenticado como gestor/admin. O PWA de campo só funciona com a conta do colaborador registada em Workforce → Funcionários.",
+        "profileMissingTitle": "Perfil de colaborador incompleto",
+        "profileMissingDescription": "A sua conta tem acesso à empresa, mas ainda não está ligada a um registo de funcionário. Peça ao gestor para concluir o registo em «Registar acesso mobile».",
+        "stepsTitle": "Como testar o PWA",
+        "stepRegister": "Em Funcionários, use «Registar acesso mobile» e defina e-mail + palavra-passe.",
+        "stepLogout": "Termine sessão com a conta de gestor (botão abaixo).",
+        "stepLogin": "Entre com o e-mail e palavra-passe do colaborador.",
+        "stepOpen": "Abra {url} no telemóvel ou browser.",
+        "urlHint": "URL do app: {url}",
+        "goToEmployees": "Ir para Funcionários",
+        "signOutAndLogin": "Terminar sessão e entrar como colaborador",
+        "backToDashboard": "Voltar ao painel"
+      },
+      "nav": {
+        "home": "Início",
+        "schedule": "Agenda",
+        "hours": "Horas",
+        "notifications": "Alertas",
+        "profile": "Perfil",
+        "sidebarLabel": "Navegação principal",
+        "bottomLabel": "Navegação inferior",
+        "unreadBadge": "{count, plural, one {# alerta por ler} other {# alertas por ler}}"
+      },
+      "schedule": {
+        "title": "Agenda"
+      },
+      "hours": {
+        "title": "Horas",
+        "subtitle": "Registos da semana atual",
+        "weekTotal": "Total esta semana",
+        "weekBalance": "Saldo da semana",
+        "emptyTitle": "Sem registos",
+        "empty": "As horas aparecem após check-outs concluídos."
+      },
+      "reports": {
+        "title": "Relatórios",
+        "subtitle": "Relatórios de serviço concluídos",
+        "description": "Consulte relatórios gerados após check-out.",
+        "emptyTitle": "Nenhum relatório",
+        "emptyDescription": "Conclua serviços com check-out para gerar relatórios automaticamente.",
+        "openPdf": "Abrir PDF",
+        "untitled": "Serviço"
+      },
+      "service": {
+        "client": "Cliente",
+        "address": "Morada",
+        "instructions": "Instruções",
+        "checklist": "Checklist",
+        "startService": "Iniciar serviço",
+        "continueExecution": "Continuar execução",
+        "reportReady": "Relatório disponível",
+        "viewReports": "Ver relatórios",
+        "mapTitle": "Local do serviço",
+        "mapUnavailable": "Localização não disponível no mapa",
+        "openNavigation": "Abrir navegação"
+      },
+      "checkIn": {
+        "title": "Check-in no local",
+        "action": "Iniciar serviço com GPS",
+        "success": "Check-in registado",
+        "notesPlaceholder": "Observações ao iniciar…",
+        "alreadyActive": "Serviço em curso",
+        "continueHint": "Já fez check-in neste serviço.",
+        "continueExecution": "Continuar execução",
+        "gpsLoading": "A obter localização…",
+        "gpsDenied": "Permita o acesso à localização",
+        "gpsUnsupported": "GPS não disponível neste dispositivo",
+        "gpsReady": "Localização obtida",
+        "fromSite": "do local",
+        "tooFar": "Está a mais de 1 km do local. Aproxime-se para fazer check-in.",
+        "offlineQueued": "Check-in guardado offline — será sincronizado automaticamente",
+        "failed": "Não foi possível registar o check-in"
+      },
+      "pwa": {
+        "offline": "Sem ligação — modo offline",
+        "offlinePending": "Offline · {count} ação(ões) pendente(s)",
+        "pendingSync": "{count} ação(ões) a sincronizar",
+        "syncing": "A sincronizar…",
+        "installTitle": "Instalar app",
+        "installDescription": "Adicione o FeldOps ao ecrã inicial",
+        "installAction": "Instalar",
+        "offlinePageTitle": "Sem ligação",
+        "offlinePageDescription": "O FeldOps está offline. Verifique a sua ligação à internet e tente novamente.",
+        "offlinePageRetry": "Tentar novamente"
+      },
+      "vacations": {
+        "title": "Férias",
+        "subtitle": "Peça férias e acompanhe o estado dos pedidos",
+        "description": "Peça férias e acompanhe o estado dos pedidos.",
+        "new": "Novo pedido",
+        "formTitle": "Pedido de férias",
+        "startDate": "Data de início",
+        "endDate": "Data de fim",
+        "notes": "Notas (opcional)",
+        "notesPlaceholder": "Motivo ou observações…",
+        "submit": "Submeter pedido",
+        "cancel": "Cancelar pedido",
+        "created": "Pedido submetido",
+        "cancelled": "Pedido cancelado",
+        "submitted": "Submetido em",
+        "emptyTitle": "Sem pedidos de férias",
+        "emptyDescription": "Submeta um pedido para aprovação da equipa.",
+        "summary": {
+          "pending": "Pendentes",
+          "upcoming": "Aprovadas",
+          "daysApproved": "Dias aprovados"
+        },
+        "status": {
+          "pending": "Pendente",
+          "approved": "Aprovado",
+          "rejected": "Rejeitado",
+          "cancelled": "Cancelado"
+        }
+      },
+      "notifications": {
+        "title": "Notificações",
+        "description": "Alertas push e avisos de novos serviços.",
+        "emptyTitle": "Sem alertas",
+        "emptyDescription": "Quando lhe for atribuído um serviço ou houver novidades, aparecerão aqui.",
+        "unreadCount": "{count} por ler",
+        "markAllRead": "Marcar tudo como lido",
+        "enablePushTitle": "Ativar alertas push",
+        "enablePushDescription": "Receba avisos mesmo com a app fechada.",
+        "enablePushAction": "Ativar",
+        "pushEnabled": "Alertas push ativados",
+        "pushDenied": "Permissão de notificações negada",
+        "pushDeniedHint": "Ative as notificações nas definições do browser para receber alertas push.",
+        "pushNotConfigured": "Push ainda não configurado neste ambiente",
+        "pushFailed": "Não foi possível ativar os alertas push",
+        "kinds": {
+          "task_assigned": "Novo serviço",
+          "vacation_approved": "Férias aprovadas",
+          "vacation_rejected": "Férias recusadas",
+          "schedule_change": "Alteração de agenda"
+        }
+      },
+      "profile": {
+        "title": "Perfil",
+        "subtitle": "Os seus dados de colaborador",
+        "role": "Função",
+        "roleEmployee": "Colaborador",
+        "email": "E-mail",
+        "phone": "Telefone",
+        "jobTitle": "Cargo",
+        "vacations": "Pedidos de férias",
+        "vacationsHint": "Solicitar e acompanhar férias",
+        "shortcuts": {
+          "hours": "Horas",
+          "reports": "Relatórios",
+          "notifications": "Alertas",
+          "vacations": "Férias"
+        }
+      }
     }
   }
 }

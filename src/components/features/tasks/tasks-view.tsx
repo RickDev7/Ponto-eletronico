@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { useLocale, useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
@@ -132,6 +132,9 @@ interface TasksViewProps {
   canWrite: boolean;
   memberRole: MemberRole;
   totalCount?: number;
+  autoCreate?: boolean;
+  prefillEmployeeId?: string;
+  prefillScheduledDate?: string;
 }
 
 export function TasksView({
@@ -142,6 +145,9 @@ export function TasksView({
   canWrite,
   memberRole,
   totalCount,
+  autoCreate = false,
+  prefillEmployeeId,
+  prefillScheduledDate,
 }: TasksViewProps) {
   const t = useTranslations("tasks");
   const tStatus = useTranslations("status");
@@ -156,6 +162,12 @@ export function TasksView({
   const [createOpen, setCreateOpen] = useState(false);
   const [activeTab, setActiveTab] = useState("active");
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
+
+  useEffect(() => {
+    if (autoCreate && canWrite) {
+      setCreateOpen(true);
+    }
+  }, [autoCreate, canWrite]);
 
   function toggleSelect(id: string) {
     setSelectedIds((prev) => {
@@ -526,6 +538,8 @@ export function TasksView({
             slug={slug}
             addresses={addresses}
             employees={employees}
+            prefillEmployeeId={prefillEmployeeId}
+            prefillScheduledDate={prefillScheduledDate}
             onSuccess={() => setCreateOpen(false)}
           />
         </DialogContent>
@@ -579,11 +593,15 @@ function TaskForm({
   slug,
   addresses,
   employees,
+  prefillEmployeeId,
+  prefillScheduledDate,
   onSuccess,
 }: {
   slug: string;
   addresses: Address[];
   employees: Employee[];
+  prefillEmployeeId?: string;
+  prefillScheduledDate?: string;
   onSuccess: () => void;
 }) {
   const t = useTranslations("tasks");
@@ -601,11 +619,11 @@ function TaskForm({
       serviceType: "",
       title: "",
       description: "",
-      scheduledDate: new Date().toISOString().split("T")[0],
+      scheduledDate: prefillScheduledDate ?? new Date().toISOString().split("T")[0],
       scheduledStart: "",
       scheduledEnd: "",
       priority: "normal",
-      employeeIds: [],
+      employeeIds: prefillEmployeeId ? [prefillEmployeeId] : [],
     },
   });
 

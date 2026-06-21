@@ -24,16 +24,149 @@ import { loadActiveVehicleUsageByTasks, loadAvailableVehicles } from "@/lib/vehi
 export async function loadWorkforceEmployees(companyId: string): Promise<WorkforceEmployeeRow[]> {
   await syncEmployeeAvailabilityStatuses(companyId);
   const supabase = await createClient();
-  const { data } = await supabase
+
+  const { data, error } = await supabase
     .from("employees")
-    .select(`
-      *,
-      supervisor:employees!employees_supervisor_id_fkey(full_name)
-    `)
+    .select("*")
     .eq("company_id", companyId)
     .neq("status", "terminated")
     .order("full_name");
-  return (data ?? []) as WorkforceEmployeeRow[];
+
+  if (error) {
+    console.error("[loadWorkforceEmployees]", error.message);
+    return [];
+  }
+
+  const rows = (data ?? []) as WorkforceEmployeeRow[];
+  const supervisorIds = [
+    ...new Set(rows.map((e) => e.supervisor_id).filter(Boolean)),
+  ] as string[];
+
+  if (supervisorIds.length === 0) return rows;
+
+  const { data: supervisors } = await supabase
+    .from("employees")
+    .select("id, full_name")
+    .eq("company_id", companyId)
+    .in("id", supervisorIds);
+
+  const nameById = new Map(
+    (supervisors ?? []).map((s) => [s.id as string, s.full_name as string | null]),
+  );
+
+  return rows.map((emp) => ({
+    ...emp,
+    supervisor: emp.supervisor_id
+      ? { full_name: nameById.get(emp.supervisor_id) ?? null }
+      : null,
+  }));
+}
+
+export async function loadWorkforceEmployeesHub(companyId: string) {
+  await syncEmployeeAvailabilityStatuses(companyId);
+  const supabase = await createClient();
+  const weekStart = new Date();
+  weekStart.setDate(weekStart.getDate() - weekStart.getDay() + 1);
+  const weekEnd = new Date(weekStart);
+  weekEnd.setDate(weekEnd.getDate() + 6);
+  const weekStartStr = weekStart.toISOString().slice(0, 10);
+  const weekEndStr = weekEnd.toISOString().slice(0, 10);
+
+  const [
+    employees,
+    teamMembers,
+    employeeSkills,
+    companySkills,
+    teams,
+    vacations,
+    absences,
+    shifts,
+    timeSummaries,
+  ] = await Promise.all([
+    loadWorkforceEmployees(companyId),
+    supabase
+      .from("team_members")
+      .select("employee_id, team_id, team:teams(id, name)")
+      .eq("company_id", companyId),
+    supabase
+      .from("employee_skills")
+      .select("employee_id, skill_id, skill:company_skills(id, name)")
+      .eq("company_id", companyId),
+    loadCompanySkills(companyId),
+    supabase.from("teams").select("id, name").eq("company_id", companyId).order("name"),
+    loadVacationRequests(companyId),
+    loadAbsences(companyId),
+    loadShifts(companyId, weekStartStr, weekEndStr),
+    loadTimeAccountSummaries(companyId),
+  ]);
+
+  const teamByEmployee = new Map<string, { teamId: string; teamName: string }>();
+  for (const row of teamMembers.data ?? []) {
+    const team = Array.isArray(row.team) ? row.team[0] : row.team;
+    if (team?.id && team?.name) {
+      teamByEmployee.set(row.employee_id as string, {
+        teamId: team.id as string,
+        teamName: team.name as string,
+      });
+    }
+  }
+
+  const skillsByEmployee = new Map<string, { ids: string[]; names: string[] }>();
+  for (const row of employeeSkills.data ?? []) {
+    const skill = Array.isArray(row.skill) ? row.skill[0] : row.skill;
+    const current = skillsByEmployee.get(row.employee_id as string) ?? { ids: [], names: [] };
+    if (skill?.id && skill?.name) {
+      current.ids.push(skill.id as string);
+      current.names.push(skill.name as string);
+    }
+    skillsByEmployee.set(row.employee_id as string, current);
+  }
+
+  const timeByEmployee = new Map(
+    timeSummaries.map((s) => [s.employeeId, s]),
+  );
+
+  const { computeEmployeeAvailability } = await import("@/lib/workforce/planning-data");
+  const { parseDepartmentFromNotes } = await import("@/lib/workforce/employees-hub");
+
+  const enriched = employees.map((emp) => {
+    const team = teamByEmployee.get(emp.id);
+    const skills = skillsByEmployee.get(emp.id) ?? { ids: [], names: [] };
+    const time = timeByEmployee.get(emp.id);
+    const card = computeEmployeeAvailability(
+      emp,
+      shifts,
+      vacations,
+      absences,
+      weekStartStr,
+      weekEndStr,
+      time?.istMinutes ?? 0,
+      skills.names,
+    );
+
+    return {
+      ...emp,
+      teamId: team?.teamId ?? null,
+      teamName: team?.teamName ?? null,
+      department: parseDepartmentFromNotes(emp.notes),
+      skillIds: skills.ids,
+      skillNames: skills.names,
+      availability: card.availability,
+      plannedMinutesWeek: card.plannedMinutes,
+      workedMinutesWeek: time?.istMinutes ?? 0,
+      memberRole: null,
+      hasMobileAccess: Boolean(emp.member_id),
+    };
+  });
+
+  return {
+    employees: enriched,
+    teams: (teams.data ?? []) as Array<{ id: string; name: string }>,
+    skills: companySkills,
+    supervisors: employees
+      .filter((e) => e.status === "active")
+      .map((e) => ({ id: e.id, full_name: e.full_name })),
+  };
 }
 
 async function attachDocumentSignedUrls<T extends { storage_path?: string | null }>(
@@ -128,7 +261,7 @@ export async function loadEmployeeProfile(companyId: string, employeeId: string)
   const supabase = await createClient();
 
   const [
-    { data: employee },
+    { data: employee, error: employeeError },
     { data: teamMember },
     { data: vacations },
     { data: absences },
@@ -139,7 +272,7 @@ export async function loadEmployeeProfile(companyId: string, employeeId: string)
   ] = await Promise.all([
     supabase
       .from("employees")
-      .select("*, supervisor:employees!employees_supervisor_id_fkey(full_name)")
+      .select("*")
       .eq("id", employeeId)
       .eq("company_id", companyId)
       .single(),
@@ -197,8 +330,25 @@ export async function loadEmployeeProfile(companyId: string, employeeId: string)
   const absenceRows = absences ?? [];
   const documentRows = documents ?? [];
 
+  let employeeRow = employee as WorkforceEmployeeRow | null;
+  if (employeeError) {
+    console.error("[loadEmployeeProfile]", employeeError.message);
+    employeeRow = null;
+  } else if (employeeRow?.supervisor_id) {
+    const { data: supervisor } = await supabase
+      .from("employees")
+      .select("full_name")
+      .eq("id", employeeRow.supervisor_id)
+      .eq("company_id", companyId)
+      .maybeSingle();
+    employeeRow = {
+      ...employeeRow,
+      supervisor: supervisor ? { full_name: supervisor.full_name } : null,
+    };
+  }
+
   return {
-    employee: employee ? { ...employee, team: teamMember } : null,
+    employee: employeeRow ? { ...employeeRow, team: teamMember } : null,
     vacations: vacationRows,
     absences: absenceRows,
     timeEntries: timeEntries ?? [],
@@ -414,20 +564,24 @@ export async function loadTimesheetEntries(companyId: string, from: string, to: 
     .not("check_out_at", "is", null)
     .order("check_in_at", { ascending: false });
 
-  return (data ?? []).map((row) => ({
-    id: row.id as string,
-    employeeId: row.employee_id as string,
-    employeeName: Array.isArray(row.employee)
-      ? row.employee[0]?.full_name ?? "—"
-      : row.employee?.full_name ?? "—",
-    date: (row.check_in_at as string).slice(0, 10),
-    minutes: row.check_out_at
-      ? minutesBetween(row.check_in_at as string, row.check_out_at as string)
-      : 0,
-    taskTitle: Array.isArray(row.task)
-      ? row.task[0]?.title ?? "—"
-      : row.task?.title ?? "—",
-  }));
+  return (data ?? []).map((row) => {
+    const employee = row.employee as { full_name?: string } | Array<{ full_name?: string }> | null;
+    const task = row.task as { title?: string } | Array<{ title?: string }> | null;
+    return {
+      id: row.id as string,
+      employeeId: row.employee_id as string,
+      employeeName: Array.isArray(employee)
+        ? employee[0]?.full_name ?? "—"
+        : employee?.full_name ?? "—",
+      date: (row.check_in_at as string).slice(0, 10),
+      minutes: row.check_out_at
+        ? minutesBetween(row.check_in_at as string, row.check_out_at as string)
+        : 0,
+      taskTitle: Array.isArray(task)
+        ? task[0]?.title ?? "—"
+        : task?.title ?? "—",
+    };
+  });
 }
 
 export async function loadEmployeeDocuments(companyId: string) {

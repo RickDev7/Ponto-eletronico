@@ -48,7 +48,7 @@ const NAV_DEFINITIONS: Array<
   | { type: "group"; titleKey: string; icon: LucideIcon; minRole: MemberRole; basePath: (s: string) => string; children: Array<{ titleKey: string; href: (s: string) => string }> }
 > = [
   { type: "item", titleKey: "dashboard", href: (s) => `/${s}`, icon: LayoutDashboard, minRole: "employee" },
-  { type: "item", titleKey: "myTasks", href: (s) => `/${s}/minha-area`, icon: UserCircle2, minRole: "employee" },
+  { type: "item", titleKey: "myTasks", href: (s) => `/${s}/mobile`, icon: UserCircle2, minRole: "employee" },
   { type: "item", titleKey: "tasks", href: (s) => `/${s}/tasks`, icon: ClipboardList, minRole: "employee" },
   {
     type: "group",

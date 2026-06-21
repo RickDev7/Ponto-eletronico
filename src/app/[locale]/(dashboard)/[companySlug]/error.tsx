@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { useTranslations } from "next-intl";
 import { AlertTriangle, RefreshCw } from "lucide-react";
 
 export default function DashboardError({
@@ -10,25 +11,26 @@ export default function DashboardError({
   error: Error & { digest?: string };
   reset: () => void;
 }) {
+  const t = useTranslations("errors.page");
+
   useEffect(() => {
     console.error(error);
   }, [error]);
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-[60vh] p-8 text-center">
-      <div className="size-14 rounded-2xl bg-destructive/10 flex items-center justify-center mb-4">
+    <div className="flex min-h-[60vh] flex-col items-center justify-center p-8 text-center">
+      <div className="mb-4 flex size-14 items-center justify-center rounded-2xl bg-destructive/10">
         <AlertTriangle className="size-7 text-destructive" />
       </div>
-      <h2 className="text-base font-semibold mb-2">Etwas ist schiefgelaufen</h2>
-      <p className="text-sm text-muted-foreground mb-6 max-w-xs">
-        Ein unerwarteter Fehler ist aufgetreten. Bitte versuchen Sie es erneut.
-      </p>
+      <h2 className="mb-2 text-base font-semibold">{t("title")}</h2>
+      <p className="mb-6 max-w-xs text-sm text-muted-foreground">{t("description")}</p>
       <button
+        type="button"
         onClick={reset}
-        className="inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90 transition-colors"
+        className="inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
       >
         <RefreshCw className="size-3.5" />
-        Erneut versuchen
+        {t("retry")}
       </button>
     </div>
   );

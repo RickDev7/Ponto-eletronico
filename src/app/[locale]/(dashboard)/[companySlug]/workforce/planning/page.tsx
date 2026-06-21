@@ -10,7 +10,7 @@ import { LOCALE_DATE_MAP } from "@/lib/i18n/metadata";
 
 interface PageProps {
   params: Promise<{ companySlug: string }>;
-  searchParams: Promise<{ view?: string; week?: string }>;
+  searchParams: Promise<{ view?: string; week?: string; employee?: string }>;
 }
 
 function weekStart(date: Date): Date {
@@ -119,6 +119,7 @@ export default async function PersonnelPlanningPage({ params, searchParams }: Pa
         prevHref={ROUTES.workforcePlanning(companySlug, routeParams)}
         nextHref={ROUTES.workforcePlanning(companySlug, routeParamsNext)}
         todayHref={ROUTES.workforcePlanning(companySlug, { view })}
+        initialEmployeeId={sp.employee ?? null}
         canWrite={can(ctx.membership.role, "tasks:write")}
         employees={data.employees}
         vacations={data.vacations}

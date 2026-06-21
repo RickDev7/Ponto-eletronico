@@ -25,6 +25,9 @@ export type Permission =
   | "reports:generate"
   | "reports:delete"
   | "activity:read"
+  | "vacations:request"
+  | "vacations:read"
+  | "notifications:read"
   | "invites:manage"
   | "finance:read"
   | "finance:write"
@@ -149,6 +152,9 @@ const ROLE_PERMISSIONS: Record<MemberRole, readonly Permission[]> = {
     "checkins:write",
     "photos:upload",
     "activity:read",
+    "vacations:request",
+    "vacations:read",
+    "notifications:read",
   ],
   client: ["company:read", "portal:read"],
 };

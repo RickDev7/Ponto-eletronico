@@ -3,7 +3,7 @@
 import { useMemo, useState, useTransition, type ReactNode } from "react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
-import { AlertTriangle, Car, ChevronLeft, ChevronRight } from "lucide-react";
+import { AlertTriangle, Car, ChevronLeft, ChevronRight, Plus } from "lucide-react";
 import { toast } from "sonner";
 import { ROUTES } from "@/config/constants";
 import { moveShiftAction } from "@/actions/workforce/actions";
@@ -340,7 +340,22 @@ export function PlanningGrid({
                   <EmployeeRowHeader empId={emp.id} name={emp.full_name} />
                   <DropCell employeeId={emp.id} date={dates[0]} className="rounded-b-lg border-0">
                     {dayShifts.length === 0 ? (
-                      <p className="p-2 text-[10px] text-muted-foreground">{t("noShiftsDay")}</p>
+                      canWrite &&
+                      !isEmployeeBlockedOnDate(emp.id, dates[0], vacations, absences) ? (
+                        <Link
+                          href={ROUTES.tasks(slug, {
+                            create: true,
+                            employee: emp.id,
+                            date: dates[0],
+                          })}
+                          className="flex min-h-[3rem] items-center justify-center gap-1.5 rounded-md border border-dashed border-border/60 p-2 text-[10px] text-muted-foreground hover:border-primary/40 hover:bg-primary/5 hover:text-primary"
+                        >
+                          <Plus className="size-3.5" />
+                          {tPlan("grid.addTask")}
+                        </Link>
+                      ) : (
+                        <p className="p-2 text-[10px] text-muted-foreground">{t("noShiftsDay")}</p>
+                      )
                     ) : (
                       <div className="grid gap-1.5 p-1.5 sm:grid-cols-2 lg:grid-cols-3">
                         {dayShifts.map((shift) => (
@@ -400,6 +415,21 @@ export function PlanningGrid({
                           {(shiftsByCell.get(cellKey(emp.id, date)) ?? []).map((shift) => (
                             <ShiftCard key={shift.assignmentId} shift={shift} compact />
                           ))}
+                          {canWrite &&
+                            (shiftsByCell.get(cellKey(emp.id, date)) ?? []).length === 0 &&
+                            !isEmployeeBlockedOnDate(emp.id, date, vacations, absences) && (
+                              <Link
+                                href={ROUTES.tasks(slug, {
+                                  create: true,
+                                  employee: emp.id,
+                                  date,
+                                })}
+                                className="flex min-h-[2rem] items-center justify-center rounded-md border border-dashed border-border/60 text-muted-foreground/60 transition-colors hover:border-primary/40 hover:bg-primary/5 hover:text-primary"
+                                title={tPlan("grid.addTask")}
+                              >
+                                <Plus className="size-3.5" />
+                              </Link>
+                            )}
                         </div>
                       </DropCell>
                     </div>

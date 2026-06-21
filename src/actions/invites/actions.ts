@@ -1,7 +1,8 @@
 "use server";
 
-import { redirect } from "next/navigation";
+import { redirectTo } from "@/i18n/server-redirect";
 import { createClient } from "@/lib/supabase/server";
+import { createAdminClient } from "@/lib/supabase/admin";
 import { getSession } from "@/lib/auth/session";
 import { actionError } from "@/lib/i18n/action-error";
 import type { ActionResult } from "@/actions/auth/actions";
@@ -57,7 +58,7 @@ export async function acceptInvite(
   }
 
   const user = await getSession();
-  if (!user) redirect("/login");
+  if (!user) redirectTo("/login");
 
   const supabase = await createClient();
 
@@ -68,10 +69,10 @@ export async function acceptInvite(
     .maybeSingle();
 
   if (!invite || invite.accepted_at) {
-    redirect("/onboarding?error=invite_invalid");
+    redirectTo("/onboarding?error=invite_invalid");
   }
   if (new Date(invite.expires_at as string) < new Date()) {
-    redirect("/onboarding?error=invite_expired");
+    redirectTo("/onboarding?error=invite_expired");
   }
 
   const { data: existing } = await supabase
@@ -81,17 +82,44 @@ export async function acceptInvite(
     .eq("company_id", invite.company_id)
     .maybeSingle();
 
+  let memberId: string;
+
   if (!existing) {
-    const { error: memberError } = await supabase
+    const { data: member, error: memberError } = await supabase
       .from("company_members")
       .insert({
         user_id: user.id,
         company_id: invite.company_id,
         role: invite.role as string,
         status: "active",
-      });
+        joined_at: new Date().toISOString(),
+      })
+      .select("id")
+      .single();
 
-    if (memberError) redirect("/onboarding?error=accept_failed");
+    if (memberError || !member) redirectTo("/onboarding?error=accept_failed");
+    memberId = member.id as string;
+  } else {
+    memberId = existing.id as string;
+  }
+
+  const employeeIdFromMeta = user.user_metadata?.employee_id as string | undefined;
+  const admin = createAdminClient();
+
+  if (employeeIdFromMeta) {
+    await admin
+      .from("employees")
+      .update({ member_id: memberId, email: invite.email as string, status: "active" })
+      .eq("id", employeeIdFromMeta)
+      .eq("company_id", invite.company_id)
+      .is("member_id", null);
+  } else {
+    await admin
+      .from("employees")
+      .update({ member_id: memberId, status: "active" })
+      .eq("company_id", invite.company_id)
+      .eq("email", invite.email as string)
+      .is("member_id", null);
   }
 
   await supabase

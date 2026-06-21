@@ -131,7 +131,7 @@ export function AppHeader({ ctx }: AppHeaderProps) {
               <DropdownMenuSeparator />
               <DropdownMenuItem
                 render={
-                  <Link href={`/${ctx.company.slug}/minha-area`} className="flex items-center gap-2" />
+                  <Link href={`/${ctx.company.slug}/mobile`} className="flex items-center gap-2" />
                 }
               >
                 <UserCircle2 className="size-4" />

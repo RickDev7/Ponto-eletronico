@@ -3,7 +3,6 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { Providers } from "@/components/providers";
 import { ThemeScript } from "@/components/theme";
 import { UiDensityScript } from "@/components/ui-density-script";
-import { PwaInit } from "@/components/pwa/pwa-init";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -49,7 +48,6 @@ export default function RootLayout({
       </head>
       <body className="min-h-full antialiased" suppressHydrationWarning>
         <Providers>{children}</Providers>
-        <PwaInit />
       </body>
     </html>
   );

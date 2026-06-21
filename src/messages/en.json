@@ -1708,7 +1708,20 @@
       "subscriptionInactive": "Your subscription is inactive. Update billing to continue.",
       "planLimitEmployees": "Employee limit reached ({limit} seats on your plan). Upgrade to add more.",
       "planLimitTasks": "Monthly task limit reached ({limit} tasks on your plan). Upgrade to create more.",
-      "acceptTermsRequired": "You must accept the Terms of Service and Privacy Policy to continue."
+      "acceptTermsRequired": "You must accept the Terms of Service and Privacy Policy to continue.",
+      "checkInNoEmployee": "No employee profile linked to this account.",
+      "checkInAlreadyActive": "You already have an active check-in. Check out first.",
+      "checkInLocationRequired": "Location access is required for check-in.",
+      "checkInTooFar": "You are more than 1 km from the service location.",
+      "checkOutNoEmployee": "No employee profile linked to this account.",
+      "employeeAlreadyHasAccess": "This employee already has mobile app access.",
+      "emailLinkedToOtherEmployee": "This email is already linked to another employee in this company."
+    },
+    "page": {
+      "title": "Unexpected error",
+      "description": "An unexpected error occurred. Please try again or contact support.",
+      "retry": "Try again",
+      "home": "Home"
     }
   },
   "status": {
@@ -1757,6 +1770,7 @@
       "rememberMe": "Remember my email",
       "showPassword": "Show password",
       "hidePassword": "Hide password",
+      "mobileRedirectHint": "Sign in with the employee account (not your manager account) to access the mobile app.",
       "features": {
         "clients": {
           "title": "Clients",
@@ -1843,6 +1857,13 @@
       "legalNamePlaceholder": "Cleaning Services Ltd.",
       "backToSite": "Back to site",
       "switchAccount": "Sign in with another account",
+      "employeePending": {
+        "title": "Employee account pending",
+        "description": "Your account exists but is not linked to a company yet. Ask a manager to complete “Register mobile access” under Employees.",
+        "emailHint": "Account: {email}",
+        "tryAgain": "Try signing in again",
+        "contactAdmin": "If registration was already done, sign out and sign in again."
+      },
       "wizard": {
         "stepLabel": "Setup",
         "welcome": {
@@ -4547,9 +4568,171 @@
     },
     "employees": {
       "title": "Employees",
+      "subtitle": "Manage staff, teams, skills, documents, schedules, and hours.",
       "description": "{count} employees in operations.",
-      "empty": { "title": "No employees", "description": "Add employees to manage shifts and hours." },
-      "columns": { "name": "Name", "role": "Role", "supervisor": "Supervisor", "hours": "Hours/week", "status": "Status" }
+      "noRole": "No role",
+      "searchPlaceholder": "Search by name, email, role, or team…",
+      "planningRedirect": "Open the planning center for the full scheduling grid.",
+      "kpi": {
+        "total": "Total employees",
+        "active": "Active employees",
+        "onVacation": "On vacation",
+        "absentToday": "Absent today",
+        "plannedHours": "Planned hours",
+        "workedHours": "Worked hours"
+      },
+      "actions": {
+        "create": "New Employee",
+        "invite": "Invite Employee",
+        "registerMobile": "Register mobile access",
+        "import": "Import Excel",
+        "profile": "View Profile",
+        "edit": "Edit",
+        "plan": "Plan",
+        "documents": "Documents",
+        "delete": "Delete employee",
+        "openPlanning": "Open planning"
+      },
+      "dialogs": {
+        "deleteDescription": "Employee {name} will be deactivated and will no longer be able to access the app. Historical data will be kept."
+      },
+      "toasts": {
+        "deleted": "Employee deleted"
+      },
+      "views": {
+        "cards": "Cards",
+        "table": "Table",
+        "planning": "Planning"
+      },
+      "filters": {
+        "all": "All",
+        "status": "Status",
+        "team": "Team",
+        "supervisor": "Supervisor",
+        "skill": "Skill",
+        "availability": "Availability"
+      },
+      "availability": {
+        "available": "Available",
+        "limited": "Partially booked",
+        "overbooked": "Overbooked",
+        "unavailable": "Unavailable"
+      },
+      "card": {
+        "supervisor": "Supervisor"
+      },
+      "empty": {
+        "title": "No employees yet",
+        "description": "Add staff to manage operations, planning, schedules, hours, and documents.",
+        "primary": "Add Employee",
+        "secondary": "Import Excel"
+      },
+      "emptyFiltered": {
+        "title": "No matches",
+        "description": "Adjust filters or search to find employees."
+      },
+      "columns": {
+        "name": "Name",
+        "role": "Role",
+        "team": "Team",
+        "supervisor": "Supervisor",
+        "hours": "Hours/week",
+        "status": "Status",
+        "mobile": "Mobile app"
+      },
+      "form": {
+        "createTitle": "New employee",
+        "fullName": "Full name",
+        "email": "Email",
+        "phone": "Phone",
+        "jobTitle": "Job title",
+        "department": "Department",
+        "team": "Team",
+        "teamPlaceholder": "Select team",
+        "supervisor": "Supervisor",
+        "supervisorPlaceholder": "Select supervisor",
+        "hireDate": "Hire date",
+        "weeklyHours": "Contracted weekly hours",
+        "contractType": "Contract type",
+        "accessRole": "Access role",
+        "status": "Status",
+        "statusActive": "Active",
+        "statusInactive": "Inactive",
+        "skills": "Skills",
+        "notes": "Notes",
+        "sendInvite": "Send email invite for app access",
+        "cancel": "Cancel",
+        "submit": "Create employee",
+        "created": "Employee created",
+        "roles": {
+          "employee": "Employee",
+          "supervisor": "Supervisor",
+          "manager": "Manager"
+        }
+      },
+      "invite": {
+        "title": "Invite employee",
+        "description": "Creates the record and sends an invite to set a password and access the mobile app.",
+        "fullName": "Full name",
+        "email": "Email",
+        "jobTitle": "Job title",
+        "role": "Role",
+        "team": "Team",
+        "cancel": "Cancel",
+        "submit": "Send invite",
+        "success": "Invite sent successfully",
+        "roles": {
+          "employee": "Employee",
+          "supervisor": "Supervisor",
+          "manager": "Manager"
+        }
+      },
+      "registerPwa": {
+        "title": "Register mobile access",
+        "description": "Create login credentials for an existing employee to access the field PWA without sending an invite email.",
+        "employee": "Employee",
+        "employeePlaceholder": "Select employee",
+        "email": "Login email",
+        "password": "Password",
+        "confirmPassword": "Confirm password",
+        "role": "Access role",
+        "mobileUrlHint": "After registration, the employee can sign in at {url}",
+        "cancel": "Cancel",
+        "submit": "Register access",
+        "success": "Mobile access created for {email}",
+        "successHint": "Share the email and password with the employee for their first login.",
+        "noEligible": "All employees already have mobile access.",
+        "mobileActive": "App active",
+        "mobilePending": "No app",
+        "validation": {
+          "passwordUppercase": "Password must include at least one uppercase letter",
+          "passwordNumber": "Password must include at least one number",
+          "passwordMismatch": "Passwords do not match"
+        },
+        "roles": {
+          "employee": "Employee",
+          "supervisor": "Supervisor",
+          "manager": "Manager"
+        }
+      },
+      "import": {
+        "title": "Import employees",
+        "description": "Upload a CSV file or Excel exported as CSV. Map columns before importing.",
+        "dropLabel": "Click to select file",
+        "formats": "CSV, TSV, or Excel exported as CSV",
+        "fields": {
+          "fullName": "Name",
+          "email": "Email",
+          "phone": "Phone",
+          "jobTitle": "Role",
+          "teamName": "Team",
+          "weeklyHours": "Contracted hours"
+        },
+        "cancel": "Cancel",
+        "import": "Import {count} employees",
+        "noRows": "No valid rows found in the file.",
+        "success": "{created} imported · {failed} failed"
+      }
     },
     "vehicles": {
       "title": "Vehicles",
@@ -4694,11 +4877,17 @@
       "documents": "Documents",
       "noDocuments": "No documents.",
       "tabs": {
-        "personal": "Personal",
-        "contract": "Contract",
-        "schedule": "Schedule",
+        "overview": "Overview",
+        "planning": "Planning",
         "hours": "Hours",
-        "history": "History"
+        "documents": "Documents",
+        "skills": "Skills",
+        "vacations": "Vacation",
+        "absences": "Absences",
+        "history": "History",
+        "personal": "Overview",
+        "contract": "Contract",
+        "schedule": "Planning"
       },
       "historyKinds": {
         "activity": "Activity",
@@ -4710,7 +4899,7 @@
       "contractTypes": {
         "full_time": "Full-time",
         "part_time": "Part-time",
-        "mini_job": "Mini-job",
+        "mini_job": "Freelancer",
         "temporary": "Temporary"
       },
       "hrForm": {
@@ -4815,6 +5004,7 @@
       "grid": {
         "title": "Planning grid",
         "dragHint": "Drag shifts between employees and days to reschedule.",
+        "addTask": "Assign task",
         "markers": {
           "vacation": "Vacation",
           "sick": "Sick",
@@ -4861,7 +5051,8 @@
         "copyWeek": "Copy previous week",
         "copyMonth": "Copy previous month",
         "repeatSchedule": "Repeat schedules",
-        "reports": "Reports"
+        "reports": "Reports",
+        "newTask": "New task"
       },
       "toasts": {
         "copiedWeek": "{count} shifts copied to next week",
@@ -4965,6 +5156,7 @@
         "title": "My schedule",
         "subtitle": "Weekly shifts and today's services",
         "today": "today",
+        "viewAll": "View all",
         "noShiftsToday": "No shifts scheduled for today."
       }
     },
@@ -5069,9 +5261,11 @@
       "title": "Field Schedule",
       "today": "Today",
       "upcoming": "Upcoming",
+      "thisWeek": "This week",
       "continue": "Continue service",
       "activeSession": "Active session",
-      "emptyToday": "No services scheduled for today."
+      "emptyToday": "No services scheduled for today.",
+      "openNavigation": "Open navigation"
     },
     "checkin": {
       "title": "On-site check-in",
@@ -5138,6 +5332,166 @@
     "empty": {
       "title": "No records in this period",
       "description": "Data appears after completed check-ins or scheduled shifts."
+    }
+  },
+  "employee": {
+    "mobile": {
+      "access": {
+        "pageTitle": "Mobile access",
+        "adminTitle": "Mobile app is for field employees only",
+        "adminDescription": "You are signed in as a manager/admin. The field PWA only works with an employee account registered under Workforce → Employees.",
+        "profileMissingTitle": "Employee profile incomplete",
+        "profileMissingDescription": "Your account has company access but is not linked to an employee record yet. Ask a manager to complete registration via “Register mobile access”.",
+        "stepsTitle": "How to test the PWA",
+        "stepRegister": "In Employees, use “Register mobile access” and set email + password.",
+        "stepLogout": "Sign out from your manager account (button below).",
+        "stepLogin": "Sign in with the employee email and password.",
+        "stepOpen": "Open {url} on a phone or browser.",
+        "urlHint": "App URL: {url}",
+        "goToEmployees": "Go to Employees",
+        "signOutAndLogin": "Sign out and sign in as employee",
+        "backToDashboard": "Back to dashboard"
+      },
+      "nav": {
+        "home": "Home",
+        "schedule": "Schedule",
+        "hours": "Hours",
+        "notifications": "Alerts",
+        "profile": "Profile",
+        "sidebarLabel": "Main navigation",
+        "bottomLabel": "Bottom navigation",
+        "unreadBadge": "{count, plural, one {# unread alert} other {# unread alerts}}"
+      },
+      "schedule": {
+        "title": "Schedule"
+      },
+      "hours": {
+        "title": "Hours",
+        "subtitle": "Current week records",
+        "weekTotal": "Total this week",
+        "weekBalance": "Week balance",
+        "emptyTitle": "No records",
+        "empty": "Hours appear after completed check-outs."
+      },
+      "reports": {
+        "title": "Reports",
+        "subtitle": "Completed service reports",
+        "description": "View reports generated after check-out.",
+        "emptyTitle": "No reports yet",
+        "emptyDescription": "Complete services with check-out to generate reports automatically.",
+        "openPdf": "Open PDF",
+        "untitled": "Service"
+      },
+      "service": {
+        "client": "Client",
+        "address": "Address",
+        "instructions": "Instructions",
+        "checklist": "Checklist",
+        "startService": "Start service",
+        "continueExecution": "Continue execution",
+        "reportReady": "Report available",
+        "viewReports": "View reports",
+        "mapTitle": "Service location",
+        "mapUnavailable": "Location not available on map",
+        "openNavigation": "Open navigation"
+      },
+      "checkIn": {
+        "title": "On-site check-in",
+        "action": "Start service with GPS",
+        "success": "Check-in recorded",
+        "notesPlaceholder": "Notes when starting…",
+        "alreadyActive": "Service in progress",
+        "continueHint": "You already checked in to this service.",
+        "continueExecution": "Continue execution",
+        "gpsLoading": "Getting location…",
+        "gpsDenied": "Allow location access",
+        "gpsUnsupported": "GPS not available on this device",
+        "gpsReady": "Location acquired",
+        "fromSite": "from site",
+        "tooFar": "You are more than 1 km away. Move closer to check in.",
+        "offlineQueued": "Check-in saved offline — will sync automatically",
+        "failed": "Could not record check-in"
+      },
+      "pwa": {
+        "offline": "No connection — offline mode",
+        "offlinePending": "Offline · {count} pending action(s)",
+        "pendingSync": "{count} action(s) to sync",
+        "syncing": "Syncing…",
+        "installTitle": "Install app",
+        "installDescription": "Add FeldOps to your home screen",
+        "installAction": "Install",
+        "offlinePageTitle": "No connection",
+        "offlinePageDescription": "FeldOps is offline. Check your internet connection and try again.",
+        "offlinePageRetry": "Try again"
+      },
+      "vacations": {
+        "title": "Vacation",
+        "subtitle": "Request time off and track request status",
+        "description": "Request time off and track request status.",
+        "new": "New request",
+        "formTitle": "Vacation request",
+        "startDate": "Start date",
+        "endDate": "End date",
+        "notes": "Notes (optional)",
+        "notesPlaceholder": "Reason or notes…",
+        "submit": "Submit request",
+        "cancel": "Cancel request",
+        "created": "Request submitted",
+        "cancelled": "Request cancelled",
+        "submitted": "Submitted on",
+        "emptyTitle": "No vacation requests",
+        "emptyDescription": "Submit a request for team approval.",
+        "summary": {
+          "pending": "Pending",
+          "upcoming": "Approved",
+          "daysApproved": "Days approved"
+        },
+        "status": {
+          "pending": "Pending",
+          "approved": "Approved",
+          "rejected": "Rejected",
+          "cancelled": "Cancelled"
+        }
+      },
+      "notifications": {
+        "title": "Notifications",
+        "description": "Push alerts and new assignment notices.",
+        "emptyTitle": "No alerts",
+        "emptyDescription": "When you're assigned a service or there's news, it will show up here.",
+        "unreadCount": "{count} unread",
+        "markAllRead": "Mark all as read",
+        "enablePushTitle": "Enable push alerts",
+        "enablePushDescription": "Get notified even when the app is closed.",
+        "enablePushAction": "Enable",
+        "pushEnabled": "Push alerts enabled",
+        "pushDenied": "Notification permission denied",
+        "pushDeniedHint": "Enable notifications in your browser settings to receive push alerts.",
+        "pushNotConfigured": "Push is not configured in this environment",
+        "pushFailed": "Could not enable push alerts",
+        "kinds": {
+          "task_assigned": "New service",
+          "vacation_approved": "Vacation approved",
+          "vacation_rejected": "Vacation rejected",
+          "schedule_change": "Schedule change"
+        }
+      },
+      "profile": {
+        "title": "Profile",
+        "subtitle": "Your employee details",
+        "role": "Role",
+        "roleEmployee": "Employee",
+        "email": "Email",
+        "phone": "Phone",
+        "jobTitle": "Job title",
+        "vacations": "Vacation requests",
+        "vacationsHint": "Request and track time off",
+        "shortcuts": {
+          "hours": "Hours",
+          "reports": "Reports",
+          "notifications": "Alerts",
+          "vacations": "Vacation"
+        }
+      }
     }
   }
 }

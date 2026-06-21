@@ -30,6 +30,8 @@ interface PageProps {
     service?: string;
     tag?: string;
     page?: string;
+    create?: string;
+    date?: string;
   }>;
 }
 
@@ -186,6 +188,9 @@ export default async function TasksPage({ params, searchParams }: PageProps) {
         canWrite={can(ctx.membership.role, "tasks:write")}
         memberRole={ctx.membership.role}
         totalCount={count ?? 0}
+        autoCreate={filters.create === "1"}
+        prefillEmployeeId={filters.employee}
+        prefillScheduledDate={filters.date}
       />
 
       {/* Pagination */}

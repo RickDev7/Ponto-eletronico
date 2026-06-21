@@ -4,12 +4,14 @@ export interface WorkforceEmployeeRow {
   email: string | null;
   phone: string | null;
   employee_number: string | null;
+  member_id: string | null;
   status: string;
   hire_date: string | null;
   job_title: string | null;
   supervisor_id: string | null;
   contract_type: string | null;
   weekly_hours: number | null;
+  notes: string | null;
   supervisor?: { full_name: string | null } | Array<{ full_name: string | null }> | null;
   team?: { team_id: string; team?: { name: string } | Array<{ name: string }> | null } | null;
 }

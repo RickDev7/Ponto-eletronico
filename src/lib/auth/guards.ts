@@ -1,9 +1,9 @@
-import { redirect } from "next/navigation";
+import { redirectTo } from "@/i18n/server-redirect";
 import { ROUTES } from "@/config/constants";
 import { can, type Permission } from "@/config/permissions";
 import { hasMinRole, isClientRole } from "@/types/enums";
 import type { MemberRole } from "@/types";
-import type { Client, ClientPortalContext, CompanyContext } from "@/types/database";
+import type { Client, ClientPortalContext, CompanyContext, Employee } from "@/types/database";
 import {
   getCompanyBySlug,
   getEmployeeForMember,
@@ -28,7 +28,7 @@ export async function requireAuth(
 ): Promise<NonNullable<Awaited<ReturnType<typeof getSession>>>> {
   const user = await getSession();
   if (!user) {
-    redirect(options.redirectTo ?? ROUTES.login);
+    redirectTo(options.redirectTo ?? ROUTES.login);
   }
   return user;
 }
@@ -62,22 +62,22 @@ export async function requireCompanyContext(
   const ctx = await getCompanyContext(options.slug);
 
   if (!ctx) {
-    redirect(ROUTES.onboarding);
+    redirectTo(ROUTES.onboarding);
   }
 
   if (isClientRole(ctx.membership.role)) {
-    redirect(ROUTES.clientPortal(ctx.company.slug));
+    redirectTo(ROUTES.clientPortal(ctx.company.slug));
   }
 
   if (
     options.minRole &&
     !hasMinRole(ctx.membership.role, options.minRole)
   ) {
-    redirect(ROUTES.dashboard(ctx.company.slug));
+    redirectTo(ROUTES.dashboard(ctx.company.slug));
   }
 
   if (options.permission && !can(ctx.membership.role, options.permission)) {
-    redirect(ROUTES.dashboard(ctx.company.slug));
+    redirectTo(ROUTES.dashboard(ctx.company.slug));
   }
 
   return ctx;
@@ -92,6 +92,38 @@ export async function requireMinRole(
   }
 }
 
+export interface EmployeeContext extends CompanyContext {
+  employee: Employee;
+}
+
+export async function requireEmployeeMobileAccess(
+  slug: string,
+): Promise<CompanyContext> {
+  const ctx = await requireCompanyContext({ slug });
+
+  if (ctx.membership.role === "client") {
+    redirectTo(ROUTES.clientPortal(ctx.company.slug));
+  }
+
+  if (ctx.membership.role !== "employee") {
+    redirectTo(ROUTES.mobileAccess(slug));
+  }
+
+  return ctx;
+}
+
+export async function requireEmployeeContext(
+  slug: string,
+): Promise<EmployeeContext> {
+  const ctx = await requireEmployeeMobileAccess(slug);
+
+  if (!ctx.employee) {
+    redirectTo(`${ROUTES.mobileAccess(slug)}?reason=profile_missing`);
+  }
+
+  return { ...ctx, employee: ctx.employee };
+}
+
 export async function requireClientPortalContext(
   slug: string,
 ): Promise<ClientPortalContext> {
@@ -99,16 +131,16 @@ export async function requireClientPortalContext(
   const ctx = await getCompanyContext(slug);
 
   if (!ctx) {
-    redirect(ROUTES.onboarding);
+    redirectTo(ROUTES.onboarding);
   }
 
   if (!isClientRole(ctx.membership.role)) {
-    redirect(ROUTES.dashboard(ctx.company.slug));
+    redirectTo(ROUTES.dashboard(ctx.company.slug));
   }
 
   const clientId = ctx.membership.client_id;
   if (!clientId) {
-    redirect(ROUTES.selectCompany);
+    redirectTo(ROUTES.selectCompany);
   }
 
   const supabase = await createClient();
@@ -120,7 +152,7 @@ export async function requireClientPortalContext(
     .maybeSingle();
 
   if (error || !client) {
-    redirect(ROUTES.selectCompany);
+    redirectTo(ROUTES.selectCompany);
   }
 
   return { ...ctx, client: client as Client };

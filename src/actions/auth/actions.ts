@@ -5,6 +5,7 @@ import { ROUTES } from "@/config/constants";
 import { createClient } from "@/lib/supabase/server";
 import { getUserCompanies, getUserProfile } from "@/lib/auth/session";
 import { resolvePostAuthRedirect } from "@/lib/auth/post-auth-redirect";
+import { linkPendingEmployeeMembership } from "@/lib/auth/link-pending-employee";
 import { actionError } from "@/lib/i18n/action-error";
 import { seedCompanySubscription } from "@/lib/billing/enforcement";
 import type { AppLocale } from "@/i18n/routing";
@@ -47,6 +48,14 @@ export async function signIn(
 
   if (!user) {
     return { success: false, error: await actionError("authFailed") };
+  }
+
+  if (user.email) {
+    try {
+      await linkPendingEmployeeMembership(user.id, user.email, user.user_metadata);
+    } catch (err) {
+      console.error("[signIn] linkPendingEmployeeMembership failed:", err);
+    }
   }
 
   const profile = await getUserProfile(user.id);

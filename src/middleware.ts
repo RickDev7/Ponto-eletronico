@@ -23,6 +23,9 @@ function isStaticAsset(pathname: string): boolean {
     pathname.startsWith("/icons/") ||
     pathname.startsWith("/images/") ||
     pathname === "/sw.js" ||
+    pathname.startsWith("/api/pwa/") ||
+    pathname.startsWith("/api/push/") ||
+    pathname.startsWith("/api/internal/push/") ||
     pathname === "/manifest.webmanifest" ||
     pathname === "/favicon.ico" ||
     pathname === "/offline" ||

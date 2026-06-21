@@ -6,7 +6,35 @@ import { EmployeeProfileView } from "@/components/features/workforce/employee-pr
 import { loadEmployeeProfile, loadWorkforceEmployees } from "@/lib/workforce/load-workforce-data";
 import { AppShellPage } from "@/components/design-system/layout";
 
-const VALID_TABS = new Set(["personal", "contract", "schedule", "hours", "history"]);
+const VALID_TABS = new Set([
+  "overview",
+  "planning",
+  "hours",
+  "documents",
+  "skills",
+  "vacations",
+  "absences",
+  "history",
+  "personal",
+  "contract",
+  "schedule",
+]);
+
+const TAB_ALIASES: Record<string, string> = {
+  personal: "overview",
+  contract: "vacations",
+  schedule: "planning",
+};
+
+type ProfileTab =
+  | "overview"
+  | "planning"
+  | "hours"
+  | "documents"
+  | "skills"
+  | "vacations"
+  | "absences"
+  | "history";
 
 interface PageProps {
   params: Promise<{ companySlug: string; employeeId: string }>;
@@ -19,10 +47,11 @@ export default async function WorkforceEmployeeProfilePage({ params, searchParam
   const locale = await getLocale();
   const dateLocale = locale === "en" ? "en-US" : "pt-BR";
 
-  const tabParam = sp.tab ?? "personal";
-  const activeTab = VALID_TABS.has(tabParam)
-    ? (tabParam as "personal" | "contract" | "schedule" | "hours" | "history")
-    : "personal";
+  const tabParam = sp.tab ?? "overview";
+  const normalized = TAB_ALIASES[tabParam] ?? tabParam;
+  const activeTab = VALID_TABS.has(normalized)
+    ? (normalized as ProfileTab)
+    : "overview";
 
   const [profile, allEmployees] = await Promise.all([
     loadEmployeeProfile(ctx.company.id, employeeId),

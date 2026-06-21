@@ -1,9 +1,9 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
-import { FileBarChart } from "lucide-react";
+import { FileBarChart, Plus } from "lucide-react";
 import { ROUTES } from "@/config/constants";
 import {
   computeAutoPlanAssignments,
@@ -60,6 +60,7 @@ interface PersonnelPlanningViewProps {
   prevHref: string;
   nextHref: string;
   todayHref: string;
+  initialEmployeeId?: string | null;
   canWrite: boolean;
   employees: WorkforceEmployeeRow[];
   vacations: VacationRequestRow[];
@@ -87,6 +88,7 @@ export function PersonnelPlanningView({
   prevHref,
   nextHref,
   todayHref,
+  initialEmployeeId = null,
   canWrite,
   employees,
   vacations,
@@ -118,7 +120,13 @@ export function PersonnelPlanningView({
   const rangeStart = dates[0];
   const rangeEnd = dates[dates.length - 1];
 
-  const [selectedEmployeeId, setSelectedEmployeeId] = useState<string | null>(null);
+  const [selectedEmployeeId, setSelectedEmployeeId] = useState<string | null>(
+    initialEmployeeId,
+  );
+
+  useEffect(() => {
+    setSelectedEmployeeId(initialEmployeeId);
+  }, [initialEmployeeId]);
   const [selectedShift, setSelectedShift] = useState<ShiftRow | null>(null);
   const [sheetOpen, setSheetOpen] = useState(false);
   const [mobilePanel, setMobilePanel] = useState<MobilePanel>("grid");
@@ -200,7 +208,20 @@ export function PersonnelPlanningView({
   }
 
   const headerActions = (
-    <div className="flex items-center gap-2">
+    <div className="flex flex-wrap items-center gap-2">
+      {canWrite ? (
+        <Button size="sm" className="h-8 gap-1.5 text-xs" asChild>
+          <Link
+            href={ROUTES.tasks(slug, {
+              create: true,
+              employee: selectedEmployeeId ?? undefined,
+            })}
+          >
+            <Plus className="size-3.5" />
+            {t("actions.newTask")}
+          </Link>
+        </Button>
+      ) : null}
       <Button variant="outline" size="sm" className="h-8 gap-1.5 text-xs" asChild>
         <Link href={ROUTES.workforcePlanningReports(slug)}>
           <FileBarChart className="size-3.5" />

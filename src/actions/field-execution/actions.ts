@@ -5,12 +5,13 @@ import { requireCompanyContext } from "@/lib/auth/guards";
 import { createClient } from "@/lib/supabase/server";
 import { STORAGE_BUCKETS } from "@/config/constants";
 import type { ActionResult } from "@/actions/auth/actions";
+import { revalidateEmployeeMobilePaths } from "@/lib/employee/revalidate-mobile";
 
 function fieldPaths(slug: string, taskId?: string) {
   const paths = [
     `/${slug}/field`,
     `/${slug}/field/schedule`,
-    `/${slug}/minha-area`,
+    `/${slug}/mobile`,
     `/${slug}/tasks`,
   ];
   if (taskId) paths.push(`/${slug}/field/tasks/${taskId}`, `/${slug}/tasks/${taskId}`);
@@ -21,6 +22,7 @@ function revalidateField(slug: string, taskId?: string) {
   for (const path of fieldPaths(slug, taskId)) {
     revalidatePath(path);
   }
+  revalidateEmployeeMobilePaths(slug, taskId);
 }
 
 export async function signServiceReportAction(

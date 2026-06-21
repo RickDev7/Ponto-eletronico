@@ -21,17 +21,18 @@ export async function createClientAction(
   if (!parsed.success) return { success: false, error: parsed.error.issues[0]?.message ?? "Invalid" };
 
   const supabase = await createClient();
+  const insertRow: Record<string, unknown> = {
+    company_id: ctx.company.id,
+    name: parsed.data.name,
+    contact_name: parsed.data.contactName || null,
+    email: parsed.data.email || null,
+    phone: parsed.data.phone || null,
+    notes: parsed.data.notes || null,
+  };
+
   const { data, error } = await supabase
     .from("clients")
-    .insert({
-      company_id: ctx.company.id,
-      name: parsed.data.name,
-      contact_name: parsed.data.contactName || null,
-      email: parsed.data.email || null,
-      phone: parsed.data.phone || null,
-      notes: parsed.data.notes || null,
-      source_lead_id: parsed.data.sourceLeadId ?? null,
-    })
+    .insert(insertRow)
     .select("id")
     .single();
 

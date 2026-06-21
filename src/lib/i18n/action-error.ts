@@ -14,7 +14,14 @@ type ActionErrorKey =
   | "subscriptionInactive"
   | "planLimitEmployees"
   | "planLimitTasks"
-  | "acceptTermsRequired";
+  | "acceptTermsRequired"
+  | "checkInNoEmployee"
+  | "checkInAlreadyActive"
+  | "checkInLocationRequired"
+  | "checkInTooFar"
+  | "checkOutNoEmployee"
+  | "employeeAlreadyHasAccess"
+  | "emailLinkedToOtherEmployee";
 
 export async function actionError(key: ActionErrorKey): Promise<string> {
   const t = await getTranslations("errors.actions");

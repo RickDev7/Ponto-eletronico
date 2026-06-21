@@ -1,6 +1,6 @@
 import { getTranslations } from "next-intl/server";
 import type { Metadata } from "next";
-import { requireCompanyContext } from "@/lib/auth/guards";
+import { requireEmployeeMobileAccess } from "@/lib/auth/guards";
 import { createClient } from "@/lib/supabase/server";
 import { MeView } from "@/components/features/me/me-view";
 import { WorkTimeWidget } from "@/components/features/me/work-time-widget";
@@ -18,7 +18,7 @@ interface PageProps {
 export default async function MobileHomePage({ params }: PageProps) {
   const { companySlug } = await params;
   const tNav = await getTranslations("navigation");
-  const ctx = await requireCompanyContext({ slug: companySlug });
+  const ctx = await requireEmployeeMobileAccess(companySlug);
 
   if (!ctx.employee) {
     return (

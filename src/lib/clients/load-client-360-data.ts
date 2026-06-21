@@ -156,32 +156,35 @@ export async function loadClient360Data(
 
   const { data: clientRow } = await supabase
     .from("clients")
-    .select("id, name, contact_name, email, phone, notes, status, source_lead_id, created_at")
+    .select("id, name, contact_name, email, phone, notes, status, created_at")
     .eq("id", clientId)
     .eq("company_id", companyId)
     .single();
 
   if (!clientRow) return null;
 
-  const client = clientRow as Client360Client;
-  const leadId = client.source_lead_id;
+  const client: Client360Client = {
+    ...(clientRow as Omit<Client360Client, "source_lead_id">),
+    source_lead_id: null,
+  };
+
+  const { data: sourceLeadRow } = await supabase
+    .from("leads")
+    .select("id, company_name, status")
+    .eq("company_id", companyId)
+    .eq("converted_client_id", clientId)
+    .maybeSingle();
+
+  const leadId = sourceLeadRow?.id ?? null;
+  client.source_lead_id = leadId;
 
   const [
-    { data: sourceLead },
     { data: leadContacts },
     { data: addresses },
     { data: contracts },
     { data: quotes },
     { data: invoices },
   ] = await Promise.all([
-    leadId
-      ? supabase
-          .from("leads")
-          .select("id, company_name, status")
-          .eq("id", leadId)
-          .eq("company_id", companyId)
-          .maybeSingle()
-      : Promise.resolve({ data: null }),
     leadId
       ? supabase
           .from("lead_contacts")
@@ -330,7 +333,7 @@ export async function loadClient360Data(
 
   return {
     client,
-    sourceLead: sourceLead ?? null,
+    sourceLead: sourceLeadRow ?? null,
     contacts,
     properties,
     contracts: contracts ?? [],

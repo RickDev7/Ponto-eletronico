@@ -70,6 +70,7 @@ export const assignEmployeeSkillSchema = z.object({
 export type VacationStatus = z.infer<typeof vacationStatusSchema>;
 export type AbsenceType = z.infer<typeof absenceTypeSchema>;
 export type UpdateEmployeeWorkforceInput = z.infer<typeof updateEmployeeWorkforceSchema>;
+export type UpdateEmployeeWorkforceFormValues = z.input<typeof updateEmployeeWorkforceSchema>;
 export type CreateVacationRequestInput = z.infer<typeof createVacationRequestSchema>;
 export type CreateAbsenceInput = z.infer<typeof createAbsenceSchema>;
 export type WorktimePolicyInput = z.infer<typeof worktimePolicySchema>;

@@ -8,6 +8,7 @@ import { Loader2 } from "lucide-react";
 import { updateEmployeeWorkforceAction } from "@/actions/workforce/actions";
 import {
   updateEmployeeWorkforceSchema,
+  type UpdateEmployeeWorkforceFormValues,
   type UpdateEmployeeWorkforceInput,
 } from "@/lib/validations/workforce";
 import { OPERATIONS_FORM_CLASS } from "@/components/shared";
@@ -48,7 +49,7 @@ export function EmployeeHrForm({ slug, employeeId, employee, supervisors, onSucc
   const tStatus = useTranslations("workforce.status");
   const tContract = useTranslations("workforce.profile.contractTypes");
 
-  const form = useForm<UpdateEmployeeWorkforceInput>({
+  const form = useForm<UpdateEmployeeWorkforceFormValues>({
     resolver: zodResolver(updateEmployeeWorkforceSchema),
     defaultValues: {
       fullName: employee.full_name,
@@ -65,8 +66,12 @@ export function EmployeeHrForm({ slug, employeeId, employee, supervisors, onSucc
     },
   });
 
-  async function onSubmit(values: UpdateEmployeeWorkforceInput) {
-    const result = await updateEmployeeWorkforceAction(slug, employeeId, values);
+  async function onSubmit(values: UpdateEmployeeWorkforceFormValues) {
+    const result = await updateEmployeeWorkforceAction(
+      slug,
+      employeeId,
+      updateEmployeeWorkforceSchema.parse(values),
+    );
     if (!result.success) {
       toast.error(result.error);
       return;
@@ -153,7 +158,15 @@ export function EmployeeHrForm({ slug, employeeId, employee, supervisors, onSucc
               <FormItem>
                 <FormLabel>{t("weeklyHours")}</FormLabel>
                 <FormControl>
-                  <Input type="number" min={0} max={60} step={0.5} {...field} />
+                  <Input
+                    type="number"
+                    min={0}
+                    max={60}
+                    step={0.5}
+                    {...field}
+                    value={Number(field.value ?? 40)}
+                    onChange={(e) => field.onChange(e.target.valueAsNumber)}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>

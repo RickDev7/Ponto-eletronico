@@ -87,9 +87,17 @@ export function EmployeeScheduleWidget({
             <CalendarDays className="size-4 text-primary" />
             <h2 className="text-sm font-semibold">{t("title")}</h2>
           </div>
-          <span className="rounded-full bg-primary/10 px-2 py-0.5 text-[10px] font-medium text-primary">
-            {todayCount} {t("today")}
-          </span>
+          <div className="flex items-center gap-2">
+            <span className="rounded-full bg-primary/10 px-2 py-0.5 text-[10px] font-medium text-primary">
+              {todayCount} {t("today")}
+            </span>
+            <Link
+              href={ROUTES.mobileSchedule(slug)}
+              className="text-[10px] font-medium text-primary hover:underline"
+            >
+              {t("viewAll")}
+            </Link>
+          </div>
         </div>
         <p className="mt-0.5 text-[11px] text-muted-foreground">{t("subtitle")}</p>
       </div>
@@ -130,7 +138,7 @@ export function EmployeeScheduleWidget({
           (allTasks.get(today) ?? []).map((task) => (
             <Link
               key={task.id}
-              href={ROUTES.task(slug, task.id)}
+              href={ROUTES.mobileService(slug, task.id)}
               className="flex items-start gap-3 rounded-xl border border-border/50 bg-background p-3 transition-colors hover:border-primary/30 hover:bg-muted/30"
             >
               <div className="mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-lg bg-primary/10">

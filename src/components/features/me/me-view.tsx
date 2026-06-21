@@ -34,6 +34,7 @@ import {
 } from "@/components/ui/dialog";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
+import { ROUTES } from "@/config/constants";
 import { cn } from "@/lib/utils";
 
 const STATUS_ICONS: Record<TaskStatus, { color: string; icon: React.ElementType }> = {
@@ -196,10 +197,12 @@ export function MeView({
             <Button
               size="sm"
               className="h-9 w-full bg-amber-600 text-white hover:bg-amber-700"
-              onClick={() => setCheckInOpen(true)}
+              asChild
             >
-              <LogOut className="size-3.5" />
-              {tCommon("checkOut")}
+              <Link href={ROUTES.mobileServiceExecute(slug, openCheckIn.task_id)}>
+                <LogOut className="size-3.5" />
+                {tCommon("checkOut")}
+              </Link>
             </Button>
           </div>
         </OperationsWorkspace>
@@ -244,7 +247,7 @@ export function MeView({
                     <div className="flex items-start justify-between gap-2">
                       <div className="min-w-0 flex-1">
                         <Link
-                          href={`/${slug}/tasks/${task.id}`}
+                          href={ROUTES.mobileService(slug, task.id)}
                           className="text-[13px] font-semibold leading-snug hover:text-primary"
                         >
                           {task.title}
@@ -302,27 +305,28 @@ export function MeView({
                         </a>
                       )}
                       {(canCheckIn || canCheckOut) && (
-                        <Button
-                          size="sm"
-                          className={cn(
-                            "h-8 flex-1 text-[11px]",
-                            canCheckOut && "bg-amber-600 hover:bg-amber-700",
-                          )}
-                          variant={canCheckOut ? "default" : "outline"}
-                          onClick={() =>
-                            canCheckOut ? setCheckInOpen(true) : openCheckInDialog(task)
-                          }
-                        >
-                          {canCheckOut ? (
-                            <>
-                              <LogOut className="size-3.5" /> {tCommon("checkOut")}
-                            </>
-                          ) : (
-                            <>
+                        canCheckIn ? (
+                          <Button
+                            size="sm"
+                            className="h-8 flex-1 text-[11px]"
+                            variant="outline"
+                            asChild
+                          >
+                            <Link href={ROUTES.mobileCheckIn(slug, task.id)}>
                               <LogIn className="size-3.5" /> {tCommon("checkIn")}
-                            </>
-                          )}
-                        </Button>
+                            </Link>
+                          </Button>
+                        ) : (
+                          <Button
+                            size="sm"
+                            className="h-8 flex-1 bg-amber-600 text-[11px] hover:bg-amber-700"
+                            asChild
+                          >
+                            <Link href={ROUTES.mobileServiceExecute(slug, task.id)}>
+                              <LogOut className="size-3.5" /> {tCommon("checkOut")}
+                            </Link>
+                          </Button>
+                        )
                       )}
                     </div>
                   </div>
@@ -344,7 +348,7 @@ export function MeView({
               return (
                 <Link
                   key={task.id}
-                  href={`/${slug}/tasks/${task.id}`}
+                  href={ROUTES.mobileService(slug, task.id)}
                   className="flex items-center gap-3 px-3 py-2.5 transition-colors hover:bg-muted/30"
                 >
                   <div className="min-w-0 flex-1">

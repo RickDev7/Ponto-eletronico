@@ -48,7 +48,17 @@ export const ROUTES = {
   employees: (slug: string) => `/${slug}/workforce/employees`,
   clients: (slug: string) => `/${slug}/clients`,
   addresses: (slug: string) => `/${slug}/addresses`,
-  tasks: (slug: string) => `/${slug}/tasks`,
+  tasks: (
+    slug: string,
+    params?: { create?: boolean; employee?: string; date?: string },
+  ) => {
+    const search = new URLSearchParams();
+    if (params?.create) search.set("create", "1");
+    if (params?.employee) search.set("employee", params.employee);
+    if (params?.date) search.set("date", params.date);
+    const q = search.toString();
+    return `/${slug}/tasks${q ? `?${q}` : ""}`;
+  },
   reports: (slug: string) => `/${slug}/reports`,
   settings: (slug: string) => `/${slug}/settings`,
   settingsBilling: (slug: string) => `/${slug}/settings?tab=billing`,
@@ -162,10 +172,14 @@ export const ROUTES = {
     const q = search.toString();
     return `/${slug}/workforce/shifts${q ? `?${q}` : ""}`;
   },
-  workforcePlanning: (slug: string, params?: { view?: string; week?: string }) => {
+  workforcePlanning: (
+    slug: string,
+    params?: { view?: string; week?: string; employee?: string },
+  ) => {
     const search = new URLSearchParams();
     if (params?.view) search.set("view", params.view);
     if (params?.week) search.set("week", params.week);
+    if (params?.employee) search.set("employee", params.employee);
     const q = search.toString();
     return `/${slug}/workforce/planning${q ? `?${q}` : ""}`;
   },
@@ -237,6 +251,17 @@ export const ROUTES = {
   clientPortalDocuments: (slug: string) => `/${slug}/portal/documents`,
   assistant: (slug: string) => `/${slug}/assistant`,
   mobile: (slug: string) => `/${slug}/mobile`,
+  mobileAccess: (slug: string) => `/${slug}/mobile-access`,
+  mobileSchedule: (slug: string) => `/${slug}/mobile/schedule`,
+  mobileService: (slug: string, taskId: string) => `/${slug}/mobile/services/${taskId}`,
+  mobileServiceExecute: (slug: string, taskId: string) =>
+    `/${slug}/mobile/services/${taskId}/execute`,
+  mobileCheckIn: (slug: string, taskId: string) => `/${slug}/mobile/check-in/${taskId}`,
+  mobileReports: (slug: string) => `/${slug}/mobile/reports`,
+  mobileHours: (slug: string) => `/${slug}/mobile/hours`,
+  mobileVacations: (slug: string) => `/${slug}/mobile/vacations`,
+  mobileNotifications: (slug: string) => `/${slug}/mobile/notifications`,
+  mobileProfile: (slug: string) => `/${slug}/mobile/profile`,
   superAdmin: "/super-admin",
   superAdminTenants: "/super-admin/tenants",
   superAdminSubscriptions: "/super-admin/subscriptions",

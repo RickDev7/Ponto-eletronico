@@ -6,7 +6,7 @@ import { createClient } from "@/lib/supabase/server";
 import { STORAGE_BUCKETS } from "@/config/constants";
 import type { ActionResult } from "@/actions/auth/actions";
 import type { PhotoType } from "@/types";
-import { logTaskEvent } from "@/lib/operations/task-events";
+import { revalidateEmployeeMobilePaths } from "@/lib/employee/revalidate-mobile";
 
 export async function uploadTaskPhoto(
   slug: string,
@@ -77,6 +77,7 @@ export async function uploadTaskPhoto(
 
   revalidatePath(`/${slug}/tasks/${taskId}`);
   revalidatePath(`/${slug}/field/tasks/${taskId}`);
+  revalidateEmployeeMobilePaths(slug, taskId);
   return {
     success: true,
     data: { id: photo.id, url: signedData?.signedUrl ?? "" },
