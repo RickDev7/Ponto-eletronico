@@ -129,6 +129,12 @@ export default async function TasksPage({ params, searchParams }: PageProps) {
       .order("name"),
   ]);
 
+  const normalizedAddresses = (addresses ?? []).map((row) => {
+    const client = row.client as { name: string } | { name: string }[] | null;
+    const clientRow = Array.isArray(client) ? client[0] : client;
+    return { ...row, client: clientRow ?? null };
+  });
+
   const totalPages = Math.ceil((count ?? 0) / PAGE_SIZE);
 
   // Count active filters for badge
@@ -175,7 +181,7 @@ export default async function TasksPage({ params, searchParams }: PageProps) {
       <TasksView
         slug={companySlug}
         tasks={tasks}
-        addresses={addresses ?? []}
+        addresses={normalizedAddresses}
         employees={employees ?? []}
         canWrite={can(ctx.membership.role, "tasks:write")}
         memberRole={ctx.membership.role}

@@ -1,4 +1,4 @@
-export type MemberRole = "admin" | "supervisor" | "employee";
+export type MemberRole = "owner" | "manager" | "admin" | "supervisor" | "employee" | "client";
 
 export type MemberStatus = "active" | "invited" | "suspended";
 
@@ -17,7 +17,7 @@ export type TaskStatus =
 
 export type TaskPriority = "low" | "normal" | "high" | "urgent";
 
-export type PhotoType = "before" | "after";
+export type PhotoType = "before" | "after" | "signature" | "evidence";
 
 export type ActivityAction =
   | "created"
@@ -42,8 +42,18 @@ export type ClientStatus = "active" | "inactive" | "archived";
 
 export type EmployeeStatus = "active" | "inactive" | "terminated" | "on_vacation" | "absent";
 
+/** Tenant-level roles (Super Admin is platform-only via platform_admins). */
 export const MEMBER_ROLES: readonly MemberRole[] = [
-  "admin",
+  "owner",
+  "manager",
+  "supervisor",
+  "employee",
+  "client",
+] as const;
+
+export const ASSIGNABLE_ROLES: readonly MemberRole[] = [
+  "owner",
+  "manager",
   "supervisor",
   "employee",
 ] as const;
@@ -64,14 +74,31 @@ export const TASK_STATUSES: readonly TaskStatus[] = [
 ] as const;
 
 export const ROLE_RANK: Record<MemberRole, number> = {
-  admin: 3,
+  owner: 4,
+  admin: 4,
+  manager: 3,
   supervisor: 2,
   employee: 1,
+  client: 0,
 };
+
+/** Normalize legacy admin role to owner. */
+export function normalizeRole(role: MemberRole): MemberRole {
+  return role === "admin" ? "owner" : role;
+}
+
+export function isClientRole(role: MemberRole): boolean {
+  return role === "client";
+}
+
+export function isOwnerRole(role: MemberRole): boolean {
+  const n = normalizeRole(role);
+  return n === "owner";
+}
 
 export function hasMinRole(
   userRole: MemberRole,
   minRole: MemberRole,
 ): boolean {
-  return ROLE_RANK[userRole] >= ROLE_RANK[minRole];
+  return ROLE_RANK[normalizeRole(userRole)] >= ROLE_RANK[normalizeRole(minRole)];
 }

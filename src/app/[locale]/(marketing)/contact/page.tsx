@@ -10,10 +10,12 @@ export default async function ContactPage() {
   const t = await getTranslations("marketing.contact");
 
   return (
-    <section className="mx-auto max-w-xl px-4 py-20 sm:px-6">
+    <section className="mx-auto max-w-xl px-4 py-20 sm:px-6 sm:py-28">
       <div className="mb-10 text-center">
-        <h1 className="mb-3 text-3xl font-semibold tracking-tight">{t("title")}</h1>
-        <p className="text-zinc-400">{t("description")}</p>
+        <h1 className="mb-3 text-3xl font-semibold tracking-tight text-[#0F172A] sm:text-4xl">
+          {t("title")}
+        </h1>
+        <p className="text-lg text-[#64748B]">{t("description")}</p>
       </div>
       <ContactForm />
     </section>

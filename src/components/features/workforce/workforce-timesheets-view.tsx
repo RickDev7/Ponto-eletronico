@@ -20,14 +20,15 @@ interface WorkforceTimesheetsViewProps {
   slug: string;
   entries: TimesheetEntry[];
   locale: string;
+  embedded?: boolean;
 }
 
-export function WorkforceTimesheetsView({ slug, entries, locale }: WorkforceTimesheetsViewProps) {
+export function WorkforceTimesheetsView({ slug, entries, locale, embedded }: WorkforceTimesheetsViewProps) {
   const t = useTranslations("workforce.timesheets");
 
   return (
-    <OperationsPage>
-      <PageHeader title={t("title")} description={t("description")} />
+    <OperationsPage className={embedded ? "gap-0" : undefined}>
+      {!embedded && <PageHeader title={t("title")} description={t("description")} />}
       <OperationsWorkspace>
         {entries.length === 0 ? (
           <EmptyState icon={FileSpreadsheet} title={t("empty.title")} description={t("empty.description")} />

@@ -1,5 +1,7 @@
 # FeldOps — Arquitetura do Sistema
 
+> **Arquitetura core (domínios, módulos, ownership, eventos):** ver [`docs/CORE_ARCHITECTURE.md`](./CORE_ARCHITECTURE.md)
+
 SaaS multi-tenant para empresas de serviços externos na Alemanha (Treppenhausreinigung, Gartenpflege, Winterdienst, Glasreinigung).
 
 ## Visão geral

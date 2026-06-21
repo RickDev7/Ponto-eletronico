@@ -51,9 +51,29 @@ export const createEmployeeDocumentSchema = z.object({
   expiresAt: z.string().optional().nullable(),
 });
 
+export const createCompanySkillSchema = z.object({
+  name: z.string().min(2).max(80),
+  serviceType: z.string().optional().nullable(),
+  description: z.string().max(300).optional(),
+  color: z.string().optional(),
+});
+
+export const updateCompanySkillSchema = createCompanySkillSchema;
+
+export const assignEmployeeSkillSchema = z.object({
+  employeeId: z.string().uuid(),
+  skillId: z.string().uuid(),
+  level: z.coerce.number().int().min(1).max(5),
+  certifiedAt: z.string().optional().nullable(),
+});
+
 export type VacationStatus = z.infer<typeof vacationStatusSchema>;
 export type AbsenceType = z.infer<typeof absenceTypeSchema>;
 export type UpdateEmployeeWorkforceInput = z.infer<typeof updateEmployeeWorkforceSchema>;
 export type CreateVacationRequestInput = z.infer<typeof createVacationRequestSchema>;
 export type CreateAbsenceInput = z.infer<typeof createAbsenceSchema>;
 export type WorktimePolicyInput = z.infer<typeof worktimePolicySchema>;
+export type CreateEmployeeDocumentInput = z.infer<typeof createEmployeeDocumentSchema>;
+export type CreateCompanySkillInput = z.infer<typeof createCompanySkillSchema>;
+export type UpdateCompanySkillInput = z.infer<typeof updateCompanySkillSchema>;
+export type AssignEmployeeSkillInput = z.infer<typeof assignEmployeeSkillSchema>;

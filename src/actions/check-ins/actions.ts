@@ -5,6 +5,8 @@ import { requireCompanyContext } from "@/lib/auth/guards";
 import { createClient } from "@/lib/supabase/server";
 import type { ActionResult } from "@/actions/auth/actions";
 import { recordTimeAccountFromCheckIn } from "@/actions/workforce/actions";
+import { logTaskEvent } from "@/lib/operations/task-events";
+import { generateServiceReport } from "@/lib/field-execution/generate-service-report";
 
 function haversineMeters(
   lat1: number,
@@ -96,7 +98,27 @@ export async function checkIn(
 
   if (error) return { success: false, error: error.message };
 
+  await supabase
+    .from("tasks")
+    .update({ status: "in_progress" })
+    .eq("id", taskId)
+    .eq("company_id", ctx.company.id)
+    .neq("status", "completed");
+
+  await logTaskEvent(supabase, {
+    companyId: ctx.company.id,
+    taskId,
+    eventType: "check_in",
+    createdBy: ctx.profile.id,
+    message: opts?.notes ?? undefined,
+    metadata: { checkInId: data.id, latitude: opts?.latitude, longitude: opts?.longitude },
+  });
+
   revalidatePath(`/${slug}/tasks`);
+  revalidatePath(`/${slug}/tasks/${taskId}`);
+  revalidatePath(`/${slug}/field/schedule`);
+  revalidatePath(`/${slug}/field/tasks/${taskId}`);
+  revalidatePath(`/${slug}/minha-area`);
   revalidatePath(`/${slug}`);
   return { success: true, data: { checkInId: data.id } };
 }
@@ -104,7 +126,13 @@ export async function checkIn(
 export async function checkOut(
   slug: string,
   checkInId: string,
-  opts?: { latitude?: number; longitude?: number; notes?: string },
+  opts?: {
+    latitude?: number;
+    longitude?: number;
+    notes?: string;
+    breakMinutes?: number;
+    travelMinutes?: number;
+  },
 ): Promise<ActionResult> {
   const ctx = await requireCompanyContext({ slug });
   if (!ctx.employee) return { success: false, error: "Kein Mitarbeiterdatensatz" };
@@ -117,10 +145,12 @@ export async function checkOut(
       check_out_latitude: opts?.latitude ?? null,
       check_out_longitude: opts?.longitude ?? null,
       check_out_notes: opts?.notes ?? null,
+      break_minutes_actual: opts?.breakMinutes ?? 0,
+      travel_minutes_actual: opts?.travelMinutes ?? 0,
     })
     .eq("id", checkInId)
     .eq("employee_id", ctx.employee.id)
-    .select("id, check_in_at, check_out_at, employee_id")
+    .select("id, task_id, check_in_at, check_out_at, employee_id")
     .single();
 
   if (error) return { success: false, error: error.message };
@@ -135,9 +165,29 @@ export async function checkOut(
     );
   }
 
+  if (checkInRow?.task_id) {
+    await logTaskEvent(supabase, {
+      companyId: ctx.company.id,
+      taskId: checkInRow.task_id as string,
+      eventType: "check_out",
+      createdBy: ctx.profile.id,
+      message: opts?.notes ?? undefined,
+      metadata: { checkInId },
+    });
+
+    await generateServiceReport(ctx.company.id, checkInRow.task_id as string, checkInId);
+  }
+
   revalidatePath(`/${slug}/tasks`);
+  if (checkInRow?.task_id) {
+    revalidatePath(`/${slug}/tasks/${checkInRow.task_id}`);
+    revalidatePath(`/${slug}/field/tasks/${checkInRow.task_id}`);
+  }
+  revalidatePath(`/${slug}/field/schedule`);
+  revalidatePath(`/${slug}/minha-area`);
   revalidatePath(`/${slug}`);
   revalidatePath(`/${slug}/workforce/time-account`);
   revalidatePath(`/${slug}/workforce/timesheets`);
+  revalidatePath(`/${slug}/workforce/time-tracking`);
   return { success: true, data: undefined };
 }

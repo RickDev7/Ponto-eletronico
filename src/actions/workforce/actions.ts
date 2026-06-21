@@ -5,6 +5,15 @@ import { requireCompanyContext } from "@/lib/auth/guards";
 import { createClient } from "@/lib/supabase/server";
 import { STORAGE_BUCKETS } from "@/config/constants";
 import { minutesBetween } from "@/lib/workforce/workforce-data";
+import { loadWorktimePolicy } from "@/lib/workforce/load-workforce-data";
+import {
+  computeNetWorkedMinutes,
+  computeOvertimeMinutes,
+  dailyContractMinutes,
+  policyOvertimeThresholdMinutes,
+  resolveBreakMinutes,
+  resolveTravelMinutes,
+} from "@/lib/time-tracking/compute-time-summary";
 import { syncEmployeeAvailabilityStatuses } from "@/lib/workforce/sync-availability";
 import {
   copyDateRangePlanning,
@@ -18,11 +27,15 @@ import {
   createAbsenceSchema,
   createEmployeeDocumentSchema,
   createVacationRequestSchema,
+  createCompanySkillSchema,
+  assignEmployeeSkillSchema,
   updateEmployeeWorkforceSchema,
   worktimePolicySchema,
   type CreateAbsenceInput,
   type CreateEmployeeDocumentInput,
   type CreateVacationRequestInput,
+  type CreateCompanySkillInput,
+  type AssignEmployeeSkillInput,
   type UpdateEmployeeWorkforceInput,
   type WorktimePolicyInput,
 } from "@/lib/validations/workforce";
@@ -35,12 +48,17 @@ function workforcePaths(slug: string) {
     `/${slug}/workforce/shifts`,
     `/${slug}/workforce/planning`,
     `/${slug}/workforce/planning/reports`,
+    `/${slug}/workforce/vehicles`,
     `/${slug}/workforce/vacations`,
     `/${slug}/workforce/absences`,
     `/${slug}/workforce/time-account`,
     `/${slug}/workforce/timesheets`,
+    `/${slug}/workforce/time-tracking`,
     `/${slug}/workforce/worktime`,
     `/${slug}/workforce/documents`,
+    `/${slug}/workforce/teams`,
+    `/${slug}/workforce/skills`,
+    `/${slug}/workforce/availability`,
     `/${slug}/employees`,
     `/${slug}/operations/scheduling`,
     `/${slug}/schedule`,
@@ -72,16 +90,43 @@ export async function recordTimeAccountFromCheckIn(
 ) {
   const supabase = await createClient();
   const entryDate = checkInAt.slice(0, 10);
-  const istMinutes = minutesBetween(checkInAt, checkOutAt);
 
-  const { data: employee } = await supabase
-    .from("employees")
-    .select("weekly_hours")
-    .eq("id", employeeId)
-    .single();
+  const [{ data: employee }, { data: checkIn }, policy] = await Promise.all([
+    supabase.from("employees").select("weekly_hours").eq("id", employeeId).single(),
+    supabase
+      .from("check_ins")
+      .select(`
+        break_minutes_actual, travel_minutes_actual,
+        task:tasks(break_minutes, travel_minutes, scheduled_date)
+      `)
+      .eq("id", checkInId)
+      .single(),
+    loadWorktimePolicy(companyId),
+  ]);
 
-  const dailySoll = Math.round((Number(employee?.weekly_hours ?? 40) / 5) * 60);
-  const balanceDelta = istMinutes - dailySoll;
+  const task = Array.isArray(checkIn?.task) ? checkIn.task[0] : checkIn?.task;
+  const weeklyHours = Number(employee?.weekly_hours ?? 40);
+  const workedMinutes = minutesBetween(checkInAt, checkOutAt);
+  const breakMinutes = resolveBreakMinutes(
+    workedMinutes,
+    Number(checkIn?.break_minutes_actual ?? 0),
+    Number(task?.break_minutes ?? 0),
+    policy,
+  );
+  const travelMinutes = resolveTravelMinutes(
+    Number(checkIn?.travel_minutes_actual ?? 0),
+    Number(task?.travel_minutes ?? 0),
+  );
+  const netWorkedMinutes = computeNetWorkedMinutes(workedMinutes, breakMinutes);
+  const contractDaily = dailyContractMinutes(weeklyHours);
+  const plannedMinutes = contractDaily;
+  const overtimeMinutes = computeOvertimeMinutes(
+    netWorkedMinutes,
+    plannedMinutes,
+    contractDaily,
+    policyOvertimeThresholdMinutes(policy),
+  );
+  const balanceDelta = netWorkedMinutes - plannedMinutes;
 
   await supabase.from("time_account_entries").delete().eq("source_id", checkInId).eq("source", "check_in");
 
@@ -89,9 +134,14 @@ export async function recordTimeAccountFromCheckIn(
     company_id: companyId,
     employee_id: employeeId,
     entry_date: entryDate,
-    soll_minutes: dailySoll,
-    ist_minutes: istMinutes,
+    soll_minutes: plannedMinutes,
+    ist_minutes: workedMinutes,
     balance_delta_minutes: balanceDelta,
+    planned_minutes: plannedMinutes,
+    break_minutes: breakMinutes,
+    travel_minutes: travelMinutes,
+    overtime_minutes: overtimeMinutes,
+    net_worked_minutes: netWorkedMinutes,
     source: "check_in",
     source_id: checkInId,
   });
@@ -617,4 +667,144 @@ export async function optimizeWeekPlanningAction(
 
   revalidateWorkforce(slug);
   return { success: true, data: { applied } };
+}
+
+export async function autoPlanRangeAction(
+  slug: string,
+  assignments: Array<{ taskId: string; employeeId: string }>,
+): Promise<ActionResult<{ assigned: number }>> {
+  const ctx = await requireCompanyContext({ slug, minRole: "supervisor" });
+  const supabase = await createClient();
+  let assigned = 0;
+
+  for (const item of assignments) {
+    const { data: existing } = await supabase
+      .from("task_assignments")
+      .select("id")
+      .eq("task_id", item.taskId)
+      .eq("company_id", ctx.company.id)
+      .maybeSingle();
+
+    if (existing) continue;
+
+    const { error } = await supabase.from("task_assignments").insert({
+      company_id: ctx.company.id,
+      task_id: item.taskId,
+      employee_id: item.employeeId,
+      assigned_by: ctx.profile.id,
+    });
+
+    if (!error) {
+      await supabase
+        .from("tasks")
+        .update({ status: "scheduled" })
+        .eq("id", item.taskId)
+        .eq("company_id", ctx.company.id);
+      assigned += 1;
+    }
+  }
+
+  revalidateWorkforce(slug);
+  revalidatePath(`/${slug}/operations/scheduling`);
+  void checkPlanningAutomations(ctx.company.id, slug);
+  return { success: true, data: { assigned } };
+}
+
+export async function applyPlanningRecommendationAction(
+  slug: string,
+  recommendation: {
+    assignmentId?: string;
+    targetEmployeeId?: string;
+    targetDate?: string;
+  },
+): Promise<ActionResult> {
+  if (!recommendation.assignmentId || !recommendation.targetEmployeeId || !recommendation.targetDate) {
+    return { success: false, error: "Recomendação inválida" };
+  }
+  return moveShiftAction(slug, recommendation.assignmentId, {
+    employeeId: recommendation.targetEmployeeId,
+    scheduledDate: recommendation.targetDate,
+  });
+}
+
+export async function createCompanySkillAction(
+  slug: string,
+  input: CreateCompanySkillInput,
+): Promise<ActionResult<{ id: string }>> {
+  const ctx = await requireCompanyContext({ slug, minRole: "supervisor" });
+  const parsed = createCompanySkillSchema.safeParse(input);
+  if (!parsed.success) return { success: false, error: parsed.error.issues[0]?.message ?? "Dados inválidos" };
+
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from("company_skills")
+    .insert({
+      company_id: ctx.company.id,
+      name: parsed.data.name,
+      service_type: parsed.data.serviceType || null,
+      description: parsed.data.description || null,
+      color: parsed.data.color || "#6366f1",
+    })
+    .select("id")
+    .single();
+
+  if (error) return { success: false, error: error.message };
+  revalidateWorkforce(slug);
+  return { success: true, data: { id: data.id as string } };
+}
+
+export async function deleteCompanySkillAction(
+  slug: string,
+  skillId: string,
+): Promise<ActionResult> {
+  const ctx = await requireCompanyContext({ slug, minRole: "supervisor" });
+  const supabase = await createClient();
+  const { error } = await supabase
+    .from("company_skills")
+    .delete()
+    .eq("id", skillId)
+    .eq("company_id", ctx.company.id);
+  if (error) return { success: false, error: error.message };
+  revalidateWorkforce(slug);
+  return { success: true, data: undefined };
+}
+
+export async function assignEmployeeSkillAction(
+  slug: string,
+  input: AssignEmployeeSkillInput,
+): Promise<ActionResult> {
+  const ctx = await requireCompanyContext({ slug, minRole: "supervisor" });
+  const parsed = assignEmployeeSkillSchema.safeParse(input);
+  if (!parsed.success) return { success: false, error: parsed.error.issues[0]?.message ?? "Dados inválidos" };
+
+  const supabase = await createClient();
+  const { error } = await supabase.from("employee_skills").upsert({
+    company_id: ctx.company.id,
+    employee_id: parsed.data.employeeId,
+    skill_id: parsed.data.skillId,
+    level: parsed.data.level,
+    certified_at: parsed.data.certifiedAt || null,
+  });
+
+  if (error) return { success: false, error: error.message };
+  revalidateWorkforce(slug, parsed.data.employeeId);
+  return { success: true, data: undefined };
+}
+
+export async function removeEmployeeSkillAction(
+  slug: string,
+  employeeId: string,
+  skillId: string,
+): Promise<ActionResult> {
+  const ctx = await requireCompanyContext({ slug, minRole: "supervisor" });
+  const supabase = await createClient();
+  const { error } = await supabase
+    .from("employee_skills")
+    .delete()
+    .eq("employee_id", employeeId)
+    .eq("skill_id", skillId)
+    .eq("company_id", ctx.company.id);
+  if (error) return { success: false, error: error.message };
+  revalidateWorkforce(slug, employeeId);
+  return { success: true, data: undefined };
 }

@@ -94,7 +94,7 @@ export function PipelineView({ slug, leads, locale, canWrite }: PipelineViewProp
               key={status}
               layout
               className={cn(
-                "min-w-[260px] flex-1 rounded-xl border border-border/60 bg-[#111111]/50 border-t-2",
+                "min-w-[260px] flex-1 rounded-xl border border-border/60 bg-card/50 border-t-2",
                 COLUMN_ACCENT[status],
                 dropTarget === status && "ring-1 ring-primary/40",
               )}

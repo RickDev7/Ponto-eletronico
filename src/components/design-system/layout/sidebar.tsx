@@ -55,7 +55,7 @@ function SidebarRoot({
       data-collapsed={effectiveCollapsed ? "true" : "false"}
       style={{ width: effectiveCollapsed ? SIDEBAR_WIDTH_ICON : SIDEBAR_WIDTH }}
       className={cn(
-        "hidden h-full shrink-0 flex-col border-r border-[#1F1F1F] bg-[#0A0A0A]",
+        "hidden h-full shrink-0 flex-col border-r border-sidebar-border bg-sidebar",
         "transition-[width] duration-200 ease-out lg:flex",
         className,
       )}

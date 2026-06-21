@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { requireCompanyContext } from "@/lib/auth/guards";
 import { createClient } from "@/lib/supabase/server";
+import { emitAutomationEvent } from "@/lib/automations/engine";
 import { createClientAction } from "@/actions/clients/actions";
 import {
   createLeadSchema,
@@ -16,6 +17,8 @@ import type { ActionResult } from "@/actions/auth/actions";
 
 function crmPaths(slug: string) {
   return [
+    `/${slug}/commercial`,
+    `/${slug}/commercial/pipeline`,
     `/${slug}/crm`,
     `/${slug}/crm/leads`,
     `/${slug}/crm/pipeline`,
@@ -24,6 +27,7 @@ function crmPaths(slug: string) {
     `/${slug}/clients`,
     `/${slug}/finance`,
     `/${slug}/finance/quotes`,
+    `/${slug}/finance/contracts`,
   ];
 }
 
@@ -100,14 +104,24 @@ async function convertLeadToClientInternal(
     email: primary?.email ?? lead.email ?? undefined,
     phone: primary?.phone ?? lead.phone ?? undefined,
     notes: lead.notes ?? undefined,
+    sourceLeadId: leadId,
   });
 
   if (!clientResult.success) return clientResult;
 
+  const clientId = clientResult.data.id;
+
+  await supabase
+    .from("quotes")
+    .update({ client_id: clientId })
+    .eq("lead_id", leadId)
+    .eq("company_id", ctx.company.id)
+    .is("client_id", null);
+
   await supabase
     .from("leads")
     .update({
-      converted_client_id: clientResult.data.id,
+      converted_client_id: clientId,
       status: "won",
     })
     .eq("id", leadId)
@@ -118,10 +132,24 @@ async function convertLeadToClientInternal(
     leadId,
     eventType: "client_converted",
     createdBy: ctx.profile.id,
-    message: clientResult.data.id,
+    message: clientId,
   });
 
-  return { success: true, data: { clientId: clientResult.data.id } };
+  void emitAutomationEvent({
+    companyId: ctx.company.id,
+    slug,
+    trigger: "lead.won",
+    payload: {
+      leadId,
+      clientId,
+      estimatedValueCents: lead.estimated_value_cents,
+      companyName: lead.company_name,
+      entityType: "lead",
+      entityId: leadId,
+    },
+  }).catch(() => undefined);
+
+  return { success: true, data: { clientId } };
 }
 
 export async function createLeadAction(
@@ -244,7 +272,7 @@ export async function updateLeadStatusAction(
   const supabase = await createClient();
   const { data: existing } = await supabase
     .from("leads")
-    .select("converted_client_id")
+    .select("converted_client_id, status, estimated_value_cents, company_name")
     .eq("id", leadId)
     .eq("company_id", ctx.company.id)
     .single();
@@ -278,6 +306,35 @@ export async function updateLeadStatusAction(
     createdBy: ctx.profile.id,
     message: parsed.data,
   });
+
+  void emitAutomationEvent({
+    companyId: ctx.company.id,
+    slug,
+    trigger: "lead.status_changed",
+    payload: {
+      leadId,
+      status: parsed.data,
+      previousStatus: existing.status,
+      companyName: existing.company_name,
+      entityType: "lead",
+      entityId: leadId,
+    },
+  }).catch(() => undefined);
+
+  if (parsed.data === "qualified") {
+    void emitAutomationEvent({
+      companyId: ctx.company.id,
+      slug,
+      trigger: "lead.qualified",
+      payload: {
+        leadId,
+        companyName: existing.company_name,
+        estimatedValueCents: existing.estimated_value_cents,
+        entityType: "lead",
+        entityId: leadId,
+      },
+    }).catch(() => undefined);
+  }
 
   let clientId: string | undefined;
   if (parsed.data === "won") {

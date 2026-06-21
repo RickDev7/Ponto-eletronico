@@ -2,9 +2,10 @@
 
 import { useMemo, useTransition } from "react";
 import { useTranslations } from "next-intl";
-import { Link } from "@/i18n/navigation";
+import { Link, useRouter } from "@/i18n/navigation";
 import { toast } from "sonner";
-import { FileDown, Pencil, RefreshCw } from "lucide-react";
+import { toast } from "sonner";
+import { FileDown, Pencil, RefreshCw, Receipt } from "lucide-react";
 import { ROUTES } from "@/config/constants";
 import { formatDate, formatMoney } from "@/lib/finance/utils";
 import {
@@ -17,6 +18,7 @@ import { ContractStatusBadge } from "@/components/features/finance/finance-statu
 import { ContractForecastChart } from "@/components/features/finance/contract-forecast-chart";
 import { openFinancePdf, type PdfDocumentData } from "@/lib/finance/pdf";
 import { updateContractStatusAction } from "@/actions/finance/actions";
+import { useInvoiceMutations } from "@/hooks/use-invoice-mutations";
 import {
   OperationsPage,
   OperationsWorkspace,
@@ -84,7 +86,9 @@ export function ContractDetailView({
   canWrite,
 }: ContractDetailViewProps) {
   const t = useTranslations("finance");
+  const router = useRouter();
   const [pending, startTransition] = useTransition();
+  const invoiceMutations = useInvoiceMutations(slug);
   const status = resolveContractStatus(contract);
   const forecast = useMemo(
     () => computeContractForecast(contract, locale, 12),
@@ -163,6 +167,50 @@ export function ContractDetailView({
             </Button>
             {canWrite && (
               <>
+                {contract.next_invoice_date && (
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    disabled={pending}
+                    onClick={() =>
+                      startTransition(async () => {
+                        const r = await invoiceMutations.generateFromContract.mutateAsync({
+                          contractId: contract.id,
+                          mode: "recurring",
+                        });
+                        if (!r.success) toast.error(r.error);
+                        else {
+                          toast.success(t("invoices.toast.generated"));
+                          router.push(ROUTES.financeInvoice(slug, r.data.id));
+                        }
+                      })
+                    }
+                  >
+                    <Receipt className="size-3.5" />
+                    {t("invoices.generateFromContract")}
+                  </Button>
+                )}
+                <Button
+                  variant="outline"
+                  size="sm"
+                  disabled={pending}
+                  onClick={() =>
+                    startTransition(async () => {
+                      const r = await invoiceMutations.generateFromContract.mutateAsync({
+                        contractId: contract.id,
+                        mode: "one_time",
+                      });
+                      if (!r.success) toast.error(r.error);
+                      else {
+                        toast.success(t("invoices.toast.created"));
+                        router.push(ROUTES.financeInvoice(slug, r.data.id));
+                      }
+                    })
+                  }
+                >
+                  <Receipt className="size-3.5" />
+                  {t("invoices.newOneTime")}
+                </Button>
                 <Button
                   variant="outline"
                   size="sm"
@@ -253,7 +301,12 @@ export function ContractDetailView({
                   {invoices.map((inv) => (
                     <li key={inv.id} className="flex items-center justify-between py-2 text-sm">
                       <div>
-                        <span className="font-mono text-xs">{inv.invoice_number}</span>
+                        <Link
+                          href={ROUTES.financeInvoice(slug, inv.id)}
+                          className="font-mono text-xs font-medium text-primary hover:underline"
+                        >
+                          {inv.invoice_number}
+                        </Link>
                         <span className="ml-2 text-xs text-muted-foreground">
                           {formatDate(inv.issue_date, locale)}
                         </span>

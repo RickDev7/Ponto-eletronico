@@ -108,8 +108,20 @@ export const createPaymentSchema = z.object({
   notes: z.string().optional(),
 });
 
+export const createExpenseSchema = z.object({
+  description: z.string().min(2),
+  amountCents: z.coerce.number().int().positive(),
+  expenseDate: z.string(),
+  category: z
+    .enum(["operational", "payroll", "supplies", "utilities", "other"])
+    .default("operational"),
+  vendor: z.string().optional(),
+  reference: z.string().optional(),
+});
+
 export type CreateQuoteInput = z.infer<typeof createQuoteSchema>;
 export type UpdateQuoteInput = z.infer<typeof updateQuoteSchema>;
 export type CreateContractInput = z.infer<typeof createContractSchema>;
 export type CreateInvoiceInput = z.infer<typeof createInvoiceSchema>;
 export type CreatePaymentInput = z.infer<typeof createPaymentSchema>;
+export type CreateExpenseInput = z.infer<typeof createExpenseSchema>;

@@ -1,8 +1,10 @@
 import { getLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { requireCompanyContext } from "@/lib/auth/guards";
-import { PropertyDetailView } from "@/components/features/operations/property-detail-view";
-import { loadPropertyById } from "@/lib/operations/load-operations-data";
+import { can } from "@/config/permissions";
+import { LOCALE_DATE_MAP } from "@/lib/i18n/metadata";
+import { loadProperty360Data } from "@/lib/properties/load-property-360-data";
+import { Property360View } from "@/components/features/properties/property-360-view";
 import { AppShellPage } from "@/components/design-system/layout";
 
 interface PageProps {
@@ -13,24 +15,18 @@ export default async function OperationsPropertyDetailPage({ params }: PageProps
   const { companySlug, propertyId } = await params;
   const ctx = await requireCompanyContext({ slug: companySlug, minRole: "supervisor" });
   const locale = await getLocale();
-  const dateLocale = locale === "en" ? "en-US" : "pt-BR";
+  const dateLocale = LOCALE_DATE_MAP[locale] ?? "en-US";
 
-  const { property, tasks, contracts, upcoming } = await loadPropertyById(
-    ctx.company.id,
-    propertyId,
-  );
-
-  if (!property) notFound();
+  const data = await loadProperty360Data(ctx.company.id, propertyId);
+  if (!data) notFound();
 
   return (
     <AppShellPage size="fluid">
-      <PropertyDetailView
+      <Property360View
         slug={companySlug}
-        property={property}
-        tasks={tasks}
-        contracts={contracts}
-        upcoming={upcoming}
+        data={data}
         locale={dateLocale}
+        canWrite={can(ctx.membership.role, "addresses:write")}
       />
     </AppShellPage>
   );

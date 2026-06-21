@@ -20,11 +20,16 @@ interface WorkforceDashboardViewProps {
 }
 
 const LINKS = [
+  { key: "planning", href: (s: string) => ROUTES.workforcePlanning(s) },
+  { key: "vehicles", href: (s: string) => ROUTES.workforceVehicles(s) },
   { key: "employees", href: (s: string) => ROUTES.workforceEmployees(s) },
+  { key: "teams", href: (s: string) => ROUTES.workforceTeams(s) },
+  { key: "skills", href: (s: string) => ROUTES.workforceSkills(s) },
+  { key: "availability", href: (s: string) => ROUTES.workforceAvailability(s) },
   { key: "shifts", href: (s: string) => ROUTES.workforceShifts(s) },
   { key: "vacations", href: (s: string) => ROUTES.workforceVacations(s) },
+  { key: "documents", href: (s: string) => ROUTES.workforceDocuments(s) },
   { key: "timeAccount", href: (s: string) => ROUTES.workforceTimeAccount(s) },
-  { key: "timesheets", href: (s: string) => ROUTES.workforceTimesheets(s) },
 ] as const;
 
 export function WorkforceDashboardView({

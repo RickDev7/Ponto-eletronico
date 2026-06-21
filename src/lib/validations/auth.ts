@@ -47,5 +47,6 @@ export const createCompanySchema = z.object({
 });
 
 export type LoginInput = z.infer<typeof loginSchema>;
+export type SignInInput = LoginInput & { redirect?: string | null };
 export type RegisterInput = z.infer<typeof registerSchema>;
 export type CreateCompanyInput = z.infer<typeof createCompanySchema>;

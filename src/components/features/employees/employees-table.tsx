@@ -6,6 +6,7 @@ import { Link } from "@/i18n/navigation";
 import { toast } from "sonner";
 import { MoreHorizontal, Pencil, Trash2, Plus, UserCheck } from "lucide-react";
 import { deleteEmployee } from "@/actions/employees/actions";
+import { ROUTES } from "@/config/constants";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import {
@@ -190,7 +191,7 @@ export function EmployeesTable({
                     <TableRow key={emp.id} className="group border-border/50">
                       <TableCell className="max-w-0 py-1 whitespace-normal">
                         <Link
-                          href={`/${slug}/employees/${emp.id}`}
+                          href={ROUTES.workforceEmployee(slug, emp.id)}
                           className="flex min-w-0 items-center gap-2 transition-colors hover:text-primary"
                         >
                           <Avatar className="size-6 shrink-0 after:border-0">

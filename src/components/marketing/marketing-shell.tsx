@@ -17,16 +17,16 @@ export async function MarketingHeader({ className }: { className?: string }) {
   return (
     <header
       className={cn(
-        "sticky top-0 z-40 border-b border-white/[0.06] bg-zinc-950/80 backdrop-blur-xl",
+        "sticky top-0 z-40 border-b border-[#E2E8F0] bg-white/90 backdrop-blur-xl",
         className,
       )}
     >
-      <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-4 sm:px-6">
+      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
         <Link href={ROUTES.home} className="flex items-center gap-2.5">
-          <div className="flex size-8 items-center justify-center rounded-xl bg-white">
-            <span className="text-sm font-bold text-zinc-950">F</span>
+          <div className="flex size-8 items-center justify-center rounded-xl bg-primary">
+            <span className="text-sm font-bold text-primary-foreground">F</span>
           </div>
-          <span className="text-sm font-semibold tracking-tight text-white">FeldOps</span>
+          <span className="text-sm font-semibold tracking-tight text-foreground">FeldOps</span>
         </Link>
 
         <nav className="hidden items-center gap-6 md:flex">
@@ -34,7 +34,7 @@ export async function MarketingHeader({ className }: { className?: string }) {
             <Link
               key={href}
               href={href}
-              className="text-sm text-zinc-400 transition-colors hover:text-white"
+              className="text-sm text-muted-foreground transition-colors hover:text-foreground"
             >
               {t(labelKey)}
             </Link>
@@ -44,13 +44,13 @@ export async function MarketingHeader({ className }: { className?: string }) {
         <div className="flex items-center gap-2">
           <Link
             href={ROUTES.login}
-            className="hidden text-sm text-zinc-400 transition-colors hover:text-white sm:block"
+            className="hidden text-sm text-muted-foreground transition-colors hover:text-foreground sm:block"
           >
             {t("login")}
           </Link>
           <Link
             href={ROUTES.register}
-            className="inline-flex items-center gap-1.5 rounded-lg bg-white px-3.5 py-1.5 text-sm font-medium text-zinc-950 transition-colors hover:bg-zinc-100"
+            className="inline-flex items-center gap-1.5 rounded-lg bg-primary px-3.5 py-1.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
           >
             {t("register")}
             <ArrowRight className="size-3.5" />
@@ -66,86 +66,86 @@ export async function MarketingFooter() {
   const tNav = await getTranslations("landing.nav");
 
   return (
-    <footer className="border-t border-white/[0.06] bg-zinc-950 py-12">
+    <footer className="border-t border-[#E2E8F0] bg-white py-14">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
           <div className="space-y-3">
             <div className="flex items-center gap-2">
-              <div className="flex size-7 items-center justify-center rounded-lg bg-white">
-                <span className="text-xs font-bold text-zinc-950">F</span>
+              <div className="flex size-7 items-center justify-center rounded-lg bg-primary">
+                <span className="text-xs font-bold text-primary-foreground">F</span>
               </div>
-              <span className="font-semibold text-white">FeldOps</span>
+              <span className="font-semibold text-foreground">FeldOps</span>
             </div>
-            <p className="text-xs leading-relaxed text-zinc-500">{t("tagline")}</p>
+            <p className="text-xs leading-relaxed text-muted-foreground">{t("tagline")}</p>
           </div>
 
           <div className="space-y-3">
-            <p className="text-xs font-medium uppercase tracking-wider text-zinc-500">
+            <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
               {t("product")}
             </p>
-            <div className="flex flex-col gap-2 text-sm text-zinc-400">
-              <Link href={ROUTES.features} className="hover:text-white transition-colors">
+            <div className="flex flex-col gap-2 text-sm text-muted-foreground">
+              <Link href={ROUTES.features} className="hover:text-foreground transition-colors">
                 {tNav("features")}
               </Link>
-              <Link href={ROUTES.pricing} className="hover:text-white transition-colors">
+              <Link href={ROUTES.pricing} className="hover:text-foreground transition-colors">
                 {tNav("pricing")}
               </Link>
-              <Link href={ROUTES.demo} className="hover:text-white transition-colors">
+              <Link href={ROUTES.demo} className="hover:text-foreground transition-colors">
                 {tNav("demo")}
               </Link>
             </div>
           </div>
 
           <div className="space-y-3">
-            <p className="text-xs font-medium uppercase tracking-wider text-zinc-500">
+            <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
               {t("company")}
             </p>
-            <div className="flex flex-col gap-2 text-sm text-zinc-400">
-              <Link href={ROUTES.contact} className="hover:text-white transition-colors">
+            <div className="flex flex-col gap-2 text-sm text-muted-foreground">
+              <Link href={ROUTES.contact} className="hover:text-foreground transition-colors">
                 {tNav("contact")}
               </Link>
             </div>
           </div>
 
           <div className="space-y-3">
-            <p className="text-xs font-medium uppercase tracking-wider text-zinc-500">
+            <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
               {t("legal")}
             </p>
-            <div className="flex flex-col gap-2 text-sm text-zinc-400">
-              <Link href={ROUTES.privacy} className="transition-colors hover:text-white">
+            <div className="flex flex-col gap-2 text-sm text-muted-foreground">
+              <Link href={ROUTES.privacy} className="transition-colors hover:text-foreground">
                 {t("privacy")}
               </Link>
-              <Link href={ROUTES.terms} className="transition-colors hover:text-white">
+              <Link href={ROUTES.terms} className="transition-colors hover:text-foreground">
                 {t("terms")}
               </Link>
-              <Link href={ROUTES.impressum} className="transition-colors hover:text-white">
+              <Link href={ROUTES.impressum} className="transition-colors hover:text-foreground">
                 {t("impressum")}
               </Link>
-              <Link href={ROUTES.cookies} className="transition-colors hover:text-white">
+              <Link href={ROUTES.cookies} className="transition-colors hover:text-foreground">
                 {t("cookies")}
               </Link>
             </div>
           </div>
         </div>
 
-        <div className="mt-10 flex flex-col items-center justify-between gap-4 border-t border-white/[0.06] pt-8 sm:flex-row">
-          <p className="text-xs text-zinc-600">
+        <div className="mt-10 flex flex-col items-center justify-between gap-4 border-t border-border pt-8 sm:flex-row">
+          <p className="text-xs text-muted-foreground">
             © {new Date().getFullYear()} FeldOps · {t("gdpr")}
           </p>
-          <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-xs text-zinc-500">
-            <Link href={ROUTES.privacy} className="transition-colors hover:text-zinc-300">
+          <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-xs text-muted-foreground">
+            <Link href={ROUTES.privacy} className="transition-colors hover:text-foreground">
               {t("privacy")}
             </Link>
-            <Link href={ROUTES.terms} className="transition-colors hover:text-zinc-300">
+            <Link href={ROUTES.terms} className="transition-colors hover:text-foreground">
               {t("terms")}
             </Link>
-            <Link href={ROUTES.impressum} className="transition-colors hover:text-zinc-300">
+            <Link href={ROUTES.impressum} className="transition-colors hover:text-foreground">
               {t("impressum")}
             </Link>
-            <Link href={ROUTES.login} className="transition-colors hover:text-zinc-300">
+            <Link href={ROUTES.login} className="transition-colors hover:text-foreground">
               {t("login")}
             </Link>
-            <Link href={ROUTES.register} className="transition-colors hover:text-zinc-300">
+            <Link href={ROUTES.register} className="transition-colors hover:text-foreground">
               {t("register")}
             </Link>
           </div>

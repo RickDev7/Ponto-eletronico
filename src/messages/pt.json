@@ -85,6 +85,7 @@
   "navigation": {
     "dashboard": "Painel",
     "myTasks": "Minhas tarefas",
+    "fieldExecution": "Campo",
     "tasks": "Tarefas",
     "calendar": "Calendário",
     "employees": "Colaboradores",
@@ -92,18 +93,24 @@
     "clients": "Clientes",
     "operations": "Operação",
     "operationsDashboard": "Dashboard Operacional",
+    "operationsOverview": "Visão geral",
+    "operationsVisits": "Visitas",
     "operationsClients": "Clientes",
-    "operationsProperties": "Imóveis",
+    "operationsProperties": "Propriedades",
     "operationsServices": "Serviços",
     "operationsScheduling": "Planejamento",
+    "operationsEquipment": "Equipamentos",
+    "operationsMaterials": "Materiais",
     "operationsCalendar": "Calendário",
     "operationsTeams": "Equipas",
     "operationsRoutes": "Rotas",
     "operationsJobs": "Execuções",
+    "operationsWorkOrders": "Ordens de trabalho",
     "workforce": "Workforce",
     "workforceDashboard": "Dashboard Workforce",
     "workforceEmployees": "Funcionários",
-    "workforcePlanning": "Planeamento",
+    "workforcePlanning": "Centro de Planeamento",
+    "workforceVehicles": "Veículos",
     "workforceShifts": "Escalas",
     "workforceAbsences": "Ausências",
     "workforceVacations": "Férias",
@@ -111,14 +118,32 @@
     "workforceTimesheets": "Timesheets",
     "workforceWorktime": "Jornadas",
     "workforceDocuments": "Documentos",
-    "crm": "CRM",
+    "workforceTeams": "Equipas",
+    "workforceSkills": "Competências",
+    "workforceAvailability": "Disponibilidade",
+    "assets": "Ativos",
+    "assetsOverview": "Visão geral",
+    "crm": "CRM & Vendas",
+    "crmOverview": "Visão geral",
+    "crmClients": "Clientes",
+    "crmQuotes": "Orçamentos",
+    "crmContracts": "Contratos",
     "crmDashboard": "Dashboard Comercial",
     "crmLeads": "Leads",
     "crmPipeline": "Pipeline",
     "crmContacts": "Contactos",
     "crmCompanies": "Empresas",
+    "commercial": "Comercial",
+    "commercialOverview": "Visão geral",
+    "commercialPipeline": "Pipeline",
+    "commercialLeads": "Leads",
+    "commercialContacts": "Contactos",
+    "commercialClients": "Clientes",
+    "commercialQuotes": "Orçamentos",
+    "commercialContracts": "Contratos",
     "finance": "Financeiro",
     "financeOverview": "Dashboard",
+    "financeRevenue": "Receita",
     "financeQuotes": "Orçamentos",
     "financeInvoices": "Faturas",
     "financeContracts": "Contratos",
@@ -127,12 +152,18 @@
     "financeCosts": "Custos",
     "financeProfitability": "Rentabilidade",
     "financeForecast": "Forecast",
+    "analytics": "Analytics",
+    "analyticsOverview": "Visão geral",
+    "analyticsExecutive": "Executivo",
+    "analyticsOperational": "Operacional",
+    "analyticsFinancial": "Financeiro",
     "properties": "Endereços",
     "reports": "Relatórios",
     "activity": "Atividades",
     "audits": "Auditorias",
     "settings": "Configurações",
     "automations": "Automações",
+    "aiAssistant": "Assistente IA",
     "appearance": "Aparência",
     "series": "Séries recorrentes",
     "templates": "Modelos",
@@ -143,7 +174,7 @@
     "allWorkspaces": "Todos os workspaces",
     "search": "Pesquisar",
     "searchShortcut": "⌘K",
-    "executiveSubtitle": "Visão executiva da operação",
+    "executiveSubtitle": "Command Center",
     "notifications": "Notificações",
     "profile": "Perfil",
     "logout": "Sair",
@@ -293,6 +324,27 @@
         "noAlerts": "Nenhum alerta crítico.",
         "noActivity": "Sem atividades recentes.",
         "noForecast": "Sem previsão disponível."
+      }
+    },
+    "commandCenter": {
+      "eyebrow": "Command Center",
+      "title": "O que requer atenção hoje?",
+      "viewAll": "Ver tudo",
+      "planning": "Planeamento",
+      "sections": {
+        "todayOps": "Operações de hoje",
+        "workforce": "Estado da equipa",
+        "finance": "Resumo financeiro",
+        "openIssues": "Problemas em aberto",
+        "activity": "Atividade recente",
+        "weekPlanning": "Pré-visualização semanal"
+      },
+      "cols": {
+        "time": "Hora",
+        "service": "Serviço",
+        "client": "Cliente",
+        "assignee": "Colaborador",
+        "status": "Estado"
       }
     }
   },
@@ -598,6 +650,81 @@
       "noProperties": "Nenhum local de serviço",
       "floorSuffix": "{floor}º andar",
       "tasksHeading": "Tarefas ({count})"
+    },
+    "client360": {
+      "pageTitle": "Cliente",
+      "noContact": "Sem contacto principal",
+      "viewAll": "Ver todos",
+      "primary": "principal",
+      "source": "Origem",
+      "originLead": "Lead de origem",
+      "taskCount": "{count, plural, one {# tarefa} other {# tarefas}}",
+      "contactSource": {
+        "client": "Cliente",
+        "lead": "Lead CRM"
+      },
+      "tabs": {
+        "overview": "Visão geral",
+        "contacts": "Contactos",
+        "contracts": "Contratos",
+        "properties": "Propriedades",
+        "services": "Serviços",
+        "invoices": "Faturas",
+        "reports": "Relatórios",
+        "documents": "Documentos"
+      },
+      "kpis": {
+        "properties": "Propriedades",
+        "contracts": "Contratos ativos",
+        "openInvoices": "Faturas em aberto",
+        "revenue": "Receita paga",
+        "activeTasks": "Tarefas ativas",
+        "completed": "Concluídas"
+      },
+      "financial": {
+        "openBalance": "Saldo em aberto"
+      },
+      "panels": {
+        "upcomingTasks": "Próximas tarefas",
+        "financial": "Resumo financeiro",
+        "activity": "Atividade recente",
+        "commercial": "Origem comercial",
+        "quotes": "Orçamentos",
+        "quickLinks": "Atalhos"
+      },
+      "actions": {
+        "contract": "Novo contrato",
+        "invoice": "Nova fatura"
+      },
+      "links": {
+        "scheduling": "Planeamento",
+        "contracts": "Contratos",
+        "reports": "Relatórios"
+      },
+      "columns": {
+        "title": "Título",
+        "status": "Estado",
+        "value": "Valor",
+        "due": "Vencimento",
+        "service": "Serviço",
+        "properties": "Propriedades",
+        "tasks": "Tarefas"
+      },
+      "form": {
+        "street": "Rua",
+        "postalCode": "Código postal",
+        "city": "Cidade"
+      },
+      "empty": {
+        "tasks": "Sem tarefas agendadas",
+        "contacts": "Sem contactos registados",
+        "contracts": "Sem contratos",
+        "properties": "Sem propriedades — adicione um endereço de serviço",
+        "services": "Sem serviços associados",
+        "invoices": "Sem faturas",
+        "reports": "Sem execuções concluídas",
+        "documents": "Sem fotos ou documentos de campo"
+      }
     }
   },
   "properties": {
@@ -866,6 +993,82 @@
         "evening": "Noite",
         "eveningRange": "17:00 – 22:00"
       }
+    }
+  },
+  "analytics": {
+    "title": "Centro de Analytics",
+    "description": "Utilização, receita, rentabilidade, SLA e desempenho da equipa num só lugar.",
+    "tabs": {
+      "hub": "Visão geral",
+      "executive": "Executivo",
+      "operational": "Operacional",
+      "financial": "Financeiro"
+    },
+    "pillars": {
+      "utilization": "Utilização",
+      "revenue": "Receita",
+      "profitability": "Rentabilidade",
+      "sla": "SLA",
+      "workforce": "Equipa",
+      "utilizationHint": "{hours}h trabalhadas (6 meses)",
+      "revenueHint": "MRR {mrr}",
+      "slaHint": "{overdue} tarefas em atraso",
+      "workforceHint": "{completed} tarefas · {employees} ativos"
+    },
+    "dashboards": {
+      "executive": {
+        "title": "Dashboard executivo",
+        "description": "KPIs de alto nível, alertas, previsão de receita e command center."
+      },
+      "operational": {
+        "title": "Dashboard operacional",
+        "description": "Utilização, conformidade SLA, desempenho de tarefas e produtividade."
+      },
+      "financial": {
+        "title": "Dashboard financeiro",
+        "description": "Receita, margens e rentabilidade por cliente e serviço."
+      }
+    },
+    "charts": {
+      "utilization": "Tendência de utilização",
+      "sla": "Conformidade SLA",
+      "revenueProfit": "Receita vs lucro",
+      "costs": "Custos",
+      "profit": "Lucro"
+    },
+    "operational": {
+      "title": "Analytics operacional",
+      "description": "Utilização em campo, aderência ao SLA e desempenho da equipa.",
+      "utilizationChart": "Horas planeadas vs trabalhadas",
+      "utilizationHint": "Planeamento de turnos vs horas de check-in",
+      "slaChart": "Taxa de conclusão no prazo",
+      "slaHint": "Tarefas concluídas na data ou antes do agendamento",
+      "plannedHours": "Planeadas",
+      "workedHours": "Trabalhadas",
+      "slaOnTime": "No prazo",
+      "slaLate": "Concluídas com atraso",
+      "slaOverdue": "Em aberto (atraso)",
+      "invoiceCollection": "SLA de cobrança",
+      "topPerformers": "Melhores desempenhos",
+      "tabs": {
+        "metrics": "Métricas",
+        "activity": "Atividade",
+        "audits": "Auditorias"
+      }
+    },
+    "financial": {
+      "title": "Analytics financeiro",
+      "description": "Receita, custos e análise de margem no ano.",
+      "received": "Recebido (ano)",
+      "invoiced": "Faturado (ano)",
+      "mrr": "MRR",
+      "margin": "Margem bruta",
+      "chartRevenue": "Receita",
+      "chartCosts": "Custos",
+      "chartProfit": "Lucro",
+      "byClient": "Receita por cliente",
+      "byService": "Receita por serviço",
+      "empty": "Sem dados no período"
     }
   },
   "reports": {
@@ -1367,6 +1570,7 @@
       "colorSchemeDescription": "Escolha a aparência da interface para sua conta",
       "lightDescription": "Interface clara",
       "darkDescription": "Menos cansaço visual",
+      "systemDescription": "Segue a preferência do sistema operacional",
       "currentMode": "Atual: {mode}",
       "darkMode": "Modo escuro",
       "lightMode": "Modo claro",
@@ -1697,11 +1901,113 @@
     "signOut": "Sair",
     "signingOut": "Saindo..."
   },
+  "clientPortal": {
+    "nav": {
+      "overview": "Visão geral",
+      "contracts": "Contratos",
+      "invoices": "Faturas",
+      "reports": "Relatórios",
+      "services": "Serviços",
+      "documents": "Documentos"
+    },
+    "overview": {
+      "title": "Portal do cliente",
+      "welcome": "Bem-vindo, {name}",
+      "kpis": {
+        "contracts": "Contratos ativos",
+        "openInvoices": "Faturas em aberto",
+        "overdue": "Faturas vencidas",
+        "properties": "Propriedades"
+      },
+      "recentInvoices": "Faturas recentes",
+      "upcomingServices": "Próximos serviços",
+      "viewAll": "Ver tudo"
+    },
+    "contracts": {
+      "title": "Contratos",
+      "description": "Seus contratos de serviço com a empresa.",
+      "empty": "Nenhum contrato encontrado.",
+      "active": "Ativo",
+      "inactive": "Inativo",
+      "columns": {
+        "title": "Título",
+        "period": "Período",
+        "frequency": "Frequência",
+        "amount": "Valor",
+        "status": "Status"
+      }
+    },
+    "invoices": {
+      "title": "Faturas",
+      "description": "Histórico de faturas e pagamentos.",
+      "empty": "Nenhuma fatura disponível.",
+      "detailDescription": "Detalhes da fatura",
+      "backToList": "Voltar à lista",
+      "lineItems": "Itens",
+      "summary": "Resumo",
+      "columns": {
+        "number": "Número",
+        "issueDate": "Emissão",
+        "dueDate": "Vencimento",
+        "amount": "Valor",
+        "status": "Status"
+      }
+    },
+    "reports": {
+      "title": "Relatórios",
+      "description": "Relatórios e comprovantes de serviço.",
+      "empty": "Nenhum relatório disponível.",
+      "noFile": "Arquivo não disponível.",
+      "downloadFailed": "Falha ao baixar o arquivo.",
+      "columns": {
+        "title": "Título",
+        "type": "Tipo",
+        "period": "Período",
+        "generated": "Gerado em"
+      },
+      "types": {
+        "daily": "Diário",
+        "weekly": "Semanal",
+        "monthly": "Mensal",
+        "client": "Cliente",
+        "employee": "Colaborador",
+        "custom": "Personalizado"
+      }
+    },
+    "services": {
+      "title": "Serviços",
+      "description": "Propriedades, contratos e execuções recentes.",
+      "properties": "Propriedades",
+      "noProperties": "Nenhuma propriedade cadastrada.",
+      "activeContracts": "Contratos ativos",
+      "noContracts": "Nenhum contrato ativo.",
+      "recentExecutions": "Execuções recentes",
+      "noExecutions": "Nenhuma execução concluída.",
+      "noUpcoming": "Nenhum serviço agendado."
+    },
+    "documents": {
+      "title": "Documentos",
+      "description": "Documentos compartilhados com você.",
+      "empty": "Nenhum documento disponível.",
+      "category": "Categoria: {value}",
+      "downloadFailed": "Falha ao baixar o documento."
+    },
+    "access": {
+      "title": "Acesso ao portal",
+      "description": "Convide o cliente para acessar contratos, faturas e relatórios.",
+      "email": "E-mail do usuário",
+      "grant": "Conceder acesso",
+      "success": "Acesso ao portal concedido.",
+      "error": "Não foi possível conceder acesso."
+    }
+  },
   "selectCompany": {
     "title": "Escolher empresa",
     "description": "Você tem acesso a vários workspaces. Selecione qual deseja abrir.",
     "createHint": "Precisa de um workspace novo?",
-    "createCompany": "Criar empresa"
+    "createCompany": "Criar empresa",
+    "platformConsole": "Gestão da Plataforma",
+    "platformConsoleHint": "Console Super Admin — tenants, faturação, suporte"
   },
   "meWorkTime": {
     "title": "Jornada hoje",
@@ -1714,13 +2020,20 @@
     "timeUntilBreak": "Faltam {time} para o intervalo recomendado"
   },
   "roles": {
+    "superAdmin": "Super Admin",
+    "owner": "Owner",
+    "manager": "Manager",
     "admin": "Administrador",
     "supervisor": "Supervisor",
     "employee": "Colaborador",
+    "client": "Cliente",
     "descriptions": {
+      "owner": "Acesso total à empresa, faturação, equipa e configurações",
+      "manager": "Gere operações, equipa e fluxos comerciais",
       "admin": "Acesso total à empresa, equipe e configurações",
       "supervisor": "Gerencia operações, equipe e relatórios",
-      "employee": "Executa tarefas e registra atividades de campo"
+      "employee": "Executa tarefas e registra atividades de campo",
+      "client": "Acesso ao portal com contratos, faturas e relatórios"
     }
   },
   "serviceTypes": {
@@ -1897,19 +2210,72 @@
       "register": "Começar grátis"
     },
     "hero": {
-      "badge": "Para empresas de serviços de campo",
-      "title": "Gestão de serviços",
-      "titleHighlight": "simplificada",
-      "description": "FeldOps é a plataforma completa para limpeza de escadas, jardinagem, serviço de inverno e limpeza de vidros. Do planejamento de tarefas à faturamento — tudo em um só lugar.",
-      "ctaPrimary": "Teste grátis agora",
-      "ctaSecondary": "Ver demo",
-      "footnote": "Sem cartão de crédito · Grátis para até 3 colaboradores"
+      "badge": "Para empresas de serviços e facility management",
+      "title": "Gerencie todo o seu negócio de serviços em uma única plataforma",
+      "description": "Planeje equipas, execute operações no terreno, fature clientes e ofereça um portal profissional — tudo integrado para empresas de limpeza, manutenção e gestão de instalações.",
+      "ctaPrimary": "Começar teste grátis",
+      "ctaSecondary": "Agendar demo",
+      "footnote": "Sem cartão de crédito · Configuração em minutos · Suporte em português",
+      "screenshotAlt": "Painel de controlo operacional do FeldOps"
+    },
+    "trustedBy": {
+      "title": "Confiado por empresas de serviços em toda a Europa",
+      "subtitle": "Mais de 500 empresas de limpeza, facility management e manutenção já digitalizaram suas operações com o FeldOps.",
+      "logos": ["CleanPro", "FacilityOne", "Maintex", "ServiceHub", "NordClean"]
+    },
+    "benefits": {
+      "eyebrow": "Por que FeldOps",
+      "title": "Menos planilhas. Mais controlo.",
+      "description": "Substitua ferramentas desconectadas por uma plataforma pensada para prestadores de serviço.",
+      "items": {
+        "visibility": {
+          "title": "Visibilidade em tempo real",
+          "description": "Saiba onde estão as suas equipas, o estado de cada visita e o que precisa de atenção hoje — sem ligar para ninguém."
+        },
+        "efficiency": {
+          "title": "Operações mais eficientes",
+          "description": "Planeie escalas, atribua ordens de serviço e reduza deslocações com rotas e agendas inteligentes."
+        },
+        "trust": {
+          "title": "Confiança com clientes",
+          "description": "Relatórios com fotos, assinaturas digitais e portal do cliente que transmitem profissionalismo."
+        },
+        "scale": {
+          "title": "Cresça sem caos",
+          "description": "De 5 a 500 colaboradores, mantenha processos consistentes com permissões por função e multi-unidade."
+        }
+      }
     },
     "features": {
-      "title": "Tudo o que você precisa",
-      "description": "Da gestão de tarefas à captura de horas com GPS — o FeldOps cobre todo o ciclo de serviço.",
+      "eyebrow": "Plataforma completa",
+      "title": "Tudo o que precisa para gerir o negócio",
+      "description": "Do primeiro contacto comercial à fatura paga — um fluxo contínuo para empresas de serviço.",
       "viewAll": "Ver todos os recursos",
       "items": {
+        "scheduling": {
+          "title": "Agendamento inteligente",
+          "description": "Calendário visual, visitas recorrentes e atribuição automática por zona ou competência."
+        },
+        "mobile": {
+          "title": "App para equipas de campo",
+          "description": "Check-in com GPS, fotos antes/depois e formulários offline para técnicos e limpadores."
+        },
+        "reporting": {
+          "title": "Relatórios profissionais",
+          "description": "PDFs automáticos, exportação para contabilidade e histórico completo por cliente ou local."
+        },
+        "compliance": {
+          "title": "Conformidade e auditoria",
+          "description": "Registos imutáveis, conformidade LGPD e dados alojados na UE."
+        },
+        "integrations": {
+          "title": "Integrações abertas",
+          "description": "API, webhooks e exportações para conectar com ERP, contabilidade e ferramentas existentes."
+        },
+        "security": {
+          "title": "Segurança enterprise",
+          "description": "Isolamento por empresa, autenticação segura e controlos de acesso granulares."
+        },
         "taskManagement": {
           "title": "Gestão de tarefas",
           "description": "Crie, atribua e acompanhe tarefas. Prioridades, prazos e atualizações de status em tempo real."
@@ -1931,7 +2297,7 @@
           "description": "Relatórios em PDF e folhas de horas em CSV para clientes e contabilidade com um clique."
         },
         "team": {
-          "title": "Gestão de equipe",
+          "title": "Gestão de equipa",
           "description": "Gerencie colaboradores, supervisores e administradores com acesso por função."
         },
         "pwa": {
@@ -1948,33 +2314,116 @@
         }
       }
     },
-    "services": {
+    "workforce": {
+      "eyebrow": "Planeamento de equipas",
+      "title": "Escalas que funcionam na prática",
+      "description": "Planeie disponibilidade, férias e competências. Veja quem está onde — antes de surgir um problema.",
+      "bullets": [
+        "Calendário de escalas por equipa ou colaborador",
+        "Banco de horas e folhas de ponto integrados",
+        "Alertas de sobreposição e falta de cobertura",
+        "Competências e certificações por função"
+      ],
+      "screenshotAlt": "Planeamento de escalas e equipas no FeldOps"
+    },
+    "operations": {
+      "eyebrow": "Gestão operacional",
+      "title": "Ordens de serviço do escritório ao terreno",
+      "description": "Crie visitas, acompanhe execução em tempo real e documente cada intervenção com provas digitais.",
+      "bullets": [
+        "Ordens de serviço e visitas num único hub",
+        "Mapa com localização das equipas",
+        "Checklists e formulários personalizáveis",
+        "Fotos, assinaturas e notas por visita"
+      ],
+      "screenshotAlt": "Gestão de ordens de serviço e visitas no FeldOps"
+    },
+    "finance": {
+      "eyebrow": "Finanças",
+      "title": "Orçamentos, contratos e faturação integrados",
+      "description": "Transforme trabalho concluído em receita — sem reintroduzir dados manualmente.",
+      "bullets": [
+        "Orçamentos e propostas com aprovação online",
+        "Contratos recorrentes ligados a visitas",
+        "Faturação automática e registo de pagamentos",
+        "Dashboard financeiro com MRR e inadimplência"
+      ],
+      "screenshotAlt": "Dashboard financeiro com faturação e receita no FeldOps"
+    },
+    "clientPortal": {
+      "eyebrow": "Portal do cliente",
+      "title": "Uma experiência profissional para os seus clientes",
+      "description": "Clientes acedem a relatórios, faturas e próximas visitas — sem emails a pedir informação.",
+      "bullets": [
+        "Portal branded com login seguro",
+        "Relatórios de serviço e histórico por local",
+        "Aprovação de orçamentos online",
+        "Comunicação centralizada por contrato"
+      ],
+      "screenshotAlt": "Portal do cliente com faturas e relatórios no FeldOps"
+    },
+    "aiAssistant": {
+      "eyebrow": "Assistente IA",
+      "title": "Respostas operacionais em segundos",
+      "description": "Pergunte sobre escalas, visitas pendentes ou métricas — o assistente conhece os seus dados.",
+      "bullets": [
+        "Consultas em linguagem natural",
+        "Sugestões de escala e cobertura",
+        "Resumos de atividade por cliente ou equipa",
+        "Disponível 24/7 no dashboard"
+      ],
+      "screenshotAlt": "Assistente IA operacional no FeldOps"
+    },
+    "industries": {
       "title": "Feito para o seu setor",
-      "description": "Desenvolvido para prestadores de serviços de campo.",
+      "description": "Configurado para as realidades de empresas de serviço e PME.",
       "items": {
-        "stairwell": {
-          "title": "Limpeza de escadas",
-          "description": "Limpeza semanal com documentação fotográfica e assinatura do cliente."
+        "cleaning": {
+          "title": "Empresas de limpeza",
+          "description": "Limpeza de escritórios, escadas e industriais com documentação fotográfica."
         },
-        "garden": {
-          "title": "Jardinagem",
-          "description": "Planeje trabalhos sazonais e acompanhe o histórico de manutenção por endereço."
+        "facility": {
+          "title": "Facility management",
+          "description": "Gestão de múltiplos sites, SLAs e relatórios para proprietários."
         },
-        "winter": {
-          "title": "Serviço de inverno",
-          "description": "Remoção de neve e salga com comprovantes GPS e registro de horas."
+        "maintenance": {
+          "title": "Manutenção técnica",
+          "description": "Ordens de trabalho, peças e histórico de equipamentos por local."
         },
-        "windows": {
-          "title": "Limpeza de vidros",
-          "description": "Limpeza de janelas com fotos antes/depois e relatório automático."
+        "services": {
+          "title": "Prestação de serviços",
+          "description": "Jardinagem, inverno, vidros e outros serviços recorrentes."
+        }
+      }
+    },
+    "testimonials": {
+      "eyebrow": "Depoimentos",
+      "title": "Equipas que já simplificaram as operações",
+      "description": "Empresas de serviço que substituíram planilhas e apps desconectadas pelo FeldOps.",
+      "items": {
+        "one": {
+          "quote": "Reduzimos 40% do tempo em escalas e os clientes elogiam os relatórios automáticos. Finalmente tudo num só lugar.",
+          "name": "Sofia Martins",
+          "role": "Diretora Operacional, CleanPro Lisboa"
+        },
+        "two": {
+          "quote": "A faturação ligada às visitas eliminou erros que nos custavam horas todas as semanas. ROI em menos de 2 meses.",
+          "name": "Thomas Weber",
+          "role": "CEO, FacilityOne GmbH"
+        },
+        "three": {
+          "quote": "As equipas de campo adotaram o app no primeiro dia. GPS e fotos deram-nos controlo total sem microgerir.",
+          "name": "Ana Ribeiro",
+          "role": "Gestora de Operações, Maintex"
         }
       }
     },
     "pricing": {
-      "title": "Preços simples, sem surpresas",
-      "description": "Comece grátis. Escale conforme crescer.",
-      "viewPlans": "Ver todos os planos",
-      "popular": "Popular",
+      "eyebrow": "Preços",
+      "title": "Planos simples, sem surpresas",
+      "description": "Comece grátis. Escale conforme a sua equipa cresce.",
+      "viewPlans": "Comparar todos os planos",
+      "popular": "Mais popular",
       "plans": {
         "starter": {
           "name": "Starter",
@@ -1982,7 +2431,7 @@
           "period": "para sempre",
           "features": [
             "Até 3 colaboradores",
-            "50 tarefas/mês",
+            "50 visitas/mês",
             "5 GB de fotos",
             "Relatórios em PDF"
           ],
@@ -1994,10 +2443,10 @@
           "period": "por mês",
           "features": [
             "Até 25 colaboradores",
-            "Tarefas ilimitadas",
+            "Visitas ilimitadas",
             "50 GB de fotos",
-            "Exportação CSV",
-            "Tarefas recorrentes",
+            "Portal do cliente",
+            "Faturação integrada",
             "Suporte prioritário"
           ],
           "cta": "14 dias grátis"
@@ -2008,23 +2457,55 @@
           "period": "por mês",
           "features": [
             "Colaboradores ilimitados",
-            "Tarefas ilimitadas",
-            "500 GB de fotos",
             "Multi-empresa",
-            "Acesso à API",
-            "Suporte dedicado"
+            "500 GB de fotos",
+            "API e webhooks",
+            "Assistente IA avançado",
+            "Gestor de conta dedicado"
           ],
-          "cta": "Fale conosco"
+          "cta": "Falar com vendas"
+        }
+      }
+    },
+    "faq": {
+      "eyebrow": "FAQ",
+      "title": "Perguntas frequentes",
+      "description": "Respostas rápidas para ajudar na sua decisão.",
+      "items": {
+        "whatIs": {
+          "question": "O que é o FeldOps?",
+          "answer": "O FeldOps é uma plataforma all-in-one para empresas de serviço: planeamento de equipas, operações de campo, finanças, portal do cliente e assistente IA — tudo num único sistema."
+        },
+        "industries": {
+          "question": "Para que tipos de empresa é indicado?",
+          "answer": "Empresas de limpeza, facility management, manutenção técnica e prestadores de serviços recorrentes. Se tem equipas no terreno e clientes com contratos, o FeldOps foi feito para si."
+        },
+        "trial": {
+          "question": "Posso testar antes de pagar?",
+          "answer": "Sim. O plano Starter é gratuito para sempre. O Professional inclui 14 dias de teste sem cartão de crédito."
+        },
+        "data": {
+          "question": "Os meus dados estão seguros?",
+          "answer": "Sim. Dados alojados na UE, conformidade LGPD, isolamento por empresa e encriptação em trânsito e em repouso."
+        },
+        "support": {
+          "question": "Que suporte oferecem?",
+          "answer": "Suporte por email em todos os planos. Clientes Professional têm prioridade. Enterprise inclui gestor de conta dedicado e onboarding assistido."
+        },
+        "migration": {
+          "question": "Posso migrar de outra ferramenta?",
+          "answer": "Sim. Ajudamos na importação de clientes, colaboradores e contratos. A nossa equipa guia-o na configuração inicial."
         }
       }
     },
     "cta": {
-      "title": "Pronto para digitalizar sua operação de serviços?",
-      "description": "Mais de 500 prestadores de serviço já confiam no FeldOps. Comece hoje — grátis e sem cartão de crédito.",
-      "button": "Começar grátis agora"
+      "title": "Pronto para gerir todo o negócio num só lugar?",
+      "description": "Junte-se a centenas de empresas de serviço que já simplificaram operações, finanças e relação com clientes.",
+      "button": "Começar teste grátis",
+      "secondary": "Falar com a equipa"
     },
     "footer": {
-      "tagline": "Plataforma operacional para empresas de serviço de campo.",
+      "tagline": "A plataforma operacional para empresas de serviço e facility management.",
       "product": "Produto",
       "company": "Empresa",
       "legal": "Legal",
@@ -2476,6 +2957,7 @@
     },
     "actions": {
       "newQuote": "Novo orçamento",
+      "view": "Ver",
       "viewInvoices": "Ver faturas",
       "viewCashflow": "Fluxo de caixa",
       "pdf": "Gerar PDF",
@@ -2689,8 +3171,41 @@
       "actions": {
         "recordPayment": "Registrar pagamento",
         "markPaid": "Marcar como paga",
+        "markSent": "Marcar como enviada",
         "cancel": "Cancelar",
         "delete": "Excluir"
+      },
+      "openPdf": "Abrir PDF",
+      "autoGenerated": "Gerada automaticamente",
+      "generateFromContract": "Gerar fatura de ciclo",
+      "newOneTime": "Fatura avulsa",
+      "timelineTitle": "Histórico da fatura",
+      "timelineEmpty": "Sem eventos",
+      "kind": {
+        "one_time": "Avulsa",
+        "recurring": "Recorrente"
+      },
+      "detail": {
+        "overview": "Resumo",
+        "period": "Período de faturação"
+      },
+      "timeline": {
+        "created": "Fatura criada",
+        "updated": "Fatura atualizada",
+        "sent": "Marcada como enviada",
+        "paid": "Marcada como paga",
+        "partial": "Parcialmente paga",
+        "overdue": "Marcada em atraso",
+        "cancelled": "Cancelada",
+        "duplicated": "Duplicada",
+        "deleted": "Eliminada",
+        "paymentReceived": "Pagamento recebido",
+        "pdfGenerated": "PDF gerado",
+        "recurringGenerated": "Fatura recorrente gerada"
+      },
+      "toast": {
+        "generated": "Fatura gerada a partir do contrato",
+        "created": "Fatura criada"
       },
       "views": {
         "table": "Tabela",
@@ -2732,7 +3247,14 @@
     },
     "cashflow": {
       "title": "Fluxo de Caixa",
-      "description": "Tendência de receita dos últimos 12 meses.",
+      "description": "Entradas, saídas e saldo acumulado dos últimos 12 meses.",
+      "inflow12m": "Entradas (12 meses)",
+      "outflow12m": "Saídas (12 meses)",
+      "net12m": "Fluxo líquido (12 meses)",
+      "inflow": "Entrada",
+      "outflow": "Saída",
+      "balance": "Saldo",
+      "balanceHint": "Saldo atual (fim do período)",
       "issued": "Emitido",
       "received": "Recebido",
       "pending": "Pendente",
@@ -2740,10 +3262,33 @@
       "pending12m": "Pendente (12 meses)",
       "months": "Meses"
     },
+    "revenue": {
+      "title": "Receita",
+      "description": "Análise de receita com margens — pagamentos, faturas e ranking por cliente e serviço.",
+      "kpi": {
+        "received": "Recebido (ano)",
+        "invoiced": "Faturado (ano)",
+        "margin": "Margem bruta",
+        "mrr": "MRR"
+      },
+      "chart": {
+        "title": "Receita vs custos",
+        "hint": "Receita recebida, custos e lucro — últimos 12 meses",
+        "received": "Recebido",
+        "costs": "Custos",
+        "profit": "Lucro"
+      },
+      "byClient": "Receita por cliente",
+      "byService": "Receita por serviço",
+      "empty": "Sem dados no período"
+    },
     "costs": {
       "title": "Custos",
-      "description": "Obrigações fiscais, descontos comerciais e execuções operacionais derivadas de contratos e serviços.",
+      "description": "Custos operacionais: mão de obra, materiais, manutenção, impostos e despesas.",
       "kpi": {
+        "total": "Custos totais (ano)",
+        "revenue": "Receita (ano)",
+        "margin": "Margem bruta",
         "tax": "IVA sobre faturas (ano)",
         "discounts": "Descontos em contratos",
         "unbilled": "Execuções não faturadas",
@@ -2751,8 +3296,23 @@
         "approvedTasks": "{count} tarefas aprovadas"
       },
       "chart": {
+        "title": "Custos por mês",
+        "hint": "Gasto operacional agregado",
         "taxTitle": "IVA por mês",
         "taxHint": "Obrigações fiscais derivadas de faturas emitidas"
+      },
+      "breakdown": {
+        "title": "Distribuição de custos",
+        "hint": "Participação por categoria no ano",
+        "empty": "Sem dados de custos no período"
+      },
+      "categories": {
+        "labor": "Mão de obra",
+        "materials": "Materiais",
+        "maintenance": "Manutenção",
+        "tax": "IVA e impostos",
+        "expenses": "Despesas operacionais",
+        "discounts": "Descontos"
       },
       "executions": {
         "title": "Serviços executados",
@@ -2765,10 +3325,22 @@
     },
     "profitability": {
       "title": "Rentabilidade",
-      "description": "Ranking de receita por cliente, contrato, serviço e imóvel — baseado em faturas e recebimentos.",
+      "description": "Margens e ranking de receita por cliente e serviço — faturas, pagamentos e custos operacionais.",
       "kpi": {
         "received": "Receita recebida (ano)",
-        "invoiced": "Receita faturada (ano)"
+        "invoiced": "Receita faturada (ano)",
+        "costs": "Custos totais (ano)",
+        "margin": "Margem bruta"
+      },
+      "margin": "Margem",
+      "costBreakdown": "Distribuição de custos",
+      "categories": {
+        "labor": "Mão de obra",
+        "materials": "Materiais",
+        "maintenance": "Manutenção",
+        "tax": "IVA e impostos",
+        "expenses": "Despesas operacionais",
+        "discounts": "Descontos"
       },
       "topClient": "Cliente mais lucrativo",
       "topContract": "Contrato mais lucrativo",
@@ -2779,9 +3351,10 @@
     },
     "forecastPage": {
       "title": "Forecast",
-      "description": "Previsão de receita com base em contratos recorrentes e faturas a receber.",
+      "description": "Previsão de receita com contratos recorrentes e faturas a receber, incluindo custos e margem projetados.",
       "kpi": {
         "mrr": "MRR atual",
+        "projectedMargin": "Margem projetada (30d)",
         "breakdown": "Contratos {contracts} · A receber {receivables}"
       },
       "periods": {
@@ -2797,7 +3370,8 @@
       },
       "sources": {
         "contracts": "Contratos recorrentes",
-        "receivables": "Faturas a receber"
+        "receivables": "Faturas a receber",
+        "costs": "Custos projetados"
       }
     },
     "form": {
@@ -2883,7 +3457,9 @@
       "paused": "Pausada"
     },
     "flow": {
-      "conditions": "{count} condição(ões)"
+      "conditions": "{count} condição(ões)",
+      "preview": "Pré-visualização do fluxo",
+      "conditionOptional": "Condição (opcional)"
     },
     "actions": {
       "new": "Nova automação",
@@ -2895,7 +3471,7 @@
       "generateService": "Gerar serviço",
       "generateServiceDesc": "Cria tarefas de serviço a partir do contrato",
       "generateReport": "Gerar relatório",
-      "generateReportDesc": "Notifica supervisores para gerar relatório",
+      "generateReportDesc": "Gera relatório de serviço e disponibiliza no portal do cliente",
       "sendReminder": "Enviar lembrete",
       "sendReminderDesc": "Lembrete de pagamento ou follow-up",
       "sendNotification": "Enviar notificação",
@@ -2918,8 +3494,16 @@
       "invoiceSentDesc": "Dispara ao enviar fatura ao cliente",
       "leadWon": "Lead ganho",
       "leadWonDesc": "Dispara quando lead é convertido",
+      "leadQualified": "Lead qualificado",
+      "leadQualifiedDesc": "Dispara quando lead passa para qualificação",
       "leadStatusChanged": "Status do lead alterado",
       "leadStatusChangedDesc": "Dispara em mudanças de status CRM",
+      "quoteSent": "Orçamento enviado",
+      "quoteSentDesc": "Dispara quando orçamento é enviado ao cliente",
+      "quoteSubmitted": "Orçamento em aprovação",
+      "quoteSubmittedDesc": "Dispara quando orçamento entra em revisão interna",
+      "quoteApproved": "Orçamento aprovado",
+      "quoteApprovedDesc": "Dispara quando orçamento é aceite/aprovado",
       "shiftEmpty": "Turno vazio",
       "shiftEmptyDesc": "Dispara quando uma tarefa fica sem colaborador atribuído",
       "weeklyHoursExceeded": "Horas semanais excedidas",
@@ -2957,7 +3541,11 @@
       "serviceApproved": "Serviço aprovado",
       "invoiceSent": "Fatura enviada",
       "leadWon": "Lead ganho",
+      "leadQualified": "Lead qualificado",
       "leadStatus": "Status do lead",
+      "quoteSent": "Orçamento enviado",
+      "quoteSubmitted": "Orçamento em aprovação",
+      "quoteApproved": "Orçamento aprovado",
       "shiftEmpty": "Turno vazio → Notificar gestor",
       "weeklyHours": "Horas excedidas → Alerta"
     },
@@ -2982,6 +3570,280 @@
       "deleted": "Automação excluída",
       "seeded": "{count} exemplos carregados",
       "alreadySeeded": "Já existem automações configuradas"
+    }
+  },
+  "aiAssistant": {
+    "title": "Assistente de Operações IA",
+    "description": "Otimize agendas, aloque equipas, estime custos, preveja atrasos e gere orçamentos e relatórios com contexto da sua empresa.",
+    "kpi": {
+      "capabilities": "Capacidades",
+      "domains": "Domínios",
+      "insights": "Insights recentes"
+    },
+    "chat": {
+      "title": "Pergunte ao assistente",
+      "placeholder": "Ex.: Como reduzir atrasos esta semana?",
+      "hint": "Respostas baseadas nos dados operacionais da empresa. Sem chave OpenAI, usa motor de regras."
+    },
+    "quickActions": "Ações rápidas",
+    "history": {
+      "title": "Histórico",
+      "empty": "Nenhuma análise registada ainda."
+    },
+    "widget": {
+      "title": "Assistente IA",
+      "analyzing": "A analisar dados da empresa…"
+    },
+    "dock": {
+      "open": "Abrir assistente IA",
+      "title": "Assistente IA",
+      "fullPage": "Abrir página completa"
+    },
+    "provider": {
+      "ai": "OpenAI",
+      "rules": "Regras",
+      "aiActive": "IA ativa",
+      "rulesActive": "Motor de regras"
+    },
+    "result": {
+      "summary": "Resumo",
+      "insights": "Insights",
+      "recommendations": "Recomendações",
+      "generated": "Conteúdo gerado",
+      "copy": "Copiar",
+      "copied": "Copiado para a área de transferência"
+    },
+    "capabilities": {
+      "optimizeSchedules": "Otimizar agenda",
+      "optimizeSchedulesDesc": "Sugere redistribuição de visitas e turnos para a semana.",
+      "suggestWorkforce": "Alocar equipa",
+      "suggestWorkforceDesc": "Recomenda atribuições com base em carga e disponibilidade.",
+      "estimateCosts": "Estimar custos",
+      "estimateCostsDesc": "Projeta custos e receita com base em contratos e operações.",
+      "predictDelays": "Prever atrasos",
+      "predictDelaysDesc": "Identifica riscos de atraso em tarefas e visitas.",
+      "generateQuotes": "Gerar orçamento",
+      "generateQuotesDesc": "Rascunho de orçamento com base no portfólio ativo.",
+      "generateReports": "Gerar relatório",
+      "generateReportsDesc": "Resumo executivo para clientes ou gestão interna.",
+      "analyzeProductivity": "Analisar produtividade",
+      "analyzeProductivityDesc": "Avalia taxa de conclusão, pontualidade e utilização."
+    },
+    "domains": {
+      "operations": "Operações",
+      "workforce": "Workforce",
+      "finance": "Finanças",
+      "analytics": "Analytics",
+      "commercial": "Comercial",
+      "tasks": "Tarefas",
+      "reports": "Relatórios",
+      "automations": "Automações",
+      "portal": "Portal do cliente",
+      "general": "Geral"
+    }
+  },
+  "platform": {
+    "brand": "Gestão da Plataforma",
+    "superAdmin": "Super Admin",
+    "exitPlatform": "Voltar aos workspaces",
+    "nav": {
+      "overview": "Visão geral",
+      "tenants": "Tenants",
+      "subscriptions": "Subscrições",
+      "support": "Suporte",
+      "logs": "Logs",
+      "featureFlags": "Feature Flags",
+      "audit": "Auditoria"
+    },
+    "overview": {
+      "title": "Visão geral da plataforma",
+      "description": "Métricas cross-tenant e acesso aos módulos de operação.",
+      "modules": "Módulos"
+    },
+    "kpi": {
+      "totalTenants": "Total de tenants",
+      "activeTenants": "Tenants ativos",
+      "suspended": "Suspensos",
+      "trialing": "Em trial",
+      "mrr": "MRR",
+      "openTickets": "Tickets abertos"
+    },
+    "tenants": {
+      "title": "Tenants",
+      "description": "Gerir todos os workspaces da plataforma.",
+      "empty": "Nenhum tenant encontrado.",
+      "statusUpdated": "Estado do tenant atualizado",
+      "columns": {
+        "tenant": "Tenant",
+        "status": "Estado",
+        "plan": "Plano",
+        "members": "Membros",
+        "created": "Criado",
+        "actions": "Ações"
+      },
+      "actions": {
+        "activate": "Ativar",
+        "suspend": "Suspender"
+      }
+    },
+    "subscriptions": {
+      "title": "Subscrições",
+      "description": "Estado de faturação de todos os tenants.",
+      "empty": "Nenhuma subscrição encontrada.",
+      "updated": "Subscrição atualizada",
+      "columns": {
+        "tenant": "Tenant",
+        "plan": "Plano",
+        "status": "Estado",
+        "period": "Período",
+        "stripe": "Stripe"
+      }
+    },
+    "support": {
+      "title": "Suporte",
+      "description": "Tickets de suporte de todos os tenants.",
+      "empty": "Nenhum ticket.",
+      "resolved": "Ticket resolvido",
+      "columns": {
+        "subject": "Assunto",
+        "tenant": "Tenant",
+        "priority": "Prioridade",
+        "status": "Estado",
+        "messages": "Mensagens",
+        "updated": "Atualizado",
+        "actions": "Ações"
+      },
+      "actions": {
+        "resolve": "Resolver"
+      }
+    },
+    "logs": {
+      "title": "Logs do sistema",
+      "description": "Logs centralizados da plataforma e integrações.",
+      "empty": "Nenhum log registado.",
+      "columns": {
+        "level": "Nível",
+        "source": "Origem",
+        "message": "Mensagem",
+        "tenant": "Tenant",
+        "time": "Hora"
+      }
+    },
+    "featureFlags": {
+      "title": "Feature Flags",
+      "description": "Ativar capacidades globalmente, por plano ou por tenant.",
+      "empty": "Nenhuma feature flag configurada.",
+      "updated": "Feature flag atualizada",
+      "scope": {
+        "global": "Global"
+      },
+      "columns": {
+        "key": "Chave",
+        "scope": "Âmbito",
+        "description": "Descrição",
+        "enabled": "Ativo"
+      }
+    },
+    "audit": {
+      "title": "Auditoria da plataforma",
+      "description": "Trilha imutável de ações de administração da plataforma.",
+      "empty": "Nenhum evento de auditoria.",
+      "columns": {
+        "time": "Hora",
+        "actor": "Ator",
+        "action": "Ação",
+        "target": "Alvo",
+        "tenant": "Tenant"
+      }
+    }
+  },
+  "assets": {
+    "hub": {
+      "title": "Ativos",
+      "description": "Veículos, equipamentos e materiais — inventário operacional centralizado.",
+      "modules": "Módulos",
+      "links": {
+        "vehicles": "Veículos",
+        "equipment": "Equipamentos",
+        "materials": "Materiais"
+      },
+      "kpis": {
+        "vehicles": "Veículos",
+        "vehiclesHint": "{available} disponíveis",
+        "equipment": "Equipamentos",
+        "equipmentHint": "{assigned} atribuídos",
+        "materials": "Materiais",
+        "materialsHint": "{low} em stock baixo",
+        "alerts": "Alertas",
+        "alertsHint": "Manutenção e rupturas de stock"
+      }
+    }
+  },
+  "commercial": {
+    "workflow": {
+      "stages": {
+        "lead": "Lead",
+        "qualification": "Qualificação",
+        "quote": "Orçamento",
+        "approval": "Aprovação",
+        "contract": "Contrato",
+        "client": "Cliente"
+      }
+    },
+    "hub": {
+      "title": "Comercial",
+      "subtitle": "Pipeline unificado — Lead até Cliente, uma única fonte de verdade.",
+      "newLead": "Novo lead",
+      "activeDeals": "Negócios ativos",
+      "viewPipeline": "Ver pipeline",
+      "modules": "Módulos",
+      "recentActivity": "Atividade recente",
+      "emptyDeals": "Nenhum negócio ativo no pipeline.",
+      "emptyActivity": "Sem atividade comercial recente.",
+      "table": {
+        "company": "Empresa",
+        "stage": "Etapa",
+        "value": "Valor",
+        "owner": "Responsável",
+        "updated": "Atualizado"
+      },
+      "links": {
+        "leads": "Leads",
+        "quotes": "Orçamentos",
+        "contracts": "Contratos",
+        "clients": "Clientes"
+      },
+      "kpis": {
+        "activeDeals": "Negócios ativos",
+        "pipelineValue": "Valor no pipeline",
+        "awaitingApproval": "Aguardando aprovação",
+        "openQuotes": "Orçamentos abertos",
+        "wonThisMonth": "Ganhos no mês",
+        "conversionRate": "Taxa de conversão"
+      },
+      "events": {
+        "created": "Lead criado",
+        "updated": "Atualizado",
+        "contacted": "Contactado",
+        "qualified": "Qualificado",
+        "quote_sent": "Orçamento enviado",
+        "negotiation": "Em negociação",
+        "won": "Ganho",
+        "lost": "Perdido",
+        "client_converted": "Convertido em cliente",
+        "contract_created": "Contrato criado",
+        "sent": "Orçamento enviado",
+        "accepted": "Orçamento aceite",
+        "rejected": "Orçamento rejeitado",
+        "viewed": "Em revisão",
+        "converted": "Convertido em contrato"
+      }
+    },
+    "pipeline": {
+      "title": "Pipeline comercial",
+      "subtitle": "Lead → Qualificação → Orçamento → Aprovação → Contrato → Cliente",
+      "emptyColumn": "Vazio",
+      "dealCount": "{count} negócios no funil"
     }
   },
   "crm": {
@@ -3125,9 +3987,12 @@
       "properties": "Imóveis",
       "services": "Serviços",
       "scheduling": "Planejamento",
+      "visits": "Visitas",
       "jobs": "Execuções",
       "teams": "Equipas",
       "routes": "Rotas",
+      "equipment": "Equipamentos",
+      "materials": "Materiais",
       "clients": "Clientes"
     },
     "dashboard": {
@@ -3155,15 +4020,15 @@
       "billed": "Faturado"
     },
     "properties": {
-      "title": "Imóveis",
-      "description": "{count} imóveis activos na operação.",
+      "title": "Propriedades",
+      "description": "{count} propriedades activas — edifícios, sites e instalações.",
       "viewClients": "Ver clientes",
       "empty": {
-        "title": "Nenhum imóvel",
-        "description": "Cadastre endereços nos clientes para iniciar a operação."
+        "title": "Nenhuma propriedade",
+        "description": "Cadastre endereços nos clientes para iniciar operações neste local."
       },
       "columns": {
-        "property": "Imóvel",
+        "property": "Propriedade",
         "client": "Cliente",
         "type": "Tipo",
         "area": "Área",
@@ -3186,8 +4051,78 @@
       "history": "Histórico",
       "client": "Cliente",
       "contracts": "Contratos activos",
-      "noContracts": "Sem contratos vinculados a este imóvel.",
+      "noContracts": "Sem contratos vinculados a esta propriedade.",
       "assigned": "Operação"
+    },
+    "property360": {
+      "back": "Propriedades",
+      "openMap": "Abrir mapa",
+      "newVisit": "Nova visita",
+      "viewAll": "Ver todos",
+      "accessNotes": "Notas de acesso",
+      "status": {
+        "active": "Activa",
+        "inactive": "Inactiva"
+      },
+      "tabs": {
+        "overview": "Visão geral",
+        "address": "Morada",
+        "client": "Cliente",
+        "services": "Serviços",
+        "contracts": "Contratos",
+        "visits": "Visitas",
+        "documents": "Documentos"
+      },
+      "kpis": {
+        "upcoming": "Visitas agendadas",
+        "completed": "Concluídas",
+        "contracts": "Contratos activos",
+        "services": "Tipos de serviço",
+        "documents": "Documentos",
+        "hours": "Horas (90 dias)"
+      },
+      "panels": {
+        "upcoming": "Próximas visitas",
+        "operations": "Resumo operacional",
+        "history": "Histórico de visitas",
+        "checkIns": "Check-ins recentes",
+        "quickLinks": "Atalhos",
+        "serviceTypes": "Serviços no local"
+      },
+      "fields": {
+        "label": "Designação",
+        "type": "Tipo",
+        "street": "Morada",
+        "country": "País",
+        "area": "Área",
+        "coordinates": "Coordenadas"
+      },
+      "columns": {
+        "service": "Serviço",
+        "source": "Origem",
+        "visits": "Visitas",
+        "title": "Título",
+        "frequency": "Frequência",
+        "value": "Valor"
+      },
+      "serviceSource": {
+        "property": "Propriedade",
+        "visit": "Visita"
+      },
+      "links": {
+        "client360": "Cliente 360",
+        "scheduling": "Planeamento",
+        "services": "Catálogo de serviços",
+        "newVisit": "Agendar visita"
+      },
+      "empty": {
+        "visits": "Sem visitas agendadas",
+        "upcoming": "Sem visitas futuras",
+        "client": "Cliente não encontrado",
+        "services": "Sem serviços configurados",
+        "contracts": "Sem contratos nesta propriedade",
+        "documents": "Sem fotos ou documentos de campo"
+      }
     },
     "services": {
       "title": "Catálogo de Serviços",
@@ -3208,6 +4143,191 @@
         "submit": "Criar serviço"
       }
     },
+    "equipment": {
+      "title": "Equipamentos",
+      "description": "Controle ferramentas, veículos e ativos — atribuições, manutenção e histórico.",
+      "new": "Novo equipamento",
+      "assign": "Atribuir",
+      "return": "Devolver",
+      "delete": "Excluir",
+      "save": "Salvar",
+      "scheduleMaintenance": "Agendar manutenção",
+      "completeMaintenance": "Concluir",
+      "created": "Equipamento criado",
+      "assigned": "Equipamento atribuído",
+      "returned": "Equipamento devolvido",
+      "deleted": "Equipamento removido",
+      "maintenanceScheduled": "Manutenção agendada",
+      "maintenanceCompleted": "Manutenção concluída",
+      "tabs": {
+        "equipment": "Equipamentos",
+        "assignments": "Atribuições",
+        "maintenance": "Manutenção",
+        "history": "Histórico"
+      },
+      "kpis": {
+        "total": "Total",
+        "available": "Disponíveis",
+        "assigned": "Atribuídos",
+        "maintenance": "Em manutenção",
+        "overdue": "Manutenção atrasada"
+      },
+      "columns": {
+        "name": "Nome",
+        "category": "Categoria",
+        "status": "Status",
+        "service": "Serviço",
+        "employee": "Colaborador",
+        "tag": "Etiqueta",
+        "equipment": "Equipamento",
+        "task": "Tarefa",
+        "assignedAt": "Atribuído em",
+        "title": "Título",
+        "type": "Tipo",
+        "scheduled": "Agendado"
+      },
+      "form": {
+        "name": "Nome",
+        "category": "Categoria",
+        "serial": "Número de série",
+        "tag": "Etiqueta do ativo",
+        "service": "Serviço vinculado",
+        "description": "Descrição",
+        "equipment": "Equipamento",
+        "employee": "Colaborador",
+        "notes": "Observações",
+        "title": "Título",
+        "type": "Tipo",
+        "scheduled": "Data agendada"
+      },
+      "category": {
+        "vehicle": "Veículo",
+        "tool": "Ferramenta",
+        "machine": "Máquina",
+        "safety": "Segurança",
+        "consumable": "Consumível",
+        "other": "Outro"
+      },
+      "status": {
+        "available": "Disponível",
+        "assigned": "Atribuído",
+        "maintenance": "Manutenção",
+        "retired": "Desativado"
+      },
+      "maintenanceType": {
+        "preventive": "Preventiva",
+        "corrective": "Corretiva",
+        "inspection": "Inspeção",
+        "calibration": "Calibração"
+      },
+      "maintenanceStatus": {
+        "scheduled": "Agendada",
+        "in_progress": "Em andamento",
+        "completed": "Concluída",
+        "cancelled": "Cancelada"
+      },
+      "event": {
+        "created": "Criado",
+        "updated": "Atualizado",
+        "assigned": "Atribuído",
+        "returned": "Devolvido",
+        "maintenance_scheduled": "Manutenção agendada",
+        "maintenance_completed": "Manutenção concluída",
+        "status_changed": "Status alterado",
+        "note": "Nota"
+      },
+      "empty": {
+        "title": "Nenhum equipamento",
+        "description": "Cadastre ferramentas, veículos e ativos para rastrear atribuições e manutenção.",
+        "assignments": "Nenhuma atribuição ativa",
+        "assignmentsDescription": "Atribua equipamentos a colaboradores ou serviços.",
+        "maintenance": "Nenhum registro de manutenção",
+        "maintenanceDescription": "Agende manutenção preventiva ou corretiva.",
+        "history": "Sem histórico",
+        "historyDescription": "Eventos do equipamento aparecerão aqui."
+      }
+    },
+    "materials": {
+      "title": "Materiais",
+      "description": "Estoque, compras, utilização e consumo — ligados ao catálogo de serviços.",
+      "new": "Novo material",
+      "linkService": "Vincular ao serviço",
+      "recordPurchase": "Registrar compra",
+      "recordUsage": "Registrar utilização",
+      "recordConsumption": "Registrar consumo",
+      "delete": "Excluir",
+      "save": "Salvar",
+      "created": "Material criado",
+      "deleted": "Material removido",
+      "purchaseRecorded": "Compra registrada",
+      "usageRecorded": "Utilização registrada",
+      "consumptionRecorded": "Consumo registrado",
+      "serviceLinked": "Serviço vinculado",
+      "linkedServices": "{count, plural, one {# serviço vinculado} other {# serviços vinculados}}",
+      "tabs": {
+        "stock": "Estoque",
+        "purchases": "Compras",
+        "usage": "Utilização",
+        "consumption": "Consumo"
+      },
+      "kpis": {
+        "total": "Materiais",
+        "lowStock": "Estoque baixo",
+        "outOfStock": "Sem estoque",
+        "purchasesMonth": "Compras (mês)",
+        "usageMonth": "Utilização (mês)",
+        "consumptionMonth": "Consumo (mês)"
+      },
+      "columns": {
+        "material": "Material",
+        "sku": "SKU",
+        "stock": "Em estoque",
+        "min": "Nível mín.",
+        "service": "Serviço",
+        "status": "Status",
+        "quantity": "Quantidade",
+        "vendor": "Fornecedor",
+        "cost": "Custo",
+        "date": "Data",
+        "employee": "Colaborador"
+      },
+      "form": {
+        "name": "Nome",
+        "sku": "SKU",
+        "unit": "Unidade",
+        "minStock": "Estoque mínimo",
+        "service": "Serviço",
+        "material": "Material",
+        "quantity": "Quantidade",
+        "unitCost": "Custo unitário",
+        "vendor": "Fornecedor",
+        "employee": "Colaborador",
+        "qtyPerService": "Qtd. por serviço"
+      },
+      "unit": {
+        "piece": "un",
+        "liter": "L",
+        "kg": "kg",
+        "meter": "m",
+        "box": "cx",
+        "other": "un"
+      },
+      "stockStatus": {
+        "ok": "Em estoque",
+        "low": "Estoque baixo",
+        "out": "Sem estoque"
+      },
+      "empty": {
+        "title": "Nenhum material",
+        "description": "Adicione materiais para controlar estoque e vincular aos serviços.",
+        "purchases": "Nenhuma compra",
+        "purchasesDescription": "Registre compras para adicionar estoque.",
+        "usage": "Nenhuma utilização",
+        "usageDescription": "Registros de saída aparecem quando materiais são retirados.",
+        "consumption": "Nenhum consumo",
+        "consumptionDescription": "Consumo é registrado quando materiais são usados num serviço."
+      }
+    },
     "scheduling": {
       "title": "Planejamento",
       "today": "Hoje",
@@ -3217,6 +4337,10 @@
         "day": "Dia",
         "week": "Semana",
         "month": "Mês"
+      },
+      "modes": {
+        "list": "Lista",
+        "calendar": "Calendário"
       }
     },
     "teams": {
@@ -3248,9 +4372,17 @@
         "description": "Não há serviços atribuídos para esta data."
       }
     },
+    "workOrders": {
+      "title": "Ordens de trabalho",
+      "description": "Execuções e visitas de campo num único hub.",
+      "tabs": {
+        "jobs": "Execuções",
+        "visits": "Visitas"
+      }
+    },
     "jobs": {
       "title": "Execuções",
-      "description": "Cada serviço executado no terreno.",
+      "description": "Cada serviço executado no terreno — rastreável até contrato, propriedade e serviço.",
       "empty": {
         "title": "Nenhuma execução",
         "description": "As execuções aparecem quando serviços são planeados ou concluídos."
@@ -3258,16 +4390,136 @@
       "columns": {
         "service": "Serviço",
         "property": "Imóvel",
+        "contract": "Contrato",
+        "client": "Cliente",
+        "date": "Data",
+        "status": "Status",
+        "trace": "Rastreio"
+      },
+      "traceable": "Completo",
+      "traceGap": "Lacuna"
+    },
+    "hub": {
+      "title": "Operações",
+      "subtitle": "Contrato → Propriedade → Serviço → Execução — cada visita rastreável, cada execução com histórico.",
+      "scheduleVisit": "Agendar visita",
+      "upcomingVisits": "Próximas visitas",
+      "viewAll": "Ver todas",
+      "modules": "Módulos",
+      "recentHistory": "Histórico recente",
+      "emptyVisits": "Nenhuma visita no período.",
+      "emptyHistory": "Sem eventos de execução recentes.",
+      "traceable": "Rastreável",
+      "gap": "Lacuna",
+      "table": {
+        "visit": "Visita",
+        "property": "Propriedade",
+        "service": "Serviço",
+        "date": "Data",
+        "status": "Status",
+        "trace": "Rastreio"
+      },
+      "links": {
+        "visits": "Visitas",
+        "services": "Serviços",
+        "scheduling": "Planeamento",
+        "equipment": "Equipamentos",
+        "materials": "Materiais",
+        "properties": "Propriedades",
+        "jobs": "Execuções",
+        "teams": "Equipas"
+      },
+      "kpis": {
+        "today": "Hoje",
+        "week": "Esta semana",
+        "completed": "Concluídos",
+        "overdue": "Atrasados",
+        "traceable": "Rastreabilidade",
+        "upcoming": "Próximas visitas",
+        "contracts": "Contratos activos",
+        "properties": "Propriedades",
+        "services": "Serviços activos"
+      }
+    },
+    "workflow": {
+      "stages": {
+        "contract": "Contrato",
+        "property": "Propriedade",
+        "service": "Serviço",
+        "execution": "Execução"
+      }
+    },
+    "visits": {
+      "title": "Visitas",
+      "description": "Todas as visitas de campo — ligadas a contrato, propriedade e serviço.",
+      "traceGap": "Rastreio incompleto",
+      "filters": {
+        "all": "Todas",
+        "upcoming": "Próximas",
+        "overdue": "Atrasadas",
+        "completed": "Concluídas",
+        "gaps": "Com lacunas"
+      },
+      "empty": {
+        "title": "Nenhuma visita",
+        "description": "Agende visitas a partir do planeamento ou de um contrato activo."
+      },
+      "columns": {
+        "visit": "Visita",
+        "client": "Cliente",
+        "property": "Propriedade",
+        "contract": "Contrato",
+        "service": "Serviço",
         "date": "Data",
         "status": "Status"
+      }
+    },
+    "traceability": {
+      "title": "Cadeia operacional",
+      "fullyTraceable": "Totalmente rastreável",
+      "incomplete": "Rastreio incompleto",
+      "execution": "Execução",
+      "stages": {
+        "contract": "Contrato",
+        "property": "Propriedade",
+        "service": "Serviço",
+        "execution": "Execução"
+      },
+      "missing": {
+        "contract": "Sem contrato",
+        "property": "Sem propriedade",
+        "service": "Sem serviço"
+      }
+    },
+    "history": {
+      "title": "Histórico de execução",
+      "empty": "Nenhum evento registado para esta execução.",
+      "events": {
+        "created": "Visita criada",
+        "status_changed": "Estado alterado",
+        "completed": "Execução concluída",
+        "assigned": "Atribuída",
+        "check_in": "Check-in",
+        "check_out": "Check-out",
+        "photo_uploaded": "Foto enviada",
+        "scheduled": "Agendada",
+        "approved": "Aprovada",
+        "invoiced": "Faturada"
       }
     }
   },
   "workforce": {
     "nav": {
       "employees": "Funcionários",
+      "planning": "Planeamento",
+      "vehicles": "Veículos",
+      "teams": "Equipas",
+      "skills": "Competências",
+      "availability": "Disponibilidade",
       "shifts": "Escalas",
       "vacations": "Férias",
+      "absences": "Ausências",
+      "documents": "Documentos",
       "timeAccount": "Banco de Horas",
       "timesheets": "Timesheets"
     },
@@ -3299,11 +4551,128 @@
       "empty": { "title": "Sem funcionários", "description": "Adicione colaboradores para gerir escalas e horas." },
       "columns": { "name": "Nome", "role": "Cargo", "supervisor": "Supervisor", "hours": "Horas/semana", "status": "Status" }
     },
+    "vehicles": {
+      "title": "Veículos",
+      "description": "Gestão de frota — motoristas, manutenção, utilização e integração com planeamento.",
+      "new": "Novo veículo",
+      "assignDriver": "Atribuir motorista",
+      "scheduleMaintenance": "Agendar manutenção",
+      "logUsage": "Registar utilização",
+      "endUsage": "Encerrar utilização",
+      "endAssignment": "Encerrar atribuição",
+      "completeMaintenance": "Concluir",
+      "delete": "Excluir",
+      "save": "Salvar",
+      "yes": "Sim",
+      "no": "Não",
+      "active": "Ativo",
+      "created": "Veículo criado",
+      "deleted": "Veículo removido",
+      "driverAssigned": "Motorista atribuído",
+      "driverEnded": "Atribuição encerrada",
+      "maintenanceScheduled": "Manutenção agendada",
+      "maintenanceCompleted": "Manutenção concluída",
+      "usageLogged": "Utilização registada",
+      "usageEnded": "Utilização encerrada",
+      "tabs": {
+        "vehicles": "Veículos",
+        "drivers": "Motoristas",
+        "maintenance": "Manutenção",
+        "usage": "Utilização"
+      },
+      "kpis": {
+        "total": "Total",
+        "available": "Disponíveis",
+        "assigned": "Atribuídos",
+        "maintenance": "Em manutenção",
+        "drivers": "Motoristas ativos",
+        "activeUsage": "Viagens ativas",
+        "overdue": "Manutenção atrasada"
+      },
+      "columns": {
+        "vehicle": "Veículo",
+        "plate": "Matrícula",
+        "status": "Status",
+        "driver": "Motorista",
+        "fuel": "Combustível",
+        "odometer": "Odómetro",
+        "primary": "Principal",
+        "assignedAt": "Atribuído em",
+        "title": "Título",
+        "type": "Tipo",
+        "scheduled": "Agendado",
+        "purpose": "Finalidade",
+        "shift": "Turno",
+        "started": "Início",
+        "distance": "Distância"
+      },
+      "form": {
+        "name": "Nome",
+        "plate": "Matrícula",
+        "make": "Marca",
+        "model": "Modelo",
+        "fuel": "Combustível",
+        "odometer": "Odómetro (km)",
+        "defaultDriver": "Motorista padrão",
+        "vehicle": "Veículo",
+        "driver": "Motorista",
+        "primaryDriver": "Motorista principal",
+        "title": "Título",
+        "type": "Tipo",
+        "scheduled": "Data agendada",
+        "purpose": "Finalidade"
+      },
+      "fuel": {
+        "gasoline": "Gasolina",
+        "diesel": "Diesel",
+        "electric": "Elétrico",
+        "hybrid": "Híbrido",
+        "other": "Outro"
+      },
+      "status": {
+        "available": "Disponível",
+        "assigned": "Atribuído",
+        "maintenance": "Manutenção",
+        "retired": "Desativado"
+      },
+      "purpose": {
+        "shift": "Turno",
+        "delivery": "Entrega",
+        "commute": "Deslocação",
+        "other": "Outro"
+      },
+      "maintenanceType": {
+        "preventive": "Preventiva",
+        "corrective": "Corretiva",
+        "inspection": "Inspeção",
+        "calibration": "Calibração"
+      },
+      "maintenanceStatus": {
+        "scheduled": "Agendada",
+        "in_progress": "Em andamento",
+        "completed": "Concluída",
+        "cancelled": "Cancelada"
+      },
+      "empty": {
+        "title": "Nenhum veículo",
+        "description": "Cadastre veículos da frota para atribuir motoristas e rastrear utilização.",
+        "drivers": "Nenhum motorista ativo",
+        "driversDescription": "Atribua motoristas aos veículos.",
+        "maintenance": "Nenhum registro de manutenção",
+        "maintenanceDescription": "Agende manutenção preventiva ou corretiva.",
+        "usage": "Nenhum registro de utilização",
+        "usageDescription": "Utilização de turnos e registos manuais aparece aqui."
+      }
+    },
     "profile": {
       "back": "Voltar",
       "noRole": "Sem cargo definido",
       "email": "E-mail",
       "phone": "Telefone",
+      "employeeNumber": "Nº funcionário",
+      "jobTitle": "Cargo",
+      "notes": "Notas",
+      "skills": "Competências",
       "supervisor": "Supervisor",
       "team": "Equipa",
       "contract": "Tipo de contrato",
@@ -3313,10 +4682,31 @@
       "balance": "Saldo",
       "upcomingShifts": "Próximas escalas",
       "noShifts": "Sem escalas agendadas.",
+      "noVacations": "Sem pedidos de férias.",
+      "noHours": "Sem registos de horas.",
+      "noHistory": "Sem histórico registado.",
+      "openPlanning": "Abrir planeamento",
+      "viewVacations": "Ver férias",
+      "viewAbsences": "Ver ausências",
+      "viewTimeAccount": "Ver banco de horas completo",
       "vacations": "Férias",
       "absences": "Ausências",
       "documents": "Documentos",
       "noDocuments": "Sem documentos.",
+      "tabs": {
+        "personal": "Pessoal",
+        "contract": "Contrato",
+        "schedule": "Agenda",
+        "hours": "Horas",
+        "history": "Histórico"
+      },
+      "historyKinds": {
+        "activity": "Atividade",
+        "vacation": "Férias",
+        "absence": "Ausência",
+        "document": "Documento",
+        "shift": "Escala"
+      },
       "contractTypes": {
         "full_time": "Tempo integral",
         "part_time": "Meio período",
@@ -3343,6 +4733,60 @@
         "notes": "Notas"
       }
     },
+    "skills": {
+      "title": "Competências",
+      "description": "{count} competências definidas para a equipa.",
+      "new": "Nova competência",
+      "assign": "Atribuir competência",
+      "assignments": "Atribuições",
+      "created": "Competência criada",
+      "deleted": "Competência removida",
+      "assigned": "Competência atribuída",
+      "empty": {
+        "title": "Sem competências",
+        "description": "Defina competências para melhorar o auto-planeamento."
+      },
+      "columns": {
+        "name": "Nome",
+        "serviceType": "Tipo de serviço",
+        "employees": "Colaboradores",
+        "employee": "Colaborador",
+        "skill": "Competência",
+        "level": "Nível"
+      },
+      "form": {
+        "name": "Nome",
+        "serviceType": "Tipo de serviço (opcional)",
+        "noServiceType": "Nenhum",
+        "submit": "Criar competência",
+        "selectEmployee": "Selecionar colaborador",
+        "selectSkill": "Selecionar competência",
+        "assignSubmit": "Atribuir"
+      }
+    },
+    "availability": {
+      "title": "Disponibilidade",
+      "description": "Visão semanal de carga e disponibilidade · {period}",
+      "openPlanning": "Centro de Planeamento",
+      "empty": {
+        "title": "Sem colaboradores",
+        "description": "Adicione colaboradores para ver disponibilidade."
+      },
+      "columns": {
+        "employee": "Colaborador",
+        "role": "Cargo",
+        "availability": "Disponibilidade",
+        "workload": "Carga",
+        "planned": "Planeado",
+        "skills": "Competências"
+      },
+      "status": {
+        "available": "Disponível",
+        "limited": "Limitado",
+        "overbooked": "Sobrecarregado",
+        "unavailable": "Indisponível"
+      }
+    },
     "shifts": {
       "title": "Escalas",
       "today": "Hoje",
@@ -3361,8 +4805,27 @@
       }
     },
     "planning": {
-      "title": "Planeamento de Pessoal",
-      "description": "Planeie, atribua e otimize equipas em tempo real.",
+      "title": "Centro de Planeamento",
+      "description": "Planeie 100 colaboradores em minutos — disponibilidade, carga e escalas num só lugar.",
+      "layout": {
+        "employees": "Colaboradores",
+        "grid": "Grelha",
+        "recommendations": "Recomendações"
+      },
+      "grid": {
+        "title": "Grelha de planeamento",
+        "dragHint": "Arraste turnos entre colaboradores e dias para reagendar.",
+        "markers": {
+          "vacation": "Férias",
+          "sick": "Baixa",
+          "absence": "Ausência"
+        },
+        "blocked": {
+          "vacation": "Colaborador de férias neste dia",
+          "sick": "Colaborador de baixa neste dia",
+          "absence": "Colaborador ausente neste dia"
+        }
+      },
       "kpi": {
         "scheduledToday": "Agendados hoje",
         "openShifts": "Turnos abertos",
@@ -3375,12 +4838,24 @@
         "utilization": "Utilização"
       },
       "employees": {
-        "title": "Equipa",
-        "hint": "Disponibilidade na semana atual",
+        "title": "Colaboradores",
+        "hint": "Disponibilidade, horas contratuais e carga no período",
         "noRole": "Sem cargo",
         "week": "sem",
         "planned": "Plan.",
-        "actual": "Real"
+        "actual": "Real",
+        "contract": "Contrato",
+        "workload": "Carga",
+        "vacation": "Férias",
+        "sick": "Baixa",
+        "vacationDays": "{count}d férias",
+        "search": "Pesquisar colaborador…",
+        "count": "{count} colaboradores",
+        "sort": {
+          "name": "Nome",
+          "workload": "Carga",
+          "availability": "Disponibilidade"
+        }
       },
       "actions": {
         "copyWeek": "Copiar semana anterior",
@@ -3402,15 +4877,20 @@
         "invalid": "Indique um número de semanas válido (1–12)"
       },
       "ai": {
-        "title": "Assistente de planeamento",
-        "description": "Balanceamento automático de carga e preenchimento de turnos.",
+        "title": "Planeamento automático",
+        "description": "Atribuição inteligente, balanceamento de carga e otimização semanal.",
+        "autoPlan": "Auto-planear ({count})",
+        "noAutoPlan": "Não há tarefas por atribuir no período.",
+        "autoPlanned": "{count} tarefas atribuídas automaticamente",
         "optimizeWeek": "Otimizar semana",
         "noChanges": "Nenhuma alteração sugerida para esta semana.",
         "applied": "{count} alterações aplicadas"
       },
       "recs": {
-        "title": "Recomendações",
+        "title": "Recomendações inteligentes",
         "empty": "Sem recomendações — a equipa está equilibrada.",
+        "apply": "Aplicar",
+        "applied": "Recomendação aplicada",
         "moveEmployee": "Mover {from} → {to} em {location}",
         "overtimeRisk": "{name} com risco de horas extra",
         "understaffed": "{date}: {name} disponível para reforço",
@@ -3430,6 +4910,13 @@
         "viewTask": "Ver tarefa",
         "duplicate": "Duplicar turno",
         "duplicated": "Turno duplicado para o dia seguinte",
+        "vehicle": "Veículo",
+        "noVehicle": "Sem veículo atribuído",
+        "assignVehicle": "Atribuir veículo",
+        "removeVehicle": "Remover veículo",
+        "vehicleAssigned": "Veículo atribuído ao turno",
+        "vehicleRemoved": "Veículo removido do turno",
+        "manageFleet": "Gerir frota",
         "types": {
           "morning": "Manhã",
           "afternoon": "Tarde",
@@ -3501,6 +4988,15 @@
       "form": { "employee": "Funcionário", "type": "Tipo", "start": "Início", "end": "Fim", "submit": "Guardar" },
       "types": { "sick": "Doença", "leave": "Licença", "absence": "Falta", "training": "Treinamento", "other": "Outro" }
     },
+    "timeBank": {
+      "title": "Banco de horas",
+      "description": "Saldos, controlo de horas e timesheets num único hub.",
+      "tabs": {
+        "account": "Saldo",
+        "tracking": "Controlo",
+        "timesheets": "Timesheets"
+      }
+    },
     "timeAccount": {
       "title": "Banco de Horas",
       "description": "Sollstunden vs Iststunden — saldo por colaborador.",
@@ -3555,6 +5051,93 @@
       "demoDescription": "Modo demo de billing — configure o Stripe para pagamentos reais.",
       "continueSetup": "Continuar configuração",
       "planLabel": "Plano"
+    }
+  },
+  "fieldExecution": {
+    "steps": {
+      "checkin": "Chegada",
+      "checklist": "Checklist",
+      "photos": "Fotos",
+      "sign": "Assinar",
+      "checkout": "Saída"
+    },
+    "nav": {
+      "back": "Anterior",
+      "next": "Seguinte"
+    },
+    "schedule": {
+      "title": "Agenda de Campo",
+      "today": "Hoje",
+      "upcoming": "Próximos",
+      "continue": "Continuar serviço",
+      "activeSession": "Sessão ativa",
+      "emptyToday": "Sem serviços agendados para hoje."
+    },
+    "checkin": {
+      "title": "Check-in no local",
+      "active": "Serviço em curso",
+      "client": "Cliente",
+      "notes": "Notas de entrada",
+      "notesPlaceholder": "Observações ao iniciar…",
+      "action": "Iniciar serviço (GPS)",
+      "done": "Check-in registado"
+    },
+    "checkout": {
+      "title": "Concluir serviço",
+      "hint": "Ao sair, o relatório de serviço é gerado automaticamente.",
+      "notes": "Notas de conclusão",
+      "action": "Check-out e gerar relatório",
+      "done": "Serviço concluído — relatório gerado"
+    },
+    "photos": {
+      "before": "Antes",
+      "after": "Depois",
+      "evidence": "Evidência",
+      "upload": "Enviar foto",
+      "uploaded": "Foto enviada"
+    },
+    "sign": {
+      "clientName": "Nome do cliente",
+      "action": "Guardar assinatura",
+      "required": "Assinatura e nome são obrigatórios",
+      "done": "Assinatura registada",
+      "alreadySigned": "Assinatura guardada"
+    },
+    "report": {
+      "open": "Abrir relatório de serviço"
+    }
+  },
+  "timeTracking": {
+    "title": "Controlo de Horas",
+    "description": "Período: {from} — {to}",
+    "exportPayroll": "Exportar folha (CSV)",
+    "payrollHint": "Horas pagáveis = líquido trabalhado + deslocação. Exportação compatível com processamento salarial.",
+    "granularity": {
+      "daily": "Diário",
+      "weekly": "Semanal",
+      "monthly": "Mensal"
+    },
+    "kpis": {
+      "planned": "Planeadas",
+      "worked": "Trabalhadas",
+      "breaks": "Pausas",
+      "travel": "Deslocação",
+      "overtime": "Extras"
+    },
+    "columns": {
+      "employee": "Colaborador",
+      "period": "Período",
+      "planned": "Plan.",
+      "worked": "Trab.",
+      "breaks": "Pausas",
+      "travel": "Desloc.",
+      "netWorked": "Líquido",
+      "overtime": "Extras",
+      "payable": "Pagável"
+    },
+    "empty": {
+      "title": "Sem registos no período",
+      "description": "Os dados aparecem após check-ins concluídos ou escalas planeadas."
     }
   }
 }

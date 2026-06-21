@@ -23,8 +23,9 @@ function revalidateAutomations(slug: string) {
 }
 
 function mapRule(row: Record<string, unknown>): AutomationRuleRow {
+  const base = row as unknown as AutomationRuleRow;
   return {
-    ...(row as AutomationRuleRow),
+    ...base,
     conditions: (row.conditions as AutomationCondition[]) ?? [],
     actions: (row.actions as AutomationActionStep[]) ?? [],
   };
@@ -188,18 +189,27 @@ export async function seedExampleAutomationsAction(
     },
     {
       name: "Serviço concluído → Relatório",
-      description: "Notifica supervisores para gerar relatório após aprovação.",
-      triggerType: "service.approved",
+      description: "Gera relatório de serviço quando a execução é concluída/aprovada.",
+      triggerType: "service.completed",
       conditions: [],
       actions: [{ type: "generate_report" }],
       isEnabled: true,
     },
     {
       name: "Fatura vencida → Lembrete",
-      description: "Envia lembrete por e-mail quando a fatura está vencida.",
+      description: "Envia lembrete por e-mail quando a fatura está vencida (máx. 1x por dia).",
       triggerType: "invoice.overdue",
       conditions: [{ field: "daysOverdue", operator: "gt", value: 0 }],
-      actions: [{ type: "send_reminder", channel: "email" }],
+      actions: [
+        {
+          type: "send_reminder",
+          channel: "email",
+          config: {
+            subject: "Lembrete: fatura {invoiceNumber} em aberto",
+            body: "Olá {clientName}, a fatura {invoiceNumber} venceu em {dueDate}. Por favor regularize o pagamento.",
+          },
+        },
+      ],
       isEnabled: true,
     },
   ];

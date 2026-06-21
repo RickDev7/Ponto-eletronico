@@ -46,6 +46,7 @@ export interface Profile {
   avatar_url: string | null;
   phone: string | null;
   locale: string;
+  theme: "light" | "dark" | "system" | null;
   created_at: string;
   updated_at: string;
 }
@@ -55,6 +56,7 @@ export interface CompanyMember {
   company_id: string;
   user_id: string;
   role: MemberRole;
+  client_id: string | null;
   status: MemberStatus;
   invited_at: string | null;
   joined_at: string | null;
@@ -86,6 +88,7 @@ export interface Client {
   phone: string | null;
   notes: string | null;
   status: ClientStatus;
+  source_lead_id: string | null;
   created_at: string;
   updated_at: string;
 }
@@ -189,7 +192,27 @@ export interface Report {
   file_size: number | null;
   generated_by: string | null;
   generated_at: string;
+  client_id: string | null;
+  visible_to_client: boolean;
   metadata: Json;
+}
+
+export interface ClientDocument {
+  id: string;
+  company_id: string;
+  client_id: string;
+  title: string;
+  description: string | null;
+  category: string;
+  storage_path: string;
+  file_name: string | null;
+  file_size: number | null;
+  mime_type: string | null;
+  visible_to_client: boolean;
+  uploaded_by: string | null;
+  uploaded_at: string;
+  created_at: string;
+  updated_at: string;
 }
 
 export interface CompanyInvite {
@@ -219,45 +242,58 @@ export interface CompanyContext {
   employee: Employee | null;
 }
 
+export interface ClientPortalContext extends CompanyContext {
+  client: Client;
+}
+
+export type DbTable<
+  Row,
+  Insert = Partial<Row>,
+  Update = Partial<Row>,
+> = {
+  Row: Row;
+  Insert: Insert;
+  Update: Update;
+  Relationships: [];
+};
+
 export interface Database {
   public: {
     Tables: {
-      companies: { Row: Company; Insert: Partial<Company> & Pick<Company, "name" | "slug">; Update: Partial<Company> };
-      profiles: { Row: Profile; Insert: Pick<Profile, "id"> & Partial<Profile>; Update: Partial<Profile> };
-      company_members: { Row: CompanyMember; Insert: Pick<CompanyMember, "company_id" | "user_id"> & Partial<CompanyMember>; Update: Partial<CompanyMember> };
-      employees: { Row: Employee; Insert: Pick<Employee, "company_id" | "full_name"> & Partial<Employee>; Update: Partial<Employee> };
-      clients: { Row: Client; Insert: Pick<Client, "company_id" | "name"> & Partial<Client>; Update: Partial<Client> };
-      addresses: { Row: Address; Insert: Pick<Address, "company_id" | "client_id" | "street" | "postal_code" | "city"> & Partial<Address>; Update: Partial<Address> };
-      tasks: { Row: Task; Insert: Pick<Task, "company_id" | "address_id" | "service_type" | "title" | "scheduled_date"> & Partial<Task>; Update: Partial<Task> };
-      task_assignments: { Row: TaskAssignment; Insert: Pick<TaskAssignment, "task_id" | "employee_id"> & Partial<TaskAssignment>; Update: Partial<TaskAssignment> };
-      check_ins: { Row: CheckIn; Insert: Pick<CheckIn, "company_id" | "task_id" | "employee_id"> & Partial<CheckIn>; Update: Partial<CheckIn> };
-      task_photos: { Row: TaskPhoto; Insert: Pick<TaskPhoto, "company_id" | "task_id" | "photo_type" | "storage_path"> & Partial<TaskPhoto>; Update: Partial<TaskPhoto> };
-      activity_logs: { Row: ActivityLog; Insert: Pick<ActivityLog, "company_id" | "entity_type" | "entity_id" | "action"> & Partial<ActivityLog>; Update: never };
-      reports: { Row: Report; Insert: Pick<Report, "company_id" | "report_type" | "title"> & Partial<Report>; Update: Partial<Report> };
-      company_invites: { Row: CompanyInvite; Insert: Pick<CompanyInvite, "company_id" | "email" | "token_hash" | "expires_at"> & Partial<CompanyInvite>; Update: Partial<CompanyInvite> };
-      subscriptions: {
-        Row: Subscription;
-        Insert: Pick<Subscription, "company_id"> & Partial<Subscription>;
-        Update: Partial<Subscription>;
-      };
-      billing_events: {
-        Row: {
+      companies: DbTable<Company, Partial<Company> & Pick<Company, "name" | "slug">>;
+      profiles: DbTable<Profile, Pick<Profile, "id"> & Partial<Profile>>;
+      company_members: DbTable<CompanyMember, Pick<CompanyMember, "company_id" | "user_id"> & Partial<CompanyMember>>;
+      employees: DbTable<Employee, Pick<Employee, "company_id" | "full_name"> & Partial<Employee>>;
+      clients: DbTable<Client, Pick<Client, "company_id" | "name"> & Partial<Client>>;
+      addresses: DbTable<Address, Pick<Address, "company_id" | "client_id" | "street" | "postal_code" | "city"> & Partial<Address>>;
+      tasks: DbTable<Task, Pick<Task, "company_id" | "address_id" | "service_type" | "title" | "scheduled_date"> & Partial<Task>>;
+      task_assignments: DbTable<TaskAssignment, Pick<TaskAssignment, "task_id" | "employee_id"> & Partial<TaskAssignment>>;
+      check_ins: DbTable<CheckIn, Pick<CheckIn, "company_id" | "task_id" | "employee_id"> & Partial<CheckIn>>;
+      task_photos: DbTable<TaskPhoto, Pick<TaskPhoto, "company_id" | "task_id" | "photo_type" | "storage_path"> & Partial<TaskPhoto>>;
+      activity_logs: DbTable<ActivityLog, Pick<ActivityLog, "company_id" | "entity_type" | "entity_id" | "action"> & Partial<ActivityLog>, never>;
+      reports: DbTable<Report, Pick<Report, "company_id" | "report_type" | "title"> & Partial<Report>>;
+      company_invites: DbTable<CompanyInvite, Pick<CompanyInvite, "company_id" | "email" | "token_hash" | "expires_at"> & Partial<CompanyInvite>>;
+      subscriptions: DbTable<Subscription, Pick<Subscription, "company_id"> & Partial<Subscription>>;
+      billing_events: DbTable<
+        {
           id: string;
           company_id: string | null;
           stripe_event_id: string;
           event_type: string;
           payload: Json;
           processed_at: string;
-        };
-        Insert: {
+        },
+        {
           stripe_event_id: string;
           event_type: string;
           payload?: Json;
           company_id?: string | null;
-        };
-        Update: never;
-      };
+        },
+        never
+      >;
     };
+    Views: Record<string, never>;
+    CompositeTypes: Record<string, never>;
     Enums: {
       member_role: MemberRole;
       member_status: MemberStatus;

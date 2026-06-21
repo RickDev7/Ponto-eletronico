@@ -5,7 +5,7 @@ import { useTranslations } from "next-intl";
 import { Link, useRouter } from "@/i18n/navigation";
 import { ROUTES } from "@/config/constants";
 import { useSearchParams } from "next/navigation";
-import { useTheme } from "next-themes";
+import { useThemePreference } from "@/hooks/use-theme-preference";
 import { toast } from "sonner";
 import {
   Bell,
@@ -28,6 +28,7 @@ import { Switch } from "@/components/ui/switch";
 import { Badge } from "@/components/ui/badge";
 import { PageHeader } from "@/components/shared/page-header";
 import { OperationsPage } from "@/components/shared/workspace";
+import { ASSIGNABLE_ROLES } from "@/types/enums";
 import { getPermissions } from "@/config/permissions";
 import type { Company, CompanyMember, MemberRole, Profile } from "@/types";
 import { PasswordResetButton } from "@/components/features/settings/password-reset-button";
@@ -131,7 +132,6 @@ function PermissionsMatrix() {
   const tMatrix = useTranslations("settings.permissionsMatrix");
   const tPerm = useTranslations("settings.permissions");
   const tRoles = useTranslations("roles");
-  const roles: MemberRole[] = ["admin", "supervisor", "employee"];
 
   return (
     <div className="overflow-x-auto">
@@ -139,7 +139,7 @@ function PermissionsMatrix() {
         <thead>
           <tr className="border-b border-border/50 text-muted-foreground">
             <th className="pb-2 pr-4 font-medium">{tMatrix("title")}</th>
-            {roles.map((role) => (
+            {ASSIGNABLE_ROLES.map((role) => (
               <th key={role} className="pb-2 px-2 text-center font-medium">
                 {tRoles(role)}
               </th>
@@ -152,7 +152,7 @@ function PermissionsMatrix() {
               <td className="py-2 pr-4 text-foreground">
                 {tPerm(PERMISSION_KEYS[perm] as Parameters<typeof tPerm>[0])}
               </td>
-              {roles.map((role) => {
+              {ASSIGNABLE_ROLES.map((role) => {
                 const has = getPermissions(role).includes(perm as never);
                 return (
                   <td key={role} className="py-2 px-2 text-center">
@@ -206,7 +206,7 @@ function NotificationToggle({
 function AppearanceSection({ slug, profile }: { slug: string; profile: Profile }) {
   const t = useTranslations("settings.appearance");
   const tCommon = useTranslations("common");
-  const { theme, setTheme, resolvedTheme } = useTheme();
+  const { theme, applyTheme, isDark } = useThemePreference(slug);
   const { density, setDensity, mounted: densityMounted } = useUiDensity();
   const { locale, switchLocale, isPending: localePending } = useSwitchLocale();
   const [mounted, setMounted] = useState(false);
@@ -214,7 +214,6 @@ function AppearanceSection({ slug, profile }: { slug: string; profile: Profile }
 
   useEffect(() => setMounted(true), []);
 
-  const isDark = (resolvedTheme ?? theme ?? "dark") === "dark";
   const profileLocale = (profile.locale === "en" ? "en" : "pt") as AppLocale;
 
   async function handleLocaleChange(next: AppLocale) {
@@ -259,18 +258,19 @@ function AppearanceSection({ slug, profile }: { slug: string; profile: Profile }
         title={t("colorScheme")}
         description={t("colorSchemeDescription")}
       >
-        <div className="grid gap-2 sm:grid-cols-2">
+        <div className="grid gap-2 sm:grid-cols-3">
           {[
-            { id: "light" as const, label: tCommon("light"), icon: Sun },
-            { id: "dark" as const, label: tCommon("dark"), icon: Moon },
-          ].map(({ id, label, icon: Icon }) => {
-            const active = mounted && (resolvedTheme ?? theme) === id;
+            { id: "light" as const, label: tCommon("light"), icon: Sun, description: t("lightDescription") },
+            { id: "dark" as const, label: tCommon("dark"), icon: Moon, description: t("darkDescription") },
+            { id: "system" as const, label: tCommon("system"), icon: Monitor, description: t("systemDescription") },
+          ].map(({ id, label, icon: Icon, description }) => {
+            const active = mounted && theme === id;
             return (
               <button
                 key={id}
                 type="button"
                 suppressHydrationWarning
-                onClick={() => setTheme(id)}
+                onClick={() => applyTheme(id)}
                 className={cn(
                   "flex items-center gap-3 rounded-lg border px-4 py-3 text-left transition-colors",
                   active
@@ -281,16 +281,18 @@ function AppearanceSection({ slug, profile }: { slug: string; profile: Profile }
                 <div
                   className={cn(
                     "flex size-8 items-center justify-center rounded-md",
-                    id === "light" ? "bg-white text-amber-500" : "bg-zinc-900 text-zinc-100",
+                    id === "light"
+                      ? "bg-white text-amber-500 shadow-sm ring-1 ring-border/60"
+                      : id === "dark"
+                        ? "bg-slate-900 text-slate-100"
+                        : "bg-muted text-muted-foreground",
                   )}
                 >
                   <Icon className="size-4" />
                 </div>
                 <div>
                   <p className="text-[12px] font-medium">{label}</p>
-                  <p className="text-[11px] text-muted-foreground">
-                    {id === "light" ? t("lightDescription") : t("darkDescription")}
-                  </p>
+                  <p className="text-[11px] text-muted-foreground">{description}</p>
                 </div>
               </button>
             );

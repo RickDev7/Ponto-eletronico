@@ -7,6 +7,7 @@ import {
 } from "lucide-react";
 import { getLocale, getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
+import { ROUTES } from "@/config/constants";
 import { AppShellPage } from "@/components/design-system/app-shell";
 import {
   DataSectionLabel,
@@ -289,9 +290,9 @@ export async function DashboardView({
             <>
               <QuickActionLink href={`/${companySlug}/tasks`} label={t("quickActions.tasks")} primary />
               <QuickActionLink href={`/${companySlug}/calendar`} label={t("quickActions.calendar")} />
-              <QuickActionLink href={`/${companySlug}/employees`} label={t("quickActions.team")} />
-              <QuickActionLink href={`/${companySlug}/activity`} label={t("quickActions.activity")} />
-              <QuickActionLink href={`/${companySlug}/audits`} label={t("quickActions.audits")} />
+              <QuickActionLink href={ROUTES.workforceEmployees(companySlug)} label={t("quickActions.team")} />
+              <QuickActionLink href={ROUTES.analyticsOperational(companySlug, { tab: "activity" })} label={t("quickActions.activity")} />
+              <QuickActionLink href={ROUTES.analyticsOperational(companySlug, { tab: "audits" })} label={t("quickActions.audits")} />
             </>
           ) : undefined
         }
@@ -317,13 +318,13 @@ export async function DashboardView({
                   </Link>
                 )}
                 {gpsMissingCount > 0 && (
-                  <Link href={`/${companySlug}/audits?days=7`} className="text-foreground hover:underline">
+                  <Link href={ROUTES.analyticsOperational(companySlug, { tab: "audits", days: "7" })} className="text-foreground hover:underline">
                     {t("alerts.gps")}{" "}
                     <strong className="font-bold tabular-nums">{gpsMissingCount}</strong>
                   </Link>
                 )}
                 {outOfRadiusCount > 0 && (
-                  <Link href={`/${companySlug}/audits?days=7`} className="text-foreground hover:underline">
+                  <Link href={ROUTES.analyticsOperational(companySlug, { tab: "audits", days: "7" })} className="text-foreground hover:underline">
                     {t("alerts.radius")}{" "}
                     <strong className="font-bold tabular-nums">{outOfRadiusCount}</strong>
                   </Link>

@@ -105,7 +105,7 @@ export default async function MinhaAreaPage({ params }: PageProps) {
   }, 0);
 
   return (
-    <AppShellPage size="narrow">
+    <AppShellPage size="default">
       <div className="space-y-3">
         <EmployeeScheduleWidget
           slug={companySlug}

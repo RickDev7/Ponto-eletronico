@@ -2,6 +2,8 @@
 
 import { useEffect } from "react";
 import { AlertTriangle, RefreshCw } from "lucide-react";
+import { Link } from "@/i18n/navigation";
+import { ROUTES } from "@/config/constants";
 
 export default function GlobalError({
   error,

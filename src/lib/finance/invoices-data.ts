@@ -21,6 +21,7 @@ export interface InvoiceListRow {
   notes: string | null;
   bank_details: string | null;
   auto_generated: boolean;
+  kind?: string | null;
   created_at: string;
   updated_at: string;
   items?: Array<{

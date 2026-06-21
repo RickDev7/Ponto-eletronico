@@ -2,7 +2,7 @@ import { requireCompanyContext } from "@/lib/auth/guards";
 import { getLocale } from "next-intl/server";
 import { LOCALE_DATE_MAP } from "@/lib/i18n/metadata";
 import { loadExecutiveDashboardData } from "@/lib/dashboard/load-executive-dashboard-data";
-import { ExecutiveDashboardView } from "@/components/features/dashboard/executive-dashboard-view";
+import { CommandCenterView } from "@/components/features/dashboard/command-center-view";
 
 interface DashboardPageProps {
   params: Promise<{ companySlug: string }>;
@@ -22,6 +22,6 @@ export default async function DashboardPage({ params }: DashboardPageProps) {
   );
 
   return (
-    <ExecutiveDashboardView slug={companySlug} data={data} locale={dateLocale} />
+    <CommandCenterView slug={companySlug} data={data} locale={dateLocale} />
   );
 }

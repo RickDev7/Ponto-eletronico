@@ -15,6 +15,7 @@ import {
 } from "recharts";
 import type { FinanceChartPoint } from "@/lib/finance/dashboard-data";
 import { formatMoney } from "@/lib/finance/utils";
+import { chartTooltipStyle, useChartTheme } from "@/lib/charts/chart-theme";
 import { cn } from "@/lib/utils";
 
 type ChartRange = "30d" | "90d" | "12m" | "ytd";
@@ -26,6 +27,8 @@ interface FinanceRevenueChartProps {
 
 export function FinanceRevenueChart({ points, locale }: FinanceRevenueChartProps) {
   const t = useTranslations("finance.dashboard");
+  const chart = useChartTheme();
+  const tooltip = chartTooltipStyle(chart);
   const [range, setRange] = useState<ChartRange>("12m");
 
   const filtered = useMemo(() => {
@@ -92,31 +95,26 @@ export function FinanceRevenueChart({ points, locale }: FinanceRevenueChartProps
             <AreaChart data={chartData} margin={{ top: 8, right: 8, left: 0, bottom: 0 }}>
               <defs>
                 <linearGradient id="revenueGrad" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor="rgb(16, 185, 129)" stopOpacity={0.25} />
-                  <stop offset="100%" stopColor="rgb(16, 185, 129)" stopOpacity={0} />
+                  <stop offset="0%" stopColor={chart.success} stopOpacity={0.25} />
+                  <stop offset="100%" stopColor={chart.success} stopOpacity={0} />
                 </linearGradient>
               </defs>
-              <CartesianGrid strokeDasharray="3 3" className="stroke-border/50" vertical={false} />
+              <CartesianGrid stroke={chart.grid} strokeDasharray="3 3" vertical={false} opacity={0.5} />
               <XAxis
                 dataKey="name"
-                tick={{ fontSize: 10, fill: "hsl(var(--muted-foreground))" }}
+                tick={{ fontSize: 10, fill: chart.axis }}
                 axisLine={false}
                 tickLine={false}
               />
               <YAxis
-                tick={{ fontSize: 10, fill: "hsl(var(--muted-foreground))" }}
+                tick={{ fontSize: 10, fill: chart.axis }}
                 axisLine={false}
                 tickLine={false}
                 tickFormatter={(v) => `€${v >= 1000 ? `${(v / 1000).toFixed(0)}k` : v}`}
                 width={44}
               />
               <Tooltip
-                contentStyle={{
-                  background: "hsl(var(--card))",
-                  border: "1px solid hsl(var(--border))",
-                  borderRadius: 8,
-                  fontSize: 12,
-                }}
+                {...tooltip}
                 formatter={(value: number, name: string) => [
                   formatMoney(Math.round(value * 100), "EUR", locale),
                   name === "revenue"
@@ -139,21 +137,21 @@ export function FinanceRevenueChart({ points, locale }: FinanceRevenueChartProps
               <Area
                 type="monotone"
                 dataKey="revenue"
-                stroke="rgb(16, 185, 129)"
+                stroke={chart.success}
                 strokeWidth={2}
                 fill="url(#revenueGrad)"
               />
               <Line
                 type="monotone"
                 dataKey="expenses"
-                stroke="rgb(244, 63, 94)"
+                stroke={chart.danger}
                 strokeWidth={2}
                 dot={false}
               />
               <Line
                 type="monotone"
                 dataKey="profit"
-                stroke="rgb(59, 130, 246)"
+                stroke={chart.primary}
                 strokeWidth={2}
                 dot={false}
                 strokeDasharray="4 4"

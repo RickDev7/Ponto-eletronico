@@ -1,8 +1,9 @@
 import { redirect } from "next/navigation";
 import { ROUTES } from "@/config/constants";
-import { hasMinRole } from "@/types/enums";
+import { can, type Permission } from "@/config/permissions";
+import { hasMinRole, isClientRole } from "@/types/enums";
 import type { MemberRole } from "@/types";
-import type { CompanyContext } from "@/types/database";
+import type { Client, ClientPortalContext, CompanyContext } from "@/types/database";
 import {
   getCompanyBySlug,
   getEmployeeForMember,
@@ -10,6 +11,7 @@ import {
   getSession,
   getUserProfile,
 } from "./session";
+import { createClient } from "@/lib/supabase/server";
 
 interface RequireAuthOptions {
   redirectTo?: string;
@@ -18,6 +20,7 @@ interface RequireAuthOptions {
 interface RequireCompanyOptions {
   slug: string;
   minRole?: MemberRole;
+  permission?: Permission;
 }
 
 export async function requireAuth(
@@ -62,10 +65,18 @@ export async function requireCompanyContext(
     redirect(ROUTES.onboarding);
   }
 
+  if (isClientRole(ctx.membership.role)) {
+    redirect(ROUTES.clientPortal(ctx.company.slug));
+  }
+
   if (
     options.minRole &&
     !hasMinRole(ctx.membership.role, options.minRole)
   ) {
+    redirect(ROUTES.dashboard(ctx.company.slug));
+  }
+
+  if (options.permission && !can(ctx.membership.role, options.permission)) {
     redirect(ROUTES.dashboard(ctx.company.slug));
   }
 
@@ -79,4 +90,38 @@ export async function requireMinRole(
   if (!hasMinRole(ctx.membership.role, minRole)) {
     throw new Error("Insufficient permissions");
   }
+}
+
+export async function requireClientPortalContext(
+  slug: string,
+): Promise<ClientPortalContext> {
+  const user = await requireAuth();
+  const ctx = await getCompanyContext(slug);
+
+  if (!ctx) {
+    redirect(ROUTES.onboarding);
+  }
+
+  if (!isClientRole(ctx.membership.role)) {
+    redirect(ROUTES.dashboard(ctx.company.slug));
+  }
+
+  const clientId = ctx.membership.client_id;
+  if (!clientId) {
+    redirect(ROUTES.selectCompany);
+  }
+
+  const supabase = await createClient();
+  const { data: client, error } = await supabase
+    .from("clients")
+    .select("*")
+    .eq("id", clientId)
+    .eq("company_id", ctx.company.id)
+    .maybeSingle();
+
+  if (error || !client) {
+    redirect(ROUTES.selectCompany);
+  }
+
+  return { ...ctx, client: client as Client };
 }

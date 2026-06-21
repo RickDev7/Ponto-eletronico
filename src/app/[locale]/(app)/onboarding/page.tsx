@@ -12,7 +12,7 @@ export default async function OnboardingPage() {
   const t = await getTranslations("auth.onboarding");
 
   return (
-    <div className="relative flex min-h-svh flex-col bg-zinc-950">
+    <div className="relative flex min-h-svh flex-col bg-background">
       <div
         className="pointer-events-none fixed inset-0 opacity-[0.15] [background-image:linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] [background-size:48px_48px]"
         aria-hidden

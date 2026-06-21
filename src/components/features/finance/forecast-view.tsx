@@ -63,6 +63,12 @@ export function ForecastView({ data, locale }: ForecastViewProps) {
           className="mb-6 grid gap-3 sm:grid-cols-2 xl:grid-cols-4"
         >
           <KpiCard label={t("kpi.mrr")} value={formatMoney(data.mrrCents, "EUR", locale)} variant="strip" />
+          <KpiCard
+            label={t("kpi.projectedMargin")}
+            value={`${data.projectedMarginPct}%`}
+            hint={formatMoney(data.projectedMargin30Cents, "EUR", locale)}
+            variant="strip"
+          />
           {periods.map((p) => (
             <KpiCard
               key={p.label}
@@ -136,6 +142,12 @@ export function ForecastView({ data, locale }: ForecastViewProps) {
                   <div className="flex justify-between">
                     <dt className="text-muted-foreground">{t("sources.receivables")}</dt>
                     <dd className="font-medium tabular-nums">{formatMoney(p.receivables, "EUR", locale)}</dd>
+                  </div>
+                  <div className="flex justify-between">
+                    <dt className="text-muted-foreground">{t("sources.costs")}</dt>
+                    <dd className="font-medium tabular-nums text-rose-600 dark:text-rose-400">
+                      {formatMoney(data.projectedCost30Cents, "EUR", locale)}
+                    </dd>
                   </div>
                 </dl>
               </div>

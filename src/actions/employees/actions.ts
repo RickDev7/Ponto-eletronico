@@ -39,6 +39,7 @@ export async function createEmployee(
 
   if (error) return { success: false, error: error.message };
 
+  revalidatePath(`/${slug}/workforce/employees`);
   revalidatePath(`/${slug}/employees`);
   return { success: true, data: { id: data.id } };
 }
@@ -70,6 +71,7 @@ export async function updateEmployee(
 
   if (error) return { success: false, error: error.message };
 
+  revalidatePath(`/${slug}/workforce/employees`);
   revalidatePath(`/${slug}/employees`);
   return { success: true, data: undefined };
 }
@@ -89,6 +91,7 @@ export async function deleteEmployee(
 
   if (error) return { success: false, error: error.message };
 
+  revalidatePath(`/${slug}/workforce/employees`);
   revalidatePath(`/${slug}/employees`);
   return { success: true, data: undefined };
 }

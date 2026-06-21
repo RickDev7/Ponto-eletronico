@@ -39,6 +39,7 @@ import {
   StatusBadge,
   type StatusTone,
 } from "@/components/shared";
+import { AiDomainWidget } from "@/components/features/ai/ai-domain-widget";
 import {
   Table,
   TableBody,
@@ -165,6 +166,8 @@ export function ClientsView({ slug, clients, canWrite }: ClientsViewProps) {
             ) : undefined
           }
         />
+
+        <AiDomainWidget slug={slug} domain="commercial" compact className="mb-2" />
 
         <OperationsWorkspace className="overflow-hidden">
           <div className="flex items-center justify-between border-b border-border/80 px-2.5 py-0.5">

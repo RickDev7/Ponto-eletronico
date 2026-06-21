@@ -11,6 +11,7 @@ import {
   type ContractListRow,
 } from "@/lib/finance/contracts-data";
 import { balanceCents, resolveDisplayStatus, type InvoiceListRow } from "@/lib/finance/invoices-data";
+import { computeMargin } from "@/lib/finance/analytics-types";
 
 export interface ForecastDayBucket {
   date: string;
@@ -30,6 +31,9 @@ export interface FinanceForecastData {
   receivables30Cents: number;
   receivables60Cents: number;
   receivables90Cents: number;
+  projectedCost30Cents: number;
+  projectedMargin30Cents: number;
+  projectedMarginPct: number;
   mrrCents: number;
   monthlyBuckets: ForecastDayBucket[];
 }
@@ -79,6 +83,7 @@ export function buildForecastFromData(
   contracts: ContractListRow[],
   invoices: Pick<InvoiceListRow, "due_date" | "total_cents" | "amount_paid_cents" | "status">[],
   locale: string,
+  monthlyCostCents = 0,
 ): FinanceForecastData {
   const today = new Date().toISOString().slice(0, 10);
   const end30 = addDays(today, 30);
@@ -126,8 +131,15 @@ export function buildForecastFromData(
     });
   }
 
+  const days30Cents = contractRecurring30Cents + receivables30Cents;
+  const projectedCost30Cents = Math.round(monthlyCostCents);
+  const { marginCents: projectedMargin30Cents, marginPct: projectedMarginPct } = computeMargin(
+    days30Cents,
+    projectedCost30Cents,
+  );
+
   return {
-    days30Cents: contractRecurring30Cents + receivables30Cents,
+    days30Cents,
     days60Cents: contractRecurring60Cents + receivables60Cents,
     days90Cents: contractRecurring90Cents + receivables90Cents,
     contractRecurring30Cents,
@@ -136,6 +148,9 @@ export function buildForecastFromData(
     receivables30Cents,
     receivables60Cents,
     receivables90Cents,
+    projectedCost30Cents,
+    projectedMargin30Cents,
+    projectedMarginPct,
     mrrCents,
     monthlyBuckets,
   };
@@ -149,7 +164,7 @@ export async function getFinanceForecastData(
   const supabase = await createClient();
   const companyId = ctx.company.id;
 
-  const [{ data: contracts }, { data: invoices }] = await Promise.all([
+  const [{ data: contracts }, { data: invoices }, analytics] = await Promise.all([
     supabase
       .from("contracts")
       .select(
@@ -161,11 +176,20 @@ export async function getFinanceForecastData(
       .select("due_date, total_cents, amount_paid_cents, status")
       .eq("company_id", companyId)
       .not("status", "in", '("cancelled","draft")'),
+    import("@/lib/finance/load-finance-analytics").then((m) => m.loadFinanceAnalytics(slug, locale)),
   ]);
+
+  const avgMonthlyCost =
+    analytics.monthly.length > 0
+      ? Math.round(
+          analytics.monthly.reduce((s, m) => s + m.costCents, 0) / analytics.monthly.length,
+        )
+      : 0;
 
   return buildForecastFromData(
     (contracts ?? []) as ContractListRow[],
     invoices ?? [],
     locale,
+    avgMonthlyCost,
   );
 }

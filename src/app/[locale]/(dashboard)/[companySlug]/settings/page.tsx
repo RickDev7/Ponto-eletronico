@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
 import { requireCompanyContext } from "@/lib/auth/guards";
+import { hasMinRole, isOwnerRole } from "@/types/enums";
 import { getCompanyBillingState } from "@/lib/billing/enforcement";
 import { createClient } from "@/lib/supabase/server";
 import { getCompanyMembers } from "@/actions/settings/actions";
@@ -33,9 +34,8 @@ function SettingsSkeleton() {
 export default async function SettingsPage({ params }: PageProps) {
   const { companySlug } = await params;
   const ctx = await requireCompanyContext({ slug: companySlug });
-  const isAdmin = ctx.membership.role === "admin";
-  const isSupervisorPlus =
-    ctx.membership.role === "admin" || ctx.membership.role === "supervisor";
+  const isAdmin = isOwnerRole(ctx.membership.role);
+  const isSupervisorPlus = hasMinRole(ctx.membership.role, "supervisor");
 
   const supabase = await createClient();
   const companyId = ctx.company.id;

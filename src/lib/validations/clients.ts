@@ -7,6 +7,7 @@ export const createClientSchema = z.object({
   email: z.email("Ungültige E-Mail").optional().or(z.literal("")),
   phone: z.string().optional(),
   notes: z.string().optional(),
+  sourceLeadId: z.string().uuid().optional(),
 });
 
 export const createAddressSchema = z.object({

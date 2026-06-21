@@ -30,12 +30,14 @@ export async function createClientAction(
       email: parsed.data.email || null,
       phone: parsed.data.phone || null,
       notes: parsed.data.notes || null,
+      source_lead_id: parsed.data.sourceLeadId ?? null,
     })
     .select("id")
     .single();
 
   if (error) return { success: false, error: error.message };
   revalidatePath(`/${slug}/clients`);
+  revalidatePath(`/${slug}/clients/${data.id}`);
   return { success: true, data: { id: data.id } };
 }
 
@@ -93,6 +95,11 @@ export async function createAddressAction(
 
   if (error) return { success: false, error: error.message };
   revalidatePath(`/${slug}/addresses`);
+  revalidatePath(`/${slug}/operations/properties`);
   revalidatePath(`/${slug}/clients`);
+  revalidatePath(`/${slug}/clients/${parsed.data.clientId}`);
+  if (data?.id) {
+    revalidatePath(`/${slug}/operations/properties/${data.id}`);
+  }
   return { success: true, data: { id: data.id } };
 }

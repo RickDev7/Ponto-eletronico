@@ -37,6 +37,7 @@ import {
   WorkspacePanelBar,
 } from "@/components/shared/workspace";
 import { cn } from "@/lib/utils";
+import { ROUTES } from "@/config/constants";
 
 export type FeedCategory =
   | "all"
@@ -74,7 +75,13 @@ export interface SystemHealthMetrics {
   activeEmployees: number;
 }
 
-function buildPageHref(slug: string, page: number) {
+function buildPageHref(slug: string, page: number, embedded?: boolean) {
+  if (embedded) {
+    return ROUTES.analyticsOperational(slug, {
+      tab: "activity",
+      page: page <= 1 ? undefined : String(page),
+    });
+  }
   if (page <= 1) return `/${slug}/activity`;
   return `/${slug}/activity?page=${page}`;
 }
@@ -91,6 +98,7 @@ interface ActivityViewProps {
     schedulingConflicts: ActivityAlert[];
   };
   health: SystemHealthMetrics;
+  embedded?: boolean;
 }
 
 type DayGroup = "today" | "yesterday" | "earlier";
@@ -295,7 +303,9 @@ function FeedRow({ item, now }: { item: ActivityFeedItem; now: number }) {
           <span className="font-medium text-foreground">{item.actorName}</span>{" "}
           <span className="text-muted-foreground">{verb}</span>{" "}
           <EntityLink item={item} />
-          {item.action === "status_changed" && meta?.from && meta?.to && (
+          {item.action === "status_changed" &&
+            meta?.from != null &&
+            meta?.to != null && (
             <span className="ml-1 text-muted-foreground">
               (
               <span>{String(meta.from)}</span>
@@ -304,7 +314,7 @@ function FeedRow({ item, now }: { item: ActivityFeedItem; now: number }) {
               )
             </span>
           )}
-          {item.action === "comment" && meta?.text && (
+          {item.action === "comment" && meta?.text != null && (
             <span className="mt-0.5 block text-[12px] italic text-muted-foreground">
               &ldquo;{String(meta.text).slice(0, 100)}
               {String(meta.text).length > 100 ? "…" : ""}&rdquo;
@@ -386,6 +396,7 @@ export function ActivityView({
   totalPages,
   alerts,
   health,
+  embedded,
 }: ActivityViewProps) {
   const t = useTranslations("activity");
   const [search, setSearch] = useState("");
@@ -427,6 +438,7 @@ export function ActivityView({
 
   return (
     <OperationsPage>
+      {!embedded && (
       <PageHeader
         compact
         title={
@@ -443,6 +455,7 @@ export function ActivityView({
         }
         description={t("eventCount", { count: totalCount })}
       />
+      )}
 
       <div className="grid grid-cols-1 gap-2 xl:grid-cols-[minmax(0,1fr)_272px]">
         <div className="min-w-0 space-y-2">
@@ -534,7 +547,7 @@ export function ActivityView({
             <Pagination
               currentPage={currentPage}
               totalPages={totalPages}
-              buildHref={(page) => buildPageHref(slug, page)}
+              buildHref={(page) => buildPageHref(slug, page, embedded)}
               className="pt-0.5"
             />
           )}

@@ -2,7 +2,7 @@
 
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
-import { ArrowRight, Building2, CalendarDays, ClipboardList, MapPin, Route, Users, Wrench } from "lucide-react";
+import { ArrowRight, Box, Boxes, Building2, CalendarDays, ClipboardList, MapPin, Route, Users, Wrench } from "lucide-react";
 import { ROUTES } from "@/config/constants";
 import {
   computeOperationsKpis,
@@ -30,8 +30,10 @@ const QUICK_LINKS = [
   { key: "properties", href: (s: string) => ROUTES.operationsProperties(s), icon: MapPin },
   { key: "services", href: (s: string) => ROUTES.operationsServices(s), icon: Wrench },
   { key: "scheduling", href: (s: string) => ROUTES.operationsScheduling(s), icon: CalendarDays },
-  { key: "jobs", href: (s: string) => ROUTES.operationsJobs(s), icon: ClipboardList },
-  { key: "teams", href: (s: string) => ROUTES.operationsTeams(s), icon: Users },
+  { key: "equipment", href: (s: string) => ROUTES.operationsEquipment(s), icon: Box },
+  { key: "materials", href: (s: string) => ROUTES.operationsMaterials(s), icon: Boxes },
+  { key: "jobs", href: (s: string) => ROUTES.operationsWorkOrders(s), icon: ClipboardList },
+  { key: "teams", href: (s: string) => ROUTES.workforceTeams(s), icon: Users },
   { key: "routes", href: (s: string) => ROUTES.operationsRoutes(s), icon: Route },
   { key: "clients", href: (s: string) => ROUTES.clients(s), icon: Building2 },
 ] as const;
@@ -71,7 +73,7 @@ export function OperationsDashboardView({
         <OperationsWorkspace className="lg:col-span-2">
           <div className="flex items-center justify-between border-b px-3 py-2">
             <h3 className="text-sm font-semibold">{t("dashboard.todayJobs")}</h3>
-            <Link href={ROUTES.operationsJobs(slug)} className="text-xs text-primary hover:underline">
+            <Link href={ROUTES.operationsWorkOrders(slug)} className="text-xs text-primary hover:underline">
               {t("dashboard.viewAll")}
               <ArrowRight className="ml-1 inline size-3" />
             </Link>

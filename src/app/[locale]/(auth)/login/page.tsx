@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { getTranslations } from "next-intl/server";
 import { LoginForm } from "@/components/auth/login-form";
 import { LoginLogo } from "@/components/auth/login-logo";
@@ -14,7 +15,7 @@ export default async function LoginPage() {
   const t = await getTranslations("auth.login");
 
   return (
-    <div className="relative flex min-h-svh w-full items-center justify-center overflow-hidden bg-zinc-950 px-4 py-12 sm:px-6">
+    <div className="relative flex min-h-svh w-full items-center justify-center overflow-hidden bg-background px-4 py-12 sm:px-6">
       {/* Background */}
       <div
         className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_-20%,rgba(255,255,255,0.06),transparent)]"
@@ -62,7 +63,9 @@ export default async function LoginPage() {
           </header>
 
           <LoginSessionBanner />
-          <LoginForm />
+          <Suspense fallback={null}>
+            <LoginForm />
+          </Suspense>
         </div>
 
         <p className="mt-8 text-center text-xs text-zinc-600">

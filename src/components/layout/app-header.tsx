@@ -2,14 +2,15 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
-import { usePathname } from "@/i18n/navigation";
+import { usePathname, useRouter } from "@/i18n/navigation";
 import { LogOut, Search, Settings, UserCircle2, Palette } from "lucide-react";
 import { toast } from "sonner";
 import { signOut } from "@/actions/auth";
+import { ROUTES } from "@/config/constants";
 import { Link } from "@/i18n/navigation";
 import { resolvePageHeader } from "@/config/navigation";
 import { Button } from "@/components/ui/button";
-import { ThemeToggle } from "@/components/theme";
+import { ThemeSwitcherDropdown } from "@/components/theme";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -35,6 +36,7 @@ export function AppHeader({ ctx }: AppHeaderProps) {
   const tAuth = useTranslations("auth");
   const tErrors = useTranslations("errors");
   const pathname = usePathname();
+  const router = useRouter();
   const [paletteOpen, setPaletteOpen] = useState(false);
 
   const { title, subtitle } = useMemo(
@@ -62,17 +64,19 @@ export function AppHeader({ ctx }: AppHeaderProps) {
 
   async function handleSignOut() {
     const id = toast.loading(tAuth("signingOut"));
-    try {
-      await signOut();
-    } catch {
-      toast.dismiss(id);
+    const result = await signOut();
+    toast.dismiss(id);
+    if (!result.success) {
       toast.error(tErrors("signOutFailed"));
+      return;
     }
+    router.push(ROUTES.login);
+    router.refresh();
   }
 
   return (
     <>
-      <Header className="h-16 w-full border-[#1F1F1F] bg-[#0A0A0A] px-4 lg:px-6">
+      <Header className="h-16 w-full border-border bg-background px-4 lg:px-6">
         <HeaderLeading className="min-w-0 flex-1 items-center gap-3">
           <SidebarMobileTrigger className="size-8 lg:hidden" />
           <div className="min-w-0">
@@ -88,11 +92,11 @@ export function AppHeader({ ctx }: AppHeaderProps) {
             type="button"
             suppressHydrationWarning
             onClick={() => setPaletteOpen(true)}
-            className="flex h-9 w-full max-w-md items-center gap-2 rounded-lg border border-[#1F1F1F] bg-[#111111] px-3 text-muted-foreground transition-colors hover:border-[#2563EB]/30 hover:text-foreground"
+            className="flex h-9 w-full max-w-md items-center gap-2 rounded-lg border border-border bg-muted/40 px-3 text-muted-foreground transition-colors hover:border-primary/30 hover:text-foreground"
           >
             <Search className="size-4 shrink-0 opacity-50" />
             <span className="flex-1 truncate text-left text-sm">{t("search")}</span>
-            <kbd className="hidden rounded border border-[#1F1F1F] px-1.5 font-mono text-[10px] text-muted-foreground md:inline">
+            <kbd className="hidden rounded border border-border px-1.5 font-mono text-[10px] text-muted-foreground md:inline">
               ⌘K
             </kbd>
           </button>
@@ -110,11 +114,11 @@ export function AppHeader({ ctx }: AppHeaderProps) {
           </Button>
           <NotificationBell slug={ctx.company.slug} userId={ctx.profile.id} />
           <LanguageSwitcher />
-          <ThemeToggle />
+          <ThemeSwitcherDropdown slug={ctx.company.slug} />
           <DropdownMenu>
-            <DropdownMenuTrigger className="inline-flex size-9 items-center justify-center rounded-lg transition-colors hover:bg-[#111111] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+            <DropdownMenuTrigger className="inline-flex size-9 items-center justify-center rounded-lg transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
               <Avatar className="size-7">
-                <AvatarFallback className="bg-[#2563EB] text-[10px] text-white">
+                <AvatarFallback className="bg-primary text-[10px] text-primary-foreground">
                   {initials}
                 </AvatarFallback>
               </Avatar>

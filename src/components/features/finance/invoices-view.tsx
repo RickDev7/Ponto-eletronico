@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState, useTransition } from "react";
 import { useTranslations } from "next-intl";
-import { useRouter, usePathname } from "@/i18n/navigation";
+import { Link, useRouter, usePathname } from "@/i18n/navigation";
 import { useSearchParams } from "next/navigation";
 import { toast } from "sonner";
 import {
@@ -11,6 +11,7 @@ import {
   Check,
   Copy,
   Download,
+  Eye,
   FileDown,
   Grid3X3,
   Mail,
@@ -23,7 +24,7 @@ import {
   ChevronLeft,
   ChevronRight,
 } from "lucide-react";
-import { PAGINATION } from "@/config/constants";
+import { PAGINATION, ROUTES } from "@/config/constants";
 import {
   formatDate,
   formatMoney,
@@ -524,7 +525,14 @@ export function InvoicesView(props: InvoicesViewProps) {
                                   />
                                 </TableCell>
                               )}
-                              <TableCell className="font-medium">{inv.invoice_number}</TableCell>
+                              <TableCell className="font-medium">
+                                <Link
+                                  href={ROUTES.financeInvoice(slug, inv.id)}
+                                  className="hover:text-primary hover:underline"
+                                >
+                                  {inv.invoice_number}
+                                </Link>
+                              </TableCell>
                               <TableCell>{inv.client_name}</TableCell>
                               <TableCell className="text-muted-foreground">{contractTitle(inv)}</TableCell>
                               <TableCell>{formatDate(inv.issue_date, locale)}</TableCell>
@@ -541,6 +549,9 @@ export function InvoicesView(props: InvoicesViewProps) {
                                 <DropdownMenu>
                                   <DropdownMenuTrigger render={<Button variant="ghost" size="icon-sm" disabled={pending}><MoreHorizontal className="size-4" /></Button>} />
                                   <DropdownMenuContent align="end" className="min-w-44">
+                                    <DropdownMenuItem onClick={() => router.push(ROUTES.financeInvoice(slug, inv.id))}>
+                                      <Eye className="size-3.5" /> {t("actions.view")}
+                                    </DropdownMenuItem>
                                     <DropdownMenuItem onClick={() => handlePdf(inv)}>
                                       <FileDown className="size-3.5" /> {t("actions.pdf")}
                                     </DropdownMenuItem>

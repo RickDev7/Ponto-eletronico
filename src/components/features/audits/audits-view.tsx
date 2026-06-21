@@ -45,6 +45,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { ROUTES } from "@/config/constants";
 import { cn } from "@/lib/utils";
 import type { AuditViolationRow } from "@/lib/audits/violations";
 
@@ -60,6 +61,7 @@ interface AuditsViewProps {
     failed: number;
     inReview: number;
   };
+  embedded?: boolean;
 }
 
 type AuditStatus = "passed" | "failed" | "pending" | "review";
@@ -95,7 +97,7 @@ function AuditStatusPill({ status }: { status: AuditStatus }) {
   );
 }
 
-export function AuditsView({ slug, days, rows, metrics }: AuditsViewProps) {
+export function AuditsView({ slug, days, rows, metrics, embedded }: AuditsViewProps) {
   const t = useTranslations("audits");
   const locale = useLocale();
   const [expandedId, setExpandedId] = useState<string | null>(null);
@@ -127,6 +129,7 @@ export function AuditsView({ slug, days, rows, metrics }: AuditsViewProps) {
 
   return (
     <OperationsPage className="pb-4">
+      {!embedded && (
       <PageHeader
         title={t("complianceTitle")}
         description={t("periodDescription", { days })}
@@ -147,6 +150,18 @@ export function AuditsView({ slug, days, rows, metrics }: AuditsViewProps) {
           </div>
         }
       />
+      )}
+      {embedded && (
+        <div className="flex justify-end pb-2">
+          <Link
+            href={`/${slug}/audits/export?days=${days}`}
+            className="inline-flex h-7 items-center gap-1 rounded-md border border-border px-2.5 text-[11px] font-medium transition-colors hover:bg-muted/50"
+          >
+            <Download className="size-3" />
+            {t("exportCsv")}
+          </Link>
+        </div>
+      )}
 
       {/* Filters toolbar */}
       <OperationsWorkspace>
@@ -161,7 +176,7 @@ export function AuditsView({ slug, days, rows, metrics }: AuditsViewProps) {
             />
           </div>
           <div className="flex flex-wrap items-center gap-1.5">
-            <Select value={typeFilter} onValueChange={setTypeFilter}>
+            <Select value={typeFilter} onValueChange={(v) => setTypeFilter(v ?? "all")}>
               <SelectTrigger className="h-7 w-[140px] text-[11px]">
                 <SelectValue placeholder={t("filters.type")} />
               </SelectTrigger>
@@ -175,7 +190,7 @@ export function AuditsView({ slug, days, rows, metrics }: AuditsViewProps) {
               {[7, 14, 30].map((d) => (
                 <Link
                   key={d}
-                  href={`/${slug}/audits?days=${d}`}
+                  href={ROUTES.analyticsOperational(slug, { tab: "audits", days: String(d) })}
                   className={cn(
                     "rounded-md px-2 py-1 text-[11px] font-medium transition-colors",
                     d === days

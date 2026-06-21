@@ -6,12 +6,13 @@ import { requireCompanyContext } from "@/lib/auth/guards";
 import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import type { ActionResult } from "@/actions/auth/actions";
+import { isOwnerRole } from "@/types/enums";
 import type { MemberRole } from "@/types";
 import { actionError } from "@/lib/i18n/action-error";
 import { enforcePlanLimit } from "@/lib/billing/enforcement";
 
-async function validationError(parsed: z.SafeParseError<unknown>): Promise<string> {
-  const field = parsed.error.issues[0]?.path[0];
+async function validationError(error: z.ZodError): Promise<string> {
+  const field = error.issues[0]?.path[0];
   if (field === "email") return actionError("invalidEmail");
   if (field === "name" || field === "full_name") return actionError("nameTooShort");
   return actionError("invalidInput");
@@ -35,7 +36,7 @@ const updateProfileSchema = z.object({
 
 const inviteMemberSchema = z.object({
   email: z.string().email(),
-  role: z.enum(["admin", "supervisor", "employee"]),
+  role: z.enum(["owner", "manager", "supervisor", "employee"]),
 });
 
 const updateCompanyRegionalSchema = z.object({
@@ -50,10 +51,10 @@ export async function updateCompany(
   slug: string,
   raw: unknown,
 ): Promise<ActionResult> {
-  const ctx = await requireCompanyContext({ slug, minRole: "admin" });
+  const ctx = await requireCompanyContext({ slug, minRole: "owner" });
   const parsed = updateCompanySchema.safeParse(raw);
   if (!parsed.success)
-    return { success: false, error: await validationError(parsed) };
+    return { success: false, error: await validationError(parsed.error) };
 
   const supabase = await createClient();
   const { error } = await supabase
@@ -76,12 +77,12 @@ export async function updateCompanyRegionalSettings(
   slug: string,
   raw: unknown,
 ): Promise<ActionResult> {
-  const ctx = await requireCompanyContext({ slug, minRole: "admin" });
+  const ctx = await requireCompanyContext({ slug, minRole: "owner" });
   const parsed = updateCompanyRegionalSchema.safeParse(raw);
   if (!parsed.success)
-    return { success: false, error: await validationError(parsed) };
+    return { success: false, error: await validationError(parsed.error) };
 
-  const current = (ctx.company.settings ?? {}) as Record<string, unknown>;
+  const current = (ctx.company.settings ?? {}) as unknown as Record<string, unknown>;
   const supabase = await createClient();
   const { error } = await supabase
     .from("companies")
@@ -109,7 +110,7 @@ export async function updateProfile(
   const ctx = await requireCompanyContext({ slug });
   const parsed = updateProfileSchema.safeParse(raw);
   if (!parsed.success)
-    return { success: false, error: await validationError(parsed) };
+    return { success: false, error: await validationError(parsed.error) };
 
   const supabase = await createClient();
   const update: { full_name: string; phone: string | null; locale?: string } = {
@@ -128,10 +129,31 @@ export async function updateProfile(
   return { success: true, data: undefined };
 }
 
+const themePreferenceSchema = z.enum(["light", "dark", "system"]);
+
+export async function updateThemePreference(
+  slug: string,
+  theme: z.infer<typeof themePreferenceSchema>,
+): Promise<ActionResult> {
+  const ctx = await requireCompanyContext({ slug });
+  const parsed = themePreferenceSchema.safeParse(theme);
+  if (!parsed.success) return { success: false, error: await actionError("invalidInput") };
+
+  const supabase = await createClient();
+  const { error } = await supabase
+    .from("profiles")
+    .update({ theme: parsed.data })
+    .eq("id", ctx.profile.id);
+
+  if (error) return { success: false, error: error.message };
+  revalidatePath(`/${slug}/settings`);
+  return { success: true, data: undefined };
+}
+
 // ── Members ────────────────────────────────────────────────────────────────────
 
 export async function getCompanyMembers(slug: string) {
-  const ctx = await requireCompanyContext({ slug, minRole: "admin" });
+  const ctx = await requireCompanyContext({ slug, minRole: "owner" });
   const supabase = await createClient();
 
   const { data, error } = await supabase
@@ -152,10 +174,10 @@ export async function updateMemberRole(
   memberId: string,
   role: MemberRole,
 ): Promise<ActionResult> {
-  const ctx = await requireCompanyContext({ slug, minRole: "admin" });
+  const ctx = await requireCompanyContext({ slug, minRole: "owner" });
 
-  // Prevent admin from demoting themselves
-  if (memberId === ctx.membership.id && role !== "admin") {
+  // Prevent owner from demoting themselves
+  if (memberId === ctx.membership.id && !isOwnerRole(role)) {
     return {
       success: false,
       error: await actionError("cannotChangeOwnRole"),
@@ -178,7 +200,7 @@ export async function removeMember(
   slug: string,
   memberId: string,
 ): Promise<ActionResult> {
-  const ctx = await requireCompanyContext({ slug, minRole: "admin" });
+  const ctx = await requireCompanyContext({ slug, minRole: "owner" });
 
   if (memberId === ctx.membership.id) {
     return {
@@ -203,10 +225,10 @@ export async function inviteMember(
   slug: string,
   raw: unknown,
 ): Promise<ActionResult<{ email: string }>> {
-  const ctx = await requireCompanyContext({ slug, minRole: "admin" });
+  const ctx = await requireCompanyContext({ slug, minRole: "owner" });
   const parsed = inviteMemberSchema.safeParse(raw);
   if (!parsed.success)
-    return { success: false, error: await validationError(parsed) };
+    return { success: false, error: await validationError(parsed.error) };
 
   const supabase = await createClient();
 

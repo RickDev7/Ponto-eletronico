@@ -1,5 +1,6 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
-import { generateTasksFromContractAction } from "@/actions/operations/actions";
+import { generateTasksFromContractInternal } from "@/lib/automations/generate-contract-tasks";
+import { generateReportForTask } from "@/lib/automations/generate-task-report";
 import { deliverAndPersist } from "@/lib/automations/channels";
 import type { AutomationEventPayload } from "@/lib/automations/types";
 import type { AutomationActionStep } from "@/lib/validations/automations";
@@ -63,6 +64,17 @@ function resolveRecipient(
   }
 }
 
+function formatReminderBody(payload: AutomationEventPayload, template?: string): string {
+  if (template) {
+    return template
+      .replace("{invoiceNumber}", String(payload.invoiceNumber ?? ""))
+      .replace("{clientName}", String(payload.clientName ?? ""))
+      .replace("{dueDate}", String(payload.dueDate ?? "—"))
+      .replace("{balance}", String(payload.balanceCents ?? ""));
+  }
+  return `Olá${payload.clientName ? ` ${payload.clientName}` : ""}, existe um saldo pendente na fatura ${payload.invoiceNumber ?? ""}. Vencimento: ${payload.dueDate ?? "—"}.`;
+}
+
 export async function executeAutomationAction(
   step: AutomationActionStep,
   ctx: ExecuteContext,
@@ -72,22 +84,23 @@ export async function executeAutomationAction(
   switch (step.type) {
     case "generate_service": {
       const contractId = payload.contractId as string | undefined;
-      if (contractId && slug) {
-        await generateTasksFromContractAction(slug, contractId);
-      }
+      if (!contractId) break;
+      await generateTasksFromContractInternal(ctx.supabase, {
+        companyId,
+        contractId,
+        createdBy: (payload.triggeredBy as string) ?? null,
+      });
       break;
     }
 
     case "generate_report": {
       const taskId = payload.taskId as string | undefined;
-      const title = payload.taskTitle as string | undefined;
-      await notifySupervisors(
+      if (!taskId) break;
+      await generateReportForTask(
+        ctx.supabase,
         companyId,
-        "automation_report",
-        "Relatório de serviço solicitado",
-        title ? `Serviço: ${title}` : "Automação solicitou geração de relatório",
-        "task",
         taskId,
+        payload.taskTitle as string | undefined,
       );
       break;
     }
@@ -138,22 +151,36 @@ export async function executeAutomationAction(
     case "send_reminder": {
       const channel = step.channel ?? "email";
       const recipient = resolveRecipient(channel, payload);
+      if (!recipient) {
+        throw new Error("reminder_no_recipient");
+      }
+
       const subject =
         (step.config?.subject as string) ??
         `Lembrete: fatura ${payload.invoiceNumber ?? ""}`.trim();
-      const body =
-        (step.config?.body as string) ??
-        `Existe um saldo pendente. Vencimento: ${payload.dueDate ?? "—"}.`;
+      const body = formatReminderBody(
+        payload,
+        step.config?.body as string | undefined,
+      );
 
       await deliverAndPersist(ctx.supabase, {
         companyId,
         runId,
         channel,
-        recipient: recipient ?? "",
+        recipient,
         subject,
         body,
         payload: payload as Record<string, unknown>,
       });
+
+      if (payload.invoiceId) {
+        await ctx.supabase
+          .from("invoices")
+          .update({ status: "overdue" })
+          .eq("id", payload.invoiceId as string)
+          .eq("company_id", companyId)
+          .in("status", ["sent", "partial"]);
+      }
       break;
     }
   }

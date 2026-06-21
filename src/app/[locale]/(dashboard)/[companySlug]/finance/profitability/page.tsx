@@ -13,7 +13,7 @@ export default async function FinanceProfitabilityPage({ params }: PageProps) {
   await requireCompanyContext({ slug: companySlug, minRole: "supervisor" });
   const locale = await getLocale();
   const dateLocale = locale === "en" ? "en-US" : "pt-BR";
-  const data = await getFinanceProfitabilityData(companySlug);
+  const data = await getFinanceProfitabilityData(companySlug, dateLocale);
 
   return (
     <AppShellPage size="fluid">

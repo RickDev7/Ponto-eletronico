@@ -78,6 +78,7 @@ import {
 } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { AiDomainWidget } from "@/components/features/ai/ai-domain-widget";
 import { cn } from "@/lib/utils";
 
 const LOCALE_MAP: Record<string, string> = {
@@ -139,6 +140,7 @@ export function TasksView({
   addresses,
   employees,
   canWrite,
+  memberRole,
   totalCount,
 }: TasksViewProps) {
   const t = useTranslations("tasks");
@@ -237,6 +239,8 @@ export function TasksView({
           </>
         }
       />
+
+      <AiDomainWidget slug={slug} domain="tasks" compact className="mb-2" role={memberRole} />
 
       <OperationsWorkspace className="overflow-hidden">
         <Tabs value={activeTab} onValueChange={setActiveTab}>

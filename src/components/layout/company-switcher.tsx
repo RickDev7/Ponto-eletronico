@@ -10,6 +10,7 @@ import type { CompanyContext } from "@/types/database";
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
@@ -115,24 +116,25 @@ export function CompanySwitcher({
         trigger
       )}
       <DropdownMenuContent align="start" className="w-56">
-        <DropdownMenuLabel className="text-xs text-muted-foreground">
-          {t("switchCompany")}
-        </DropdownMenuLabel>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem className="gap-2 font-medium">
-          <Check className="size-3.5" />
-          {ctx.company.name}
-        </DropdownMenuItem>
-        {otherCompanies.map((c) => (
-          <DropdownMenuItem
-            key={c.id}
-            onSelect={() => switchCompany(c.slug, c.id)}
-            className="gap-2"
-          >
-            <Building2 className="size-3.5 text-muted-foreground" />
-            {c.name}
+        <DropdownMenuGroup>
+          <DropdownMenuLabel className="text-xs text-muted-foreground">
+            {t("switchCompany")}
+          </DropdownMenuLabel>
+          <DropdownMenuItem className="gap-2 font-medium">
+            <Check className="size-3.5" />
+            {ctx.company.name}
           </DropdownMenuItem>
-        ))}
+          {otherCompanies.map((c) => (
+            <DropdownMenuItem
+              key={c.id}
+              onSelect={() => switchCompany(c.slug, c.id)}
+              className="gap-2"
+            >
+              <Building2 className="size-3.5 text-muted-foreground" />
+              {c.name}
+            </DropdownMenuItem>
+          ))}
+        </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuItem
           onSelect={() => router.push(ROUTES.selectCompany)}

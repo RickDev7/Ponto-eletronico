@@ -1,5 +1,6 @@
 "use client";
 
+import { ThemePreferenceSync } from "@/components/theme";
 import { AppShellContent as AppShell } from "@/components/design-system/layout/app-shell-content";
 import { AppShellLayout } from "@/components/design-system/layout/shell";
 import { AppHeader } from "@/components/layout/app-header";
@@ -26,15 +27,18 @@ export function DashboardShell({
   children,
 }: DashboardShellProps) {
   return (
-    <AppShellLayout
-      defaultSidebarCollapsed={false}
-      sidebar={<AppSidebar ctx={ctx} userCompanies={userCompanies} />}
-      header={<AppHeader ctx={ctx} userCompanies={userCompanies} />}
-      footer={
-        <BottomNav slug={ctx.company.slug} role={ctx.membership.role} />
-      }
-    >
-      <AppShell>{children}</AppShell>
-    </AppShellLayout>
+    <>
+      <ThemePreferenceSync profileTheme={ctx.profile.theme} />
+      <AppShellLayout
+        defaultSidebarCollapsed={false}
+        sidebar={<AppSidebar ctx={ctx} userCompanies={userCompanies} />}
+        header={<AppHeader ctx={ctx} userCompanies={userCompanies} />}
+        footer={
+          <BottomNav slug={ctx.company.slug} role={ctx.membership.role} />
+        }
+      >
+        <AppShell>{children}</AppShell>
+      </AppShellLayout>
+    </>
   );
 }

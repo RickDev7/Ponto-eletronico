@@ -19,6 +19,7 @@ import { FinanceForecastPanel } from "./finance-forecast-panel";
 import { FinanceQuotesPanel } from "./finance-quotes-panel";
 import { FinanceActivityTimeline } from "./finance-activity-timeline";
 import { OperationsPage, OperationsWorkspace } from "@/components/shared";
+import { AiDomainWidget } from "@/components/features/ai/ai-domain-widget";
 
 const stagger = {
   hidden: { opacity: 0 },
@@ -30,7 +31,7 @@ const stagger = {
 
 const fadeUp = {
   hidden: { opacity: 0, y: 10 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.35, ease: [0.22, 1, 0.36, 1] } },
+  show: { opacity: 1, y: 0, transition: { duration: 0.35, ease: [0.22, 1, 0.36, 1] as const } },
 };
 
 interface CompanyPdf {
@@ -149,6 +150,8 @@ export function FinanceDashboardView({
             </button>
           </div>
         </motion.header>
+
+        <AiDomainWidget slug={slug} domain="finance" compact />
 
         <OperationsWorkspace className="space-y-6">
           {/* KPI Grid */}

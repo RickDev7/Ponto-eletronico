@@ -11,6 +11,7 @@ import {
   OperationsWorkspace,
   PageHeader,
 } from "@/components/shared";
+import { cn } from "@/lib/utils";
 
 interface ProfitabilityViewProps {
   data: FinanceProfitabilityData;
@@ -69,7 +70,10 @@ function RankTable({
                 {formatMoney(row.receivedCents, "EUR", locale)}
               </p>
               <p className="text-[10px] text-muted-foreground">
-                {t("invoiced")}: {formatMoney(row.revenueCents, "EUR", locale)}
+                {t("margin")}:{" "}
+                <span className={cn(row.marginPct >= 0 ? "text-emerald-600 dark:text-emerald-400" : "text-rose-600")}>
+                  {row.marginPct}%
+                </span>
               </p>
             </div>
           </div>
@@ -91,7 +95,7 @@ export function ProfitabilityView({ data, locale }: ProfitabilityViewProps) {
           initial="hidden"
           animate="show"
           variants={fadeUp}
-          className="mb-6 grid gap-3 sm:grid-cols-2"
+          className="mb-6 grid gap-3 sm:grid-cols-2 xl:grid-cols-4"
         >
           <KpiCard
             label={t("kpi.received")}
@@ -103,7 +107,41 @@ export function ProfitabilityView({ data, locale }: ProfitabilityViewProps) {
             value={formatMoney(data.totalInvoicedCents, "EUR", locale)}
             variant="strip"
           />
+          <KpiCard
+            label={t("kpi.costs")}
+            value={formatMoney(data.totalCostCents, "EUR", locale)}
+            variant="strip"
+          />
+          <KpiCard
+            label={t("kpi.margin")}
+            value={`${data.grossMarginPct}%`}
+            variant="strip"
+          />
         </motion.div>
+
+        {data.costCategories.length > 0 && (
+          <div className="mb-6 rounded-xl border border-border/60 bg-card p-4">
+            <h3 className="mb-3 text-sm font-semibold">{t("costBreakdown")}</h3>
+            <div className="space-y-2">
+              {data.costCategories.map((cat) => (
+                <div key={cat.key} className="flex items-center gap-3">
+                  <div className="h-2 flex-1 overflow-hidden rounded-full bg-muted">
+                    <div
+                      className="h-full rounded-full bg-primary/70"
+                      style={{ width: `${cat.pct}%` }}
+                    />
+                  </div>
+                  <span className="w-24 shrink-0 text-xs text-muted-foreground">
+                    {t(`categories.${cat.labelKey}`)}
+                  </span>
+                  <span className="w-20 shrink-0 text-right text-xs font-medium tabular-nums">
+                    {formatMoney(cat.cents, "EUR", locale)}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
 
         <div className="grid gap-4 lg:grid-cols-2">
           <RankTable
@@ -113,20 +151,8 @@ export function ProfitabilityView({ data, locale }: ProfitabilityViewProps) {
             emptyLabel={t("empty")}
           />
           <RankTable
-            title={t("topContract")}
-            rows={data.topContracts}
-            locale={locale}
-            emptyLabel={t("empty")}
-          />
-          <RankTable
             title={t("byService")}
             rows={data.byService}
-            locale={locale}
-            emptyLabel={t("empty")}
-          />
-          <RankTable
-            title={t("byProperty")}
-            rows={data.byProperty}
             locale={locale}
             emptyLabel={t("empty")}
           />

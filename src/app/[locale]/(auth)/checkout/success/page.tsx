@@ -19,7 +19,7 @@ export default async function CheckoutSuccessPage({
   const t = await getTranslations("billing.success");
 
   return (
-    <div className="flex min-h-svh items-center justify-center bg-zinc-950 px-4 py-12">
+    <div className="flex min-h-svh items-center justify-center bg-background px-4 py-12">
       <div className="w-full max-w-md animate-in fade-in slide-in-from-bottom-2 text-center duration-500">
         <div className="mx-auto mb-6 flex size-14 items-center justify-center rounded-full bg-emerald-500/10">
           <CheckCircle2 className="size-7 text-emerald-400" />

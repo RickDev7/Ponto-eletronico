@@ -41,12 +41,16 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import type { MemberRole } from "@/types";
+import { ASSIGNABLE_ROLES } from "@/types/enums";
 import { cn } from "@/lib/utils";
 
 const ROLE_COLORS: Record<MemberRole, string> = {
+  owner: "bg-violet-100 text-violet-700 border-violet-200 dark:bg-violet-950/30 dark:text-violet-400",
   admin: "bg-violet-100 text-violet-700 border-violet-200 dark:bg-violet-950/30 dark:text-violet-400",
+  manager: "bg-indigo-100 text-indigo-700 border-indigo-200 dark:bg-indigo-950/30 dark:text-indigo-400",
   supervisor: "bg-blue-100 text-blue-700 border-blue-200 dark:bg-blue-950/30 dark:text-blue-400",
   employee: "bg-muted text-muted-foreground",
+  client: "bg-emerald-100 text-emerald-700 border-emerald-200 dark:bg-emerald-950/30 dark:text-emerald-400",
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -77,7 +81,7 @@ export function MembersPanel({
     () =>
       z.object({
         email: z.string().email(tValidation("email")),
-        role: z.enum(["admin", "supervisor", "employee"]),
+        role: z.enum(["owner", "manager", "supervisor", "employee"]),
       }),
     [tValidation],
   );
@@ -208,7 +212,7 @@ export function MembersPanel({
                       <div className="px-2 py-1.5 text-xs text-muted-foreground font-medium">
                         {t("changeRole")}
                       </div>
-                      {(["admin", "supervisor", "employee"] as MemberRole[]).map((r) => (
+                      {ASSIGNABLE_ROLES.map((r) => (
                         <DropdownMenuItem
                           key={r}
                           onSelect={() => handleRoleChange(m.id, r)}
@@ -256,11 +260,11 @@ export function MembersPanel({
             <div className="space-y-1.5">
               <Label>{t("role")}</Label>
               <div className="grid grid-cols-3 gap-2">
-                {(["admin", "supervisor", "employee"] as MemberRole[]).map((role) => (
+                {ASSIGNABLE_ROLES.map((role) => (
                   <button
                     key={role}
                     type="button"
-                    onClick={() => setValue("role", role)}
+                    onClick={() => setValue("role", role as InviteData["role"])}
                     className={`rounded-lg border p-2.5 text-xs font-medium transition-colors ${
                       selectedRole === role
                         ? "border-primary bg-primary/10 text-primary"

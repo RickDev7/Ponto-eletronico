@@ -1,6 +1,12 @@
 import { type NextRequest, NextResponse } from "next/server";
 import createIntlMiddleware from "next-intl/middleware";
-import { AUTH_PUBLIC_PATHS, ROUTES } from "@/config/constants";
+import {
+  AUTH_PUBLIC_PATHS,
+  ROUTES,
+  isSuperAdminPath,
+  isTenantWorkspacePath,
+  toCanonicalSuperAdminPath,
+} from "@/config/constants";
 import { routing, LOCALE_STORAGE_KEY } from "@/i18n/routing";
 import { updateSession } from "@/lib/supabase/middleware";
 
@@ -57,6 +63,24 @@ function isProtectedPath(pathname: string): boolean {
   return true;
 }
 
+async function checkPlatformAdmin(
+  supabase: Awaited<ReturnType<typeof updateSession>>["supabase"],
+  userId: string,
+): Promise<boolean> {
+  const { data, error } = await supabase
+    .from("platform_admins")
+    .select("id")
+    .eq("user_id", userId)
+    .maybeSingle();
+
+  if (error) {
+    console.error("[middleware] platform_admins check failed:", error.message);
+    return false;
+  }
+
+  return Boolean(data);
+}
+
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
@@ -84,7 +108,7 @@ export async function middleware(request: NextRequest) {
   }
 
   const intlResponse = intlMiddleware(request);
-  const { supabaseResponse, user } = await updateSession(request);
+  const { supabaseResponse, user, supabase } = await updateSession(request);
 
   const mergeCookies = (target: NextResponse) => {
     supabaseResponse.cookies.getAll().forEach((cookie) => {
@@ -99,8 +123,13 @@ export async function middleware(request: NextRequest) {
   const locale = getLocaleFromPathname(pathname);
   const barePath = stripLocale(pathname);
 
-  // /login, /register, etc. are always reachable — including for authenticated users
-  // (sign out, switch account, explicit navigation).
+  // Legacy /platform and alias /admin → canonical /super-admin
+  if (isSuperAdminPath(barePath) && barePath !== ROUTES.superAdmin && !barePath.startsWith(`${ROUTES.superAdmin}/`)) {
+    const url = request.nextUrl.clone();
+    url.pathname = `/${locale}${toCanonicalSuperAdminPath(barePath)}`;
+    return mergeCookies(NextResponse.redirect(url));
+  }
+
   if (PUBLIC_PATHS.has(barePath)) {
     return mergeCookies(intlResponse);
   }
@@ -113,6 +142,33 @@ export async function middleware(request: NextRequest) {
       url.searchParams.delete("redirect");
     }
     return mergeCookies(NextResponse.redirect(url));
+  }
+
+  if (user) {
+    const isSuperAdmin = await checkPlatformAdmin(supabase, user.id);
+
+    // Super Admin paths: allow only platform_admins; never fall through to tenant
+    if (isSuperAdminPath(barePath)) {
+      if (!isSuperAdmin) {
+        const url = request.nextUrl.clone();
+        url.pathname = `/${locale}${ROUTES.login}`;
+        url.searchParams.set("error", "platform_access_denied");
+        return mergeCookies(NextResponse.redirect(url));
+      }
+      return mergeCookies(intlResponse);
+    }
+
+    // Super Admin must never enter tenant workspace
+    if (
+      isSuperAdmin &&
+      (isTenantWorkspacePath(barePath) ||
+        barePath === ROUTES.selectCompany ||
+        barePath === ROUTES.onboarding)
+    ) {
+      const url = request.nextUrl.clone();
+      url.pathname = `/${locale}${ROUTES.superAdmin}`;
+      return mergeCookies(NextResponse.redirect(url));
+    }
   }
 
   return mergeCookies(intlResponse);

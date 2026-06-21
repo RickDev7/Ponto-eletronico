@@ -6,6 +6,7 @@ import { createClient } from "@/lib/supabase/server";
 import { STORAGE_BUCKETS } from "@/config/constants";
 import type { ActionResult } from "@/actions/auth/actions";
 import type { PhotoType } from "@/types";
+import { logTaskEvent } from "@/lib/operations/task-events";
 
 export async function uploadTaskPhoto(
   slug: string,
@@ -22,7 +23,7 @@ export async function uploadTaskPhoto(
     return { success: false, error: "Datei und Fotoart erforderlich" };
   }
 
-  if (!["before", "after"].includes(photoType)) {
+  if (!["before", "after", "signature", "evidence"].includes(photoType)) {
     return { success: false, error: "Ungültige Fotoart" };
   }
 
@@ -66,7 +67,16 @@ export async function uploadTaskPhoto(
     return { success: false, error: dbError.message };
   }
 
+  await logTaskEvent(supabase, {
+    companyId: ctx.company.id,
+    taskId,
+    eventType: "photo_uploaded",
+    createdBy: ctx.profile.id,
+    metadata: { photoType, photoId: photo.id },
+  });
+
   revalidatePath(`/${slug}/tasks/${taskId}`);
+  revalidatePath(`/${slug}/field/tasks/${taskId}`);
   return {
     success: true,
     data: { id: photo.id, url: signedData?.signedUrl ?? "" },

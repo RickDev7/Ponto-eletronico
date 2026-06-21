@@ -51,6 +51,9 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
+import { TraceabilityBreadcrumb } from "@/components/features/operations/traceability-breadcrumb";
+import { ExecutionHistoryPanel } from "@/components/features/operations/execution-history-panel";
+import type { TaskEventRow, TraceableExecution } from "@/lib/operations/traceable-execution-types";
 
 const LOCALE_MAP: Record<string, string> = {
   pt: "pt-BR",
@@ -91,6 +94,8 @@ interface TaskDetailViewProps {
   openCheckInId: string | null;
   canWrite: boolean;
   canUploadPhoto: boolean;
+  traceableExecution?: TraceableExecution;
+  taskEvents?: TaskEventRow[];
 }
 
 export function TaskDetailView({
@@ -102,6 +107,8 @@ export function TaskDetailView({
   openCheckInId,
   canWrite,
   canUploadPhoto,
+  traceableExecution,
+  taskEvents = [],
 }: TaskDetailViewProps) {
   const t = useTranslations("tasks");
   const tStatus = useTranslations("status");
@@ -276,6 +283,10 @@ export function TaskDetailView({
             {statusLabel}
           </div>
         </div>
+
+        {traceableExecution && (
+          <TraceabilityBreadcrumb slug={slug} execution={traceableExecution} compact />
+        )}
 
         <div className="flex flex-wrap gap-3 text-sm text-muted-foreground">
           <span className="flex items-center gap-1.5">
@@ -573,6 +584,10 @@ export function TaskDetailView({
             })}
           </div>
         </section>
+      )}
+
+      {taskEvents.length > 0 && (
+        <ExecutionHistoryPanel events={taskEvents} locale={locale} />
       )}
 
       <Dialog open={checkInOpen} onOpenChange={(v) => {

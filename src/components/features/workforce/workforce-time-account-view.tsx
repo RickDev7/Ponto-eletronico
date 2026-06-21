@@ -18,14 +18,15 @@ import {
 interface WorkforceTimeAccountViewProps {
   slug: string;
   summaries: TimeAccountSummary[];
+  embedded?: boolean;
 }
 
-export function WorkforceTimeAccountView({ slug, summaries }: WorkforceTimeAccountViewProps) {
+export function WorkforceTimeAccountView({ slug, summaries, embedded }: WorkforceTimeAccountViewProps) {
   const t = useTranslations("workforce.timeAccount");
 
   return (
-    <OperationsPage>
-      <PageHeader title={t("title")} description={t("description")} />
+    <OperationsPage className={embedded ? "gap-0" : undefined}>
+      {!embedded && <PageHeader title={t("title")} description={t("description")} />}
       <OperationsWorkspace className="overflow-hidden">
         {summaries.length === 0 ? (
           <EmptyState icon={Clock} title={t("empty.title")} description={t("empty.description")} />

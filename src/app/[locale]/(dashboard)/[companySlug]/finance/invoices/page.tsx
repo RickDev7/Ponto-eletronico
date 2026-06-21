@@ -56,7 +56,7 @@ export default async function FinanceInvoicesPage({ params, searchParams }: Page
       .order("issue_date", { ascending: false }),
     supabase
       .from("invoices")
-      .select("id, status, issue_date, total_cents, amount_paid_cents, due_date")
+      .select("*")
       .eq("company_id", ctx.company.id)
       .gte("issue_date", yearStart)
       .lte("issue_date", yearEnd),

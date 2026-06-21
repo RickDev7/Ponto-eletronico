@@ -14,14 +14,24 @@ export function PwaInit() {
   const [showBanner, setShowBanner] = useState(false);
 
   useEffect(() => {
-    // Register service worker
     if ("serviceWorker" in navigator) {
+      if (process.env.NODE_ENV !== "production") {
+        void navigator.serviceWorker.getRegistrations().then((registrations) => {
+          registrations.forEach((registration) => void registration.unregister());
+        });
+        if ("caches" in window) {
+          void caches.keys().then((keys) => {
+            keys.forEach((key) => void caches.delete(key));
+          });
+        }
+        return;
+      }
+
       navigator.serviceWorker
         .register("/sw.js", { scope: "/" })
         .catch(() => { /* SW optional */ });
     }
 
-    // Capture install prompt
     const handler = (e: Event) => {
       e.preventDefault();
       const dismissed = sessionStorage.getItem("pwa-dismissed");

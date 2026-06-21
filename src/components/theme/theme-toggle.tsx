@@ -5,7 +5,7 @@ import { Moon, Sun, SunMoon } from "lucide-react";
 import { useTheme } from "next-themes";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import type { ThemeName } from "@/config/theme";
+import type { ThemePreference } from "@/config/theme";
 
 interface ThemeToggleProps {
   className?: string;
@@ -24,10 +24,10 @@ export function ThemeToggle({
 
   useEffect(() => setMounted(true), []);
 
-  const isDark = (resolvedTheme ?? theme ?? "dark") === "dark";
+  const isDark = (resolvedTheme ?? theme ?? "light") === "dark";
 
   function toggleTheme() {
-    const next: ThemeName = isDark ? "light" : "dark";
+    const next: ThemePreference = isDark ? "light" : "dark";
     setTheme(next);
   }
 
@@ -38,7 +38,7 @@ export function ThemeToggle({
       size={size}
       className={cn(className)}
       onClick={toggleTheme}
-      aria-label="Farbschema umschalten"
+      aria-label="Alternar tema"
     >
       {mounted ? (
         isDark ? (

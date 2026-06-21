@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Providers } from "@/components/providers";
+import { ThemeScript } from "@/components/theme";
 import { UiDensityScript } from "@/components/ui-density-script";
 import { PwaInit } from "@/components/pwa/pwa-init";
 import "./globals.css";
@@ -43,6 +44,7 @@ export default function RootLayout({
         {/* Prevent browser translation extensions (Edge, Chrome, Google Translate)
             from modifying the DOM before React hydration */}
         <meta name="google" content="notranslate" />
+        <ThemeScript />
         <UiDensityScript />
       </head>
       <body className="min-h-full antialiased" suppressHydrationWarning>

@@ -8,7 +8,11 @@ export const automationTriggerSchema = z.enum([
   "invoice.overdue",
   "invoice.sent",
   "lead.won",
+  "lead.qualified",
   "lead.status_changed",
+  "quote.sent",
+  "quote.submitted",
+  "quote.approved",
   "shift.empty",
   "weekly_hours.exceeded",
 ]);
@@ -49,9 +53,9 @@ export const createAutomationRuleSchema = z.object({
   name: z.string().min(2).max(120),
   description: z.string().max(500).optional(),
   triggerType: automationTriggerSchema,
-  conditions: z.array(automationConditionSchema).default([]),
+  conditions: z.array(automationConditionSchema),
   actions: z.array(automationActionStepSchema).min(1),
-  isEnabled: z.boolean().default(true),
+  isEnabled: z.boolean(),
 });
 
 export const updateAutomationRuleSchema = createAutomationRuleSchema;

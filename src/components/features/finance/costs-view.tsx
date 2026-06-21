@@ -24,8 +24,8 @@ const fadeUp = {
 
 export function CostsView({ data, locale }: CostsViewProps) {
   const t = useTranslations("finance.costs");
-  const maxTax = useMemo(
-    () => Math.max(...data.monthlyBuckets.map((b) => b.taxCents), 1),
+  const maxCost = useMemo(
+    () => Math.max(...data.monthlyBuckets.map((b) => b.costCents), 1),
     [data.monthlyBuckets],
   );
 
@@ -38,35 +38,36 @@ export function CostsView({ data, locale }: CostsViewProps) {
           initial="hidden"
           animate="show"
           variants={fadeUp}
-          className="mb-6 grid gap-3 sm:grid-cols-2 xl:grid-cols-4"
+          className="mb-6 grid gap-3 sm:grid-cols-2 xl:grid-cols-3"
         >
-          <KpiCard label={t("kpi.tax")} value={formatMoney(data.taxPayableCents, "EUR", locale)} variant="strip" />
-          <KpiCard label={t("kpi.discounts")} value={formatMoney(data.discountsCents, "EUR", locale)} variant="strip" />
           <KpiCard
-            label={t("kpi.unbilled")}
-            value={String(data.unbilledExecutionsCount)}
-            hint={formatMoney(data.unbilledExecutionsCents, "EUR", locale)}
+            label={t("kpi.total")}
+            value={formatMoney(data.totalCostCents, "EUR", locale)}
             variant="strip"
           />
           <KpiCard
-            label={t("kpi.operationalLoad")}
-            value={`${Math.round(data.operationalMinutes / 60)}h`}
-            hint={t("kpi.approvedTasks", { count: data.approvedExecutionsCount })}
+            label={t("kpi.revenue")}
+            value={formatMoney(data.revenueCents, "EUR", locale)}
+            variant="strip"
+          />
+          <KpiCard
+            label={t("kpi.margin")}
+            value={`${data.grossMarginPct}%`}
             variant="strip"
           />
         </motion.div>
 
         <div className="grid gap-4 lg:grid-cols-2">
           <div className="rounded-xl border border-border/60 bg-card p-4">
-            <h3 className="mb-1 text-sm font-semibold">{t("chart.taxTitle")}</h3>
-            <p className="mb-4 text-xs text-muted-foreground">{t("chart.taxHint")}</p>
+            <h3 className="mb-1 text-sm font-semibold">{t("chart.title")}</h3>
+            <p className="mb-4 text-xs text-muted-foreground">{t("chart.hint")}</p>
             <div className="flex h-40 items-end gap-1">
               {data.monthlyBuckets.map((bucket) => (
                 <div key={bucket.key} className="flex flex-1 flex-col items-center gap-1">
                   <div
                     className="w-full rounded-t bg-rose-500/70"
-                    style={{ height: `${Math.max((bucket.taxCents / maxTax) * 100, 4)}%` }}
-                    title={formatMoney(bucket.taxCents, "EUR", locale)}
+                    style={{ height: `${Math.max((bucket.costCents / maxCost) * 100, 4)}%` }}
+                    title={formatMoney(bucket.costCents, "EUR", locale)}
                   />
                   <span className="text-[9px] text-muted-foreground">{bucket.label}</span>
                 </div>
@@ -75,29 +76,22 @@ export function CostsView({ data, locale }: CostsViewProps) {
           </div>
 
           <div className="rounded-xl border border-border/60 bg-card p-4">
-            <h3 className="mb-1 text-sm font-semibold">{t("executions.title")}</h3>
-            <p className="mb-4 text-xs text-muted-foreground">{t("executions.hint")}</p>
+            <h3 className="mb-1 text-sm font-semibold">{t("breakdown.title")}</h3>
+            <p className="mb-4 text-xs text-muted-foreground">{t("breakdown.hint")}</p>
             <dl className="space-y-3 text-sm">
-              <div className="flex justify-between border-b border-border/40 pb-2">
-                <dt className="text-muted-foreground">{t("executions.approved")}</dt>
-                <dd className="font-medium tabular-nums">{data.approvedExecutionsCount}</dd>
-              </div>
-              <div className="flex justify-between border-b border-border/40 pb-2">
-                <dt className="text-muted-foreground">{t("executions.billed")}</dt>
-                <dd className="font-medium tabular-nums">{data.billedExecutionsCount}</dd>
-              </div>
-              <div className="flex justify-between border-b border-border/40 pb-2">
-                <dt className="text-muted-foreground">{t("executions.unbilled")}</dt>
-                <dd className="font-medium tabular-nums text-amber-600 dark:text-amber-400">
-                  {data.unbilledExecutionsCount}
-                </dd>
-              </div>
-              <div className="flex justify-between">
-                <dt className="text-muted-foreground">{t("executions.atRisk")}</dt>
-                <dd className="font-semibold tabular-nums">
-                  {formatMoney(data.unbilledExecutionsCents, "EUR", locale)}
-                </dd>
-              </div>
+              {data.costCategories.length === 0 ? (
+                <p className="text-xs text-muted-foreground">{t("breakdown.empty")}</p>
+              ) : (
+                data.costCategories.map((cat) => (
+                  <div key={cat.key} className="flex justify-between border-b border-border/40 pb-2">
+                    <dt className="text-muted-foreground">{t(`categories.${cat.labelKey}`)}</dt>
+                    <dd className="font-medium tabular-nums">
+                      {formatMoney(cat.cents, "EUR", locale)}
+                      <span className="ml-1 text-[10px] text-muted-foreground">({cat.pct}%)</span>
+                    </dd>
+                  </div>
+                ))
+              )}
             </dl>
           </div>
         </div>

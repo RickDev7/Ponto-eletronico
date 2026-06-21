@@ -85,6 +85,7 @@
   "navigation": {
     "dashboard": "Dashboard",
     "myTasks": "My tasks",
+    "fieldExecution": "Field",
     "tasks": "Tasks",
     "calendar": "Calendar",
     "employees": "Employees",
@@ -92,18 +93,24 @@
     "clients": "Clients",
     "operations": "Operations",
     "operationsDashboard": "Operations Dashboard",
+    "operationsOverview": "Overview",
+    "operationsVisits": "Visits",
     "operationsClients": "Clients",
     "operationsProperties": "Properties",
     "operationsServices": "Services",
     "operationsScheduling": "Scheduling",
+    "operationsEquipment": "Equipment",
+    "operationsMaterials": "Materials",
     "operationsCalendar": "Calendar",
     "operationsTeams": "Teams",
     "operationsRoutes": "Routes",
     "operationsJobs": "Executions",
+    "operationsWorkOrders": "Work orders",
     "workforce": "Workforce",
     "workforceDashboard": "Workforce Dashboard",
     "workforceEmployees": "Employees",
-    "workforcePlanning": "Personnel Planning",
+    "workforcePlanning": "Planning Center",
+    "workforceVehicles": "Vehicles",
     "workforceShifts": "Shifts",
     "workforceAbsences": "Absences",
     "workforceVacations": "Vacations",
@@ -111,14 +118,32 @@
     "workforceTimesheets": "Timesheets",
     "workforceWorktime": "Work Schedules",
     "workforceDocuments": "Documents",
-    "crm": "CRM",
+    "workforceTeams": "Teams",
+    "workforceSkills": "Skills",
+    "workforceAvailability": "Availability",
+    "assets": "Assets",
+    "assetsOverview": "Overview",
+    "crm": "CRM & Sales",
+    "crmOverview": "Overview",
+    "crmClients": "Clients",
+    "crmQuotes": "Quotes",
+    "crmContracts": "Contracts",
     "crmDashboard": "Sales Dashboard",
     "crmLeads": "Leads",
     "crmPipeline": "Pipeline",
     "crmContacts": "Contacts",
     "crmCompanies": "Companies",
+    "commercial": "Commercial",
+    "commercialOverview": "Overview",
+    "commercialPipeline": "Pipeline",
+    "commercialLeads": "Leads",
+    "commercialContacts": "Contacts",
+    "commercialClients": "Clients",
+    "commercialQuotes": "Quotes",
+    "commercialContracts": "Contracts",
     "finance": "Finance",
     "financeOverview": "Dashboard",
+    "financeRevenue": "Revenue",
     "financeQuotes": "Quotes",
     "financeInvoices": "Invoices",
     "financeContracts": "Contracts",
@@ -127,12 +152,18 @@
     "financeCosts": "Costs",
     "financeProfitability": "Profitability",
     "financeForecast": "Forecast",
+    "analytics": "Analytics",
+    "analyticsOverview": "Overview",
+    "analyticsExecutive": "Executive",
+    "analyticsOperational": "Operational",
+    "analyticsFinancial": "Financial",
     "properties": "Addresses",
     "reports": "Reports",
     "activity": "Activity",
     "audits": "Audits",
     "settings": "Settings",
     "automations": "Automations",
+    "aiAssistant": "AI Assistant",
     "appearance": "Appearance",
     "series": "Recurring series",
     "templates": "Templates",
@@ -143,7 +174,7 @@
     "allWorkspaces": "All workspaces",
     "search": "Search",
     "searchShortcut": "⌘K",
-    "executiveSubtitle": "Executive operations overview",
+    "executiveSubtitle": "Command Center",
     "notifications": "Notifications",
     "profile": "Profile",
     "logout": "Log out",
@@ -293,6 +324,27 @@
         "noAlerts": "No critical alerts.",
         "noActivity": "No recent activity.",
         "noForecast": "No forecast available."
+      }
+    },
+    "commandCenter": {
+      "eyebrow": "Command Center",
+      "title": "What requires attention today?",
+      "viewAll": "View all",
+      "planning": "Planning",
+      "sections": {
+        "todayOps": "Today's operations",
+        "workforce": "Workforce status",
+        "finance": "Financial snapshot",
+        "openIssues": "Open issues",
+        "activity": "Recent activity",
+        "weekPlanning": "Weekly planning preview"
+      },
+      "cols": {
+        "time": "Time",
+        "service": "Service",
+        "client": "Client",
+        "assignee": "Assignee",
+        "status": "Status"
       }
     }
   },
@@ -598,6 +650,81 @@
       "noProperties": "No service locations",
       "floorSuffix": "{floor}. floor",
       "tasksHeading": "Tasks ({count})"
+    },
+    "client360": {
+      "pageTitle": "Client",
+      "noContact": "No primary contact",
+      "viewAll": "View all",
+      "primary": "primary",
+      "source": "Source",
+      "originLead": "Source lead",
+      "taskCount": "{count, plural, one {# task} other {# tasks}}",
+      "contactSource": {
+        "client": "Client",
+        "lead": "CRM lead"
+      },
+      "tabs": {
+        "overview": "Overview",
+        "contacts": "Contacts",
+        "contracts": "Contracts",
+        "properties": "Properties",
+        "services": "Services",
+        "invoices": "Invoices",
+        "reports": "Reports",
+        "documents": "Documents"
+      },
+      "kpis": {
+        "properties": "Properties",
+        "contracts": "Active contracts",
+        "openInvoices": "Open invoices",
+        "revenue": "Paid revenue",
+        "activeTasks": "Active tasks",
+        "completed": "Completed"
+      },
+      "financial": {
+        "openBalance": "Open balance"
+      },
+      "panels": {
+        "upcomingTasks": "Upcoming tasks",
+        "financial": "Financial summary",
+        "activity": "Recent activity",
+        "commercial": "Commercial origin",
+        "quotes": "Quotes",
+        "quickLinks": "Quick links"
+      },
+      "actions": {
+        "contract": "New contract",
+        "invoice": "New invoice"
+      },
+      "links": {
+        "scheduling": "Scheduling",
+        "contracts": "Contracts",
+        "reports": "Reports"
+      },
+      "columns": {
+        "title": "Title",
+        "status": "Status",
+        "value": "Amount",
+        "due": "Due",
+        "service": "Service",
+        "properties": "Properties",
+        "tasks": "Tasks"
+      },
+      "form": {
+        "street": "Street",
+        "postalCode": "Postal code",
+        "city": "City"
+      },
+      "empty": {
+        "tasks": "No scheduled tasks",
+        "contacts": "No contacts on file",
+        "contracts": "No contracts",
+        "properties": "No properties — add a service address",
+        "services": "No associated services",
+        "invoices": "No invoices",
+        "reports": "No completed executions",
+        "documents": "No field photos or documents"
+      }
     }
   },
   "properties": {
@@ -866,6 +993,82 @@
         "evening": "Evening",
         "eveningRange": "17:00 – 22:00"
       }
+    }
+  },
+  "analytics": {
+    "title": "Analytics Center",
+    "description": "Utilization, revenue, profitability, SLA and workforce performance in one place.",
+    "tabs": {
+      "hub": "Overview",
+      "executive": "Executive",
+      "operational": "Operational",
+      "financial": "Financial"
+    },
+    "pillars": {
+      "utilization": "Utilization",
+      "revenue": "Revenue",
+      "profitability": "Profitability",
+      "sla": "SLA",
+      "workforce": "Workforce",
+      "utilizationHint": "{hours}h worked (6 mo)",
+      "revenueHint": "MRR {mrr}",
+      "slaHint": "{overdue} overdue tasks",
+      "workforceHint": "{completed} tasks · {employees} active"
+    },
+    "dashboards": {
+      "executive": {
+        "title": "Executive dashboard",
+        "description": "High-level KPIs, alerts, revenue forecast and command center view."
+      },
+      "operational": {
+        "title": "Operational dashboard",
+        "description": "Utilization, SLA compliance, task performance and team productivity."
+      },
+      "financial": {
+        "title": "Financial dashboard",
+        "description": "Revenue, margins, profitability by client and service."
+      }
+    },
+    "charts": {
+      "utilization": "Utilization trend",
+      "sla": "SLA compliance",
+      "revenueProfit": "Revenue vs profit",
+      "costs": "Costs",
+      "profit": "Profit"
+    },
+    "operational": {
+      "title": "Operational analytics",
+      "description": "Field utilization, SLA adherence and workforce performance.",
+      "utilizationChart": "Planned vs worked hours",
+      "utilizationHint": "Shift planning compared to check-in hours",
+      "slaChart": "On-time completion rate",
+      "slaHint": "Tasks completed on or before scheduled date",
+      "plannedHours": "Planned",
+      "workedHours": "Worked",
+      "slaOnTime": "On time",
+      "slaLate": "Completed late",
+      "slaOverdue": "Open overdue",
+      "invoiceCollection": "Invoice collection SLA",
+      "topPerformers": "Top performers",
+      "tabs": {
+        "metrics": "Metrics",
+        "activity": "Activity",
+        "audits": "Audits"
+      }
+    },
+    "financial": {
+      "title": "Financial analytics",
+      "description": "Revenue, costs and margin analysis for the year.",
+      "received": "Received (YTD)",
+      "invoiced": "Invoiced (YTD)",
+      "mrr": "MRR",
+      "margin": "Gross margin",
+      "chartRevenue": "Revenue",
+      "chartCosts": "Costs",
+      "chartProfit": "Profit",
+      "byClient": "Revenue per client",
+      "byService": "Revenue per service",
+      "empty": "No data for this period"
     }
   },
   "reports": {
@@ -1367,6 +1570,7 @@
       "colorSchemeDescription": "Choose the interface appearance for your account",
       "lightDescription": "Bright interface",
       "darkDescription": "Reduced eye strain",
+      "systemDescription": "Follows your operating system preference",
       "currentMode": "Current: {mode}",
       "darkMode": "Dark mode",
       "lightMode": "Light mode",
@@ -1697,11 +1901,113 @@
     "signOut": "Log out",
     "signingOut": "Signing out..."
   },
+  "clientPortal": {
+    "nav": {
+      "overview": "Overview",
+      "contracts": "Contracts",
+      "invoices": "Invoices",
+      "reports": "Reports",
+      "services": "Services",
+      "documents": "Documents"
+    },
+    "overview": {
+      "title": "Client portal",
+      "welcome": "Welcome, {name}",
+      "kpis": {
+        "contracts": "Active contracts",
+        "openInvoices": "Open invoices",
+        "overdue": "Overdue invoices",
+        "properties": "Properties"
+      },
+      "recentInvoices": "Recent invoices",
+      "upcomingServices": "Upcoming services",
+      "viewAll": "View all"
+    },
+    "contracts": {
+      "title": "Contracts",
+      "description": "Your service contracts with the company.",
+      "empty": "No contracts found.",
+      "active": "Active",
+      "inactive": "Inactive",
+      "columns": {
+        "title": "Title",
+        "period": "Period",
+        "frequency": "Frequency",
+        "amount": "Amount",
+        "status": "Status"
+      }
+    },
+    "invoices": {
+      "title": "Invoices",
+      "description": "Invoice and payment history.",
+      "empty": "No invoices available.",
+      "detailDescription": "Invoice details",
+      "backToList": "Back to list",
+      "lineItems": "Line items",
+      "summary": "Summary",
+      "columns": {
+        "number": "Number",
+        "issueDate": "Issue date",
+        "dueDate": "Due date",
+        "amount": "Amount",
+        "status": "Status"
+      }
+    },
+    "reports": {
+      "title": "Reports",
+      "description": "Reports and service proofs.",
+      "empty": "No reports available.",
+      "noFile": "File not available.",
+      "downloadFailed": "Failed to download file.",
+      "columns": {
+        "title": "Title",
+        "type": "Type",
+        "period": "Period",
+        "generated": "Generated"
+      },
+      "types": {
+        "daily": "Daily",
+        "weekly": "Weekly",
+        "monthly": "Monthly",
+        "client": "Client",
+        "employee": "Employee",
+        "custom": "Custom"
+      }
+    },
+    "services": {
+      "title": "Services",
+      "description": "Properties, contracts and recent executions.",
+      "properties": "Properties",
+      "noProperties": "No properties registered.",
+      "activeContracts": "Active contracts",
+      "noContracts": "No active contracts.",
+      "recentExecutions": "Recent executions",
+      "noExecutions": "No completed executions.",
+      "noUpcoming": "No scheduled services."
+    },
+    "documents": {
+      "title": "Documents",
+      "description": "Documents shared with you.",
+      "empty": "No documents available.",
+      "category": "Category: {value}",
+      "downloadFailed": "Failed to download document."
+    },
+    "access": {
+      "title": "Portal access",
+      "description": "Invite the client to access contracts, invoices and reports.",
+      "email": "User email",
+      "grant": "Grant access",
+      "success": "Portal access granted.",
+      "error": "Could not grant access."
+    }
+  },
   "selectCompany": {
     "title": "Choose company",
     "description": "You have access to multiple workspaces. Select one to open.",
     "createHint": "Need a new workspace?",
-    "createCompany": "Create company"
+    "createCompany": "Create company",
+    "platformConsole": "Platform Management",
+    "platformConsoleHint": "Super Admin console — tenants, billing, support"
   },
   "meWorkTime": {
     "title": "Work time today",
@@ -1714,13 +2020,20 @@
     "timeUntilBreak": "{time} until recommended break"
   },
   "roles": {
+    "superAdmin": "Super Admin",
+    "owner": "Owner",
+    "manager": "Manager",
     "admin": "Administrator",
     "supervisor": "Supervisor",
     "employee": "Employee",
+    "client": "Client",
     "descriptions": {
+      "owner": "Full access to company, billing, team and settings",
+      "manager": "Manages operations, team and commercial workflows",
       "admin": "Full access to company, team, and settings",
       "supervisor": "Manages operations, team, and reports",
-      "employee": "Executes tasks and records field activity"
+      "employee": "Executes tasks and records field activity",
+      "client": "Portal access to contracts, invoices and reports"
     }
   },
   "serviceTypes": {
@@ -1897,19 +2210,72 @@
       "register": "Start for free"
     },
     "hero": {
-      "badge": "For field service companies",
-      "title": "Service management",
-      "titleHighlight": "made simple",
-      "description": "FeldOps is the all-in-one platform for stairwell cleaning, garden maintenance, winter service, and window cleaning. From task planning to billing — everything in one app.",
+      "badge": "For service businesses and facility management",
+      "title": "Manage your entire service business from one platform",
+      "description": "Plan crews, run field operations, invoice clients, and deliver a professional client portal — all integrated for cleaning, maintenance, and facility management companies.",
       "ctaPrimary": "Start free trial",
-      "ctaSecondary": "Watch demo",
-      "footnote": "No credit card required · Free for up to 3 employees"
+      "ctaSecondary": "Book a demo",
+      "footnote": "No credit card required · Set up in minutes · Human support",
+      "screenshotAlt": "FeldOps operational command center dashboard"
+    },
+    "trustedBy": {
+      "title": "Trusted by service businesses across Europe",
+      "subtitle": "Over 500 cleaning, facility management, and maintenance companies have digitized their operations with FeldOps.",
+      "logos": ["CleanPro", "FacilityOne", "Maintex", "ServiceHub", "NordClean"]
+    },
+    "benefits": {
+      "eyebrow": "Why FeldOps",
+      "title": "Less spreadsheet chaos. More control.",
+      "description": "Replace disconnected tools with one platform built for service providers.",
+      "items": {
+        "visibility": {
+          "title": "Real-time visibility",
+          "description": "Know where your teams are, the status of every visit, and what needs attention today — without calling anyone."
+        },
+        "efficiency": {
+          "title": "Smarter operations",
+          "description": "Plan schedules, assign work orders, and reduce travel with intelligent routing and calendars."
+        },
+        "trust": {
+          "title": "Client confidence",
+          "description": "Photo reports, digital sign-offs, and a client portal that looks as professional as your work."
+        },
+        "scale": {
+          "title": "Grow without chaos",
+          "description": "From 5 to 500 employees, keep processes consistent with role-based access and multi-site support."
+        }
+      }
     },
     "features": {
-      "title": "Everything you need",
-      "description": "From task management to GPS time tracking — FeldOps covers the entire service cycle.",
+      "eyebrow": "Complete platform",
+      "title": "Everything you need to run the business",
+      "description": "From first sales contact to paid invoice — one continuous flow for service companies.",
       "viewAll": "View all features",
       "items": {
+        "scheduling": {
+          "title": "Smart scheduling",
+          "description": "Visual calendar, recurring visits, and automatic assignment by zone or skill."
+        },
+        "mobile": {
+          "title": "Field team app",
+          "description": "GPS check-in, before/after photos, and offline forms for technicians and cleaners."
+        },
+        "reporting": {
+          "title": "Professional reports",
+          "description": "Automatic PDFs, accounting exports, and full history per client or site."
+        },
+        "compliance": {
+          "title": "Compliance & audit",
+          "description": "Immutable logs, GDPR compliance, and EU-hosted data."
+        },
+        "integrations": {
+          "title": "Open integrations",
+          "description": "API, webhooks, and exports to connect with ERP, accounting, and existing tools."
+        },
+        "security": {
+          "title": "Enterprise security",
+          "description": "Per-company isolation, secure authentication, and granular access controls."
+        },
         "taskManagement": {
           "title": "Task management",
           "description": "Create, assign, and track tasks. Priorities, due dates, and status updates in real time."
@@ -1943,38 +2309,121 @@
           "description": "EU data hosting, full data isolation per company, secure authentication."
         },
         "multiTenant": {
-          "title": "Multi-tenant",
+          "title": "Multi-company",
           "description": "Manage multiple locations or companies with a single account."
         }
       }
     },
-    "services": {
+    "workforce": {
+      "eyebrow": "Workforce planning",
+      "title": "Schedules that work in the real world",
+      "description": "Plan availability, time off, and skills. See who is where — before problems surface.",
+      "bullets": [
+        "Crew and employee scheduling calendar",
+        "Integrated time bank and timesheets",
+        "Overlap and coverage gap alerts",
+        "Skills and certifications per role"
+      ],
+      "screenshotAlt": "FeldOps workforce scheduling and planning"
+    },
+    "operations": {
+      "eyebrow": "Operations management",
+      "title": "Work orders from office to field",
+      "description": "Create visits, track execution in real time, and document every job with digital proof.",
+      "bullets": [
+        "Work orders and visits in one hub",
+        "Map view with team locations",
+        "Customizable checklists and forms",
+        "Photos, signatures, and notes per visit"
+      ],
+      "screenshotAlt": "FeldOps work orders and field operations"
+    },
+    "finance": {
+      "eyebrow": "Finance",
+      "title": "Quotes, contracts, and billing integrated",
+      "description": "Turn completed work into revenue — without re-entering data manually.",
+      "bullets": [
+        "Quotes and proposals with online approval",
+        "Recurring contracts linked to visits",
+        "Automated invoicing and payment tracking",
+        "Financial dashboard with MRR and overdue"
+      ],
+      "screenshotAlt": "FeldOps finance dashboard with billing and revenue"
+    },
+    "clientPortal": {
+      "eyebrow": "Client portal",
+      "title": "A professional experience for your clients",
+      "description": "Clients access reports, invoices, and upcoming visits — without email back-and-forth.",
+      "bullets": [
+        "Branded portal with secure login",
+        "Service reports and site history",
+        "Online quote approval",
+        "Centralized communication per contract"
+      ],
+      "screenshotAlt": "FeldOps client portal with invoices and reports"
+    },
+    "aiAssistant": {
+      "eyebrow": "AI assistant",
+      "title": "Operational answers in seconds",
+      "description": "Ask about schedules, pending visits, or metrics — the assistant knows your data.",
+      "bullets": [
+        "Natural language queries",
+        "Scheduling and coverage suggestions",
+        "Activity summaries by client or crew",
+        "Available 24/7 in the dashboard"
+      ],
+      "screenshotAlt": "FeldOps AI assistant for operations"
+    },
+    "industries": {
       "title": "Built for your industry",
-      "description": "Purpose-built for field service providers.",
+      "description": "Configured for the realities of service businesses and SMEs.",
       "items": {
-        "stairwell": {
-          "title": "Stairwell cleaning",
-          "description": "Weekly stair cleaning with photo documentation and client sign-off."
+        "cleaning": {
+          "title": "Cleaning companies",
+          "description": "Office, stairwell, and industrial cleaning with photo documentation."
         },
-        "garden": {
-          "title": "Garden maintenance",
-          "description": "Plan seasonal garden work and track maintenance history per property."
+        "facility": {
+          "title": "Facility management",
+          "description": "Multi-site management, SLAs, and reports for property owners."
         },
-        "winter": {
-          "title": "Winter service",
-          "description": "Snow removal and gritting with GPS proof and time tracking."
+        "maintenance": {
+          "title": "Technical maintenance",
+          "description": "Work orders, parts, and equipment history per location."
         },
-        "windows": {
-          "title": "Window cleaning",
-          "description": "Window cleaning with before/after photos and automatic reporting."
+        "services": {
+          "title": "Service providers",
+          "description": "Landscaping, winter service, windows, and other recurring services."
+        }
+      }
+    },
+    "testimonials": {
+      "eyebrow": "Testimonials",
+      "title": "Teams that simplified their operations",
+      "description": "Service businesses that replaced spreadsheets and disconnected apps with FeldOps.",
+      "items": {
+        "one": {
+          "quote": "We cut scheduling time by 40% and clients love the automatic reports. Finally everything in one place.",
+          "name": "Sofia Martins",
+          "role": "COO, CleanPro Lisbon"
+        },
+        "two": {
+          "quote": "Billing linked to visits eliminated errors that cost us hours every week. ROI in under 2 months.",
+          "name": "Thomas Weber",
+          "role": "CEO, FacilityOne GmbH"
+        },
+        "three": {
+          "quote": "Field teams adopted the app on day one. GPS and photos gave us full control without micromanaging.",
+          "name": "Ana Ribeiro",
+          "role": "Operations Manager, Maintex"
         }
       }
     },
     "pricing": {
-      "title": "Simple pricing, no surprises",
-      "description": "Start for free. Scale as you grow.",
+      "eyebrow": "Pricing",
+      "title": "Simple plans, no surprises",
+      "description": "Start for free. Scale as your team grows.",
       "viewPlans": "Compare all plans",
-      "popular": "Popular",
+      "popular": "Most popular",
       "plans": {
         "starter": {
           "name": "Starter",
@@ -1982,7 +2431,7 @@
           "period": "forever",
           "features": [
             "Up to 3 employees",
-            "50 tasks/month",
+            "50 visits/month",
             "5 GB photo storage",
             "PDF reports"
           ],
@@ -1994,10 +2443,10 @@
           "period": "per month",
           "features": [
             "Up to 25 employees",
-            "Unlimited tasks",
+            "Unlimited visits",
             "50 GB photo storage",
-            "CSV export",
-            "Recurring tasks",
+            "Client portal",
+            "Integrated billing",
             "Priority support"
           ],
           "cta": "14-day free trial"
@@ -2008,23 +2457,55 @@
           "period": "per month",
           "features": [
             "Unlimited employees",
-            "Unlimited tasks",
-            "500 GB photo storage",
             "Multi-company",
-            "API access",
-            "Dedicated support"
+            "500 GB photo storage",
+            "API & webhooks",
+            "Advanced AI assistant",
+            "Dedicated account manager"
           ],
-          "cta": "Contact us"
+          "cta": "Talk to sales"
+        }
+      }
+    },
+    "faq": {
+      "eyebrow": "FAQ",
+      "title": "Frequently asked questions",
+      "description": "Quick answers to help you decide.",
+      "items": {
+        "whatIs": {
+          "question": "What is FeldOps?",
+          "answer": "FeldOps is an all-in-one platform for service businesses: workforce planning, field operations, finance, client portal, and AI assistant — in one system."
+        },
+        "industries": {
+          "question": "What types of companies is it for?",
+          "answer": "Cleaning companies, facility management, technical maintenance, and recurring service providers. If you have field teams and contract clients, FeldOps is built for you."
+        },
+        "trial": {
+          "question": "Can I try before paying?",
+          "answer": "Yes. The Starter plan is free forever. Professional includes a 14-day trial with no credit card required."
+        },
+        "data": {
+          "question": "Is my data secure?",
+          "answer": "Yes. EU-hosted data, GDPR compliance, per-company isolation, and encryption in transit and at rest."
+        },
+        "support": {
+          "question": "What support do you offer?",
+          "answer": "Email support on all plans. Professional customers get priority. Enterprise includes a dedicated account manager and assisted onboarding."
+        },
+        "migration": {
+          "question": "Can I migrate from another tool?",
+          "answer": "Yes. We help import clients, employees, and contracts. Our team guides you through initial setup."
         }
       }
     },
     "cta": {
-      "title": "Ready to digitize your service business?",
-      "description": "Over 500 service providers already trust FeldOps. Start today — free and no credit card required.",
-      "button": "Start for free now"
+      "title": "Ready to run your entire business in one place?",
+      "description": "Join hundreds of service companies that simplified operations, finance, and client relationships.",
+      "button": "Start free trial",
+      "secondary": "Talk to our team"
     },
     "footer": {
-      "tagline": "Operational platform for field service companies.",
+      "tagline": "The operational platform for service businesses and facility management.",
       "product": "Product",
       "company": "Company",
       "legal": "Legal",
@@ -2476,6 +2957,7 @@
     },
     "actions": {
       "newQuote": "New quote",
+      "view": "View",
       "viewInvoices": "View invoices",
       "viewCashflow": "Cash flow",
       "pdf": "Generate PDF",
@@ -2689,8 +3171,41 @@
       "actions": {
         "recordPayment": "Record payment",
         "markPaid": "Mark as paid",
+        "markSent": "Mark as sent",
         "cancel": "Cancel",
         "delete": "Delete"
+      },
+      "openPdf": "Open PDF",
+      "autoGenerated": "Auto-generated",
+      "generateFromContract": "Generate billing invoice",
+      "newOneTime": "One-time invoice",
+      "timelineTitle": "Invoice history",
+      "timelineEmpty": "No events yet",
+      "kind": {
+        "one_time": "One-time",
+        "recurring": "Recurring"
+      },
+      "detail": {
+        "overview": "Overview",
+        "period": "Billing period"
+      },
+      "timeline": {
+        "created": "Invoice created",
+        "updated": "Invoice updated",
+        "sent": "Marked as sent",
+        "paid": "Marked as paid",
+        "partial": "Partially paid",
+        "overdue": "Marked overdue",
+        "cancelled": "Cancelled",
+        "duplicated": "Duplicated",
+        "deleted": "Deleted",
+        "paymentReceived": "Payment received",
+        "pdfGenerated": "PDF generated",
+        "recurringGenerated": "Recurring invoice generated"
+      },
+      "toast": {
+        "generated": "Invoice generated from contract",
+        "created": "Invoice created"
       },
       "views": {
         "table": "Table",
@@ -2732,7 +3247,14 @@
     },
     "cashflow": {
       "title": "Cash Flow",
-      "description": "12-month revenue trend.",
+      "description": "12-month cash inflows, outflows and running balance.",
+      "inflow12m": "Inflows (12 mo)",
+      "outflow12m": "Outflows (12 mo)",
+      "net12m": "Net cash flow (12 mo)",
+      "inflow": "Inflow",
+      "outflow": "Outflow",
+      "balance": "Balance",
+      "balanceHint": "Current balance (end of period)",
       "issued": "Issued",
       "received": "Received",
       "pending": "Pending",
@@ -2740,10 +3262,33 @@
       "pending12m": "Pending (12 mo)",
       "months": "Months"
     },
+    "revenue": {
+      "title": "Revenue",
+      "description": "Revenue analytics with margins — payments, invoices and rankings by client and service.",
+      "kpi": {
+        "received": "Received (YTD)",
+        "invoiced": "Invoiced (YTD)",
+        "margin": "Gross margin",
+        "mrr": "MRR"
+      },
+      "chart": {
+        "title": "Revenue vs costs",
+        "hint": "Received revenue, costs and profit — last 12 months",
+        "received": "Received",
+        "costs": "Costs",
+        "profit": "Profit"
+      },
+      "byClient": "Revenue per client",
+      "byService": "Revenue per service",
+      "empty": "No data for this period"
+    },
     "costs": {
       "title": "Costs",
-      "description": "Tax obligations, commercial discounts and operational executions from contracts and services.",
+      "description": "Operational costs across labor, materials, maintenance, tax and expenses.",
       "kpi": {
+        "total": "Total costs (YTD)",
+        "revenue": "Revenue (YTD)",
+        "margin": "Gross margin",
         "tax": "VAT on invoices (YTD)",
         "discounts": "Contract discounts",
         "unbilled": "Unbilled executions",
@@ -2751,8 +3296,23 @@
         "approvedTasks": "{count} approved tasks"
       },
       "chart": {
+        "title": "Costs by month",
+        "hint": "Aggregated operational spend",
         "taxTitle": "VAT by month",
         "taxHint": "Tax obligations from issued invoices"
+      },
+      "breakdown": {
+        "title": "Cost breakdown",
+        "hint": "Share by category for the year",
+        "empty": "No cost data for this period"
+      },
+      "categories": {
+        "labor": "Labor",
+        "materials": "Materials",
+        "maintenance": "Maintenance",
+        "tax": "VAT & tax",
+        "expenses": "Operating expenses",
+        "discounts": "Discounts"
       },
       "executions": {
         "title": "Executed services",
@@ -2765,10 +3325,22 @@
     },
     "profitability": {
       "title": "Profitability",
-      "description": "Revenue ranking by client, contract, service and property — from invoices and payments.",
+      "description": "Margins and revenue ranking by client and service — from invoices, payments and operational costs.",
       "kpi": {
         "received": "Received revenue (YTD)",
-        "invoiced": "Invoiced revenue (YTD)"
+        "invoiced": "Invoiced revenue (YTD)",
+        "costs": "Total costs (YTD)",
+        "margin": "Gross margin"
+      },
+      "margin": "Margin",
+      "costBreakdown": "Cost breakdown",
+      "categories": {
+        "labor": "Labor",
+        "materials": "Materials",
+        "maintenance": "Maintenance",
+        "tax": "VAT & tax",
+        "expenses": "Operating expenses",
+        "discounts": "Discounts"
       },
       "topClient": "Most profitable client",
       "topContract": "Most profitable contract",
@@ -2779,9 +3351,10 @@
     },
     "forecastPage": {
       "title": "Forecast",
-      "description": "Revenue forecast based on recurring contracts and receivables.",
+      "description": "Revenue forecast based on recurring contracts and receivables, with projected costs and margin.",
       "kpi": {
         "mrr": "Current MRR",
+        "projectedMargin": "Projected margin (30d)",
         "breakdown": "Contracts {contracts} · Receivables {receivables}"
       },
       "periods": {
@@ -2797,7 +3370,8 @@
       },
       "sources": {
         "contracts": "Recurring contracts",
-        "receivables": "Outstanding invoices"
+        "receivables": "Outstanding invoices",
+        "costs": "Projected costs"
       }
     },
     "form": {
@@ -2883,7 +3457,9 @@
       "paused": "Paused"
     },
     "flow": {
-      "conditions": "{count} condition(s)"
+      "conditions": "{count} condition(s)",
+      "preview": "Workflow preview",
+      "conditionOptional": "Condition (optional)"
     },
     "actions": {
       "new": "New automation",
@@ -2895,7 +3471,7 @@
       "generateService": "Generate service",
       "generateServiceDesc": "Creates service tasks from contract",
       "generateReport": "Generate report",
-      "generateReportDesc": "Notifies supervisors to generate report",
+      "generateReportDesc": "Generates service report and publishes to client portal",
       "sendReminder": "Send reminder",
       "sendReminderDesc": "Payment or follow-up reminder",
       "sendNotification": "Send notification",
@@ -2918,8 +3494,16 @@
       "invoiceSentDesc": "Fires when invoice is sent to client",
       "leadWon": "Lead won",
       "leadWonDesc": "Fires when lead is converted",
+      "leadQualified": "Lead qualified",
+      "leadQualifiedDesc": "Fires when a lead is marked qualified",
       "leadStatusChanged": "Lead status changed",
       "leadStatusChangedDesc": "Fires on CRM status changes",
+      "quoteSent": "Quote sent",
+      "quoteSentDesc": "Fires when a quote is sent to the customer",
+      "quoteSubmitted": "Quote submitted for approval",
+      "quoteSubmittedDesc": "Fires when a quote enters internal review",
+      "quoteApproved": "Quote approved",
+      "quoteApprovedDesc": "Fires when a quote is accepted/approved",
       "shiftEmpty": "Empty shift",
       "shiftEmptyDesc": "Fires when a task has no assigned employee",
       "weeklyHoursExceeded": "Weekly hours exceeded",
@@ -2957,7 +3541,11 @@
       "serviceApproved": "Service approved",
       "invoiceSent": "Invoice sent",
       "leadWon": "Lead won",
+      "leadQualified": "Lead qualified",
       "leadStatus": "Lead status",
+      "quoteSent": "Quote sent",
+      "quoteSubmitted": "Quote submitted",
+      "quoteApproved": "Quote approved",
       "shiftEmpty": "Empty shift → Notify manager",
       "weeklyHours": "Hours exceeded → Alert"
     },
@@ -2982,6 +3570,280 @@
       "deleted": "Automation deleted",
       "seeded": "{count} examples loaded",
       "alreadySeeded": "Automations already configured"
+    }
+  },
+  "aiAssistant": {
+    "title": "AI Operations Assistant",
+    "description": "Optimize schedules, allocate workforce, estimate costs, predict delays, and generate quotes and reports using your company context.",
+    "kpi": {
+      "capabilities": "Capabilities",
+      "domains": "Domains",
+      "insights": "Recent insights"
+    },
+    "chat": {
+      "title": "Ask the assistant",
+      "placeholder": "E.g. How can we reduce delays this week?",
+      "hint": "Answers are based on your operational data. Without an OpenAI key, a rules engine is used."
+    },
+    "quickActions": "Quick actions",
+    "history": {
+      "title": "History",
+      "empty": "No analyses recorded yet."
+    },
+    "widget": {
+      "title": "AI Assistant",
+      "analyzing": "Analyzing company data…"
+    },
+    "dock": {
+      "open": "Open AI assistant",
+      "title": "AI Assistant",
+      "fullPage": "Open full page"
+    },
+    "provider": {
+      "ai": "OpenAI",
+      "rules": "Rules",
+      "aiActive": "AI active",
+      "rulesActive": "Rules engine"
+    },
+    "result": {
+      "summary": "Summary",
+      "insights": "Insights",
+      "recommendations": "Recommendations",
+      "generated": "Generated content",
+      "copy": "Copy",
+      "copied": "Copied to clipboard"
+    },
+    "capabilities": {
+      "optimizeSchedules": "Optimize schedule",
+      "optimizeSchedulesDesc": "Suggests redistribution of visits and shifts for the week.",
+      "suggestWorkforce": "Allocate workforce",
+      "suggestWorkforceDesc": "Recommends assignments based on workload and availability.",
+      "estimateCosts": "Estimate costs",
+      "estimateCostsDesc": "Projects costs and revenue from contracts and operations.",
+      "predictDelays": "Predict delays",
+      "predictDelaysDesc": "Identifies delay risks in tasks and visits.",
+      "generateQuotes": "Generate quote",
+      "generateQuotesDesc": "Draft quote based on active portfolio.",
+      "generateReports": "Generate report",
+      "generateReportsDesc": "Executive summary for clients or internal management.",
+      "analyzeProductivity": "Analyze productivity",
+      "analyzeProductivityDesc": "Evaluates completion rate, on-time delivery, and utilization."
+    },
+    "domains": {
+      "operations": "Operations",
+      "workforce": "Workforce",
+      "finance": "Finance",
+      "analytics": "Analytics",
+      "commercial": "Commercial",
+      "tasks": "Tasks",
+      "reports": "Reports",
+      "automations": "Automations",
+      "portal": "Client portal",
+      "general": "General"
+    }
+  },
+  "platform": {
+    "brand": "Platform Management",
+    "superAdmin": "Super Admin",
+    "exitPlatform": "Back to workspaces",
+    "nav": {
+      "overview": "Overview",
+      "tenants": "Tenants",
+      "subscriptions": "Subscriptions",
+      "support": "Support",
+      "logs": "Logs",
+      "featureFlags": "Feature Flags",
+      "audit": "Audit"
+    },
+    "overview": {
+      "title": "Platform Overview",
+      "description": "Cross-tenant metrics and module access for platform operators.",
+      "modules": "Modules"
+    },
+    "kpi": {
+      "totalTenants": "Total tenants",
+      "activeTenants": "Active tenants",
+      "suspended": "Suspended",
+      "trialing": "Trialing",
+      "mrr": "MRR",
+      "openTickets": "Open tickets"
+    },
+    "tenants": {
+      "title": "Tenants",
+      "description": "Manage all workspaces on the platform.",
+      "empty": "No tenants found.",
+      "statusUpdated": "Tenant status updated",
+      "columns": {
+        "tenant": "Tenant",
+        "status": "Status",
+        "plan": "Plan",
+        "members": "Members",
+        "created": "Created",
+        "actions": "Actions"
+      },
+      "actions": {
+        "activate": "Activate",
+        "suspend": "Suspend"
+      }
+    },
+    "subscriptions": {
+      "title": "Subscriptions",
+      "description": "Billing state across all tenants.",
+      "empty": "No subscriptions found.",
+      "updated": "Subscription updated",
+      "columns": {
+        "tenant": "Tenant",
+        "plan": "Plan",
+        "status": "Status",
+        "period": "Period",
+        "stripe": "Stripe"
+      }
+    },
+    "support": {
+      "title": "Support",
+      "description": "Customer support tickets from all tenants.",
+      "empty": "No tickets.",
+      "resolved": "Ticket resolved",
+      "columns": {
+        "subject": "Subject",
+        "tenant": "Tenant",
+        "priority": "Priority",
+        "status": "Status",
+        "messages": "Messages",
+        "updated": "Updated",
+        "actions": "Actions"
+      },
+      "actions": {
+        "resolve": "Resolve"
+      }
+    },
+    "logs": {
+      "title": "System Logs",
+      "description": "Centralized platform and integration logs.",
+      "empty": "No logs recorded.",
+      "columns": {
+        "level": "Level",
+        "source": "Source",
+        "message": "Message",
+        "tenant": "Tenant",
+        "time": "Time"
+      }
+    },
+    "featureFlags": {
+      "title": "Feature Flags",
+      "description": "Toggle capabilities globally, per plan, or per tenant.",
+      "empty": "No feature flags configured.",
+      "updated": "Feature flag updated",
+      "scope": {
+        "global": "Global"
+      },
+      "columns": {
+        "key": "Key",
+        "scope": "Scope",
+        "description": "Description",
+        "enabled": "Enabled"
+      }
+    },
+    "audit": {
+      "title": "Platform Audit",
+      "description": "Immutable audit trail of platform admin actions.",
+      "empty": "No audit events.",
+      "columns": {
+        "time": "Time",
+        "actor": "Actor",
+        "action": "Action",
+        "target": "Target",
+        "tenant": "Tenant"
+      }
+    }
+  },
+  "assets": {
+    "hub": {
+      "title": "Assets",
+      "description": "Vehicles, equipment and materials — centralized operational inventory.",
+      "modules": "Modules",
+      "links": {
+        "vehicles": "Vehicles",
+        "equipment": "Equipment",
+        "materials": "Materials"
+      },
+      "kpis": {
+        "vehicles": "Vehicles",
+        "vehiclesHint": "{available} available",
+        "equipment": "Equipment",
+        "equipmentHint": "{assigned} assigned",
+        "materials": "Materials",
+        "materialsHint": "{low} low stock",
+        "alerts": "Alerts",
+        "alertsHint": "Maintenance and stock-outs"
+      }
+    }
+  },
+  "commercial": {
+    "workflow": {
+      "stages": {
+        "lead": "Lead",
+        "qualification": "Qualification",
+        "quote": "Quote",
+        "approval": "Approval",
+        "contract": "Contract",
+        "client": "Client"
+      }
+    },
+    "hub": {
+      "title": "Commercial",
+      "subtitle": "Unified pipeline — Lead to Client, single source of truth.",
+      "newLead": "New lead",
+      "activeDeals": "Active deals",
+      "viewPipeline": "View pipeline",
+      "modules": "Modules",
+      "recentActivity": "Recent activity",
+      "emptyDeals": "No active deals in the pipeline.",
+      "emptyActivity": "No recent commercial activity.",
+      "table": {
+        "company": "Company",
+        "stage": "Stage",
+        "value": "Value",
+        "owner": "Owner",
+        "updated": "Updated"
+      },
+      "links": {
+        "leads": "Leads",
+        "quotes": "Quotes",
+        "contracts": "Contracts",
+        "clients": "Clients"
+      },
+      "kpis": {
+        "activeDeals": "Active deals",
+        "pipelineValue": "Pipeline value",
+        "awaitingApproval": "Awaiting approval",
+        "openQuotes": "Open quotes",
+        "wonThisMonth": "Won this month",
+        "conversionRate": "Conversion rate"
+      },
+      "events": {
+        "created": "Lead created",
+        "updated": "Updated",
+        "contacted": "Contacted",
+        "qualified": "Qualified",
+        "quote_sent": "Quote sent",
+        "negotiation": "In negotiation",
+        "won": "Won",
+        "lost": "Lost",
+        "client_converted": "Converted to client",
+        "contract_created": "Contract created",
+        "sent": "Quote sent",
+        "accepted": "Quote accepted",
+        "rejected": "Quote rejected",
+        "viewed": "Under review",
+        "converted": "Converted to contract"
+      }
+    },
+    "pipeline": {
+      "title": "Commercial pipeline",
+      "subtitle": "Lead → Qualification → Quote → Approval → Contract → Client",
+      "emptyColumn": "Empty",
+      "dealCount": "{count} deals in funnel"
     }
   },
   "crm": {
@@ -3125,9 +3987,12 @@
       "properties": "Properties",
       "services": "Services",
       "scheduling": "Scheduling",
+      "visits": "Visits",
       "jobs": "Executions",
       "teams": "Teams",
       "routes": "Routes",
+      "equipment": "Equipment",
+      "materials": "Materials",
       "clients": "Clients"
     },
     "dashboard": {
@@ -3156,11 +4021,11 @@
     },
     "properties": {
       "title": "Properties",
-      "description": "{count} active properties in operations.",
+      "description": "{count} active properties — buildings, sites, and facilities.",
       "viewClients": "View clients",
       "empty": {
         "title": "No properties",
-        "description": "Add addresses to clients to start operations."
+        "description": "Add service addresses to clients to run operations at this location."
       },
       "columns": {
         "property": "Property",
@@ -3189,6 +4054,76 @@
       "noContracts": "No contracts linked to this property.",
       "assigned": "Operations"
     },
+    "property360": {
+      "back": "Properties",
+      "openMap": "Open map",
+      "newVisit": "New visit",
+      "viewAll": "View all",
+      "accessNotes": "Access notes",
+      "status": {
+        "active": "Active",
+        "inactive": "Inactive"
+      },
+      "tabs": {
+        "overview": "Overview",
+        "address": "Address",
+        "client": "Client",
+        "services": "Services",
+        "contracts": "Contracts",
+        "visits": "Visits",
+        "documents": "Documents"
+      },
+      "kpis": {
+        "upcoming": "Scheduled visits",
+        "completed": "Completed",
+        "contracts": "Active contracts",
+        "services": "Service types",
+        "documents": "Documents",
+        "hours": "Hours (90 days)"
+      },
+      "panels": {
+        "upcoming": "Upcoming visits",
+        "operations": "Operations summary",
+        "history": "Visit history",
+        "checkIns": "Recent check-ins",
+        "quickLinks": "Quick links",
+        "serviceTypes": "On-site services"
+      },
+      "fields": {
+        "label": "Label",
+        "type": "Type",
+        "street": "Address",
+        "country": "Country",
+        "area": "Area",
+        "coordinates": "Coordinates"
+      },
+      "columns": {
+        "service": "Service",
+        "source": "Source",
+        "visits": "Visits",
+        "title": "Title",
+        "frequency": "Frequency",
+        "value": "Amount"
+      },
+      "serviceSource": {
+        "property": "Property",
+        "visit": "Visit"
+      },
+      "links": {
+        "client360": "Client 360",
+        "scheduling": "Scheduling",
+        "services": "Service catalog",
+        "newVisit": "Schedule visit"
+      },
+      "empty": {
+        "visits": "No scheduled visits",
+        "upcoming": "No upcoming visits",
+        "client": "Client not found",
+        "services": "No services configured",
+        "contracts": "No contracts at this property",
+        "documents": "No field photos or documents"
+      }
+    },
     "services": {
       "title": "Service Catalog",
       "description": "Standard services for cleaning, facility and landscaping.",
@@ -3208,6 +4143,191 @@
         "submit": "Create service"
       }
     },
+    "equipment": {
+      "title": "Equipment",
+      "description": "Track tools, vehicles, and assets — assignments, maintenance, and history.",
+      "new": "New equipment",
+      "assign": "Assign",
+      "return": "Return",
+      "delete": "Delete",
+      "save": "Save",
+      "scheduleMaintenance": "Schedule maintenance",
+      "completeMaintenance": "Mark complete",
+      "created": "Equipment created",
+      "assigned": "Equipment assigned",
+      "returned": "Equipment returned",
+      "deleted": "Equipment removed",
+      "maintenanceScheduled": "Maintenance scheduled",
+      "maintenanceCompleted": "Maintenance completed",
+      "tabs": {
+        "equipment": "Equipment",
+        "assignments": "Assignments",
+        "maintenance": "Maintenance",
+        "history": "History"
+      },
+      "kpis": {
+        "total": "Total",
+        "available": "Available",
+        "assigned": "Assigned",
+        "maintenance": "In maintenance",
+        "overdue": "Overdue maintenance"
+      },
+      "columns": {
+        "name": "Name",
+        "category": "Category",
+        "status": "Status",
+        "service": "Service",
+        "employee": "Employee",
+        "tag": "Asset tag",
+        "equipment": "Equipment",
+        "task": "Task",
+        "assignedAt": "Assigned",
+        "title": "Title",
+        "type": "Type",
+        "scheduled": "Scheduled"
+      },
+      "form": {
+        "name": "Name",
+        "category": "Category",
+        "serial": "Serial number",
+        "tag": "Asset tag",
+        "service": "Linked service",
+        "description": "Description",
+        "equipment": "Equipment",
+        "employee": "Employee",
+        "notes": "Notes",
+        "title": "Title",
+        "type": "Type",
+        "scheduled": "Scheduled date"
+      },
+      "category": {
+        "vehicle": "Vehicle",
+        "tool": "Tool",
+        "machine": "Machine",
+        "safety": "Safety",
+        "consumable": "Consumable",
+        "other": "Other"
+      },
+      "status": {
+        "available": "Available",
+        "assigned": "Assigned",
+        "maintenance": "Maintenance",
+        "retired": "Retired"
+      },
+      "maintenanceType": {
+        "preventive": "Preventive",
+        "corrective": "Corrective",
+        "inspection": "Inspection",
+        "calibration": "Calibration"
+      },
+      "maintenanceStatus": {
+        "scheduled": "Scheduled",
+        "in_progress": "In progress",
+        "completed": "Completed",
+        "cancelled": "Cancelled"
+      },
+      "event": {
+        "created": "Created",
+        "updated": "Updated",
+        "assigned": "Assigned",
+        "returned": "Returned",
+        "maintenance_scheduled": "Maintenance scheduled",
+        "maintenance_completed": "Maintenance completed",
+        "status_changed": "Status changed",
+        "note": "Note"
+      },
+      "empty": {
+        "title": "No equipment",
+        "description": "Register tools, vehicles, and assets to track assignments and maintenance.",
+        "assignments": "No active assignments",
+        "assignmentsDescription": "Assign equipment to employees or services.",
+        "maintenance": "No maintenance records",
+        "maintenanceDescription": "Schedule preventive or corrective maintenance.",
+        "history": "No history",
+        "historyDescription": "Equipment events will appear here."
+      }
+    },
+    "materials": {
+      "title": "Materials",
+      "description": "Stock, purchases, usage and consumption — linked to your service catalog.",
+      "new": "New material",
+      "linkService": "Link to service",
+      "recordPurchase": "Record purchase",
+      "recordUsage": "Record usage",
+      "recordConsumption": "Record consumption",
+      "delete": "Delete",
+      "save": "Save",
+      "created": "Material created",
+      "deleted": "Material removed",
+      "purchaseRecorded": "Purchase recorded",
+      "usageRecorded": "Usage recorded",
+      "consumptionRecorded": "Consumption recorded",
+      "serviceLinked": "Service linked",
+      "linkedServices": "{count, plural, one {# linked service} other {# linked services}}",
+      "tabs": {
+        "stock": "Stock",
+        "purchases": "Purchases",
+        "usage": "Usage",
+        "consumption": "Consumption"
+      },
+      "kpis": {
+        "total": "Materials",
+        "lowStock": "Low stock",
+        "outOfStock": "Out of stock",
+        "purchasesMonth": "Purchases (month)",
+        "usageMonth": "Usage (month)",
+        "consumptionMonth": "Consumption (month)"
+      },
+      "columns": {
+        "material": "Material",
+        "sku": "SKU",
+        "stock": "On hand",
+        "min": "Min level",
+        "service": "Service",
+        "status": "Status",
+        "quantity": "Quantity",
+        "vendor": "Vendor",
+        "cost": "Cost",
+        "date": "Date",
+        "employee": "Employee"
+      },
+      "form": {
+        "name": "Name",
+        "sku": "SKU",
+        "unit": "Unit",
+        "minStock": "Min stock level",
+        "service": "Service",
+        "material": "Material",
+        "quantity": "Quantity",
+        "unitCost": "Unit cost",
+        "vendor": "Vendor",
+        "employee": "Employee",
+        "qtyPerService": "Qty per service"
+      },
+      "unit": {
+        "piece": "pcs",
+        "liter": "L",
+        "kg": "kg",
+        "meter": "m",
+        "box": "box",
+        "other": "unit"
+      },
+      "stockStatus": {
+        "ok": "In stock",
+        "low": "Low stock",
+        "out": "Out of stock"
+      },
+      "empty": {
+        "title": "No materials",
+        "description": "Add materials to track stock and link them to services.",
+        "purchases": "No purchases",
+        "purchasesDescription": "Record purchases to add stock.",
+        "usage": "No usage records",
+        "usageDescription": "Usage logs appear when materials are checked out.",
+        "consumption": "No consumption",
+        "consumptionDescription": "Consumption is recorded when materials are used on a service."
+      }
+    },
     "scheduling": {
       "title": "Scheduling",
       "today": "Today",
@@ -3217,6 +4337,10 @@
         "day": "Day",
         "week": "Week",
         "month": "Month"
+      },
+      "modes": {
+        "list": "List",
+        "calendar": "Calendar"
       }
     },
     "teams": {
@@ -3248,9 +4372,17 @@
         "description": "No assigned services for this date."
       }
     },
+    "workOrders": {
+      "title": "Work orders",
+      "description": "Field executions and visits in one hub.",
+      "tabs": {
+        "jobs": "Executions",
+        "visits": "Visits"
+      }
+    },
     "jobs": {
       "title": "Executions",
-      "description": "Each service executed in the field.",
+      "description": "Each field service — traceable to contract, property and service.",
       "empty": {
         "title": "No executions",
         "description": "Executions appear when services are scheduled or completed."
@@ -3258,16 +4390,136 @@
       "columns": {
         "service": "Service",
         "property": "Property",
+        "contract": "Contract",
+        "client": "Client",
+        "date": "Date",
+        "status": "Status",
+        "trace": "Trace"
+      },
+      "traceable": "Complete",
+      "traceGap": "Gap"
+    },
+    "hub": {
+      "title": "Operations",
+      "subtitle": "Contract → Property → Service → Execution — every visit traceable, every execution with history.",
+      "scheduleVisit": "Schedule visit",
+      "upcomingVisits": "Upcoming visits",
+      "viewAll": "View all",
+      "modules": "Modules",
+      "recentHistory": "Recent history",
+      "emptyVisits": "No visits in this period.",
+      "emptyHistory": "No recent execution events.",
+      "traceable": "Traceable",
+      "gap": "Gap",
+      "table": {
+        "visit": "Visit",
+        "property": "Property",
+        "service": "Service",
+        "date": "Date",
+        "status": "Status",
+        "trace": "Trace"
+      },
+      "links": {
+        "visits": "Visits",
+        "services": "Services",
+      "scheduling": "Scheduling",
+      "equipment": "Equipment",
+      "materials": "Materials",
+      "properties": "Properties",
+        "jobs": "Executions",
+        "teams": "Teams"
+      },
+      "kpis": {
+        "today": "Today",
+        "week": "This week",
+        "completed": "Completed",
+        "overdue": "Overdue",
+        "traceable": "Traceability",
+        "upcoming": "Upcoming visits",
+        "contracts": "Active contracts",
+        "properties": "Properties",
+        "services": "Active services"
+      }
+    },
+    "workflow": {
+      "stages": {
+        "contract": "Contract",
+        "property": "Property",
+        "service": "Service",
+        "execution": "Execution"
+      }
+    },
+    "visits": {
+      "title": "Visits",
+      "description": "All field visits — linked to contract, property and service.",
+      "traceGap": "Incomplete trace",
+      "filters": {
+        "all": "All",
+        "upcoming": "Upcoming",
+        "overdue": "Overdue",
+        "completed": "Completed",
+        "gaps": "With gaps"
+      },
+      "empty": {
+        "title": "No visits",
+        "description": "Schedule visits from scheduling or an active contract."
+      },
+      "columns": {
+        "visit": "Visit",
+        "client": "Client",
+        "property": "Property",
+        "contract": "Contract",
+        "service": "Service",
         "date": "Date",
         "status": "Status"
+      }
+    },
+    "traceability": {
+      "title": "Operations chain",
+      "fullyTraceable": "Fully traceable",
+      "incomplete": "Incomplete trace",
+      "execution": "Execution",
+      "stages": {
+        "contract": "Contract",
+        "property": "Property",
+        "service": "Service",
+        "execution": "Execution"
+      },
+      "missing": {
+        "contract": "No contract",
+        "property": "No property",
+        "service": "No service"
+      }
+    },
+    "history": {
+      "title": "Execution history",
+      "empty": "No events recorded for this execution.",
+      "events": {
+        "created": "Visit created",
+        "status_changed": "Status changed",
+        "completed": "Execution completed",
+        "assigned": "Assigned",
+        "check_in": "Check-in",
+        "check_out": "Check-out",
+        "photo_uploaded": "Photo uploaded",
+        "scheduled": "Scheduled",
+        "approved": "Approved",
+        "invoiced": "Invoiced"
       }
     }
   },
   "workforce": {
     "nav": {
       "employees": "Employees",
+      "planning": "Planning",
+      "vehicles": "Vehicles",
+      "teams": "Teams",
+      "skills": "Skills",
+      "availability": "Availability",
       "shifts": "Shifts",
       "vacations": "Vacations",
+      "absences": "Absences",
+      "documents": "Documents",
       "timeAccount": "Time Account",
       "timesheets": "Timesheets"
     },
@@ -3299,11 +4551,128 @@
       "empty": { "title": "No employees", "description": "Add employees to manage shifts and hours." },
       "columns": { "name": "Name", "role": "Role", "supervisor": "Supervisor", "hours": "Hours/week", "status": "Status" }
     },
+    "vehicles": {
+      "title": "Vehicles",
+      "description": "Fleet management — drivers, maintenance, usage and planning integration.",
+      "new": "New vehicle",
+      "assignDriver": "Assign driver",
+      "scheduleMaintenance": "Schedule maintenance",
+      "logUsage": "Log usage",
+      "endUsage": "End usage",
+      "endAssignment": "End assignment",
+      "completeMaintenance": "Mark complete",
+      "delete": "Delete",
+      "save": "Save",
+      "yes": "Yes",
+      "no": "No",
+      "active": "Active",
+      "created": "Vehicle created",
+      "deleted": "Vehicle removed",
+      "driverAssigned": "Driver assigned",
+      "driverEnded": "Driver assignment ended",
+      "maintenanceScheduled": "Maintenance scheduled",
+      "maintenanceCompleted": "Maintenance completed",
+      "usageLogged": "Usage logged",
+      "usageEnded": "Usage ended",
+      "tabs": {
+        "vehicles": "Vehicles",
+        "drivers": "Drivers",
+        "maintenance": "Maintenance",
+        "usage": "Usage"
+      },
+      "kpis": {
+        "total": "Total",
+        "available": "Available",
+        "assigned": "Assigned",
+        "maintenance": "In maintenance",
+        "drivers": "Active drivers",
+        "activeUsage": "Active trips",
+        "overdue": "Overdue maintenance"
+      },
+      "columns": {
+        "vehicle": "Vehicle",
+        "plate": "Plate",
+        "status": "Status",
+        "driver": "Driver",
+        "fuel": "Fuel",
+        "odometer": "Odometer",
+        "primary": "Primary",
+        "assignedAt": "Assigned",
+        "title": "Title",
+        "type": "Type",
+        "scheduled": "Scheduled",
+        "purpose": "Purpose",
+        "shift": "Shift",
+        "started": "Started",
+        "distance": "Distance"
+      },
+      "form": {
+        "name": "Name",
+        "plate": "License plate",
+        "make": "Make",
+        "model": "Model",
+        "fuel": "Fuel type",
+        "odometer": "Odometer (km)",
+        "defaultDriver": "Default driver",
+        "vehicle": "Vehicle",
+        "driver": "Driver",
+        "primaryDriver": "Primary driver",
+        "title": "Title",
+        "type": "Type",
+        "scheduled": "Scheduled date",
+        "purpose": "Purpose"
+      },
+      "fuel": {
+        "gasoline": "Gasoline",
+        "diesel": "Diesel",
+        "electric": "Electric",
+        "hybrid": "Hybrid",
+        "other": "Other"
+      },
+      "status": {
+        "available": "Available",
+        "assigned": "Assigned",
+        "maintenance": "Maintenance",
+        "retired": "Retired"
+      },
+      "purpose": {
+        "shift": "Shift",
+        "delivery": "Delivery",
+        "commute": "Commute",
+        "other": "Other"
+      },
+      "maintenanceType": {
+        "preventive": "Preventive",
+        "corrective": "Corrective",
+        "inspection": "Inspection",
+        "calibration": "Calibration"
+      },
+      "maintenanceStatus": {
+        "scheduled": "Scheduled",
+        "in_progress": "In progress",
+        "completed": "Completed",
+        "cancelled": "Cancelled"
+      },
+      "empty": {
+        "title": "No vehicles",
+        "description": "Register fleet vehicles to assign drivers and track usage.",
+        "drivers": "No active drivers",
+        "driversDescription": "Assign drivers to vehicles.",
+        "maintenance": "No maintenance records",
+        "maintenanceDescription": "Schedule preventive or corrective maintenance.",
+        "usage": "No usage records",
+        "usageDescription": "Usage from shifts and manual logs appears here."
+      }
+    },
     "profile": {
       "back": "Back",
       "noRole": "No role defined",
       "email": "Email",
       "phone": "Phone",
+      "employeeNumber": "Employee number",
+      "jobTitle": "Job title",
+      "notes": "Notes",
+      "skills": "Skills",
       "supervisor": "Supervisor",
       "team": "Team",
       "contract": "Contract type",
@@ -3313,10 +4682,31 @@
       "balance": "Balance",
       "upcomingShifts": "Upcoming shifts",
       "noShifts": "No scheduled shifts.",
+      "noVacations": "No vacation requests.",
+      "noHours": "No hour entries.",
+      "noHistory": "No history recorded.",
+      "openPlanning": "Open planning",
+      "viewVacations": "View vacations",
+      "viewAbsences": "View absences",
+      "viewTimeAccount": "View full time account",
       "vacations": "Vacations",
       "absences": "Absences",
       "documents": "Documents",
       "noDocuments": "No documents.",
+      "tabs": {
+        "personal": "Personal",
+        "contract": "Contract",
+        "schedule": "Schedule",
+        "hours": "Hours",
+        "history": "History"
+      },
+      "historyKinds": {
+        "activity": "Activity",
+        "vacation": "Vacation",
+        "absence": "Absence",
+        "document": "Document",
+        "shift": "Shift"
+      },
       "contractTypes": {
         "full_time": "Full-time",
         "part_time": "Part-time",
@@ -3343,6 +4733,60 @@
         "notes": "Notes"
       }
     },
+    "skills": {
+      "title": "Skills",
+      "description": "{count} skills defined for the team.",
+      "new": "New skill",
+      "assign": "Assign skill",
+      "assignments": "Assignments",
+      "created": "Skill created",
+      "deleted": "Skill removed",
+      "assigned": "Skill assigned",
+      "empty": {
+        "title": "No skills",
+        "description": "Define skills to improve auto-planning."
+      },
+      "columns": {
+        "name": "Name",
+        "serviceType": "Service type",
+        "employees": "Employees",
+        "employee": "Employee",
+        "skill": "Skill",
+        "level": "Level"
+      },
+      "form": {
+        "name": "Name",
+        "serviceType": "Service type (optional)",
+        "noServiceType": "None",
+        "submit": "Create skill",
+        "selectEmployee": "Select employee",
+        "selectSkill": "Select skill",
+        "assignSubmit": "Assign"
+      }
+    },
+    "availability": {
+      "title": "Availability",
+      "description": "Weekly workload and availability overview · {period}",
+      "openPlanning": "Planning Center",
+      "empty": {
+        "title": "No employees",
+        "description": "Add employees to see availability."
+      },
+      "columns": {
+        "employee": "Employee",
+        "role": "Role",
+        "availability": "Availability",
+        "workload": "Workload",
+        "planned": "Planned",
+        "skills": "Skills"
+      },
+      "status": {
+        "available": "Available",
+        "limited": "Limited",
+        "overbooked": "Overbooked",
+        "unavailable": "Unavailable"
+      }
+    },
     "shifts": {
       "title": "Shifts",
       "today": "Today",
@@ -3361,8 +4805,27 @@
       }
     },
     "planning": {
-      "title": "Personnel Planning",
-      "description": "Plan, assign and optimize teams in real time.",
+      "title": "Planning Center",
+      "description": "Plan 100 employees in minutes — availability, workload and schedules in one place.",
+      "layout": {
+        "employees": "Employees",
+        "grid": "Grid",
+        "recommendations": "Recommendations"
+      },
+      "grid": {
+        "title": "Planning grid",
+        "dragHint": "Drag shifts between employees and days to reschedule.",
+        "markers": {
+          "vacation": "Vacation",
+          "sick": "Sick",
+          "absence": "Absent"
+        },
+        "blocked": {
+          "vacation": "Employee on vacation this day",
+          "sick": "Employee on sick leave this day",
+          "absence": "Employee absent this day"
+        }
+      },
       "kpi": {
         "scheduledToday": "Scheduled today",
         "openShifts": "Open shifts",
@@ -3375,12 +4838,24 @@
         "utilization": "Utilization"
       },
       "employees": {
-        "title": "Team",
-        "hint": "Availability for current week",
+        "title": "Employees",
+        "hint": "Availability, contract hours and workload in period",
         "noRole": "No role",
         "week": "wk",
         "planned": "Plan.",
-        "actual": "Act."
+        "actual": "Act.",
+        "contract": "Contract",
+        "workload": "Load",
+        "vacation": "Vacation",
+        "sick": "Sick",
+        "vacationDays": "{count}d vacation",
+        "search": "Search employee…",
+        "count": "{count} employees",
+        "sort": {
+          "name": "Name",
+          "workload": "Workload",
+          "availability": "Availability"
+        }
       },
       "actions": {
         "copyWeek": "Copy previous week",
@@ -3402,15 +4877,20 @@
         "invalid": "Enter a valid number of weeks (1–12)"
       },
       "ai": {
-        "title": "Planning assistant",
-        "description": "Automatic workload balancing and shift filling.",
+        "title": "Auto planning",
+        "description": "Smart assignment, workload balancing and weekly optimization.",
+        "autoPlan": "Auto-plan ({count})",
+        "noAutoPlan": "No unassigned tasks in this period.",
+        "autoPlanned": "{count} tasks assigned automatically",
         "optimizeWeek": "Optimize week",
         "noChanges": "No changes suggested for this week.",
         "applied": "{count} changes applied"
       },
       "recs": {
-        "title": "Recommendations",
+        "title": "Smart recommendations",
         "empty": "No recommendations — team is balanced.",
+        "apply": "Apply",
+        "applied": "Recommendation applied",
         "moveEmployee": "Move {from} → {to} at {location}",
         "overtimeRisk": "{name} at overtime risk",
         "understaffed": "{date}: {name} available for backup",
@@ -3430,6 +4910,13 @@
         "viewTask": "View task",
         "duplicate": "Duplicate shift",
         "duplicated": "Shift duplicated to next day",
+        "vehicle": "Vehicle",
+        "noVehicle": "No vehicle assigned",
+        "assignVehicle": "Assign vehicle",
+        "removeVehicle": "Remove vehicle",
+        "vehicleAssigned": "Vehicle assigned to shift",
+        "vehicleRemoved": "Vehicle removed from shift",
+        "manageFleet": "Manage fleet",
         "types": {
           "morning": "Morning",
           "afternoon": "Afternoon",
@@ -3501,6 +4988,15 @@
       "form": { "employee": "Employee", "type": "Type", "start": "Start", "end": "End", "submit": "Save" },
       "types": { "sick": "Sick", "leave": "Leave", "absence": "Absence", "training": "Training", "other": "Other" }
     },
+    "timeBank": {
+      "title": "Time bank",
+      "description": "Balances, time tracking and timesheets in one hub.",
+      "tabs": {
+        "account": "Balance",
+        "tracking": "Tracking",
+        "timesheets": "Timesheets"
+      }
+    },
     "timeAccount": {
       "title": "Time Account",
       "description": "Target vs actual hours — balance per employee.",
@@ -3555,6 +5051,93 @@
       "demoDescription": "Billing demo mode — configure Stripe to enable live payments.",
       "continueSetup": "Continue setup",
       "planLabel": "Plan"
+    }
+  },
+  "fieldExecution": {
+    "steps": {
+      "checkin": "Arrive",
+      "checklist": "Checklist",
+      "photos": "Photos",
+      "sign": "Sign",
+      "checkout": "Finish"
+    },
+    "nav": {
+      "back": "Back",
+      "next": "Next"
+    },
+    "schedule": {
+      "title": "Field Schedule",
+      "today": "Today",
+      "upcoming": "Upcoming",
+      "continue": "Continue service",
+      "activeSession": "Active session",
+      "emptyToday": "No services scheduled for today."
+    },
+    "checkin": {
+      "title": "On-site check-in",
+      "active": "Service in progress",
+      "client": "Client",
+      "notes": "Start notes",
+      "notesPlaceholder": "Notes when starting…",
+      "action": "Start service (GPS)",
+      "done": "Check-in recorded"
+    },
+    "checkout": {
+      "title": "Complete service",
+      "hint": "On check-out, the service report is generated automatically.",
+      "notes": "Completion notes",
+      "action": "Check-out & generate report",
+      "done": "Service completed — report generated"
+    },
+    "photos": {
+      "before": "Before",
+      "after": "After",
+      "evidence": "Evidence",
+      "upload": "Upload photo",
+      "uploaded": "Photo uploaded"
+    },
+    "sign": {
+      "clientName": "Client name",
+      "action": "Save signature",
+      "required": "Signature and name are required",
+      "done": "Signature saved",
+      "alreadySigned": "Signature saved"
+    },
+    "report": {
+      "open": "Open service report"
+    }
+  },
+  "timeTracking": {
+    "title": "Time Tracking",
+    "description": "Period: {from} — {to}",
+    "exportPayroll": "Export payroll (CSV)",
+    "payrollHint": "Payable hours = net worked + travel time. Export is payroll-ready.",
+    "granularity": {
+      "daily": "Daily",
+      "weekly": "Weekly",
+      "monthly": "Monthly"
+    },
+    "kpis": {
+      "planned": "Planned",
+      "worked": "Worked",
+      "breaks": "Breaks",
+      "travel": "Travel",
+      "overtime": "Overtime"
+    },
+    "columns": {
+      "employee": "Employee",
+      "period": "Period",
+      "planned": "Plan.",
+      "worked": "Work.",
+      "breaks": "Breaks",
+      "travel": "Travel",
+      "netWorked": "Net",
+      "overtime": "OT",
+      "payable": "Payable"
+    },
+    "empty": {
+      "title": "No records in this period",
+      "description": "Data appears after completed check-ins or scheduled shifts."
     }
   }
 }

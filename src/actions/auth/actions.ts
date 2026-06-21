@@ -1,12 +1,10 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { getLocale } from "next-intl/server";
-import { redirect } from "@/i18n/navigation";
 import { ROUTES } from "@/config/constants";
 import { createClient } from "@/lib/supabase/server";
-import { resolveMembershipCompany } from "@/lib/auth/resolve-company";
 import { getUserCompanies, getUserProfile } from "@/lib/auth/session";
+import { resolvePostAuthRedirect } from "@/lib/auth/post-auth-redirect";
 import { actionError } from "@/lib/i18n/action-error";
 import { seedCompanySubscription } from "@/lib/billing/enforcement";
 import type { AppLocale } from "@/i18n/routing";
@@ -16,7 +14,7 @@ import {
   registerSchema,
   ACCEPT_TERMS_ERROR_KEY,
   type CreateCompanyInput,
-  type LoginInput,
+  type SignInInput,
   type RegisterInput,
 } from "@/lib/validations/auth";
 
@@ -25,9 +23,10 @@ export type ActionResult<T = void> =
   | { success: false; error: string };
 
 export async function signIn(
-  input: LoginInput,
+  input: SignInInput,
 ): Promise<ActionResult<{ redirectTo: string; preferredLocale: AppLocale }>> {
-  const parsed = loginSchema.safeParse(input);
+  const { redirect: explicitRedirect, ...credentials } = input;
+  const parsed = loginSchema.safeParse(credentials);
   if (!parsed.success) {
     return { success: false, error: await actionError("invalidInput") };
   }
@@ -54,13 +53,9 @@ export async function signIn(
   const preferredLocale: AppLocale = profile?.locale === "en" ? "en" : "pt";
 
   const companies = await getUserCompanies(user.id);
-  let redirectTo = ROUTES.onboarding;
-  if (companies.length === 1) {
-    const company = resolveMembershipCompany(companies[0]!.company);
-    if (company?.slug) redirectTo = ROUTES.dashboard(company.slug);
-  } else if (companies.length > 1) {
-    redirectTo = ROUTES.selectCompany;
-  }
+  const redirectTo = await resolvePostAuthRedirect(user.id, companies, {
+    explicitRedirect,
+  });
 
   revalidatePath("/", "layout");
   return { success: true, data: { redirectTo, preferredLocale } };
@@ -95,12 +90,11 @@ export async function signUp(
   return { success: true, data: { redirectTo: ROUTES.onboarding } };
 }
 
-export async function signOut(): Promise<void> {
+export async function signOut(): Promise<ActionResult> {
   const supabase = await createClient();
   await supabase.auth.signOut();
   revalidatePath("/", "layout");
-  const locale = await getLocale();
-  redirect({ href: ROUTES.login, locale });
+  return { success: true, data: undefined };
 }
 
 export async function requestPasswordReset(
@@ -165,7 +159,14 @@ export async function createCompany(
     return { success: false, error: await actionError("notAuthenticated") };
   }
 
-  const { data, error } = await supabase.rpc("create_company_with_admin", {
+  const rpcClient = supabase as unknown as {
+    rpc(
+      fn: "create_company_with_admin",
+      args: { p_name: string; p_slug: string; p_legal_name?: string | null },
+    ): Promise<{ data: string | null; error: { message: string } | null }>;
+  };
+
+  const { data, error } = await rpcClient.rpc("create_company_with_admin", {
     p_name: parsed.data.name,
     p_slug: parsed.data.slug,
     p_legal_name: parsed.data.legalName ?? null,

@@ -37,7 +37,7 @@ export async function POST(request: Request) {
   const { error: idempotencyError } = await supabase.from("billing_events").insert({
     stripe_event_id: event.id,
     event_type: event.type,
-    payload: event.data.object as Record<string, unknown>,
+    payload: event.data.object as unknown as Record<string, unknown>,
     company_id:
       (event.data.object as { metadata?: { company_id?: string } }).metadata
         ?.company_id ?? null,

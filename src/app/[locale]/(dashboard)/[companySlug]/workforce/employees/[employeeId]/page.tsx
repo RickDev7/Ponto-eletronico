@@ -6,15 +6,23 @@ import { EmployeeProfileView } from "@/components/features/workforce/employee-pr
 import { loadEmployeeProfile, loadWorkforceEmployees } from "@/lib/workforce/load-workforce-data";
 import { AppShellPage } from "@/components/design-system/layout";
 
+const VALID_TABS = new Set(["personal", "contract", "schedule", "hours", "history"]);
+
 interface PageProps {
   params: Promise<{ companySlug: string; employeeId: string }>;
+  searchParams: Promise<{ tab?: string }>;
 }
 
-export default async function WorkforceEmployeeProfilePage({ params }: PageProps) {
-  const { companySlug, employeeId } = await params;
+export default async function WorkforceEmployeeProfilePage({ params, searchParams }: PageProps) {
+  const [{ companySlug, employeeId }, sp] = await Promise.all([params, searchParams]);
   const ctx = await requireCompanyContext({ slug: companySlug, minRole: "supervisor" });
   const locale = await getLocale();
   const dateLocale = locale === "en" ? "en-US" : "pt-BR";
+
+  const tabParam = sp.tab ?? "personal";
+  const activeTab = VALID_TABS.has(tabParam)
+    ? (tabParam as "personal" | "contract" | "schedule" | "hours" | "history")
+    : "personal";
 
   const [profile, allEmployees] = await Promise.all([
     loadEmployeeProfile(ctx.company.id, employeeId),
@@ -37,6 +45,7 @@ export default async function WorkforceEmployeeProfilePage({ params }: PageProps
       <EmployeeProfileView
         slug={companySlug}
         employeeId={employeeId}
+        activeTab={activeTab}
         employee={profile.employee}
         supervisors={supervisors}
         vacations={profile.vacations}
@@ -44,6 +53,8 @@ export default async function WorkforceEmployeeProfilePage({ params }: PageProps
         timeEntries={profile.timeEntries}
         documents={profile.documents}
         upcomingShifts={upcoming}
+        skills={profile.skills}
+        history={profile.history}
         locale={dateLocale}
         canWrite={can(ctx.membership.role, "employees:write")}
       />

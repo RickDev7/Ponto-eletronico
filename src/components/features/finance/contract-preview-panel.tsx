@@ -7,6 +7,7 @@ import {
   formatMoney,
   type ContractFrequency,
 } from "@/lib/finance/utils";
+import type { DeepPartial } from "react-hook-form";
 import type { CreateContractInput } from "@/lib/validations/finance";
 import { monthlyAmountCents } from "@/lib/finance/contracts-data";
 
@@ -21,7 +22,7 @@ interface ContractPreviewCompany {
 
 interface ContractPreviewPanelProps {
   company: ContractPreviewCompany;
-  values: Partial<CreateContractInput>;
+  values: DeepPartial<CreateContractInput>;
   totals: {
     subtotalCents: number;
     discountCents: number;
@@ -89,10 +90,10 @@ export function ContractPreviewPanel({
         </p>
         {items.map((item, i) => (
           <div key={i} className="flex justify-between gap-2 text-xs">
-            <span className="min-w-0 truncate">{item.description || "—"}</span>
+            <span className="min-w-0 truncate">{item?.description || "—"}</span>
             <span className="shrink-0 tabular-nums text-muted-foreground">
               {formatMoney(
-                Math.round(Number(item.quantity ?? 0) * Number(item.unitPriceCents ?? 0)),
+                Math.round(Number(item?.quantity ?? 0) * Number(item?.unitPriceCents ?? 0)),
                 "EUR",
                 locale,
               )}

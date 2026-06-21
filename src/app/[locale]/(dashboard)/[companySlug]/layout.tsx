@@ -1,8 +1,12 @@
-import { redirect } from "@/i18n/navigation";
+import { redirectTo } from "@/i18n/server-redirect";
 import { requireCompanyContext } from "@/lib/auth/guards";
-import { getUserCompanies } from "@/lib/auth/session";
+import { isPlatformAdmin } from "@/lib/auth/platform-guards";
+import { resolveMembershipCompany } from "@/lib/auth/resolve-company";
+import { getSession, getUserCompanies } from "@/lib/auth/session";
 import { RESERVED_COMPANY_SLUGS, ROUTES } from "@/config/constants";
+import { isClientRole } from "@/types/enums";
 import { DashboardShell } from "@/components/layout/dashboard-shell";
+import { AiAssistantDock } from "@/components/features/ai/ai-assistant-dock";
 
 interface DashboardLayoutProps {
   children: React.ReactNode;
@@ -29,25 +33,44 @@ export default async function DashboardLayout({
   const { companySlug } = await params;
 
   if (RESERVED_COMPANY_SLUGS.has(companySlug)) {
+    if (companySlug === "super-admin" || companySlug === "admin") {
+      await redirectTo(ROUTES.superAdmin);
+    }
     const authRoute = SLUG_TO_AUTH_ROUTE[companySlug];
     if (authRoute) {
-      redirect(authRoute);
+      await redirectTo(authRoute);
     }
-    redirect(ROUTES.home);
+    await redirectTo(ROUTES.home);
   }
 
   const ctx = await requireCompanyContext({ slug: companySlug });
 
+  const sessionUser = await getSession();
+  if (sessionUser && (await isPlatformAdmin(sessionUser.id))) {
+    await redirectTo(ROUTES.superAdmin);
+  }
+
+  if (ctx.membership.role === "employee") {
+    await redirectTo(ROUTES.mobile(companySlug));
+  }
+
+  if (isClientRole(ctx.membership.role)) {
+    await redirectTo(ROUTES.clientPortal(companySlug));
+  }
+
   const allMemberships = await getUserCompanies(ctx.profile.id);
-  const userCompanies = allMemberships.map((m) => ({
-    id: m.company.id,
-    name: m.company.name,
-    slug: m.company.slug,
-  }));
+  const userCompanies = allMemberships
+    .map((m) => {
+      const company = resolveMembershipCompany(m.company);
+      if (!company) return null;
+      return { id: company.id, name: company.name, slug: company.slug };
+    })
+    .filter((c): c is NonNullable<typeof c> => c !== null);
 
   return (
     <DashboardShell ctx={ctx} userCompanies={userCompanies}>
       {children}
+      <AiAssistantDock slug={companySlug} role={ctx.membership.role} />
     </DashboardShell>
   );
 }

@@ -1,14 +1,16 @@
 import type { MemberRole } from "@/types";
 import {
+  BarChart3,
   Briefcase,
   ClipboardList,
   FileText,
   LayoutDashboard,
+  Package,
   Settings,
+  Sparkles,
   Target,
   UserCircle2,
   Wallet,
-  CalendarDays,
   Zap,
   type LucideIcon,
 } from "lucide-react";
@@ -48,19 +50,20 @@ const NAV_DEFINITIONS: Array<
   { type: "item", titleKey: "dashboard", href: (s) => `/${s}`, icon: LayoutDashboard, minRole: "employee" },
   { type: "item", titleKey: "myTasks", href: (s) => `/${s}/minha-area`, icon: UserCircle2, minRole: "employee" },
   { type: "item", titleKey: "tasks", href: (s) => `/${s}/tasks`, icon: ClipboardList, minRole: "employee" },
-  { type: "item", titleKey: "calendar", href: (s) => `/${s}/calendar`, icon: CalendarDays, minRole: "employee" },
   {
     type: "group",
     titleKey: "crm",
     icon: Target,
     minRole: "supervisor",
-    basePath: (s) => `/${s}/crm`,
+    basePath: (s) => `/${s}/commercial`,
     children: [
-      { titleKey: "crmDashboard", href: (s) => `/${s}/crm` },
+      { titleKey: "crmOverview", href: (s) => `/${s}/commercial` },
+      { titleKey: "crmPipeline", href: (s) => `/${s}/commercial/pipeline` },
       { titleKey: "crmLeads", href: (s) => `/${s}/crm/leads` },
       { titleKey: "crmContacts", href: (s) => `/${s}/crm/contacts` },
-      { titleKey: "crmCompanies", href: (s) => `/${s}/crm/companies` },
-      { titleKey: "crmPipeline", href: (s) => `/${s}/crm/pipeline` },
+      { titleKey: "crmClients", href: (s) => `/${s}/clients` },
+      { titleKey: "crmQuotes", href: (s) => `/${s}/finance/quotes` },
+      { titleKey: "crmContracts", href: (s) => `/${s}/finance/contracts` },
     ],
   },
   {
@@ -70,10 +73,12 @@ const NAV_DEFINITIONS: Array<
     minRole: "supervisor",
     basePath: (s) => `/${s}/operations`,
     children: [
-      { titleKey: "operationsClients", href: (s) => `/${s}/clients` },
+      { titleKey: "operationsOverview", href: (s) => `/${s}/operations` },
+      { titleKey: "operationsWorkOrders", href: (s) => `/${s}/operations/work-orders` },
       { titleKey: "operationsProperties", href: (s) => `/${s}/operations/properties` },
       { titleKey: "operationsServices", href: (s) => `/${s}/operations/services` },
       { titleKey: "operationsScheduling", href: (s) => `/${s}/operations/scheduling` },
+      { titleKey: "operationsRoutes", href: (s) => `/${s}/operations/routes` },
     ],
   },
   {
@@ -85,10 +90,26 @@ const NAV_DEFINITIONS: Array<
     children: [
       { titleKey: "workforcePlanning", href: (s) => `/${s}/workforce/planning` },
       { titleKey: "workforceEmployees", href: (s) => `/${s}/workforce/employees` },
-      { titleKey: "workforceShifts", href: (s) => `/${s}/workforce/shifts` },
+      { titleKey: "workforceTeams", href: (s) => `/${s}/workforce/teams` },
+      { titleKey: "workforceSkills", href: (s) => `/${s}/workforce/skills` },
+      { titleKey: "workforceAvailability", href: (s) => `/${s}/workforce/availability` },
       { titleKey: "workforceVacations", href: (s) => `/${s}/workforce/vacations` },
       { titleKey: "workforceAbsences", href: (s) => `/${s}/workforce/absences` },
+      { titleKey: "workforceDocuments", href: (s) => `/${s}/workforce/documents` },
       { titleKey: "workforceTimeAccount", href: (s) => `/${s}/workforce/time-account` },
+    ],
+  },
+  {
+    type: "group",
+    titleKey: "assets",
+    icon: Package,
+    minRole: "supervisor",
+    basePath: (s) => `/${s}/assets`,
+    children: [
+      { titleKey: "assetsOverview", href: (s) => `/${s}/assets` },
+      { titleKey: "workforceVehicles", href: (s) => `/${s}/workforce/vehicles` },
+      { titleKey: "operationsEquipment", href: (s) => `/${s}/operations/equipment` },
+      { titleKey: "operationsMaterials", href: (s) => `/${s}/operations/materials` },
     ],
   },
   {
@@ -99,17 +120,31 @@ const NAV_DEFINITIONS: Array<
     basePath: (s) => `/${s}/finance`,
     children: [
       { titleKey: "financeOverview", href: (s) => `/${s}/finance` },
+      { titleKey: "financeRevenue", href: (s) => `/${s}/finance/revenue` },
       { titleKey: "financeInvoices", href: (s) => `/${s}/finance/invoices` },
       { titleKey: "financePayments", href: (s) => `/${s}/finance/payments` },
       { titleKey: "financeCashflow", href: (s) => `/${s}/finance/cashflow` },
-      { titleKey: "financeContracts", href: (s) => `/${s}/finance/contracts` },
       { titleKey: "financeCosts", href: (s) => `/${s}/finance/costs` },
       { titleKey: "financeProfitability", href: (s) => `/${s}/finance/profitability` },
       { titleKey: "financeForecast", href: (s) => `/${s}/finance/forecast` },
     ],
   },
+  {
+    type: "group",
+    titleKey: "analytics",
+    icon: BarChart3,
+    minRole: "supervisor",
+    basePath: (s) => `/${s}/analytics`,
+    children: [
+      { titleKey: "analyticsOverview", href: (s) => `/${s}/analytics` },
+      { titleKey: "analyticsExecutive", href: (s) => `/${s}/analytics/executive` },
+      { titleKey: "analyticsOperational", href: (s) => `/${s}/analytics/operational` },
+      { titleKey: "analyticsFinancial", href: (s) => `/${s}/analytics/financial` },
+    ],
+  },
   { type: "item", titleKey: "reports", href: (s) => `/${s}/reports`, icon: FileText, minRole: "supervisor" },
   { type: "item", titleKey: "automations", href: (s) => `/${s}/automations`, icon: Zap, minRole: "supervisor" },
+  { type: "item", titleKey: "aiAssistant", href: (s) => `/${s}/assistant`, icon: Sparkles, minRole: "supervisor" },
   { type: "item", titleKey: "settings", href: (s) => `/${s}/settings`, icon: Settings, minRole: "supervisor" },
 ];
 
@@ -144,6 +179,14 @@ export function getDashboardNavEntries(slug: string): NavEntry[] {
 }
 
 /** Resolve page title + subtitle from pathname for the app header. */
+const CRM_CHILD_PREFIXES = ["crm", "commercial", "clients", "finance/quotes", "finance/contracts"] as const;
+const ASSETS_CHILD_PREFIXES = [
+  "assets",
+  "workforce/vehicles",
+  "operations/equipment",
+  "operations/materials",
+] as const;
+
 export function resolvePageHeader(
   pathname: string,
   slug: string,
@@ -152,7 +195,22 @@ export function resolvePageHeader(
   const nav = getDashboardNavEntries(slug);
   for (const entry of nav) {
     if (isNavGroup(entry)) {
-      if (pathname === entry.basePath || pathname.startsWith(`${entry.basePath}/`)) {
+      const underBase =
+        pathname === entry.basePath || pathname.startsWith(`${entry.basePath}/`);
+      const underCrmChild =
+        entry.titleKey === "crm" &&
+        CRM_CHILD_PREFIXES.some((seg) => {
+          const p = `/${slug}/${seg}`;
+          return pathname === p || pathname.startsWith(`${p}/`);
+        });
+      const underAssetsChild =
+        entry.titleKey === "assets" &&
+        ASSETS_CHILD_PREFIXES.some((seg) => {
+          const p = `/${slug}/${seg}`;
+          return pathname === p || pathname.startsWith(`${p}/`);
+        });
+
+      if (underBase || underCrmChild || underAssetsChild) {
         for (const child of entry.children) {
           if (pathname === child.path || pathname.startsWith(`${child.path}/`)) {
             return { title: t(child.titleKey), subtitle: t(entry.titleKey) };

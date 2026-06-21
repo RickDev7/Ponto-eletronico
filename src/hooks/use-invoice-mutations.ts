@@ -8,6 +8,7 @@ import {
   duplicateInvoiceAction,
   deleteInvoiceAction,
   generateRecurringInvoicesAction,
+  generateInvoiceFromContractAction,
 } from "@/actions/finance/actions";
 import type { CreateInvoiceInput, CreatePaymentInput } from "@/lib/validations/finance";
 import type { InvoiceStatus } from "@/lib/finance/utils";
@@ -40,6 +41,16 @@ export function useInvoiceMutations(slug: string) {
     }),
     generateRecurring: useMutation({
       mutationFn: () => generateRecurringInvoicesAction(slug),
+      onSuccess: invalidate,
+    }),
+    generateFromContract: useMutation({
+      mutationFn: ({
+        contractId,
+        mode,
+      }: {
+        contractId: string;
+        mode?: "recurring" | "one_time";
+      }) => generateInvoiceFromContractAction(slug, contractId, mode),
       onSuccess: invalidate,
     }),
   };

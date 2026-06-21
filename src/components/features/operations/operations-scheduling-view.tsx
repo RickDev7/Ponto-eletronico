@@ -10,6 +10,8 @@ import {
   OperationsWorkspace,
   PageHeader,
 } from "@/components/shared";
+import { AiDomainWidget } from "@/components/features/ai/ai-domain-widget";
+import { CalendarView } from "@/components/features/calendar/calendar-view";
 
 type SchedulingTask = {
   id: string;
@@ -29,10 +31,17 @@ interface OperationsSchedulingViewProps {
   slug: string;
   tasks: SchedulingTask[];
   view: "day" | "week" | "month";
+  mode: "list" | "calendar";
   rangeLabel: string;
   prevHref: string;
   nextHref: string;
   todayHref: string;
+  calendar?: {
+    year: number;
+    month: number;
+    today: string;
+    calendarTasks: Array<Record<string, unknown>>;
+  };
 }
 
 const STATUS_COLOR: Record<TaskStatus, string> = {
@@ -47,10 +56,12 @@ export function OperationsSchedulingView({
   slug,
   tasks,
   view,
+  mode,
   rangeLabel,
   prevHref,
   nextHref,
   todayHref,
+  calendar,
 }: OperationsSchedulingViewProps) {
   const t = useTranslations("operations.scheduling");
 
@@ -69,31 +80,57 @@ export function OperationsSchedulingView({
         title={t("title")}
         description={rangeLabel}
         actions={
-          <div className="flex items-center gap-2">
-            <Link href={prevHref} className="inline-flex size-8 items-center justify-center rounded-lg border">
-              <ChevronLeft className="size-4" />
-            </Link>
-            <Link href={todayHref} className="rounded-lg border px-3 py-1 text-xs font-medium">
-              {t("today")}
-            </Link>
-            <Link href={nextHref} className="inline-flex size-8 items-center justify-center rounded-lg border">
-              <ChevronRight className="size-4" />
-            </Link>
-            <div className="ml-2 flex rounded-lg border p-0.5 text-xs">
-              {(["day", "week", "month"] as const).map((v) => (
+          <div className="flex flex-wrap items-center gap-2">
+            <div className="flex rounded-lg border p-0.5 text-xs">
+              {(["list", "calendar"] as const).map((m) => (
                 <Link
-                  key={v}
-                  href={ROUTES.operationsScheduling(slug, { view: v })}
-                  className={`rounded-md px-2.5 py-1 ${view === v ? "bg-primary text-primary-foreground" : ""}`}
+                  key={m}
+                  href={ROUTES.operationsScheduling(slug, { view, mode: m })}
+                  className={`rounded-md px-2.5 py-1 ${mode === m ? "bg-primary text-primary-foreground" : ""}`}
                 >
-                  {t(`views.${v}`)}
+                  {t(`modes.${m}`)}
                 </Link>
               ))}
             </div>
+            {mode === "list" && (
+              <>
+                <Link href={prevHref} className="inline-flex size-8 items-center justify-center rounded-lg border">
+                  <ChevronLeft className="size-4" />
+                </Link>
+                <Link href={todayHref} className="rounded-lg border px-3 py-1 text-xs font-medium">
+                  {t("today")}
+                </Link>
+                <Link href={nextHref} className="inline-flex size-8 items-center justify-center rounded-lg border">
+                  <ChevronRight className="size-4" />
+                </Link>
+                <div className="flex rounded-lg border p-0.5 text-xs">
+                  {(["day", "week", "month"] as const).map((v) => (
+                    <Link
+                      key={v}
+                      href={ROUTES.operationsScheduling(slug, { view: v, mode })}
+                      className={`rounded-md px-2.5 py-1 ${view === v ? "bg-primary text-primary-foreground" : ""}`}
+                    >
+                      {t(`views.${v}`)}
+                    </Link>
+                  ))}
+                </div>
+              </>
+            )}
           </div>
         }
       />
 
+      <AiDomainWidget slug={slug} domain="operations" compact className="mb-4" />
+
+      {mode === "calendar" && calendar ? (
+        <CalendarView
+          slug={slug}
+          tasks={calendar.calendarTasks}
+          year={calendar.year}
+          month={calendar.month}
+          today={calendar.today}
+        />
+      ) : (
       <OperationsWorkspace>
         {dates.length === 0 ? (
           <p className="p-8 text-center text-sm text-muted-foreground">{t("empty")}</p>
@@ -127,6 +164,7 @@ export function OperationsSchedulingView({
           </div>
         )}
       </OperationsWorkspace>
+      )}
     </OperationsPage>
   );
 }

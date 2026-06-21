@@ -11,12 +11,16 @@ import {
   MapPin,
   Loader2,
   ArrowRight,
-  ShieldCheck,
   FileText,
   Activity,
   Settings,
   Calendar,
+  Target,
+  Truck,
+  BarChart3,
+  Wallet,
 } from "lucide-react";
+import { ROUTES } from "@/config/constants";
 import { createClient } from "@/lib/supabase/client";
 import type { ServiceType } from "@/types";
 
@@ -118,7 +122,7 @@ export function CommandPalette({ slug, companyId, open, onClose }: CommandPalett
           type: "employee" as const,
           title: e.full_name,
           subtitle: e.email ?? t("types.employee"),
-          href: `/${slug}/employees/${e.id}`,
+          href: ROUTES.workforceEmployee(slug, e.id),
         })),
         ...(addresses.data ?? []).map((a) => ({
           id: a.id,
@@ -167,15 +171,18 @@ export function CommandPalette({ slug, companyId, open, onClose }: CommandPalett
   }
 
   const shortcuts = [
-    { label: t("shortcuts.tasks"), icon: ClipboardList, href: `/${slug}/tasks` },
-    { label: t("shortcuts.clients"), icon: Building2, href: `/${slug}/clients` },
-    { label: t("shortcuts.employees"), icon: Users, href: `/${slug}/employees` },
-    { label: tNav("myTasks"), icon: MapPin, href: `/${slug}/minha-area` },
-    { label: t("shortcuts.reports"), icon: FileText, href: `/${slug}/reports` },
-    { label: t("shortcuts.audits"), icon: ShieldCheck, href: `/${slug}/audits` },
-    { label: t("shortcuts.activity"), icon: Activity, href: `/${slug}/activity` },
-    { label: t("shortcuts.calendar"), icon: Calendar, href: `/${slug}/calendar` },
-    { label: tNav("settings"), icon: Settings, href: `/${slug}/settings` },
+    { label: tNav("operationsWorkOrders"), icon: ClipboardList, href: ROUTES.operationsWorkOrders(slug) },
+    { label: tNav("operationsScheduling"), icon: Calendar, href: ROUTES.operationsScheduling(slug) },
+    { label: tNav("crmLeads"), icon: Target, href: ROUTES.crmLeads(slug) },
+    { label: tNav("crmPipeline"), icon: Target, href: ROUTES.commercialPipeline(slug) },
+    { label: t("shortcuts.clients"), icon: Building2, href: ROUTES.clients(slug) },
+    { label: tNav("financeInvoices"), icon: Wallet, href: ROUTES.financeInvoices(slug) },
+    { label: t("shortcuts.employees"), icon: Users, href: ROUTES.workforceEmployees(slug) },
+    { label: tNav("workforceVehicles"), icon: Truck, href: ROUTES.workforceVehicles(slug) },
+    { label: tNav("analyticsOperational"), icon: BarChart3, href: ROUTES.analyticsOperational(slug) },
+    { label: t("shortcuts.reports"), icon: FileText, href: ROUTES.reports(slug) },
+    { label: t("shortcuts.activity"), icon: Activity, href: ROUTES.analyticsOperational(slug, { tab: "activity" }) },
+    { label: tNav("settings"), icon: Settings, href: ROUTES.settings(slug) },
   ];
 
   if (!open) return null;

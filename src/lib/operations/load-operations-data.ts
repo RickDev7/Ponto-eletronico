@@ -1,6 +1,12 @@
 import { createClient } from "@/lib/supabase/server";
+import { loadProperty360Data } from "@/lib/properties/load-property-360-data";
+import { loadTraceableExecutions } from "@/lib/operations/load-operations-hub-data";
+import {
+  mapTraceableRows,
+  TRACEABLE_TASK_SELECT,
+  type TraceableExecution,
+} from "@/lib/operations/traceable-execution-types";
 import type {
-  ExecutionRow,
   PropertyRow,
   ServiceRow,
   TeamRow,
@@ -17,41 +23,33 @@ export async function loadProperties(companyId: string): Promise<PropertyRow[]> 
 }
 
 export async function loadPropertyById(companyId: string, propertyId: string) {
-  const supabase = await createClient();
-  const today = new Date().toISOString().slice(0, 10);
-
-  const [{ data: property }, { data: tasks }, { data: contracts }] = await Promise.all([
-    supabase
-      .from("addresses")
-      .select("*, client:clients(id, name, email, phone)")
-      .eq("id", propertyId)
-      .eq("company_id", companyId)
-      .single(),
-    supabase
-      .from("tasks")
-      .select(`
-        id, title, status, scheduled_date, service_type, approved_at, invoice_id,
-        assignments:task_assignments(employee:employees(full_name))
-      `)
-      .eq("address_id", propertyId)
-      .eq("company_id", companyId)
-      .neq("status", "cancelled")
-      .order("scheduled_date", { ascending: false })
-      .limit(40),
-    supabase
-      .from("contracts")
-      .select("id, title, status, frequency, start_date, end_date, is_active")
-      .eq("company_id", companyId)
-      .eq("address_id", propertyId)
-      .eq("is_active", true),
-  ]);
-
-  const upcoming =
-    tasks?.filter(
-      (t) => t.scheduled_date >= today && t.status !== "completed" && !t.approved_at,
-    ) ?? [];
-
-  return { property, tasks: tasks ?? [], contracts: contracts ?? [], upcoming };
+  const data = await loadProperty360Data(companyId, propertyId);
+  if (!data) {
+    return { property: null, tasks: [], contracts: [], upcoming: [] };
+  }
+  const tasks = [...data.upcomingVisits, ...data.visitHistory].map((v) => ({
+    id: v.id,
+    title: v.title,
+    status: v.status,
+    scheduled_date: v.scheduled_date,
+    service_type: v.service_type,
+    approved_at: v.approved_at,
+    invoice_id: null as string | null,
+    assignments: v.assignees.map((name) => ({ employee: { full_name: name } })),
+  }));
+  return {
+    property: { ...data.property, client: data.client },
+    tasks,
+    contracts: data.contracts,
+    upcoming: data.upcomingVisits.map((v) => ({
+      id: v.id,
+      title: v.title,
+      status: v.status,
+      scheduled_date: v.scheduled_date,
+      approved_at: v.approved_at,
+      invoice_id: null as string | null,
+    })),
+  };
 }
 
 export async function loadServices(companyId: string): Promise<ServiceRow[]> {
@@ -82,25 +80,12 @@ export async function loadTeams(companyId: string): Promise<TeamRow[]> {
   return (data ?? []) as TeamRow[];
 }
 
-export async function loadExecutions(companyId: string, from?: string, to?: string): Promise<ExecutionRow[]> {
-  const supabase = await createClient();
-  let query = supabase
-    .from("tasks")
-    .select(`
-      id, title, status, scheduled_date, scheduled_start, scheduled_end,
-      service_type, approved_at, invoice_id, contract_id, team_id,
-      address:addresses(label, street, city, client:clients(name)),
-      assignments:task_assignments(employee:employees(full_name))
-    `)
-    .eq("company_id", companyId)
-    .neq("status", "cancelled")
-    .order("scheduled_date", { ascending: false });
-
-  if (from) query = query.gte("scheduled_date", from);
-  if (to) query = query.lte("scheduled_date", to);
-
-  const { data } = await query.limit(500);
-  return (data ?? []) as ExecutionRow[];
+export async function loadExecutions(
+  companyId: string,
+  from?: string,
+  to?: string,
+): Promise<TraceableExecution[]> {
+  return loadTraceableExecutions(companyId, from, to);
 }
 
 export async function loadEmployeesForOperations(companyId: string) {
@@ -141,5 +126,13 @@ export async function loadSchedulingTasks(companyId: string, from: string, to: s
     .neq("status", "cancelled")
     .order("scheduled_date")
     .order("scheduled_start", { ascending: true, nullsFirst: true });
-  return data ?? [];
+
+  return (data ?? []).map((row) => {
+    const address = row.address as
+      | { label: string | null; street: string; city: string }
+      | { label: string | null; street: string; city: string }[]
+      | null;
+    const addressRow = Array.isArray(address) ? address[0] : address;
+    return { ...row, address: addressRow ?? null };
+  });
 }

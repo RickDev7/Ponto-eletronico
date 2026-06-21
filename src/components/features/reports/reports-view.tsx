@@ -42,6 +42,7 @@ import { EmptyState } from "@/components/shared/empty-state";
 import type { ServiceType } from "@/types";
 import { generatePdfReport } from "@/lib/reports/pdf-generator";
 import { cn } from "@/lib/utils";
+import { AiDomainWidget } from "@/components/features/ai/ai-domain-widget";
 
 const SAVED_VIEWS = [
   { id: "7d", days: 7 },
@@ -415,6 +416,8 @@ export function ReportsView({ slug, reports, companyName }: ReportsViewProps) {
           </div>
         }
       />
+
+      <AiDomainWidget slug={slug} domain="reports" compact className="mb-2" />
 
       {/* Top bar: date range + export + saved views */}
       <OperationsWorkspace>

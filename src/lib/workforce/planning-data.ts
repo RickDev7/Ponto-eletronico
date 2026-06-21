@@ -28,11 +28,26 @@ export interface EmployeePlanningCard {
   fullName: string;
   jobTitle: string | null;
   weeklyHours: number;
+  contractMinutes: number;
   plannedMinutes: number;
   actualMinutes: number;
+  workloadPct: number;
   availability: AvailabilityStatus;
   status: string;
   shiftCount: number;
+  vacationDays: number;
+  sickDays: number;
+  onVacationToday: boolean;
+  onSickToday: boolean;
+  skills: string[];
+  serviceTypes: string[];
+}
+
+export interface AutoPlanAssignment {
+  taskId: string;
+  employeeId: string;
+  scheduledDate: string;
+  title: string;
 }
 
 export interface PlanningRecommendation {
@@ -65,6 +80,48 @@ function weekBounds(dateStr: string): { start: string; end: string } {
   const endDate = new Date(d);
   endDate.setDate(endDate.getDate() + 6);
   return { start, end: endDate.toISOString().slice(0, 10) };
+}
+
+function daysBetweenInclusive(start: string, end: string): number {
+  const a = new Date(start + "T12:00:00");
+  const b = new Date(end + "T12:00:00");
+  return Math.max(1, Math.round((b.getTime() - a.getTime()) / 86_400_000) + 1);
+}
+
+function overlapDays(
+  rangeStart: string,
+  rangeEnd: string,
+  blockStart: string,
+  blockEnd: string,
+): number {
+  const start = rangeStart > blockStart ? rangeStart : blockStart;
+  const end = rangeEnd < blockEnd ? rangeEnd : blockEnd;
+  if (start > end) return 0;
+  return daysBetweenInclusive(start, end);
+}
+
+export function isEmployeeBlockedOnDate(
+  employeeId: string,
+  date: string,
+  vacations: VacationRequestRow[],
+  absences: AbsenceRow[],
+): "vacation" | "sick" | "absence" | null {
+  if (
+    vacations.some(
+      (v) =>
+        v.employee_id === employeeId &&
+        v.status === "approved" &&
+        v.start_date <= date &&
+        v.end_date >= date,
+    )
+  ) {
+    return "vacation";
+  }
+  const dayAbsence = absences.find(
+    (a) => a.employee_id === employeeId && a.start_date <= date && a.end_date >= date,
+  );
+  if (!dayAbsence) return null;
+  return dayAbsence.absence_type === "sick" ? "sick" : "absence";
 }
 
 export function shiftDurationMinutes(shift: ShiftRow): number {
@@ -134,29 +191,46 @@ export function computeEmployeeAvailability(
   rangeStart: string,
   rangeEnd: string,
   actualMinutes: number,
+  skillNames: string[] = [],
+  serviceTypes: string[] = [],
 ): EmployeePlanningCard {
   const empShifts = shifts.filter((s) => s.employeeId === employee.id);
   const weeklyHours = Number(employee.weekly_hours ?? 40);
+  const rangeDays = daysBetweenInclusive(rangeStart, rangeEnd);
+  const contractMinutes = Math.round((weeklyHours * 60 * rangeDays) / 7);
   const plannedMinutes = empShifts.reduce((a, s) => a + shiftDurationMinutes(s), 0);
-  const capacityMinutes = weeklyHours * 60;
+  const workloadPct =
+    contractMinutes > 0 ? Math.min(150, Math.round((plannedMinutes / contractMinutes) * 100)) : 0;
+
+  const today = new Date().toISOString().slice(0, 10);
+  const onVacationToday = isEmployeeBlockedOnDate(employee.id, today, vacations, absences) === "vacation";
+  const onSickToday = isEmployeeBlockedOnDate(employee.id, today, vacations, absences) === "sick";
+
+  const vacationDays = vacations
+    .filter((v) => v.employee_id === employee.id && v.status === "approved")
+    .reduce((acc, v) => acc + overlapDays(rangeStart, rangeEnd, v.start_date, v.end_date), 0);
+
+  const sickDays = absences
+    .filter((a) => a.employee_id === employee.id && a.absence_type === "sick")
+    .reduce((acc, a) => acc + overlapDays(rangeStart, rangeEnd, a.start_date, a.end_date), 0);
 
   let availability: AvailabilityStatus = "available";
 
-  if (employee.status === "on_vacation" || employee.status === "absent" || employee.status === "inactive") {
+  if (
+    employee.status === "on_vacation" ||
+    employee.status === "absent" ||
+    employee.status === "inactive" ||
+    onVacationToday ||
+    onSickToday
+  ) {
     availability = "unavailable";
   } else if (empShifts.some((s) => s.conflicts.includes("overload") || s.conflicts.includes("weekly_hours"))) {
     availability = "overbooked";
   } else if (
     empShifts.some((s) => s.conflicts.length > 0) ||
-    plannedMinutes > capacityMinutes * 0.85
+    workloadPct > 85
   ) {
     availability = "limited";
-  }
-
-  const today = new Date().toISOString().slice(0, 10);
-  if (today >= rangeStart && today <= rangeEnd) {
-    void vacations;
-    void absences;
   }
 
   return {
@@ -164,11 +238,19 @@ export function computeEmployeeAvailability(
     fullName: employee.full_name,
     jobTitle: employee.job_title,
     weeklyHours,
+    contractMinutes,
     plannedMinutes,
     actualMinutes,
+    workloadPct,
     availability,
     status: employee.status,
     shiftCount: empShifts.length,
+    vacationDays,
+    sickDays,
+    onVacationToday,
+    onSickToday,
+    skills: skillNames,
+    serviceTypes,
   };
 }
 
@@ -276,6 +358,66 @@ export function optimizeWeekPlan(
     }));
 
   return { recommendations, moves };
+}
+
+export function computeAutoPlanAssignments(
+  unassignedTasks: Array<{ id: string; scheduled_date: string; title: string; service_type?: string | null }>,
+  employees: WorkforceEmployeeRow[],
+  cards: EmployeePlanningCard[],
+  shifts: ShiftRow[],
+  vacations: VacationRequestRow[],
+  absences: AbsenceRow[],
+): AutoPlanAssignment[] {
+  const assignments: AutoPlanAssignment[] = [];
+  const plannedByEmployeeDate = new Map<string, number>();
+
+  for (const shift of shifts) {
+    const key = `${shift.employeeId}:${shift.scheduledDate}`;
+    plannedByEmployeeDate.set(key, (plannedByEmployeeDate.get(key) ?? 0) + 1);
+  }
+
+  const sortedTasks = [...unassignedTasks].sort((a, b) =>
+    a.scheduled_date.localeCompare(b.scheduled_date),
+  );
+
+  for (const task of sortedTasks) {
+    const candidates = employees
+      .filter((e) => e.status === "active")
+      .map((emp) => {
+        const card = cards.find((c) => c.id === emp.id);
+        const blocked = isEmployeeBlockedOnDate(emp.id, task.scheduled_date, vacations, absences);
+        const dayShifts = plannedByEmployeeDate.get(`${emp.id}:${task.scheduled_date}`) ?? 0;
+        return {
+          emp,
+          card,
+          blocked,
+          dayShifts,
+          workload: card?.workloadPct ?? 0,
+        };
+      })
+      .filter((c) => !c.blocked && c.dayShifts < 3)
+      .sort((a, b) => {
+        const taskType = task.service_type ?? null;
+        const aSkill = taskType && a.card?.serviceTypes.includes(taskType) ? 0 : 1;
+        const bSkill = taskType && b.card?.serviceTypes.includes(taskType) ? 0 : 1;
+        return aSkill - bSkill || a.workload - b.workload || a.dayShifts - b.dayShifts;
+      });
+
+    const pick = candidates[0];
+    if (!pick) continue;
+
+    assignments.push({
+      taskId: task.id,
+      employeeId: pick.emp.id,
+      scheduledDate: task.scheduled_date,
+      title: task.title,
+    });
+
+    const key = `${pick.emp.id}:${task.scheduled_date}`;
+    plannedByEmployeeDate.set(key, (plannedByEmployeeDate.get(key) ?? 0) + 1);
+  }
+
+  return assignments;
 }
 
 export function computeMonthlySummary(

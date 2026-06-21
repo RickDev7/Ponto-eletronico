@@ -63,6 +63,10 @@ export interface ShiftRow {
   travelMinutes: number;
   status: string;
   conflicts: string[];
+  vehicleId: string | null;
+  vehicleName: string | null;
+  vehiclePlate: string | null;
+  usageId: string | null;
 }
 
 export interface WorkforceKpis {

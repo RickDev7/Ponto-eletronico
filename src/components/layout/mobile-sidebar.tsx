@@ -27,6 +27,7 @@ import {
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
@@ -112,24 +113,25 @@ export function MobileSidebar({ ctx, userCompanies = [] }: MobileSidebarProps) {
                   <ChevronsUpDown className="size-3.5 text-muted-foreground shrink-0" />
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="start" className="w-56">
-                  <DropdownMenuLabel className="text-xs text-muted-foreground">
-                    {t("switchCompany")}
-                  </DropdownMenuLabel>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem className="gap-2 font-medium">
-                    <Check className="size-3.5" />
-                    {ctx.company.name}
-                  </DropdownMenuItem>
-                  {otherCompanies.map((c) => (
-                    <DropdownMenuItem
-                      key={c.id}
-                      onSelect={() => switchCompany(c.slug, c.id)}
-                      className="gap-2"
-                    >
-                      <Building2 className="size-3.5 text-muted-foreground" />
-                      {c.name}
+                  <DropdownMenuGroup>
+                    <DropdownMenuLabel className="text-xs text-muted-foreground">
+                      {t("switchCompany")}
+                    </DropdownMenuLabel>
+                    <DropdownMenuItem className="gap-2 font-medium">
+                      <Check className="size-3.5" />
+                      {ctx.company.name}
                     </DropdownMenuItem>
-                  ))}
+                    {otherCompanies.map((c) => (
+                      <DropdownMenuItem
+                        key={c.id}
+                        onSelect={() => switchCompany(c.slug, c.id)}
+                        className="gap-2"
+                      >
+                        <Building2 className="size-3.5 text-muted-foreground" />
+                        {c.name}
+                      </DropdownMenuItem>
+                    ))}
+                  </DropdownMenuGroup>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem
                     onSelect={() => { setOpen(false); router.push(ROUTES.selectCompany); }}

@@ -4,7 +4,6 @@ import { useMemo } from "react";
 import { useTranslations } from "next-intl";
 import { motion } from "framer-motion";
 import {
-  ArrowRight,
   Mail,
   MessageCircle,
   Smartphone,
@@ -14,6 +13,7 @@ import {
 import type { AutomationsPageData } from "@/lib/automations/load-automations-data";
 import type { AutomationRuleRow } from "@/lib/automations/types";
 import { AUTOMATION_EXAMPLES, getActionDef, getTriggerDef } from "@/lib/automations/catalog";
+import { AutomationExampleFlow } from "@/components/features/automations/automation-workflow-pipeline";
 import { AutomationRuleCard } from "@/components/features/automations/automation-rule-card";
 import { AutomationRunsPanel } from "@/components/features/automations/automation-runs-panel";
 import { AutomationFormDialog } from "@/components/features/automations/automation-form-dialog";
@@ -29,6 +29,7 @@ import { toast } from "sonner";
 import { seedExampleAutomationsAction } from "@/actions/automations/actions";
 import { useRouter } from "@/i18n/navigation";
 import { listChannelAdapters } from "@/lib/automations/channels";
+import { AiDomainWidget } from "@/components/features/ai/ai-domain-widget";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 10 },
@@ -108,6 +109,8 @@ export function AutomationsView({ slug, data, canWrite }: AutomationsViewProps) 
         }
       />
 
+      <AiDomainWidget slug={slug} domain="automations" compact className="mb-4" />
+
       <OperationsWorkspace>
         <motion.div
           initial="hidden"
@@ -154,14 +157,13 @@ export function AutomationsView({ slug, data, canWrite }: AutomationsViewProps) 
             return (
             <div
               key={ex.key}
-              className="rounded-xl border border-dashed border-border/60 bg-muted/20 px-4 py-3 text-xs"
+              className="rounded-xl border border-dashed border-border/60 bg-muted/20 px-4 py-3"
             >
-              <p className="font-medium">{t(`examples.${ex.key}` as never)}</p>
-              <div className="mt-2 flex items-center gap-1 text-muted-foreground">
-                <span>{tr ? t(tr.labelKey as never) : ex.trigger}</span>
-                <ArrowRight className="size-3" />
-                <span>{ac ? t(ac.labelKey as never) : ex.action}</span>
-              </div>
+              <AutomationExampleFlow
+                triggerDef={tr}
+                actionDef={ac}
+                exampleKey={ex.key}
+              />
             </div>
             );
           })}

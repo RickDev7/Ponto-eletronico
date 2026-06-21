@@ -174,6 +174,10 @@ function buildHtml(data: PdfDocumentData): string {
 </html>`;
 }
 
+export function buildFinancePdfHtml(data: PdfDocumentData): string {
+  return buildHtml(data);
+}
+
 export function openFinancePdf(data: PdfDocumentData) {
   const html = buildHtml(data);
   const win = window.open("", "_blank");

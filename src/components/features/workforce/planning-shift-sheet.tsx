@@ -1,16 +1,28 @@
 "use client";
 
-import { useTransition } from "react";
+import { useState, useTransition } from "react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
-import { Building2, Clock, Copy, MapPin, User } from "lucide-react";
+import { Building2, Car, Clock, Copy, MapPin, User } from "lucide-react";
 import { toast } from "sonner";
 import { useRouter } from "@/i18n/navigation";
 import { ROUTES } from "@/config/constants";
 import { duplicateShiftAction } from "@/actions/workforce/actions";
+import {
+  assignVehicleToShiftAction,
+  removeVehicleFromShiftAction,
+} from "@/actions/vehicles/actions";
 import { formatMinutes, shiftDurationMinutes } from "@/lib/workforce/planning-data";
 import type { ShiftRow } from "@/lib/workforce/workforce-data";
+import type { VehicleRow } from "@/lib/vehicles/vehicle-data";
 import { Button } from "@/components/ui/button";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import {
   Sheet,
   SheetContent,
@@ -26,11 +38,16 @@ interface PlanningShiftSheetProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   canWrite?: boolean;
+  vehicles?: VehicleRow[];
 }
 
 function formatTime(iso: string | null) {
   if (!iso) return "—";
   return iso.slice(11, 16);
+}
+
+function vehicleLabel(v: VehicleRow): string {
+  return v.plate_number ? `${v.name} (${v.plate_number})` : v.name;
 }
 
 export function PlanningShiftSheet({
@@ -39,14 +56,19 @@ export function PlanningShiftSheet({
   open,
   onOpenChange,
   canWrite = false,
+  vehicles = [],
 }: PlanningShiftSheetProps) {
   const t = useTranslations("workforce.planning.shift");
   const router = useRouter();
   const [pending, startTransition] = useTransition();
+  const [selectedVehicleId, setSelectedVehicleId] = useState("");
 
   if (!shift) return null;
 
   const duration = formatMinutes(shiftDurationMinutes(shift));
+  const assignableVehicles = vehicles.filter(
+    (v) => v.status === "available" || v.id === shift.vehicleId,
+  );
 
   function handleDuplicate() {
     startTransition(async () => {
@@ -55,6 +77,34 @@ export function PlanningShiftSheet({
       else {
         toast.success(t("duplicated"));
         onOpenChange(false);
+        router.refresh();
+      }
+    });
+  }
+
+  function handleAssignVehicle() {
+    if (!selectedVehicleId) return;
+    startTransition(async () => {
+      const result = await assignVehicleToShiftAction(slug, {
+        vehicleId: selectedVehicleId,
+        taskId: shift!.taskId,
+        employeeId: shift!.employeeId,
+      });
+      if (!result.success) toast.error(result.error);
+      else {
+        toast.success(t("vehicleAssigned"));
+        router.refresh();
+      }
+    });
+  }
+
+  function handleRemoveVehicle() {
+    if (!shift!.usageId) return;
+    startTransition(async () => {
+      const result = await removeVehicleFromShiftAction(slug, shift!.usageId!);
+      if (!result.success) toast.error(result.error);
+      else {
+        toast.success(t("vehicleRemoved"));
         router.refresh();
       }
     });
@@ -91,6 +141,52 @@ export function PlanningShiftSheet({
             <span>
               {formatTime(shift.scheduledStart)} – {formatTime(shift.scheduledEnd)} ({duration})
             </span>
+          </div>
+          <div className="rounded-lg border border-border p-3">
+            <div className="mb-2 flex items-center gap-2 font-medium">
+              <Car className="size-4 text-muted-foreground" />
+              {t("vehicle")}
+            </div>
+            {shift.vehicleId ? (
+              <div className="space-y-2">
+                <p>
+                  {shift.vehicleName}
+                  {shift.vehiclePlate && (
+                    <span className="ml-1 font-mono text-muted-foreground">({shift.vehiclePlate})</span>
+                  )}
+                </p>
+                {canWrite && (
+                  <Button variant="outline" size="sm" disabled={pending} onClick={handleRemoveVehicle}>
+                    {t("removeVehicle")}
+                  </Button>
+                )}
+              </div>
+            ) : (
+              <div className="space-y-2">
+                <p className="text-muted-foreground">{t("noVehicle")}</p>
+                {canWrite && assignableVehicles.length > 0 && (
+                  <div className="flex gap-2">
+                    <Select value={selectedVehicleId} onValueChange={(v) => setSelectedVehicleId(v ?? "")}>
+                      <SelectTrigger className="flex-1"><SelectValue placeholder="—" /></SelectTrigger>
+                      <SelectContent>
+                        {assignableVehicles.map((v) => (
+                          <SelectItem key={v.id} value={v.id}>{vehicleLabel(v)}</SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    <Button size="sm" disabled={pending || !selectedVehicleId} onClick={handleAssignVehicle}>
+                      {t("assignVehicle")}
+                    </Button>
+                  </div>
+                )}
+              </div>
+            )}
+            <Link
+              href={ROUTES.workforceVehicles(slug)}
+              className="mt-2 inline-block text-xs text-primary hover:underline"
+            >
+              {t("manageFleet")}
+            </Link>
           </div>
           {shift.shiftType && (
             <p>

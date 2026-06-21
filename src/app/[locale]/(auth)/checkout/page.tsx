@@ -15,7 +15,7 @@ export default async function CheckoutPage({ searchParams }: CheckoutPageProps) 
   const t = await getTranslations("billing.checkout");
 
   return (
-    <div className="flex min-h-svh items-center justify-center bg-zinc-950 px-4 py-12">
+    <div className="flex min-h-svh items-center justify-center bg-background px-4 py-12">
       <div className="relative w-full max-w-md">
         <div className="mb-8 space-y-2 text-center">
           <h1 className="text-2xl font-semibold tracking-tight text-white">{t("title")}</h1>

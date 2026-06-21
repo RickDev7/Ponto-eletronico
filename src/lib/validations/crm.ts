@@ -17,8 +17,8 @@ export const createLeadSchema = z.object({
   phone: z.string().optional(),
   website: z.string().optional(),
   city: z.string().optional(),
-  country: z.string().default("DE"),
-  estimatedValueCents: z.coerce.number().int().min(0).default(0),
+  country: z.string(),
+  estimatedValueCents: z.number().int().min(0),
   notes: z.string().optional(),
   ownerId: z.string().uuid().optional().nullable(),
   status: leadStatusSchema.optional(),
@@ -32,7 +32,7 @@ export const createLeadContactSchema = z.object({
   email: z.string().email().optional().or(z.literal("")),
   phone: z.string().optional(),
   roleTitle: z.string().optional(),
-  isPrimary: z.boolean().default(false),
+  isPrimary: z.boolean(),
 });
 
 export type LeadStatus = z.infer<typeof leadStatusSchema>;

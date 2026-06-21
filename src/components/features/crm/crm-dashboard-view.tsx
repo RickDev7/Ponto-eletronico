@@ -17,6 +17,7 @@ import {
   OperationsWorkspace,
   PageHeader,
 } from "@/components/shared";
+import { AiDomainWidget } from "@/components/features/ai/ai-domain-widget";
 
 interface CrmDashboardViewProps {
   slug: string;
@@ -66,6 +67,8 @@ export function CrmDashboardView({ slug, leads, activities, locale, canWrite }: 
           </div>
         }
       />
+
+      <AiDomainWidget slug={slug} domain="commercial" compact className="mb-4" />
 
       <motion.div initial="hidden" animate="show" variants={fadeUp}>
         <CrmKpiStrip

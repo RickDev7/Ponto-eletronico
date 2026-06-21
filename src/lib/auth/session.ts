@@ -1,4 +1,5 @@
 import { createClient } from "@/lib/supabase/server";
+import type { Company, CompanyMember, Employee, Profile } from "@/types/database";
 import type { CompanyWithMembership } from "@/types/queries";
 import type { User } from "@supabase/supabase-js";
 
@@ -10,7 +11,7 @@ export async function getSession(): Promise<User | null> {
   return user;
 }
 
-export async function getUserProfile(userId: string) {
+export async function getUserProfile(userId: string): Promise<Profile | null> {
   const supabase = await createClient();
   const { data, error } = await supabase
     .from("profiles")
@@ -18,8 +19,8 @@ export async function getUserProfile(userId: string) {
     .eq("id", userId)
     .single();
 
-  if (error) return null;
-  return data;
+  if (error || !data) return null;
+  return data as Profile;
 }
 
 export async function getUserCompanies(
@@ -36,7 +37,10 @@ export async function getUserCompanies(
   return (data ?? []) as CompanyWithMembership[];
 }
 
-export async function getMembership(userId: string, companyId: string) {
+export async function getMembership(
+  userId: string,
+  companyId: string,
+): Promise<CompanyMember | null> {
   const supabase = await createClient();
   const { data, error } = await supabase
     .from("company_members")
@@ -46,11 +50,11 @@ export async function getMembership(userId: string, companyId: string) {
     .eq("status", "active")
     .maybeSingle();
 
-  if (error) return null;
-  return data;
+  if (error || !data) return null;
+  return data as CompanyMember;
 }
 
-export async function getCompanyBySlug(slug: string) {
+export async function getCompanyBySlug(slug: string): Promise<Company | null> {
   const supabase = await createClient();
   const { data, error } = await supabase
     .from("companies")
@@ -58,14 +62,14 @@ export async function getCompanyBySlug(slug: string) {
     .eq("slug", slug)
     .maybeSingle();
 
-  if (error) return null;
-  return data;
+  if (error || !data) return null;
+  return data as Company;
 }
 
 export async function getEmployeeForMember(
   companyId: string,
   memberId: string,
-) {
+): Promise<Employee | null> {
   const supabase = await createClient();
   const { data, error } = await supabase
     .from("employees")
@@ -74,6 +78,6 @@ export async function getEmployeeForMember(
     .eq("member_id", memberId)
     .maybeSingle();
 
-  if (error) return null;
-  return data;
+  if (error || !data) return null;
+  return data as Employee;
 }

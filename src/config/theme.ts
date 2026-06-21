@@ -6,13 +6,15 @@ export const THEME_STORAGE_KEY = "feldops-theme";
 export const themeConfig = {
   /** CSS attribute applied to <html> — matches Tailwind `dark:` variant */
   attribute: "class" as const,
-  /** Default: dark mode */
-  defaultTheme: "dark" as const,
-  /** Supported themes (no system — explicit light/dark only) */
-  themes: ["light", "dark"] as const,
-  enableSystem: false,
+  /** Default: light mode (enterprise SaaS standard) */
+  defaultTheme: "light" as const,
+  /** Supported themes including system preference */
+  themes: ["light", "dark", "system"] as const,
+  enableSystem: true,
   disableTransitionOnChange: true,
   storageKey: THEME_STORAGE_KEY,
 } as const;
 
-export type ThemeName = (typeof themeConfig.themes)[number];
+export type ThemePreference = (typeof themeConfig.themes)[number];
+/** @deprecated Use ThemePreference */
+export type ThemeName = "light" | "dark";

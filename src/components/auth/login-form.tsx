@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { useRouter, Link } from "@/i18n/navigation";
 import { useForm } from "react-hook-form";
@@ -34,6 +35,8 @@ const inputClassName = cn(
 
 export function LoginForm() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const redirectParam = searchParams.get("redirect");
   const t = useTranslations("auth.login");
   const tForms = useTranslations("forms");
   const [showPassword, setShowPassword] = useState(false);
@@ -57,7 +60,7 @@ export function LoginForm() {
   }, [form]);
 
   async function onSubmit(values: LoginInput) {
-    const result = await signIn(values);
+    const result = await signIn({ ...values, redirect: redirectParam });
     if (!result.success) {
       toast.error(result.error);
       return;

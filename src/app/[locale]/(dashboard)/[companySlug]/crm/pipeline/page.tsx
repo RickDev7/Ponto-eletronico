@@ -1,29 +1,12 @@
-import { getLocale } from "next-intl/server";
-import { requireCompanyContext } from "@/lib/auth/guards";
-import { can } from "@/config/permissions";
-import { PipelineView } from "@/components/features/crm/pipeline-view";
-import { loadLeads } from "@/lib/crm/load-crm-data";
-import { AppShellPage } from "@/components/design-system/layout";
+import { redirect } from "@/i18n/navigation";
+import { ROUTES } from "@/config/constants";
 
 interface PageProps {
-  params: Promise<{ companySlug: string }>;
+  params: Promise<{ companySlug: string; locale: string }>;
 }
 
-export default async function CrmPipelinePage({ params }: PageProps) {
-  const { companySlug } = await params;
-  const ctx = await requireCompanyContext({ slug: companySlug, minRole: "supervisor" });
-  const locale = await getLocale();
-  const dateLocale = locale === "en" ? "en-US" : "pt-BR";
-  const leads = await loadLeads(ctx.company.id);
-
-  return (
-    <AppShellPage size="fluid">
-      <PipelineView
-        slug={companySlug}
-        leads={leads}
-        locale={dateLocale}
-        canWrite={can(ctx.membership.role, "crm:write")}
-      />
-    </AppShellPage>
-  );
+/** Legacy CRM pipeline → unified commercial pipeline. */
+export default async function CrmPipelineRedirectPage({ params }: PageProps) {
+  const { companySlug, locale } = await params;
+  redirect({ href: ROUTES.commercialPipeline(companySlug), locale });
 }

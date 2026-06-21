@@ -14,7 +14,7 @@ export function AppShellContent({
   return (
     <main
       className={cn(
-        "relative flex-1 overflow-y-auto overscroll-contain bg-[#0A0A0A]",
+        "relative flex-1 overflow-y-auto overscroll-contain bg-background",
         padBottomNav && "pb-16 lg:pb-0",
         className,
       )}

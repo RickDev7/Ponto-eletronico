@@ -127,7 +127,10 @@ export default async function PersonnelPlanningPage({ params, searchParams }: Pa
         summaries={data.summaries}
         todayMinutes={data.todayMinutes}
         unassignedTasks={data.unassignedTasks}
+        unassignedTaskList={data.unassignedTaskList}
+        employeeSkillRows={data.employeeSkillRows}
         profitability={profitability}
+        vehicles={data.vehicles}
       />
     </AppShellPage>
   );

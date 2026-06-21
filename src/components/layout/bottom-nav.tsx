@@ -29,8 +29,8 @@ export function BottomNav({ slug, role }: BottomNavProps) {
       minRole: "employee" as MemberRole,
     },
     {
-      labelKey: "myTasks",
-      href: `/${slug}/minha-area`,
+      labelKey: "fieldExecution",
+      href: `/${slug}/field/schedule`,
       icon: UserCircle2,
       exact: false,
       minRole: "employee" as MemberRole,

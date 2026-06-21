@@ -11,6 +11,15 @@ import {
   type WorktimePolicyRow,
   type WorkforceEmployeeRow,
 } from "@/lib/workforce/workforce-data";
+import {
+  buildEmployeeServiceTypeMap,
+  type CompanySkillRow,
+  type EmployeeAvailabilityRow,
+  type EmployeeHistoryEntry,
+  type EmployeeSkillRow,
+} from "@/lib/workforce/employee-domain";
+import { computeEmployeeAvailability } from "@/lib/workforce/planning-data";
+import { loadActiveVehicleUsageByTasks, loadAvailableVehicles } from "@/lib/vehicles/load-vehicle-data";
 
 export async function loadWorkforceEmployees(companyId: string): Promise<WorkforceEmployeeRow[]> {
   await syncEmployeeAvailabilityStatuses(companyId);
@@ -27,10 +36,96 @@ export async function loadWorkforceEmployees(companyId: string): Promise<Workfor
   return (data ?? []) as WorkforceEmployeeRow[];
 }
 
+async function attachDocumentSignedUrls<T extends { storage_path?: string | null }>(
+  docs: T[],
+): Promise<Array<T & { signedUrl: string | null }>> {
+  if (!docs.length) return [];
+  const supabase = await createClient();
+  const paths = docs.map((d) => d.storage_path).filter(Boolean) as string[];
+
+  const urlMap: Record<string, string> = {};
+  await Promise.all(
+    paths.map(async (path) => {
+      const { data } = await supabase.storage
+        .from(STORAGE_BUCKETS.employeeDocuments)
+        .createSignedUrl(path, 60 * 60);
+      urlMap[path] = data?.signedUrl ?? "";
+    }),
+  );
+
+  return docs.map((d) => ({
+    ...d,
+    signedUrl: d.storage_path ? urlMap[d.storage_path] ?? null : null,
+  }));
+}
+
+export async function loadEmployeeHistory(
+  companyId: string,
+  employeeId: string,
+  vacations: Array<{ id: string; start_date: string; end_date: string; status: string; created_at?: string }>,
+  absences: Array<{ id: string; start_date: string; end_date: string; absence_type: string; created_at?: string }>,
+  documents: Array<{ id: string; title: string; doc_type: string; created_at?: string }>,
+): Promise<EmployeeHistoryEntry[]> {
+  const supabase = await createClient();
+  const { data: activityRows } = await supabase
+    .from("activity_logs")
+    .select("id, action, metadata, created_at")
+    .eq("company_id", companyId)
+    .eq("entity_type", "employee")
+    .eq("entity_id", employeeId)
+    .order("created_at", { ascending: false })
+    .limit(30);
+
+  const entries: EmployeeHistoryEntry[] = [];
+
+  for (const row of activityRows ?? []) {
+    entries.push({
+      id: `activity-${row.id}`,
+      kind: "activity",
+      action: row.action as string,
+      label: row.action as string,
+      createdAt: row.created_at as string,
+      metadata: row.metadata as Record<string, unknown> | null,
+    });
+  }
+
+  for (const v of vacations) {
+    entries.push({
+      id: `vacation-${v.id}`,
+      kind: "vacation",
+      action: v.status,
+      label: `${v.start_date} → ${v.end_date}`,
+      createdAt: v.created_at ?? v.start_date,
+    });
+  }
+
+  for (const a of absences) {
+    entries.push({
+      id: `absence-${a.id}`,
+      kind: "absence",
+      action: a.absence_type,
+      label: `${a.start_date} → ${a.end_date}`,
+      createdAt: a.created_at ?? a.start_date,
+    });
+  }
+
+  for (const d of documents) {
+    entries.push({
+      id: `document-${d.id}`,
+      kind: "document",
+      action: "uploaded",
+      label: d.title,
+      createdAt: d.created_at ?? new Date().toISOString(),
+      metadata: { doc_type: d.doc_type },
+    });
+  }
+
+  return entries.sort((a, b) => b.createdAt.localeCompare(a.createdAt)).slice(0, 40);
+}
+
 export async function loadEmployeeProfile(companyId: string, employeeId: string) {
   await syncEmployeeAvailabilityStatuses(companyId);
   const supabase = await createClient();
-  const today = new Date().toISOString().slice(0, 10);
 
   const [
     { data: employee },
@@ -40,6 +135,7 @@ export async function loadEmployeeProfile(companyId: string, employeeId: string)
     { data: timeEntries },
     { data: documents },
     { data: assignments },
+    { data: employeeSkills },
   ] = await Promise.all([
     supabase
       .from("employees")
@@ -90,39 +186,27 @@ export async function loadEmployeeProfile(companyId: string, employeeId: string)
       .eq("employee_id", employeeId)
       .eq("company_id", companyId)
       .limit(40),
+    supabase
+      .from("employee_skills")
+      .select("employee_id, skill_id, level, certified_at, skill:company_skills(id, name, service_type, color)")
+      .eq("employee_id", employeeId)
+      .eq("company_id", companyId),
   ]);
+
+  const vacationRows = vacations ?? [];
+  const absenceRows = absences ?? [];
+  const documentRows = documents ?? [];
 
   return {
     employee: employee ? { ...employee, team: teamMember } : null,
-    vacations: vacations ?? [],
-    absences: absences ?? [],
+    vacations: vacationRows,
+    absences: absenceRows,
     timeEntries: timeEntries ?? [],
-    documents: await attachDocumentSignedUrls(documents ?? []),
+    documents: await attachDocumentSignedUrls(documentRows),
     upcomingShifts: assignments ?? [],
+    skills: (employeeSkills ?? []) as EmployeeSkillRow[],
+    history: await loadEmployeeHistory(companyId, employeeId, vacationRows, absenceRows, documentRows),
   };
-}
-
-async function attachDocumentSignedUrls<T extends { storage_path?: string | null }>(
-  docs: T[],
-): Promise<Array<T & { signedUrl: string | null }>> {
-  if (!docs.length) return [];
-  const supabase = await createClient();
-  const paths = docs.map((d) => d.storage_path).filter(Boolean) as string[];
-
-  const urlMap: Record<string, string> = {};
-  await Promise.all(
-    paths.map(async (path) => {
-      const { data } = await supabase.storage
-        .from(STORAGE_BUCKETS.employeeDocuments)
-        .createSignedUrl(path, 60 * 60);
-      urlMap[path] = data?.signedUrl ?? "";
-    }),
-  );
-
-  return docs.map((d) => ({
-    ...d,
-    signedUrl: d.storage_path ? urlMap[d.storage_path] ?? null : null,
-  }));
 }
 
 export async function loadVacationRequests(companyId: string): Promise<VacationRequestRow[]> {
@@ -272,6 +356,10 @@ export async function loadShifts(companyId: string, from: string, to: string): P
 
   return base.map((shift) => ({
     ...shift,
+    vehicleId: null,
+    vehicleName: null,
+    vehiclePlate: null,
+    usageId: null,
     conflicts: detectShiftConflicts(
       shift,
       base,
@@ -280,6 +368,35 @@ export async function loadShifts(companyId: string, from: string, to: string): P
       weeklyByEmployee.get(shift.employeeId) ?? 40,
     ),
   }));
+}
+
+async function attachVehicleDataToShifts(
+  companyId: string,
+  shifts: ShiftRow[],
+): Promise<ShiftRow[]> {
+  const taskIds = shifts.map((s) => s.taskId);
+  const usageByTask = await loadActiveVehicleUsageByTasks(companyId, taskIds);
+
+  return shifts.map((shift) => {
+    const usage = usageByTask.get(shift.taskId);
+    if (!usage) return shift;
+    return {
+      ...shift,
+      vehicleId: usage.vehicleId,
+      vehicleName: usage.vehicleName,
+      vehiclePlate: usage.vehiclePlate,
+      usageId: usage.usageId,
+    };
+  });
+}
+
+export async function loadShiftsWithVehicles(
+  companyId: string,
+  from: string,
+  to: string,
+): Promise<ShiftRow[]> {
+  const shifts = await loadShifts(companyId, from, to);
+  return attachVehicleDataToShifts(companyId, shifts);
 }
 
 export async function loadTimesheetEntries(companyId: string, from: string, to: string) {
@@ -356,6 +473,86 @@ export async function loadWorkforceDashboardData(companyId: string) {
   return { employees, vacations, absences, shifts, todayMinutes, overtimeMinutes };
 }
 
+export async function loadCompanySkills(companyId: string): Promise<CompanySkillRow[]> {
+  const supabase = await createClient();
+  const { data } = await supabase
+    .from("company_skills")
+    .select("*")
+    .eq("company_id", companyId)
+    .order("name");
+  return (data ?? []) as CompanySkillRow[];
+}
+
+export async function loadEmployeeSkillsForCompany(companyId: string): Promise<EmployeeSkillRow[]> {
+  const supabase = await createClient();
+  const { data } = await supabase
+    .from("employee_skills")
+    .select("employee_id, skill_id, level, certified_at, company_id, skill:company_skills(id, name, service_type, color)")
+    .eq("company_id", companyId);
+  return (data ?? []) as EmployeeSkillRow[];
+}
+
+export function groupSkillsByEmployee(rows: EmployeeSkillRow[]): Map<string, EmployeeSkillRow[]> {
+  const map = new Map<string, EmployeeSkillRow[]>();
+  for (const row of rows) {
+    const list = map.get(row.employee_id) ?? [];
+    list.push(row);
+    map.set(row.employee_id, list);
+  }
+  return map;
+}
+
+export async function loadAvailabilityOverview(
+  companyId: string,
+  from: string,
+  to: string,
+): Promise<EmployeeAvailabilityRow[]> {
+  const [employees, vacations, absences, shifts, summaries, skillRows] = await Promise.all([
+    loadWorkforceEmployees(companyId),
+    loadVacationRequests(companyId),
+    loadAbsences(companyId),
+    loadShifts(companyId, from, to),
+    loadTimeAccountSummaries(companyId),
+    loadEmployeeSkillsForCompany(companyId),
+  ]);
+
+  const skillsByEmployee = groupSkillsByEmployee(skillRows);
+
+  return employees.map((emp) => {
+    const summary = summaries.find((s) => s.employeeId === emp.id);
+    const card = computeEmployeeAvailability(
+      emp,
+      shifts,
+      vacations,
+      absences,
+      from,
+      to,
+      summary?.istMinutes ?? 0,
+      (skillsByEmployee.get(emp.id) ?? []).map((s) => {
+        const skill = Array.isArray(s.skill) ? s.skill[0] : s.skill;
+        return skill?.name ?? "";
+      }).filter(Boolean),
+      (skillsByEmployee.get(emp.id) ?? []).flatMap((s) => {
+        const skill = Array.isArray(s.skill) ? s.skill[0] : s.skill;
+        return skill?.service_type ? [skill.service_type] : [];
+      }),
+    );
+    return {
+      employeeId: emp.id,
+      fullName: emp.full_name,
+      jobTitle: emp.job_title,
+      status: emp.status,
+      availability: card.availability,
+      workloadPct: card.workloadPct,
+      plannedMinutes: card.plannedMinutes,
+      contractMinutes: card.contractMinutes,
+      onVacationToday: card.onVacationToday,
+      onSickToday: card.onSickToday,
+      skillCount: skillsByEmployee.get(emp.id)?.length ?? 0,
+    };
+  });
+}
+
 export async function loadPlanningPageData(companyId: string, from: string, to: string) {
   const today = new Date().toISOString().slice(0, 10);
   const supabase = await createClient();
@@ -364,8 +561,10 @@ export async function loadPlanningPageData(companyId: string, from: string, to: 
     employees,
     vacations,
     absences,
-    shifts,
+    shiftsRaw,
     summaries,
+    skillRows,
+    vehicles,
     { data: todayCheckIns },
   ] = await Promise.all([
     loadWorkforceEmployees(companyId),
@@ -373,6 +572,8 @@ export async function loadPlanningPageData(companyId: string, from: string, to: 
     loadAbsences(companyId),
     loadShifts(companyId, from, to),
     loadTimeAccountSummaries(companyId),
+    loadEmployeeSkillsForCompany(companyId),
+    loadAvailableVehicles(companyId),
     supabase
       .from("check_ins")
       .select("check_in_at, check_out_at")
@@ -381,16 +582,21 @@ export async function loadPlanningPageData(companyId: string, from: string, to: 
       .lte("check_in_at", `${today}T23:59:59`),
   ]);
 
-  const { data: unassignedTasks } = await supabase
+  const shifts = await attachVehicleDataToShifts(companyId, shiftsRaw);
+
+  const { data: unassignedTaskRows } = await supabase
     .from("tasks")
-    .select("id")
+    .select("id, title, scheduled_date, status, service_type")
     .eq("company_id", companyId)
     .gte("scheduled_date", from)
     .lte("scheduled_date", to)
     .not("status", "eq", "cancelled");
 
   const assignedTaskIds = new Set(shifts.map((s) => s.taskId));
-  const unassigned = (unassignedTasks ?? []).filter((t) => !assignedTaskIds.has(t.id as string)).length;
+  const unassignedList = (unassignedTaskRows ?? []).filter(
+    (t) => !assignedTaskIds.has(t.id as string),
+  );
+  const unassigned = unassignedList.length;
 
   const todayMinutes = (todayCheckIns ?? []).reduce((acc, ci) => {
     if (!ci.check_out_at) return acc;
@@ -404,14 +610,27 @@ export async function loadPlanningPageData(companyId: string, from: string, to: 
     return a + 120;
   }, 0);
 
+  const skillsByEmployee = groupSkillsByEmployee(skillRows);
+  const employeeServiceTypes = buildEmployeeServiceTypeMap(skillRows);
+
   return {
     employees,
     vacations,
     absences,
     shifts,
     summaries,
+    skillsByEmployee,
+    employeeServiceTypes,
+    employeeSkillRows: skillRows,
     todayMinutes,
     weekPlannedMinutes,
     unassignedTasks: unassigned,
+    unassignedTaskList: unassignedList.map((t) => ({
+      id: t.id as string,
+      title: t.title as string,
+      scheduled_date: t.scheduled_date as string,
+      service_type: (t.service_type as string | null) ?? null,
+    })),
+    vehicles,
   };
 }

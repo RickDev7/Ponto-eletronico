@@ -1,5 +1,8 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
+import { getUserProfile } from "@/lib/auth/session";
+import { resolvePostAuthRedirect } from "@/lib/auth/post-auth-redirect";
+import type { AppLocale } from "@/i18n/routing";
 
 export async function GET(request: Request) {
   const { searchParams, origin } = new URL(request.url);
@@ -12,12 +15,10 @@ export async function GET(request: Request) {
     const { error } = await supabase.auth.exchangeCodeForSession(code);
 
     if (!error) {
-      // Password recovery redirect — go directly to update-password page
       if (type === "recovery" || next === "/update-password") {
         return NextResponse.redirect(`${origin}/update-password`);
       }
 
-      // Check if there's a pending invite for this user's email
       const {
         data: { user },
       } = await supabase.auth.getUser();
@@ -32,33 +33,29 @@ export async function GET(request: Request) {
           .maybeSingle();
 
         if (invite) {
-          // Redirect to invite acceptance page
           return NextResponse.redirect(
             `${origin}/invite/accept?id=${invite.id}`,
           );
         }
       }
 
-      // Normal login flow
-      if (next) {
-        return NextResponse.redirect(`${origin}${next}`);
-      }
-
-      // Check if user has a company
       if (user) {
+        const profile = await getUserProfile(user.id);
+        const locale: AppLocale = profile?.locale === "en" ? "en" : "pt";
+
         const { data: memberships } = await supabase
           .from("company_members")
-          .select("company:companies(slug)")
+          .select("role, company:companies(slug)")
           .eq("user_id", user.id)
-          .eq("status", "active")
-          .limit(1)
-          .maybeSingle();
+          .eq("status", "active");
 
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const slug = (memberships?.company as any)?.slug;
-        if (slug) {
-          return NextResponse.redirect(`${origin}/${slug}`);
-        }
+        const redirectPath = await resolvePostAuthRedirect(
+          user.id,
+          memberships ?? [],
+          { explicitRedirect: next },
+        );
+
+        return NextResponse.redirect(`${origin}/${locale}${redirectPath}`);
       }
 
       return NextResponse.redirect(`${origin}/onboarding`);

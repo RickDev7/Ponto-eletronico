@@ -1,33 +1,12 @@
-import { getLocale } from "next-intl/server";
-import { requireCompanyContext } from "@/lib/auth/guards";
-import { can } from "@/config/permissions";
-import { CrmDashboardView } from "@/components/features/crm/crm-dashboard-view";
-import { loadLeads, loadRecentLeadEvents } from "@/lib/crm/load-crm-data";
-import { AppShellPage } from "@/components/design-system/layout";
+import { redirect } from "@/i18n/navigation";
+import { ROUTES } from "@/config/constants";
 
 interface PageProps {
-  params: Promise<{ companySlug: string }>;
+  params: Promise<{ companySlug: string; locale: string }>;
 }
 
-export default async function CrmDashboardPage({ params }: PageProps) {
-  const { companySlug } = await params;
-  const ctx = await requireCompanyContext({ slug: companySlug, minRole: "supervisor" });
-  const locale = await getLocale();
-  const dateLocale = locale === "en" ? "en-US" : "pt-BR";
-  const [leads, activities] = await Promise.all([
-    loadLeads(ctx.company.id),
-    loadRecentLeadEvents(ctx.company.id),
-  ]);
-
-  return (
-    <AppShellPage size="fluid">
-      <CrmDashboardView
-        slug={companySlug}
-        leads={leads}
-        activities={activities}
-        locale={dateLocale}
-        canWrite={can(ctx.membership.role, "crm:write")}
-      />
-    </AppShellPage>
-  );
+/** Legacy CRM dashboard → unified Commercial hub. */
+export default async function CrmDashboardRedirect({ params }: PageProps) {
+  const { companySlug, locale } = await params;
+  redirect({ href: ROUTES.crm(companySlug), locale });
 }

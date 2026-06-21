@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { requireCompanyContext } from "@/lib/auth/guards";
 import { enforcePlanLimit } from "@/lib/billing/enforcement";
 import { createClient } from "@/lib/supabase/server";
+import { logTaskEvent } from "@/lib/operations/task-events";
 import { createTaskSchema, type CreateTaskInput } from "@/lib/validations/tasks";
 import { generateOccurrenceDates, type RecurrenceRule } from "@/lib/recurring/generator";
 import type { ActionResult } from "@/actions/auth/actions";
@@ -42,6 +43,14 @@ export async function createTask(
     .single();
 
   if (error) return { success: false, error: error.message };
+
+  await logTaskEvent(supabase, {
+    companyId: ctx.company.id,
+    taskId: data.id,
+    eventType: "created",
+    createdBy: ctx.profile.id,
+    message: "Visita criada manualmente",
+  });
 
   if (parsed.data.employeeIds?.length) {
     await supabase.from("task_assignments").insert(
@@ -195,15 +204,38 @@ export async function updateTaskStatus(
   taskId: string,
   status: TaskStatus,
 ): Promise<ActionResult> {
-  await requireCompanyContext({ slug });
+  const ctx = await requireCompanyContext({ slug });
   const supabase = await createClient();
   const { error } = await supabase
     .from("tasks")
     .update({ status })
-    .eq("id", taskId);
+    .eq("id", taskId)
+    .eq("company_id", ctx.company.id);
 
   if (error) return { success: false, error: error.message };
+
+  await logTaskEvent(supabase, {
+    companyId: ctx.company.id,
+    taskId,
+    eventType: "status_changed",
+    createdBy: ctx.profile.id,
+    message: status,
+    metadata: { status },
+  });
+
+  if (status === "completed") {
+    await logTaskEvent(supabase, {
+      companyId: ctx.company.id,
+      taskId,
+      eventType: "completed",
+      createdBy: ctx.profile.id,
+    });
+  }
+
   revalidatePath(`/${slug}/tasks`);
+  revalidatePath(`/${slug}/operations`);
+  revalidatePath(`/${slug}/operations/visits`);
+  revalidatePath(`/${slug}/operations/work-orders`);
   revalidatePath(`/${slug}`);
   return { success: true, data: undefined };
 }
@@ -281,16 +313,16 @@ export async function bulkUpdateTasks(
     schedule: "scheduled",
   };
 
-  const { count, error } = await supabase
+  const { data, error } = await supabase
     .from("tasks")
     .update({ status: statusMap[action] })
     .in("id", taskIds)
     .eq("company_id", ctx.company.id)
-    .select("id", { count: "exact", head: true });
+    .select("id");
 
   if (error) return { success: false, error: error.message };
 
   revalidatePath(`/${slug}/tasks`);
   revalidatePath(`/${slug}`);
-  return { success: true, data: { updated: count ?? taskIds.length } };
+  return { success: true, data: { updated: data?.length ?? 0 } };
 }

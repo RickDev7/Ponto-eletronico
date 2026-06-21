@@ -1,6 +1,7 @@
 import { getLocale } from "next-intl/server";
 import { requireCompanyContext } from "@/lib/auth/guards";
 import { ROUTES } from "@/config/constants";
+import { createClient } from "@/lib/supabase/server";
 import { OperationsSchedulingView } from "@/components/features/operations/operations-scheduling-view";
 import { loadSchedulingTasks } from "@/lib/operations/load-operations-data";
 import { AppShellPage } from "@/components/design-system/layout";
@@ -8,7 +9,7 @@ import { LOCALE_DATE_MAP } from "@/lib/i18n/metadata";
 
 interface PageProps {
   params: Promise<{ companySlug: string }>;
-  searchParams: Promise<{ view?: string; week?: string }>;
+  searchParams: Promise<{ view?: string; week?: string; mode?: string; month?: string; year?: string }>;
 }
 
 function weekStart(date: Date): Date {
@@ -30,8 +31,10 @@ export default async function OperationsSchedulingPage({ params, searchParams }:
   const locale = await getLocale();
   const dateLocale = LOCALE_DATE_MAP[locale] ?? "en-US";
 
+  const mode = sp.mode === "calendar" ? "calendar" : "list";
   const view = (sp.view === "day" || sp.view === "month" ? sp.view : "week") as "day" | "week" | "month";
   const baseDate = sp.week ? new Date(sp.week + "T00:00:00") : new Date();
+  const now = new Date();
 
   let from: string;
   let to: string;
@@ -78,7 +81,44 @@ export default async function OperationsSchedulingPage({ params, searchParams }:
     nextMonday.setDate(monday.getDate() + 7);
   }
 
-  const tasks = await loadSchedulingTasks(ctx.company.id, from, to);
+  const schedulingParams = { view, mode } as const;
+  const tasks = mode === "list" ? await loadSchedulingTasks(ctx.company.id, from, to) : [];
+
+  let calendarProps: {
+    year: number;
+    month: number;
+    today: string;
+    calendarTasks: Array<Record<string, unknown>>;
+  } | undefined;
+
+  if (mode === "calendar") {
+    const currentYear = parseInt(sp.year ?? String(now.getFullYear()), 10);
+    const currentMonth = parseInt(sp.month ?? String(now.getMonth() + 1), 10);
+    const firstDay = new Date(currentYear, currentMonth - 1, 1);
+    const lastDay = new Date(currentYear, currentMonth, 0);
+    const supabase = await createClient();
+    const { data: calendarTasks } = await supabase
+      .from("tasks")
+      .select(`
+        id, title, status, service_type, priority, scheduled_date, scheduled_start,
+        address:addresses(city),
+        assignments:task_assignments(
+          employee:employees(full_name)
+        )
+      `)
+      .eq("company_id", ctx.company.id)
+      .gte("scheduled_date", iso(firstDay))
+      .lte("scheduled_date", iso(lastDay))
+      .neq("status", "cancelled")
+      .order("scheduled_start", { ascending: true, nullsFirst: true });
+
+    calendarProps = {
+      year: currentYear,
+      month: currentMonth,
+      today: now.toISOString().slice(0, 10),
+      calendarTasks: (calendarTasks ?? []) as Array<Record<string, unknown>>,
+    };
+  }
 
   return (
     <AppShellPage size="fluid">
@@ -86,10 +126,12 @@ export default async function OperationsSchedulingPage({ params, searchParams }:
         slug={companySlug}
         tasks={tasks}
         view={view}
+        mode={mode}
         rangeLabel={rangeLabel}
-        prevHref={ROUTES.operationsScheduling(companySlug, { view, week: iso(prevMonday) })}
-        nextHref={ROUTES.operationsScheduling(companySlug, { view, week: iso(nextMonday) })}
-        todayHref={ROUTES.operationsScheduling(companySlug, { view })}
+        prevHref={ROUTES.operationsScheduling(companySlug, { ...schedulingParams, week: iso(prevMonday) })}
+        nextHref={ROUTES.operationsScheduling(companySlug, { ...schedulingParams, week: iso(nextMonday) })}
+        todayHref={ROUTES.operationsScheduling(companySlug, schedulingParams)}
+        calendar={calendarProps}
       />
     </AppShellPage>
   );

@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 import { redirect } from "@/i18n/navigation";
 import { ROUTES } from "@/config/constants";
+import { resolvePostAuthRedirect } from "@/lib/auth/post-auth-redirect";
+import { isPlatformAdmin } from "@/lib/auth/platform-guards";
 import { resolveMembershipCompany } from "@/lib/auth/resolve-company";
 import { getSession, getUserCompanies } from "@/lib/auth/session";
 import { SelectCompanyView } from "@/components/features/company/select-company-view";
@@ -13,19 +15,25 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function SelectCompanyPage() {
-  const user = await getSession();
-  if (!user) {
-    redirect(ROUTES.login);
+  const locale = await getLocale();
+  const sessionUser = await getSession();
+  const userId = sessionUser?.id;
+  if (!userId) {
+    redirect({ href: ROUTES.login, locale });
+    throw new Error("Auth required");
   }
 
-  const memberships = await getUserCompanies(user.id);
+  if (await isPlatformAdmin(userId)) {
+    redirect({ href: ROUTES.superAdmin, locale });
+  }
+
+  const memberships = await getUserCompanies(userId);
   if (memberships.length === 0) {
-    redirect(ROUTES.onboarding);
+    redirect({ href: ROUTES.onboarding, locale });
   }
   if (memberships.length === 1) {
-    const company = resolveMembershipCompany(memberships[0]!.company);
-    if (company?.slug) redirect(ROUTES.dashboard(company.slug));
-    redirect(ROUTES.onboarding);
+    const href = await resolvePostAuthRedirect(userId, memberships);
+    redirect({ href, locale });
   }
 
   const companies = memberships
@@ -43,7 +51,7 @@ export default async function SelectCompanyPage() {
     .filter((item): item is NonNullable<typeof item> => item !== null);
 
   return (
-    <div className="relative flex min-h-svh flex-col bg-zinc-950">
+    <div className="relative flex min-h-svh flex-col bg-background">
       <OnboardingAuthBar />
       <div className="flex flex-1 items-center justify-center px-4 pb-12 pt-20">
         <SelectCompanyView companies={companies} />

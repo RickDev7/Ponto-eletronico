@@ -6,6 +6,7 @@ import { Link, useRouter } from "@/i18n/navigation";
 import { setActiveCompany } from "@/actions/company/actions";
 import { ROUTES } from "@/config/constants";
 import type { MemberRole } from "@/types";
+import { isClientRole } from "@/types/enums";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 
@@ -26,9 +27,14 @@ export function SelectCompanyView({ companies }: SelectCompanyViewProps) {
   const tRoles = useTranslations("roles");
   const router = useRouter();
 
-  async function openCompany(slug: string, companyId: string) {
+  async function openCompany(slug: string, companyId: string, role: MemberRole) {
     await setActiveCompany(companyId);
-    router.push(ROUTES.dashboard(slug));
+    const href = isClientRole(role)
+      ? ROUTES.clientPortal(slug)
+      : role === "employee"
+        ? ROUTES.mobile(slug)
+        : ROUTES.dashboard(slug);
+    router.push(href);
   }
 
   return (
@@ -46,7 +52,7 @@ export function SelectCompanyView({ companies }: SelectCompanyViewProps) {
           <li key={item.id}>
             <button
               type="button"
-              onClick={() => openCompany(item.slug, item.id)}
+              onClick={() => openCompany(item.slug, item.id, item.role)}
               className="group flex w-full items-center gap-3 rounded-xl border border-border/70 bg-card px-4 py-3 text-left transition-colors hover:border-primary/40 hover:bg-muted/30"
             >
               <div className="flex size-10 shrink-0 items-center justify-center rounded-lg border border-border bg-muted/30 text-sm font-semibold text-muted-foreground">

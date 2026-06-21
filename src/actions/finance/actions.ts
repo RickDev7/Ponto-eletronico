@@ -15,28 +15,40 @@ import {
   createContractSchema,
   createInvoiceSchema,
   createPaymentSchema,
+  createExpenseSchema,
   createQuoteSchema,
   contractStatusSchema,
   updateQuoteSchema,
   type CreateContractInput,
   type CreateInvoiceInput,
   type CreatePaymentInput,
+  type CreateExpenseInput,
   type CreateQuoteInput,
   type UpdateQuoteInput,
 } from "@/lib/validations/finance";
 import type { ActionResult } from "@/actions/auth/actions";
+import { buildInvoiceFromContract, type InvoiceEventType } from "@/lib/finance/invoicing-engine";
+import { advanceDateByFrequency } from "@/lib/finance/utils";
 import { linkQuoteToLeadAction, onQuoteAcceptedForLeadAction } from "@/actions/crm/actions";
 import { generateTasksFromContractAction } from "@/actions/operations/actions";
 import { emitAutomationEvent } from "@/lib/automations/engine";
 
 function financePaths(slug: string) {
   return [
+    `/${slug}/commercial`,
+    `/${slug}/commercial/pipeline`,
+    `/${slug}/crm`,
     `/${slug}/finance`,
     `/${slug}/finance/quotes`,
     `/${slug}/finance/contracts`,
     `/${slug}/finance/invoices`,
     `/${slug}/finance/payments`,
+    `/${slug}/finance/revenue`,
     `/${slug}/finance/cashflow`,
+    `/${slug}/finance/costs`,
+    `/${slug}/finance/profitability`,
+    `/${slug}/finance/forecast`,
+    `/${slug}/clients`,
   ];
 }
 
@@ -430,6 +442,14 @@ export async function updateQuoteStatusAction(
 ): Promise<ActionResult> {
   const ctx = await requireCompanyContext({ slug, minRole: "supervisor" });
   const supabase = await createClient();
+
+  const { data: quoteBefore } = await supabase
+    .from("quotes")
+    .select("quote_number, total_cents, lead_id, client_id")
+    .eq("id", quoteId)
+    .eq("company_id", ctx.company.id)
+    .single();
+
   const { error } = await supabase
     .from("quotes")
     .update({ status })
@@ -453,7 +473,53 @@ export async function updateQuoteStatusAction(
     });
   }
 
+  if (status === "sent") {
+    void emitAutomationEvent({
+      companyId: ctx.company.id,
+      slug,
+      trigger: "quote.sent",
+      payload: {
+        quoteId,
+        quoteNumber: quoteBefore?.quote_number,
+        totalCents: quoteBefore?.total_cents,
+        leadId: quoteBefore?.lead_id,
+        entityType: "quote",
+        entityId: quoteId,
+      },
+    }).catch(() => undefined);
+  }
+
+  if (status === "under_review") {
+    void emitAutomationEvent({
+      companyId: ctx.company.id,
+      slug,
+      trigger: "quote.submitted",
+      payload: {
+        quoteId,
+        quoteNumber: quoteBefore?.quote_number,
+        totalCents: quoteBefore?.total_cents,
+        leadId: quoteBefore?.lead_id,
+        entityType: "quote",
+        entityId: quoteId,
+      },
+    }).catch(() => undefined);
+  }
+
   if (status === "accepted") {
+    void emitAutomationEvent({
+      companyId: ctx.company.id,
+      slug,
+      trigger: "quote.approved",
+      payload: {
+        quoteId,
+        quoteNumber: quoteBefore?.quote_number,
+        totalCents: quoteBefore?.total_cents,
+        leadId: quoteBefore?.lead_id,
+        clientId: quoteBefore?.client_id,
+        entityType: "quote",
+        entityId: quoteId,
+      },
+    }).catch(() => undefined);
     await onQuoteAcceptedForLeadAction(slug, quoteId);
   }
 
@@ -474,12 +540,34 @@ export async function convertQuoteToContractAction(
     .eq("company_id", ctx.company.id)
     .single();
 
-  if (!quote?.client_id) {
-    return { success: false, error: "Quote must be linked to a client" };
+  if (!quote) {
+    return { success: false, error: "Quote not found" };
+  }
+
+  let clientId = quote.client_id as string | null;
+  if (!clientId && quote.lead_id) {
+    const { data: lead } = await supabase
+      .from("leads")
+      .select("converted_client_id")
+      .eq("id", quote.lead_id)
+      .eq("company_id", ctx.company.id)
+      .single();
+    if (lead?.converted_client_id) {
+      clientId = lead.converted_client_id;
+      await supabase
+        .from("quotes")
+        .update({ client_id: clientId })
+        .eq("id", quoteId)
+        .eq("company_id", ctx.company.id);
+    }
+  }
+
+  if (!clientId) {
+    return { success: false, error: "Quote must be linked to a client — approve the quote first" };
   }
 
   const contractResult = await createContractAction(slug, {
-    clientId: quote.client_id,
+    clientId,
     clientName: quote.client_name,
     clientCompany: quote.client_company ?? undefined,
     clientEmail: quote.client_email ?? "",
@@ -501,16 +589,41 @@ export async function convertQuoteToContractAction(
     taxRate: Number(quote.tax_rate),
     discountCents: quote.discount_cents ?? 0,
     notes: quote.notes ?? undefined,
+    autoRenew: true,
+    renewalNoticeDays: 30,
+    autoGenerateInvoice: true,
+    autoSendEmail: false,
+    autoGeneratePdf: true,
+    paymentReminder: true,
     isActive: true,
   });
 
   if (!contractResult.success) return contractResult;
 
   await supabase
+    .from("contracts")
+    .update({
+      quote_id: quoteId,
+      lead_id: quote.lead_id ?? null,
+    })
+    .eq("id", contractResult.data.id)
+    .eq("company_id", ctx.company.id);
+
+  await supabase
     .from("quotes")
     .update({ status: "accepted", contract_id: contractResult.data.id })
     .eq("id", quoteId)
     .eq("company_id", ctx.company.id);
+
+  if (quote.lead_id) {
+    await supabase.from("lead_events").insert({
+      company_id: ctx.company.id,
+      lead_id: quote.lead_id,
+      event_type: "contract_created",
+      message: contractResult.data.id,
+      created_by: ctx.profile.id,
+    });
+  }
 
   await logQuoteEvent(supabase, {
     companyId: ctx.company.id,
@@ -553,6 +666,87 @@ async function logContractEvent(
     message: params.message ?? null,
     created_by: params.createdBy ?? null,
   });
+}
+
+async function logInvoiceEvent(
+  supabase: Awaited<ReturnType<typeof createClient>>,
+  params: {
+    companyId: string;
+    invoiceId: string;
+    eventType: InvoiceEventType;
+    createdBy?: string | null;
+    message?: string;
+  },
+) {
+  await supabase.from("invoice_events").insert({
+    company_id: params.companyId,
+    invoice_id: params.invoiceId,
+    event_type: params.eventType,
+    message: params.message ?? null,
+    created_by: params.createdBy ?? null,
+  });
+}
+
+async function insertInvoiceFromDraft(
+  supabase: Awaited<ReturnType<typeof createClient>>,
+  ctx: Awaited<ReturnType<typeof requireCompanyContext>>,
+  params: {
+    clientId: string | null;
+    contractId: string | null;
+    draft: ReturnType<typeof buildInvoiceFromContract>;
+    invoiceNumber: string;
+  },
+) {
+  const { draft } = params;
+  const { data: invoice, error } = await supabase
+    .from("invoices")
+    .insert({
+      company_id: ctx.company.id,
+      client_id: params.clientId,
+      contract_id: params.contractId,
+      invoice_number: params.invoiceNumber,
+      status: "draft",
+      kind: draft.kind,
+      issue_date: draft.issueDate,
+      due_date: draft.dueDate,
+      period_start: draft.periodStart,
+      period_end: draft.periodEnd,
+      client_name: draft.clientName,
+      client_company: draft.clientCompany,
+      client_email: draft.clientEmail,
+      client_phone: draft.clientPhone,
+      subtotal_cents: draft.subtotalCents,
+      tax_rate: draft.taxRate,
+      tax_cents: draft.taxCents,
+      total_cents: draft.totalCents,
+      notes: draft.notes,
+      bank_details: draft.bankDetails,
+      auto_generated: draft.autoGenerated,
+    })
+    .select("id")
+    .single();
+
+  if (error || !invoice) {
+    return { success: false as const, error: error?.message ?? "Failed" };
+  }
+
+  const { error: itemsError } = await supabase.from("invoice_items").insert(
+    draft.lineItems.map((item, index) => ({
+      company_id: ctx.company.id,
+      invoice_id: invoice.id,
+      description: item.description,
+      quantity: item.quantity,
+      unit_price_cents: item.unitPriceCents,
+      line_total_cents: item.lineTotalCents,
+      sort_order: index,
+    })),
+  );
+
+  if (itemsError) {
+    return { success: false as const, error: itemsError.message };
+  }
+
+  return { success: true as const, id: invoice.id };
 }
 
 function mapContractItems(input: CreateContractInput["items"]) {
@@ -920,6 +1114,7 @@ export async function createInvoiceAction(
       contract_id: parsed.data.contractId ?? null,
       invoice_number: invoiceNumber,
       status: "draft",
+      kind: "one_time",
       issue_date: parsed.data.issueDate,
       due_date: parsed.data.dueDate,
       period_start: parsed.data.periodStart ?? null,
@@ -953,8 +1148,123 @@ export async function createInvoiceAction(
   );
 
   if (itemsError) return { success: false, error: itemsError.message };
+
+  await logInvoiceEvent(supabase, {
+    companyId: ctx.company.id,
+    invoiceId: invoice.id,
+    eventType: "created",
+    createdBy: ctx.profile.id,
+    message: invoiceNumber,
+  });
+
   revalidateFinance(slug);
   return { success: true, data: { id: invoice.id } };
+}
+
+export async function generateInvoiceFromContractAction(
+  slug: string,
+  contractId: string,
+  mode: "recurring" | "one_time" = "one_time",
+): Promise<ActionResult<{ id: string }>> {
+  const ctx = await requireCompanyContext({ slug, minRole: "supervisor" });
+  const supabase = await createClient();
+
+  const { data: contract } = await supabase
+    .from("contracts")
+    .select("*, items:contract_items(*)")
+    .eq("id", contractId)
+    .eq("company_id", ctx.company.id)
+    .single();
+
+  if (!contract) return { success: false, error: "Contract not found" };
+  if (!contract.is_active) return { success: false, error: "Contract is not active" };
+
+  const { data: client } = await supabase
+    .from("clients")
+    .select("name, contact_name, email, phone")
+    .eq("id", contract.client_id)
+    .single();
+
+  if (!client) return { success: false, error: "Client not found" };
+
+  const draft = buildInvoiceFromContract(
+    {
+      ...contract,
+      items: (contract.items as Array<{
+        description: string;
+        quantity: number;
+        unit_price_cents: number;
+        line_total_cents: number;
+        sort_order?: number;
+      }>) ?? [],
+    },
+    client,
+    {
+      mode,
+      periodStart: mode === "recurring" ? contract.next_invoice_date : null,
+    },
+  );
+
+  if (mode === "recurring" && !draft.periodStart) {
+    return { success: false, error: "No billing date scheduled on contract" };
+  }
+
+  if (mode === "recurring" && draft.periodStart) {
+    const { data: existing } = await supabase
+      .from("invoices")
+      .select("id")
+      .eq("contract_id", contractId)
+      .eq("period_start", draft.periodStart)
+      .eq("auto_generated", true)
+      .maybeSingle();
+    if (existing) {
+      return { success: false, error: "Invoice already generated for this period" };
+    }
+  }
+
+  const invoiceNumber = await nextDocumentNumber(supabase, ctx.company.id, "invoice");
+  const inserted = await insertInvoiceFromDraft(supabase, ctx, {
+    clientId: contract.client_id,
+    contractId: contract.id,
+    draft,
+    invoiceNumber,
+  });
+
+  if (!inserted.success) return { success: false, error: inserted.error };
+
+  await logInvoiceEvent(supabase, {
+    companyId: ctx.company.id,
+    invoiceId: inserted.id,
+    eventType: mode === "recurring" ? "recurring_generated" : "created",
+    createdBy: ctx.profile.id,
+    message: invoiceNumber,
+  });
+
+  await logContractEvent(supabase, {
+    companyId: ctx.company.id,
+    contractId: contract.id,
+    eventType: "invoice_generated",
+    createdBy: ctx.profile.id,
+    message: invoiceNumber,
+  });
+
+  if (
+    mode === "recurring" &&
+    draft.periodStart &&
+    contract.next_invoice_date === draft.periodStart
+  ) {
+    const next = advanceDateByFrequency(
+      new Date(contract.next_invoice_date),
+      contract.frequency as import("@/lib/finance/utils").ContractFrequency,
+    );
+    await supabase
+      .from("contracts")
+      .update({ next_invoice_date: next.toISOString().slice(0, 10) })
+      .eq("id", contract.id);
+  }
+
+  revalidateFinance(slug);
+  return { success: true, data: { id: inserted.id } };
 }
 
 export async function duplicateInvoiceAction(
@@ -977,9 +1287,10 @@ export async function duplicateInvoiceAction(
     description: string;
     quantity: number;
     unit_price_cents: number;
+    discount_percent?: number;
   }>) ?? [];
 
-  return createInvoiceAction(slug, {
+  const result = await createInvoiceAction(slug, {
     clientId: inv.client_id,
     contractId: inv.contract_id,
     clientName: inv.client_name,
@@ -991,14 +1302,28 @@ export async function duplicateInvoiceAction(
     periodStart: inv.period_start ?? undefined,
     periodEnd: inv.period_end ?? undefined,
     taxRate: Number(inv.tax_rate),
+    discountCents: inv.discount_cents ?? 0,
     notes: inv.notes ?? undefined,
     bankDetails: inv.bank_details ?? undefined,
     items: items.map((i) => ({
       description: i.description,
       quantity: Number(i.quantity),
       unitPriceCents: i.unit_price_cents,
+      discountPercent: Number(i.discount_percent ?? 0),
     })),
   });
+
+  if (result.success) {
+    await logInvoiceEvent(supabase, {
+      companyId: ctx.company.id,
+      invoiceId: result.data.id,
+      eventType: "duplicated",
+      createdBy: ctx.profile.id,
+      message: invoiceId,
+    });
+  }
+
+  return result;
 }
 
 export async function deleteInvoiceAction(
@@ -1044,6 +1369,52 @@ export async function updateInvoiceStatusAction(
     .eq("id", invoiceId)
     .eq("company_id", ctx.company.id);
   if (error) return { success: false, error: error.message };
+
+  const eventMap: Partial<Record<typeof status, InvoiceEventType>> = {
+    sent: "sent",
+    paid: "paid",
+    partial: "partial",
+    overdue: "overdue",
+    cancelled: "cancelled",
+  };
+  const eventType = eventMap[status];
+  if (eventType) {
+    await logInvoiceEvent(supabase, {
+      companyId: ctx.company.id,
+      invoiceId,
+      eventType,
+      createdBy: ctx.profile.id,
+    });
+  }
+
+  if (status === "sent") {
+    const { data: invoice } = await supabase
+      .from("invoices")
+      .select("invoice_number, total_cents, client_name, client_email, client_phone, client_id")
+      .eq("id", invoiceId)
+      .eq("company_id", ctx.company.id)
+      .single();
+
+    if (invoice) {
+      void emitAutomationEvent({
+        companyId: ctx.company.id,
+        slug,
+        trigger: "invoice.sent",
+        payload: {
+          invoiceId,
+          invoiceNumber: invoice.invoice_number,
+          totalCents: invoice.total_cents,
+          clientName: invoice.client_name,
+          clientEmail: invoice.client_email,
+          clientPhone: invoice.client_phone,
+          clientId: invoice.client_id,
+          entityType: "invoice",
+          entityId: invoiceId,
+        },
+      }).catch(() => undefined);
+    }
+  }
+
   revalidateFinance(slug);
   return { success: true, data: undefined };
 }
@@ -1061,7 +1432,7 @@ export async function createPaymentAction(
   const supabase = await createClient();
   const { data: invoice } = await supabase
     .from("invoices")
-    .select("total_cents, amount_paid_cents")
+    .select("total_cents, amount_paid_cents, contract_id")
     .eq("id", parsed.data.invoiceId)
     .eq("company_id", ctx.company.id)
     .single();
@@ -1098,16 +1469,68 @@ export async function createPaymentAction(
     .update({ amount_paid_cents: newPaid, status: newStatus })
     .eq("id", parsed.data.invoiceId);
 
+  await logInvoiceEvent(supabase, {
+    companyId: ctx.company.id,
+    invoiceId: parsed.data.invoiceId,
+    eventType: newStatus === "paid" ? "paid" : "payment_received",
+    createdBy: ctx.profile.id,
+    message: String(parsed.data.amountCents),
+  });
+
+  if (invoice.contract_id) {
+    await logContractEvent(supabase, {
+      companyId: ctx.company.id,
+      contractId: invoice.contract_id,
+      eventType: "payment_received",
+      createdBy: ctx.profile.id,
+      message: String(parsed.data.amountCents),
+    });
+  }
+
   revalidateFinance(slug);
   return { success: true, data: { id: payment.id } };
+}
+
+export async function recordExpenseAction(
+  slug: string,
+  input: CreateExpenseInput,
+): Promise<ActionResult<{ id: string }>> {
+  const ctx = await requireCompanyContext({ slug, minRole: "supervisor" });
+  const parsed = createExpenseSchema.safeParse(input);
+  if (!parsed.success) {
+    return { success: false, error: parsed.error.issues[0]?.message ?? "Invalid" };
+  }
+
+  const supabase = await createClient();
+  const { data: expense, error } = await supabase
+    .from("finance_expenses")
+    .insert({
+      company_id: ctx.company.id,
+      description: parsed.data.description,
+      amount_cents: parsed.data.amountCents,
+      expense_date: parsed.data.expenseDate,
+      category: parsed.data.category,
+      vendor: parsed.data.vendor ?? null,
+      reference: parsed.data.reference ?? null,
+      created_by: ctx.profile.id,
+    })
+    .select("id")
+    .single();
+
+  if (error || !expense) return { success: false, error: error?.message ?? "Failed" };
+
+  revalidateFinance(slug);
+  return { success: true, data: { id: expense.id } };
 }
 
 export async function generateRecurringInvoicesAction(
   slug: string,
 ): Promise<ActionResult<{ count: number }>> {
-  await requireCompanyContext({ slug, minRole: "supervisor" });
+  const ctx = await requireCompanyContext({ slug, minRole: "supervisor" });
   const supabase = await createClient();
-  const { data, error } = await supabase.rpc("generate_recurring_invoices");
+  const { data, error } = await supabase.rpc("generate_recurring_invoices_for_company", {
+    p_company_id: ctx.company.id,
+  });
   if (error) return { success: false, error: error.message };
   revalidateFinance(slug);
   return { success: true, data: { count: (data as number) ?? 0 } };

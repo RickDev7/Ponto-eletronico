@@ -1,6 +1,10 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { evaluateConditions } from "@/lib/automations/conditions";
 import { executeAutomationAction } from "@/lib/automations/execute-action";
+import {
+  recordAutomationDedupe,
+  shouldSkipAutomationDedupe,
+} from "@/lib/automations/idempotency";
 import type {
   AutomationEventPayload,
   AutomationRuleRow,
@@ -24,6 +28,23 @@ export async function runAutomationRule(
   payload: AutomationEventPayload,
   slug?: string,
 ): Promise<{ runId: string; status: "success" | "failed" | "skipped" }> {
+  if (await shouldSkipAutomationDedupe(supabase, rule, payload)) {
+    const { data: skipped } = await supabase
+      .from("automation_runs")
+      .insert({
+        company_id: rule.company_id,
+        rule_id: rule.id,
+        trigger_type: rule.trigger_type,
+        trigger_payload: payload,
+        status: "skipped",
+        error_message: "dedupe",
+        completed_at: new Date().toISOString(),
+      })
+      .select("id")
+      .single();
+    return { runId: skipped?.id ?? "", status: "skipped" };
+  }
+
   if (!evaluateConditions(rule.conditions, payload)) {
     const { data: skipped } = await supabase
       .from("automation_runs")
@@ -71,6 +92,8 @@ export async function runAutomationRule(
       .from("automation_runs")
       .update({ status: "success", completed_at: new Date().toISOString() })
       .eq("id", run.id);
+
+    await recordAutomationDedupe(supabase, rule, payload);
 
     return { runId: run.id, status: "success" };
   } catch (err) {

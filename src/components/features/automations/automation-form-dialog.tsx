@@ -22,6 +22,7 @@ import {
   createAutomationRuleSchema,
   type CreateAutomationRuleInput,
 } from "@/lib/validations/automations";
+import { AutomationWorkflowPipeline } from "@/components/features/automations/automation-workflow-pipeline";
 import { OPERATIONS_FORM_CLASS } from "@/components/shared";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -135,6 +136,17 @@ export function AutomationFormDialog({
 
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className={OPERATIONS_FORM_CLASS}>
+            <div className="rounded-lg border border-border/60 bg-muted/20 p-4">
+              <p className="mb-3 text-[11px] font-medium uppercase tracking-wide text-muted-foreground">
+                {t("flow.preview")}
+              </p>
+              <AutomationWorkflowPipeline
+                triggerType={triggerType}
+                conditions={form.watch("conditions")}
+                actions={form.watch("actions")}
+              />
+            </div>
+
             <FormField
               control={form.control}
               name="name"
