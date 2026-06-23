@@ -3,6 +3,7 @@ import "server-only";
 import { ROUTES, isTenantWorkspacePath } from "@/config/constants";
 import { resolveMembershipCompany } from "@/lib/auth/resolve-company";
 import { isPlatformAdmin } from "@/lib/auth/platform-guards";
+import { isInvalidAppHref, sanitizeAppHref } from "@/lib/navigation/sanitize-href";
 import type { MemberRole } from "@/types/enums";
 import { isClientRole } from "@/types/enums";
 
@@ -24,8 +25,10 @@ export async function resolvePostAuthRedirect(
   memberships: MembershipForRedirect[],
   options?: { explicitRedirect?: string | null },
 ): Promise<string> {
-  if (options?.explicitRedirect) {
-    const bare = options.explicitRedirect.split("?")[0] ?? options.explicitRedirect;
+  const explicitRedirect = options?.explicitRedirect;
+  if (explicitRedirect && !isInvalidAppHref(explicitRedirect)) {
+    const safeRedirect = sanitizeAppHref(explicitRedirect);
+    const bare = safeRedirect.split("?")[0] ?? safeRedirect;
     if (
       bare.startsWith("/super-admin") ||
       bare === "/platform" ||
@@ -39,8 +42,27 @@ export async function resolvePostAuthRedirect(
           .replace(/^\/platform/, "/super-admin")
           .replace(/^\/admin/, "/super-admin");
       }
-    } else if (!isTenantWorkspacePath(bare) || !(await isPlatformAdmin(userId))) {
-      return options.explicitRedirect;
+    } else if (isTenantWorkspacePath(bare)) {
+      const slug = bare.split("/").filter(Boolean)[0];
+      const isMobileRoute =
+        bare === ROUTES.mobile(slug!) ||
+        bare.startsWith(`${ROUTES.mobile(slug!)}/`);
+      if (isMobileRoute && slug) {
+        const membership = memberships.find((m) => {
+          const company = resolveMembershipCompany(m.company);
+          return company?.slug === slug;
+        });
+        if (membership && membership.role !== "employee") {
+          return ROUTES.mobileAccess(slug);
+        }
+      }
+      return safeRedirect;
+    } else if (
+      bare === ROUTES.selectCompany ||
+      bare === ROUTES.onboarding ||
+      bare.startsWith("/invite/")
+    ) {
+      return safeRedirect;
     }
   }
 

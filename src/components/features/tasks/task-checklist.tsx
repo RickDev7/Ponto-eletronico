@@ -22,6 +22,9 @@ interface TaskChecklistProps {
   taskId: string;
   items: ChecklistItem[];
   canEdit: boolean;
+  offlineSupport?: {
+    onToggleOffline: (itemId: string, checked: boolean) => Promise<void>;
+  };
 }
 
 export function TaskChecklist({
@@ -29,6 +32,7 @@ export function TaskChecklist({
   taskId,
   items,
   canEdit,
+  offlineSupport,
 }: TaskChecklistProps) {
   const t = useTranslations("tasks");
   const tCommon = useTranslations("common");
@@ -69,9 +73,28 @@ export function TaskChecklist({
 
   function handleToggle(item: ChecklistItem) {
     startTransition(async () => {
-      updateOptimistic({ type: "toggle", id: item.id, checked: !item.is_checked });
-      const result = await toggleChecklistItem(slug, item.id, taskId, !item.is_checked);
-      if (!result.success) toast.error(result.error);
+      const nextChecked = !item.is_checked;
+      updateOptimistic({ type: "toggle", id: item.id, checked: nextChecked });
+
+      if (!navigator.onLine && offlineSupport) {
+        await offlineSupport.onToggleOffline(item.id, nextChecked);
+        return;
+      }
+
+      try {
+        const result = await toggleChecklistItem(slug, item.id, taskId, nextChecked);
+        if (!result.success) {
+          updateOptimistic({ type: "toggle", id: item.id, checked: item.is_checked });
+          toast.error(result.error);
+        }
+      } catch {
+        if (offlineSupport) {
+          await offlineSupport.onToggleOffline(item.id, nextChecked);
+        } else {
+          updateOptimistic({ type: "toggle", id: item.id, checked: item.is_checked });
+          toast.error(tCommon("error"));
+        }
+      }
     });
   }
 

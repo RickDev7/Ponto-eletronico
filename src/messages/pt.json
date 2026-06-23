@@ -83,6 +83,14 @@
     }
   },
   "navigation": {
+    "sectionOverview": "Visão geral",
+    "sectionCommercial": "Comercial",
+    "sectionOperations": "Operações",
+    "sectionWorkforce": "Equipes",
+    "sectionResources": "Recursos",
+    "sectionFinance": "Financeiro",
+    "sectionInsights": "Análises",
+    "sectionSystem": "Sistema",
     "dashboard": "Painel",
     "myTasks": "Minhas tarefas",
     "fieldExecution": "Campo",
@@ -114,6 +122,7 @@
     "workforceShifts": "Escalas",
     "workforceAbsences": "Ausências",
     "workforceVacations": "Férias",
+    "workforceMessages": "Mensagens",
     "workforceTimeAccount": "Banco de Horas",
     "workforceTimesheets": "Timesheets",
     "workforceWorktime": "Jornadas",
@@ -1879,9 +1888,25 @@
     },
     "branding": {
       "tagline": "Gerencie serviços de campo com eficiência.",
-      "headline": "Gestão operacional feita para empresas de serviço.",
+      "eyebrow": "Plataforma enterprise para serviços de campo",
+      "headline": "Gerencie todo o seu negócio de serviços em uma plataforma.",
+      "valueDescription": "Planeje equipes, gerencie clientes, crie orçamentos, acompanhe operações e automatize faturamento.",
       "featuresTitle": "Tudo o que sua operação precisa",
       "description": "Gerencie clientes, propriedades, colaboradores e operações diárias a partir de um único workspace.",
+      "features": {
+        "workforcePlanning": "Planejamento de Equipes",
+        "clientManagement": "Gestão de Clientes",
+        "financeBilling": "Financeiro & Faturamento",
+        "serviceOperations": "Operações de Serviço",
+        "employeeMobile": "App Mobile do Colaborador",
+        "clientPortal": "Portal do Cliente"
+      },
+      "kpis": {
+        "todayServices": "Serviços Hoje",
+        "employeesScheduled": "Colaboradores Agendados",
+        "revenueMonth": "Receita do Mês",
+        "openTasks": "Tarefas Abertas"
+      },
       "multiTenant": "Multi-tenant",
       "offline": "Funciona offline",
       "gdpr": "Conforme LGPD",
@@ -2223,6 +2248,7 @@
   "landing": {
     "nav": {
       "features": "Recursos",
+      "product": "Produto",
       "services": "Setores",
       "pricing": "Preços",
       "demo": "Demo",
@@ -2231,40 +2257,50 @@
       "register": "Começar grátis"
     },
     "hero": {
-      "badge": "Para empresas de serviços e facility management",
-      "title": "Gerencie todo o seu negócio de serviços em uma única plataforma",
-      "description": "Planeje equipas, execute operações no terreno, fature clientes e ofereça um portal profissional — tudo integrado para empresas de limpeza, manutenção e gestão de instalações.",
+      "badge": "Para limpeza, facility, jardinagem e empresas de serviço",
+      "title": "Gerencie todo o seu negócio de serviços em uma plataforma.",
+      "description": "Gerencie equipes, clientes, ordens de serviço, planeamento, faturamento e comunicação com clientes — sem planilhas, papelada ou caos no WhatsApp.",
       "ctaPrimary": "Começar teste grátis",
       "ctaSecondary": "Agendar demo",
-      "footnote": "Sem cartão de crédito · Configuração em minutos · Suporte em português",
-      "screenshotAlt": "Painel de controlo operacional do FeldOps"
+      "footnote": "Sem cartão de crédito · Configuração em minutos · Suporte humano",
+      "screenshotAlt": "Painel operacional FeldOps",
+      "industries": [
+        "Limpeza",
+        "Facility Management",
+        "Manutenção Predial",
+        "Jardinagem",
+        "Pintura",
+        "Construção"
+      ],
+      "kpis": {
+        "todayServices": "Serviços Hoje",
+        "employeesScheduled": "Colaboradores Agendados",
+        "revenueMonth": "Receita do Mês",
+        "openTasks": "Tarefas Abertas"
+      }
     },
     "trustedBy": {
-      "title": "Confiado por empresas de serviços em toda a Europa",
-      "subtitle": "Mais de 500 empresas de limpeza, facility management e manutenção já digitalizaram suas operações com o FeldOps.",
-      "logos": ["CleanPro", "FacilityOne", "Maintex", "ServiceHub", "NordClean"]
+      "title": "Confiado por empresas de serviços operacionais",
+      "subtitle": "Mais de 500 empresas de limpeza, facility e manutenção digitalizaram suas operações com o FeldOps.",
+      "logos": ["CleanPro", "FacilityOne", "Maintex", "GreenScape", "BuildCare", "NordClean"],
+      "metrics": [
+        { "value": "500+", "label": "Empresas de serviço" },
+        { "value": "12k+", "label": "Colaboradores de campo" },
+        { "value": "2M+", "label": "Ordens de serviço concluídas" },
+        { "value": "98%", "label": "Taxa de serviço no prazo" }
+      ]
     },
-    "benefits": {
-      "eyebrow": "Por que FeldOps",
-      "title": "Menos planilhas. Mais controlo.",
-      "description": "Substitua ferramentas desconectadas por uma plataforma pensada para prestadores de serviço.",
+    "problems": {
+      "eyebrow": "O problema",
+      "title": "Pare de gerir o negócio com planilhas e WhatsApp",
+      "description": "Empresas operacionais perdem tempo, dinheiro e clientes quando planeamento, execução e faturamento vivem em ferramentas desconectadas.",
+      "replaceTag": "Substituir",
+      "withTag": "Por",
       "items": {
-        "visibility": {
-          "title": "Visibilidade em tempo real",
-          "description": "Saiba onde estão as suas equipas, o estado de cada visita e o que precisa de atenção hoje — sem ligar para ninguém."
-        },
-        "efficiency": {
-          "title": "Operações mais eficientes",
-          "description": "Planeie escalas, atribua ordens de serviço e reduza deslocações com rotas e agendas inteligentes."
-        },
-        "trust": {
-          "title": "Confiança com clientes",
-          "description": "Relatórios com fotos, assinaturas digitais e portal do cliente que transmitem profissionalismo."
-        },
-        "scale": {
-          "title": "Cresça sem caos",
-          "description": "De 5 a 500 colaboradores, mantenha processos consistentes com permissões por função e multi-unidade."
-        }
+        "excel": { "replace": "Planilhas Excel", "with": "Automação de fluxos" },
+        "paper": { "replace": "Checklists em papel", "with": "Visibilidade em tempo real" },
+        "whatsapp": { "replace": "Caos no WhatsApp", "with": "Planeamento estruturado" },
+        "scheduling": { "replace": "Agendamento manual", "with": "Insights de rentabilidade" }
       }
     },
     "features": {
@@ -2337,63 +2373,82 @@
     },
     "workforce": {
       "eyebrow": "Planeamento de equipas",
-      "title": "Escalas que funcionam na prática",
-      "description": "Planeie disponibilidade, férias e competências. Veja quem está onde — antes de surgir um problema.",
+      "title": "Planeie equipas com clareza drag-and-drop",
+      "description": "Veja capacidade diária, semanal e mensal num relance. Atribua as pessoas certas aos trabalhos certos sem sobreposições.",
       "bullets": [
-        "Calendário de escalas por equipa ou colaborador",
-        "Banco de horas e folhas de ponto integrados",
-        "Alertas de sobreposição e falta de cobertura",
-        "Competências e certificações por função"
+        "Quadro de planeamento drag & drop",
+        "Vistas diária, semanal e mensal",
+        "Competências, disponibilidade e férias num só lugar",
+        "Alertas de lacunas e conflitos de cobertura"
       ],
-      "screenshotAlt": "Planeamento de escalas e equipas no FeldOps"
+      "screenshotAlt": "Planeamento de equipas FeldOps"
     },
-    "operations": {
-      "eyebrow": "Gestão operacional",
-      "title": "Ordens de serviço do escritório ao terreno",
-      "description": "Crie visitas, acompanhe execução em tempo real e documente cada intervenção com provas digitais.",
+    "workOrders": {
+      "eyebrow": "Ordens de serviço",
+      "title": "Da visita agendada à prova de serviço",
+      "description": "Crie ordens de serviço, atribua equipas, acompanhe a execução e registe fotos — cada trabalho documentado e faturável.",
       "bullets": [
-        "Ordens de serviço e visitas num único hub",
-        "Mapa com localização das equipas",
-        "Checklists e formulários personalizáveis",
-        "Fotos, assinaturas e notas por visita"
+        "Agendamento e despacho de serviços",
+        "Gestão de tarefas com prioridades",
+        "Checklists digitais por tipo de serviço",
+        "Fotos antes/depois e notas de campo"
       ],
-      "screenshotAlt": "Gestão de ordens de serviço e visitas no FeldOps"
+      "screenshotAlt": "Ordens de serviço e operações FeldOps"
+    },
+    "employeeApp": {
+      "eyebrow": "App do colaborador",
+      "title": "A sua equipa de campo, sempre conectada",
+      "description": "App mobile para limpeza, técnicos e equipas — check-in no local, registo de horas e conclusão de trabalhos offline.",
+      "bullets": [
+        "PWA mobile com experiência nativa",
+        "Check-in e check-out com GPS",
+        "Registo de horas e timesheets",
+        "Funciona offline em zonas sem sinal"
+      ],
+      "screenshotAlt": "App mobile do colaborador FeldOps"
     },
     "finance": {
       "eyebrow": "Finanças",
-      "title": "Orçamentos, contratos e faturação integrados",
-      "description": "Transforme trabalho concluído em receita — sem reintroduzir dados manualmente.",
+      "title": "Orçamentos, faturas e rentabilidade num fluxo",
+      "description": "Transforme trabalho concluído em receita — acompanhe fluxo de caixa, margens e pagamentos em atraso sem reintroduzir dados.",
       "bullets": [
         "Orçamentos e propostas com aprovação online",
-        "Contratos recorrentes ligados a visitas",
-        "Faturação automática e registo de pagamentos",
-        "Dashboard financeiro com MRR e inadimplência"
+        "Faturação automática a partir do serviço",
+        "Dashboard de fluxo de caixa e receita",
+        "Rentabilidade por cliente, contrato ou equipa"
       ],
-      "screenshotAlt": "Dashboard financeiro com faturação e receita no FeldOps"
+      "screenshotAlt": "Dashboard financeiro FeldOps"
     },
     "clientPortal": {
       "eyebrow": "Portal do cliente",
-      "title": "Uma experiência profissional para os seus clientes",
-      "description": "Clientes acedem a relatórios, faturas e próximas visitas — sem emails a pedir informação.",
+      "title": "Experiência profissional, zero caos no email",
+      "description": "Portal com a sua marca para faturas, contratos, relatórios e histórico — sem threads de WhatsApp.",
       "bullets": [
-        "Portal branded com login seguro",
-        "Relatórios de serviço e histórico por local",
-        "Aprovação de orçamentos online",
-        "Comunicação centralizada por contrato"
+        "Faturas e estado de pagamento",
+        "Contratos ativos e documentos",
+        "Relatórios de serviço e histórico de visitas",
+        "Login seguro e personalizado por cliente"
       ],
-      "screenshotAlt": "Portal do cliente com faturas e relatórios no FeldOps"
+      "screenshotAlt": "Portal do cliente FeldOps"
     },
     "aiAssistant": {
       "eyebrow": "Assistente IA",
-      "title": "Respostas operacionais em segundos",
-      "description": "Pergunte sobre escalas, visitas pendentes ou métricas — o assistente conhece os seus dados.",
+      "title": "Inteligência operacional integrada",
+      "description": "Deixe a IA ajudar a planear melhor — detete conflitos, otimize mão de obra e revele insights de receita.",
       "bullets": [
-        "Consultas em linguagem natural",
-        "Sugestões de escala e cobertura",
-        "Resumos de atividade por cliente ou equipa",
-        "Disponível 24/7 no dashboard"
+        "Sugestões automáticas de planeamento",
+        "Deteção de conflitos de escala",
+        "Otimização de utilização de equipas",
+        "Insights de receita e margem"
       ],
-      "screenshotAlt": "Assistente IA operacional no FeldOps"
+      "screenshotAlt": "Assistente IA FeldOps"
+    },
+    "howItWorks": {
+      "eyebrow": "Como funciona",
+      "title": "Um fluxo contínuo do lead à fatura",
+      "description": "Cada passo conectado — sem reescrever dados entre comercial, operações e financeiro.",
+      "steps": ["Lead", "Cliente", "Orçamento", "Contrato", "Planeamento", "Serviço", "Fatura"],
+      "footer": "O FeldOps conecta os fluxos comercial, operacional e financeiro numa plataforma feita para empresas de serviço."
     },
     "industries": {
       "title": "Feito para o seu setor",
@@ -2520,14 +2575,16 @@
       }
     },
     "cta": {
-      "title": "Pronto para gerir todo o negócio num só lugar?",
-      "description": "Junte-se a centenas de empresas de serviço que já simplificaram operações, finanças e relação com clientes.",
+      "title": "Pronto para parar de gerir o negócio com planilhas?",
+      "description": "Comece o seu teste grátis hoje. Junte-se a centenas de empresas de limpeza, facility e serviços que usam o FeldOps.",
       "button": "Começar teste grátis",
-      "secondary": "Falar com a equipa"
+      "secondary": "Agendar demo"
     },
     "footer": {
       "tagline": "A plataforma operacional para empresas de serviço e facility management.",
       "product": "Produto",
+      "workOrders": "Ordens de serviço",
+      "employeeApp": "App do colaborador",
       "company": "Empresa",
       "legal": "Legal",
       "gdpr": "Conforme LGPD",
@@ -5171,6 +5228,37 @@
       "empty": { "title": "Sem pedidos", "description": "Registe pedidos de férias dos colaboradores." },
       "form": { "employee": "Funcionário", "start": "Início", "end": "Fim", "submit": "Submeter" }
     },
+    "messages": {
+      "title": "Mensagens de campo",
+      "description": "Comunicação com colaboradores no PWA mobile.",
+      "compose": "Nova mensagem",
+      "composeTitle": "Enviar mensagem",
+      "modeEmployee": "Colaborador",
+      "modeTeam": "Equipa",
+      "employee": "Colaborador",
+      "team": "Equipa",
+      "selectEmployee": "Selecionar colaborador",
+      "selectTeam": "Selecionar equipa",
+      "subject": "Assunto",
+      "subjectPlaceholder": "Assunto (opcional)",
+      "message": "Mensagem",
+      "messagePlaceholder": "Escreva a mensagem…",
+      "attachmentOptional": "Anexo (opcional)",
+      "attachment": "Abrir anexo",
+      "send": "Enviar",
+      "sent": "{count, plural, one {Mensagem enviada} other {# mensagens enviadas}}",
+      "replyPlaceholder": "Responder na conversa…",
+      "sendReply": "Enviar resposta",
+      "replySent": "Resposta enviada",
+      "noSubject": "Sem assunto",
+      "emptyThreads": "Nenhuma conversa ainda",
+      "selectThreadTitle": "Selecione uma conversa",
+      "selectThreadDescription": "Escolha um colaborador à esquerda ou envie uma nova mensagem.",
+      "filters": {
+        "all": "Todas",
+        "needs_reply": "Aguardam resposta"
+      }
+    },
     "absences": {
       "title": "Ausências",
       "description": "Doença, licenças e faltas registadas.",
@@ -5355,15 +5443,146 @@
       "nav": {
         "home": "Início",
         "schedule": "Agenda",
+        "jobs": "Serviços",
+        "messages": "Mensagens",
         "hours": "Horas",
         "notifications": "Alertas",
         "profile": "Perfil",
         "sidebarLabel": "Navegação principal",
         "bottomLabel": "Navegação inferior",
-        "unreadBadge": "{count, plural, one {# alerta por ler} other {# alertas por ler}}"
+        "unreadBadge": "{count, plural, one {# por ler} other {# por ler}}"
+      },
+      "home": {
+        "title": "Início",
+        "greeting": {
+          "morning": "Bom dia",
+          "afternoon": "Boa tarde",
+          "evening": "Boa noite"
+        },
+        "greetingName": "{name}",
+        "greetingFallback": "Colaborador",
+        "todaySummary": "Resumo de hoje",
+        "todayJobs": "Serviços de hoje",
+        "currentJob": "Serviço em curso",
+        "nextJob": "Próximo serviço",
+        "seeAll": "Ver todos",
+        "quickActions": "Ações rápidas",
+        "dailySummary": "Resumo do dia",
+        "priorityHigh": "Prioridade alta",
+        "kpis": {
+          "todayJobs": "Serviços hoje",
+          "hoursPlanned": "Horas planeadas",
+          "hoursWorked": "Horas trabalhadas",
+          "pendingTasks": "Pendentes"
+        },
+        "actions": {
+          "checkIn": "Check-in",
+          "checkOut": "Check-out",
+          "viewRoute": "Rota",
+          "openJob": "Iniciar serviço",
+          "messages": "Mensagens",
+          "more": "Mais"
+        }
+      },
+      "jobs": {
+        "title": "Serviços",
+        "subtitle": "Todos os serviços atribuídos a si",
+        "emptyTitle": "Sem serviços",
+        "emptyDescription": "Não tem serviços neste filtro. Consulte a agenda.",
+        "viewSchedule": "Ver agenda",
+        "filters": {
+          "today": "Hoje",
+          "pending": "Pendentes",
+          "inProgress": "Em curso",
+          "completed": "Concluídos",
+          "all": "Todos"
+        },
+        "actions": {
+          "open": "Abrir",
+          "navigate": "Navegar",
+          "start": "Iniciar"
+        }
+      },
+      "messages": {
+        "title": "Mensagens",
+        "subtitle": "Comunicação com a equipa e alertas",
+        "tabs": {
+          "messages": "Equipa",
+          "alerts": "Alertas"
+        },
+        "emptyTitle": "Sem mensagens",
+        "emptyDescription": "Mensagens da equipa e operações aparecem aqui.",
+        "fromOperations": "Operações",
+        "you": "Você",
+        "reply": "Responder",
+        "replyPlaceholder": "Escreva a sua resposta…",
+        "sendReply": "Enviar",
+        "cancel": "Cancelar",
+        "replySent": "Resposta enviada",
+        "replyFailed": "Não foi possível enviar a resposta",
+        "pendingSync": "A sincronizar",
+        "markRead": "Marcar como lida",
+        "markAllRead": "Marcar tudo como lido",
+        "markedAllRead": "Tudo marcado como lido",
+        "openAlertsPage": "Abrir página de alertas",
+        "newMessage": "Nova mensagem",
+        "composeSubjectPlaceholder": "Assunto (opcional)",
+        "composePlaceholder": "Mensagem para a equipa de operações…",
+        "sendMessage": "Enviar",
+        "composeSent": "Mensagem enviada",
+        "composeFailed": "Não foi possível enviar a mensagem",
+        "attachment": "Abrir anexo",
+        "attachmentOffline": "Anexos só estão disponíveis com ligação à internet"
+      },
+      "deviceLock": {
+        "title": "App bloqueada",
+        "subtitle": "Introduza o PIN para continuar",
+        "wrongPin": "PIN incorreto",
+        "useBiometric": "Usar biometria",
+        "biometricFailed": "Biometria não reconhecida",
+        "settingsTitle": "Bloqueio do dispositivo",
+        "settingsDescription": "Proteja o app com PIN e biometria após inatividade",
+        "newPin": "Novo PIN (4–6 dígitos)",
+        "confirmPin": "Confirmar PIN",
+        "pinLength": "O PIN deve ter 4 a 6 dígitos",
+        "pinMismatch": "Os PINs não coincidem",
+        "enablePin": "Ativar bloqueio",
+        "pinEnabled": "Bloqueio por PIN ativado",
+        "pinActive": "Bloqueio ativo neste dispositivo",
+        "biometricLabel": "Desbloqueio biométrico",
+        "biometricEnabled": "Biometria ativada",
+        "biometricDisabled": "Biometria desativada",
+        "biometricSetupFailed": "Não foi possível configurar biometria",
+        "lockNow": "Bloquear agora",
+        "disable": "Desativar",
+        "disabled": "Bloqueio desativado"
+      },
+      "checklistConflicts": {
+        "title": "{count, plural, one {# conflito na checklist} other {# conflitos na checklist}}",
+        "description": "O servidor e o seu dispositivo têm estados diferentes. Escolha qual manter.",
+        "serverState": "Servidor",
+        "localState": "Dispositivo",
+        "checked": "Marcado",
+        "unchecked": "Desmarcado",
+        "useServer": "Usar servidor",
+        "useLocal": "Manter local",
+        "keptServer": "Alteração local descartada",
+        "keptLocal": "Será sincronizado com o servidor"
       },
       "schedule": {
-        "title": "Agenda"
+        "title": "Agenda",
+        "tabs": {
+          "today": "Hoje",
+          "week": "Semana",
+          "month": "Mês"
+        },
+        "legend": {
+          "completed": "Concluído",
+          "scheduled": "Agendado",
+          "inProgress": "Em curso",
+          "overdue": "Em atraso"
+        },
+        "emptyMonth": "Sem serviços neste mês."
       },
       "hours": {
         "title": "Horas",
@@ -5395,6 +5614,24 @@
         "mapUnavailable": "Localização não disponível no mapa",
         "openNavigation": "Abrir navegação"
       },
+      "ai": {
+        "title": "Assistente IA",
+        "subtitle": "Sugestões para este serviço",
+        "analyzing": "A analisar o serviço…",
+        "providerAi": "OpenAI",
+        "providerRules": "Regras",
+        "actions": {
+          "checklist": "Checklist",
+          "materials": "Materiais",
+          "notes": "Notas"
+        },
+        "checklistTitle": "Passos sugeridos",
+        "materialsTitle": "Materiais recomendados",
+        "notesTitle": "Notas de serviço",
+        "copy": "Copiar",
+        "copied": "Copiado",
+        "copyFailed": "Não foi possível copiar"
+      },
       "checkIn": {
         "title": "Check-in no local",
         "action": "Iniciar serviço com GPS",
@@ -5417,6 +5654,7 @@
         "offlinePending": "Offline · {count} ação(ões) pendente(s)",
         "pendingSync": "{count} ação(ões) a sincronizar",
         "syncing": "A sincronizar…",
+        "actionQueued": "Guardado offline — será sincronizado automaticamente",
         "installTitle": "Instalar app",
         "installDescription": "Adicione o FeldOps ao ecrã inicial",
         "installAction": "Instalar",
@@ -5485,6 +5723,12 @@
         "jobTitle": "Cargo",
         "vacations": "Pedidos de férias",
         "vacationsHint": "Solicitar e acompanhar férias",
+        "shortcutsTitle": "Atalhos",
+        "settingsTitle": "Definições",
+        "language": "Idioma",
+        "theme": "Tema",
+        "documents": "Documentos",
+        "signOut": "Terminar sessão",
         "shortcuts": {
           "hours": "Horas",
           "reports": "Relatórios",

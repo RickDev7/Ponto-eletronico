@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { getLocale, getTranslations } from "next-intl/server";
 import { redirect } from "@/i18n/navigation";
+import { AuthFormHeader } from "@/components/auth/auth-form-header";
+import { AuthShell } from "@/components/auth/auth-shell";
 import { OnboardingWizard } from "@/components/onboarding/onboarding-wizard";
 import { OnboardingAuthBar } from "@/components/onboarding/onboarding-auth-bar";
 import { EmployeeOnboardingPending } from "@/components/onboarding/employee-onboarding-pending";
@@ -49,29 +51,20 @@ export default async function OnboardingPage() {
   }
 
   return (
-    <div className="relative flex min-h-svh flex-col bg-background">
-      <div
-        className="pointer-events-none fixed inset-0 opacity-[0.15] [background-image:linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] [background-size:48px_48px]"
-        aria-hidden
-      />
+    <div className="relative min-h-svh bg-background">
       <OnboardingAuthBar />
-      <div className="relative flex flex-1 items-center justify-center px-4 pb-12 pt-20">
-        <div className="w-full max-w-lg">
-          <div className="mb-8 space-y-2 text-center">
-            <p className="text-xs font-medium uppercase tracking-[0.2em] text-zinc-500">
-              {t("wizard.stepLabel")}
-            </p>
-            <h1 className="text-2xl font-semibold tracking-tight text-white">
-              {t("title")}
-            </h1>
-            <p className="text-sm text-zinc-500">{t("pageDescription")}</p>
-          </div>
+      <div className="pt-14">
+        <AuthShell minimal>
+          <AuthFormHeader
+            title={t("title")}
+            description={t("pageDescription")}
+          />
           {showEmployeePending && user?.email ? (
             <EmployeeOnboardingPending email={user.email} />
           ) : (
             <OnboardingWizard />
           )}
-        </div>
+        </AuthShell>
       </div>
     </div>
   );

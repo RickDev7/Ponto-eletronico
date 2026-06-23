@@ -15,8 +15,6 @@ export default async function MobileServicePage({ params }: PageProps) {
   if (!execution?.isAssigned) notFound();
 
   return (
-    <div className="p-4">
-      <EmployeeServiceDetailView slug={companySlug} taskId={taskId} context={execution} />
-    </div>
+    <EmployeeServiceDetailView slug={companySlug} taskId={taskId} context={execution} />
   );
 }

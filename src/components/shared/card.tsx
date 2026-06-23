@@ -20,11 +20,11 @@ export interface CardProps
 }
 
 const variantStyles: Record<NonNullable<CardProps["variant"]>, string> = {
-  default: "rounded-md border border-border/70 bg-card/40 shadow-none",
-  muted: "rounded-md border border-border/60 bg-muted/20 shadow-none",
-  outline: "rounded-md border border-border/50 bg-transparent shadow-none",
-  ghost: "border-0 bg-transparent shadow-none",
-  elevated: "rounded-md border border-border/70 bg-card/40 shadow-none",
+  default: "rounded-lg border border-border bg-card shadow-ds-soft",
+  muted: "rounded-lg border border-border/60 bg-muted/40 shadow-none",
+  outline: "rounded-lg border border-border bg-transparent shadow-none",
+  ghost: "rounded-lg border-0 bg-transparent shadow-none",
+  elevated: "rounded-lg border border-border bg-card shadow-ds-medium",
 };
 
 const paddingStyles: Record<NonNullable<CardProps["padding"]>, string> = {

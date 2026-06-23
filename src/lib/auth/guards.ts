@@ -28,7 +28,7 @@ export async function requireAuth(
 ): Promise<NonNullable<Awaited<ReturnType<typeof getSession>>>> {
   const user = await getSession();
   if (!user) {
-    redirectTo(options.redirectTo ?? ROUTES.login);
+    await redirectTo(options.redirectTo ?? ROUTES.login);
   }
   return user;
 }
@@ -62,22 +62,22 @@ export async function requireCompanyContext(
   const ctx = await getCompanyContext(options.slug);
 
   if (!ctx) {
-    redirectTo(ROUTES.onboarding);
+    await redirectTo(ROUTES.onboarding);
   }
 
   if (isClientRole(ctx.membership.role)) {
-    redirectTo(ROUTES.clientPortal(ctx.company.slug));
+    await redirectTo(ROUTES.clientPortal(ctx.company.slug));
   }
 
   if (
     options.minRole &&
     !hasMinRole(ctx.membership.role, options.minRole)
   ) {
-    redirectTo(ROUTES.dashboard(ctx.company.slug));
+    await redirectTo(ROUTES.dashboard(ctx.company.slug));
   }
 
   if (options.permission && !can(ctx.membership.role, options.permission)) {
-    redirectTo(ROUTES.dashboard(ctx.company.slug));
+    await redirectTo(ROUTES.dashboard(ctx.company.slug));
   }
 
   return ctx;
@@ -102,11 +102,11 @@ export async function requireEmployeeMobileAccess(
   const ctx = await requireCompanyContext({ slug });
 
   if (ctx.membership.role === "client") {
-    redirectTo(ROUTES.clientPortal(ctx.company.slug));
+    await redirectTo(ROUTES.clientPortal(ctx.company.slug));
   }
 
   if (ctx.membership.role !== "employee") {
-    redirectTo(ROUTES.mobileAccess(slug));
+    await redirectTo(ROUTES.mobileAccess(slug));
   }
 
   return ctx;
@@ -118,7 +118,7 @@ export async function requireEmployeeContext(
   const ctx = await requireEmployeeMobileAccess(slug);
 
   if (!ctx.employee) {
-    redirectTo(`${ROUTES.mobileAccess(slug)}?reason=profile_missing`);
+    await redirectTo(`${ROUTES.mobileAccess(slug)}?reason=profile_missing`);
   }
 
   return { ...ctx, employee: ctx.employee };
@@ -131,16 +131,16 @@ export async function requireClientPortalContext(
   const ctx = await getCompanyContext(slug);
 
   if (!ctx) {
-    redirectTo(ROUTES.onboarding);
+    await redirectTo(ROUTES.onboarding);
   }
 
   if (!isClientRole(ctx.membership.role)) {
-    redirectTo(ROUTES.dashboard(ctx.company.slug));
+    await redirectTo(ROUTES.dashboard(ctx.company.slug));
   }
 
   const clientId = ctx.membership.client_id;
   if (!clientId) {
-    redirectTo(ROUTES.selectCompany);
+    await redirectTo(ROUTES.selectCompany);
   }
 
   const supabase = await createClient();
@@ -152,7 +152,7 @@ export async function requireClientPortalContext(
     .maybeSingle();
 
   if (error || !client) {
-    redirectTo(ROUTES.selectCompany);
+    await redirectTo(ROUTES.selectCompany);
   }
 
   return { ...ctx, client: client as Client };

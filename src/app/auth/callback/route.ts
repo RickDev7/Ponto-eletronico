@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import { getUserProfile } from "@/lib/auth/session";
 import { resolvePostAuthRedirect } from "@/lib/auth/post-auth-redirect";
+import { isInvalidAppHref, sanitizeAppHref } from "@/lib/navigation/sanitize-href";
 import type { AppLocale } from "@/i18n/routing";
 
 export async function GET(request: Request) {
@@ -52,10 +53,15 @@ export async function GET(request: Request) {
         const redirectPath = await resolvePostAuthRedirect(
           user.id,
           memberships ?? [],
-          { explicitRedirect: next },
+          {
+            explicitRedirect:
+              next && !isInvalidAppHref(next) ? next : null,
+          },
         );
 
-        return NextResponse.redirect(`${origin}/${locale}${redirectPath}`);
+        return NextResponse.redirect(
+          `${origin}/${locale}${sanitizeAppHref(redirectPath, "/onboarding")}`,
+        );
       }
 
       return NextResponse.redirect(`${origin}/onboarding`);

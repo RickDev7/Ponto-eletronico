@@ -1,4 +1,5 @@
 import type { ServiceType } from "@/types";
+import { isValidCompanySlug } from "@/lib/navigation/sanitize-href";
 
 export const APP_NAME = "FeldOps";
 export const APP_DESCRIPTION =
@@ -16,6 +17,7 @@ export const STORAGE_BUCKETS = {
   companyAssets: "company-assets",
   employeeDocuments: "employee-documents",
   clientDocuments: "client-documents",
+  employeeMessageAttachments: "employee-message-attachments",
 } as const;
 
 export const PAGINATION = {
@@ -192,6 +194,7 @@ export const ROUTES = {
   },
   workforceVehicles: (slug: string) => `/${slug}/workforce/vehicles`,
   workforceVacations: (slug: string) => `/${slug}/workforce/vacations`,
+  workforceMessages: (slug: string) => `/${slug}/workforce/messages`,
   workforceAbsences: (slug: string) => `/${slug}/workforce/absences`,
   workforceTimeAccount: (slug: string) => `/${slug}/workforce/time-account`,
   workforceTimeBank: (
@@ -261,6 +264,8 @@ export const ROUTES = {
   mobileHours: (slug: string) => `/${slug}/mobile/hours`,
   mobileVacations: (slug: string) => `/${slug}/mobile/vacations`,
   mobileNotifications: (slug: string) => `/${slug}/mobile/notifications`,
+  mobileMessages: (slug: string) => `/${slug}/mobile/messages`,
+  mobileJobs: (slug: string) => `/${slug}/mobile/jobs`,
   mobileProfile: (slug: string) => `/${slug}/mobile/profile`,
   superAdmin: "/super-admin",
   superAdminTenants: "/super-admin/tenants",
@@ -362,13 +367,28 @@ export const RESERVED_COMPANY_SLUGS = new Set([
   "admin",
   "pt",
   "en",
+  "undefinedundefined",
 ]);
 
 /** True when the first URL segment is a company slug (tenant workspace). */
 export function isTenantWorkspacePath(barePath: string): boolean {
   const segments = barePath.split("/").filter(Boolean);
   if (segments.length === 0) return false;
-  return !RESERVED_COMPANY_SLUGS.has(segments[0]!);
+  const slug = segments[0]!;
+  if (RESERVED_COMPANY_SLUGS.has(slug)) return false;
+  return isValidCompanySlug(slug);
+}
+
+/** Desktop routes employees may visit without being bounced to /mobile. */
+export function isEmployeeDesktopExemptPath(
+  barePath: string,
+  companySlug: string,
+): boolean {
+  const mobileAccess = ROUTES.mobileAccess(companySlug);
+  return (
+    barePath === mobileAccess ||
+    barePath.startsWith(`${mobileAccess}/`)
+  );
 }
 
 export const SERVICE_TYPE_LABELS: Record<

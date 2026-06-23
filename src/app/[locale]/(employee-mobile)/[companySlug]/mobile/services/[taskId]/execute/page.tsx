@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 import { redirectTo } from "@/i18n/server-redirect";
 import { requireEmployeeContext } from "@/lib/auth/guards";
 import { ROUTES } from "@/config/constants";
-import { FieldExecutionView } from "@/components/features/field-execution/field-execution-view";
+import { MobileExecutePageClient } from "@/components/mobile/mobile-execute-page-client";
 import { loadExecutionContext } from "@/lib/field-execution/load-execution-context";
 
 interface PageProps {
@@ -21,14 +21,10 @@ export default async function MobileServiceExecutePage({ params }: PageProps) {
   }
 
   return (
-    <div className="p-4">
-      <FieldExecutionView
-        slug={companySlug}
-        taskId={taskId}
-        context={execution}
-        variant="mobile"
-        mode="execute"
-      />
-    </div>
+    <MobileExecutePageClient
+      slug={companySlug}
+      taskId={taskId}
+      initialExecution={execution}
+    />
   );
 }

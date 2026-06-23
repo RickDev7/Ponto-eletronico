@@ -83,6 +83,14 @@
     }
   },
   "navigation": {
+    "sectionOverview": "Overview",
+    "sectionCommercial": "Commercial",
+    "sectionOperations": "Operations",
+    "sectionWorkforce": "Workforce",
+    "sectionResources": "Resources",
+    "sectionFinance": "Finance",
+    "sectionInsights": "Insights",
+    "sectionSystem": "System",
     "dashboard": "Dashboard",
     "myTasks": "My tasks",
     "fieldExecution": "Field",
@@ -114,6 +122,7 @@
     "workforceShifts": "Shifts",
     "workforceAbsences": "Absences",
     "workforceVacations": "Vacations",
+    "workforceMessages": "Messages",
     "workforceTimeAccount": "Time Account",
     "workforceTimesheets": "Timesheets",
     "workforceWorktime": "Work Schedules",
@@ -1879,9 +1888,25 @@
     },
     "branding": {
       "tagline": "Manage field services efficiently.",
-      "headline": "Operational management built for service companies.",
+      "eyebrow": "Enterprise field service platform",
+      "headline": "Manage your entire service business from one platform.",
+      "valueDescription": "Plan teams, manage clients, create quotes, track operations and automate billing.",
       "featuresTitle": "Everything your operation needs",
       "description": "Manage clients, properties, employees and daily operations from a single workspace.",
+      "features": {
+        "workforcePlanning": "Workforce Planning",
+        "clientManagement": "Client Management",
+        "financeBilling": "Finance & Billing",
+        "serviceOperations": "Service Operations",
+        "employeeMobile": "Employee Mobile App",
+        "clientPortal": "Client Portal"
+      },
+      "kpis": {
+        "todayServices": "Today's Services",
+        "employeesScheduled": "Employees Scheduled",
+        "revenueMonth": "Revenue This Month",
+        "openTasks": "Open Tasks"
+      },
       "multiTenant": "Multi-tenant",
       "offline": "Offline-capable",
       "gdpr": "GDPR compliant",
@@ -2223,6 +2248,7 @@
   "landing": {
     "nav": {
       "features": "Features",
+      "product": "Product",
       "services": "Industries",
       "pricing": "Pricing",
       "demo": "Demo",
@@ -2231,39 +2257,61 @@
       "register": "Start for free"
     },
     "hero": {
-      "badge": "For service businesses and facility management",
-      "title": "Manage your entire service business from one platform",
-      "description": "Plan crews, run field operations, invoice clients, and deliver a professional client portal — all integrated for cleaning, maintenance, and facility management companies.",
-      "ctaPrimary": "Start free trial",
-      "ctaSecondary": "Book a demo",
+      "badge": "For cleaning, facility, landscaping & service businesses",
+      "title": "Run your entire service business from one platform.",
+      "description": "Manage teams, clients, work orders, planning, billing and customer communication without spreadsheets, paperwork or WhatsApp chaos.",
+      "ctaPrimary": "Start Free Trial",
+      "ctaSecondary": "Book a Demo",
       "footnote": "No credit card required · Set up in minutes · Human support",
-      "screenshotAlt": "FeldOps operational command center dashboard"
+      "screenshotAlt": "FeldOps operational command center dashboard",
+      "industries": [
+        "Cleaning",
+        "Facility Management",
+        "Property Maintenance",
+        "Landscaping",
+        "Painting",
+        "Construction"
+      ],
+      "kpis": {
+        "todayServices": "Today's Services",
+        "employeesScheduled": "Employees Scheduled",
+        "revenueMonth": "Revenue This Month",
+        "openTasks": "Open Tasks"
+      }
     },
     "trustedBy": {
-      "title": "Trusted by service businesses across Europe",
+      "title": "Trusted by operational service businesses",
       "subtitle": "Over 500 cleaning, facility management, and maintenance companies have digitized their operations with FeldOps.",
-      "logos": ["CleanPro", "FacilityOne", "Maintex", "ServiceHub", "NordClean"]
+      "logos": ["CleanPro", "FacilityOne", "Maintex", "GreenScape", "BuildCare", "NordClean"],
+      "metrics": [
+        { "value": "500+", "label": "Service companies" },
+        { "value": "12k+", "label": "Field workers" },
+        { "value": "2M+", "label": "Work orders completed" },
+        { "value": "98%", "label": "On-time service rate" }
+      ]
     },
-    "benefits": {
-      "eyebrow": "Why FeldOps",
-      "title": "Less spreadsheet chaos. More control.",
-      "description": "Replace disconnected tools with one platform built for service providers.",
+    "problems": {
+      "eyebrow": "The problem",
+      "title": "Stop running your business on spreadsheets and WhatsApp",
+      "description": "Operational businesses lose time, money and clients when planning, execution and billing live in disconnected tools.",
+      "replaceTag": "Replace",
+      "withTag": "With",
       "items": {
-        "visibility": {
-          "title": "Real-time visibility",
-          "description": "Know where your teams are, the status of every visit, and what needs attention today — without calling anyone."
+        "excel": {
+          "replace": "Excel spreadsheets",
+          "with": "Automated workflows"
         },
-        "efficiency": {
-          "title": "Smarter operations",
-          "description": "Plan schedules, assign work orders, and reduce travel with intelligent routing and calendars."
+        "paper": {
+          "replace": "Paper checklists",
+          "with": "Real-time visibility"
         },
-        "trust": {
-          "title": "Client confidence",
-          "description": "Photo reports, digital sign-offs, and a client portal that looks as professional as your work."
+        "whatsapp": {
+          "replace": "WhatsApp chaos",
+          "with": "Structured planning"
         },
-        "scale": {
-          "title": "Grow without chaos",
-          "description": "From 5 to 500 employees, keep processes consistent with role-based access and multi-site support."
+        "scheduling": {
+          "replace": "Manual scheduling",
+          "with": "Profitability insights"
         }
       }
     },
@@ -2337,63 +2385,82 @@
     },
     "workforce": {
       "eyebrow": "Workforce planning",
-      "title": "Schedules that work in the real world",
-      "description": "Plan availability, time off, and skills. See who is where — before problems surface.",
+      "title": "Plan crews with drag-and-drop clarity",
+      "description": "See daily, weekly and monthly capacity at a glance. Assign the right people to the right jobs without double-booking.",
       "bullets": [
-        "Crew and employee scheduling calendar",
-        "Integrated time bank and timesheets",
-        "Overlap and coverage gap alerts",
-        "Skills and certifications per role"
+        "Drag & drop planning board",
+        "Daily, weekly and monthly views",
+        "Skills, availability and time-off in one place",
+        "Coverage gaps and conflict alerts"
       ],
       "screenshotAlt": "FeldOps workforce scheduling and planning"
     },
-    "operations": {
-      "eyebrow": "Operations management",
-      "title": "Work orders from office to field",
-      "description": "Create visits, track execution in real time, and document every job with digital proof.",
+    "workOrders": {
+      "eyebrow": "Work orders",
+      "title": "From scheduled visit to proof of service",
+      "description": "Create work orders, assign teams, track execution and capture photos — every job documented and billable.",
       "bullets": [
-        "Work orders and visits in one hub",
-        "Map view with team locations",
-        "Customizable checklists and forms",
-        "Photos, signatures, and notes per visit"
+        "Service scheduling and dispatch",
+        "Task management with priorities",
+        "Digital checklists per service type",
+        "Before/after photos and site notes"
       ],
       "screenshotAlt": "FeldOps work orders and field operations"
     },
+    "employeeApp": {
+      "eyebrow": "Employee app",
+      "title": "Your field team, always connected",
+      "description": "A mobile app built for cleaners, technicians and crews — check-in on site, log hours and complete jobs offline.",
+      "bullets": [
+        "Native-feel mobile PWA",
+        "GPS check-in and check-out",
+        "Hours tracking and timesheets",
+        "Works offline in low-signal areas"
+      ],
+      "screenshotAlt": "FeldOps employee mobile app"
+    },
     "finance": {
       "eyebrow": "Finance",
-      "title": "Quotes, contracts, and billing integrated",
-      "description": "Turn completed work into revenue — without re-entering data manually.",
+      "title": "Quotes, invoices and profitability in one flow",
+      "description": "Turn completed work into revenue — track cash flow, margins and overdue payments without re-entering data.",
       "bullets": [
         "Quotes and proposals with online approval",
-        "Recurring contracts linked to visits",
-        "Automated invoicing and payment tracking",
-        "Financial dashboard with MRR and overdue"
+        "Automated invoicing from completed work",
+        "Cash flow and revenue dashboard",
+        "Profitability by client, contract or crew"
       ],
       "screenshotAlt": "FeldOps finance dashboard with billing and revenue"
     },
     "clientPortal": {
       "eyebrow": "Client portal",
-      "title": "A professional experience for your clients",
-      "description": "Clients access reports, invoices, and upcoming visits — without email back-and-forth.",
+      "title": "Professional client experience, zero email chaos",
+      "description": "Give clients a branded portal for invoices, contracts, reports and service history — without WhatsApp threads.",
       "bullets": [
-        "Branded portal with secure login",
-        "Service reports and site history",
-        "Online quote approval",
-        "Centralized communication per contract"
+        "Invoices and payment status",
+        "Active contracts and documents",
+        "Service reports and visit history",
+        "Secure branded login per client"
       ],
       "screenshotAlt": "FeldOps client portal with invoices and reports"
     },
     "aiAssistant": {
       "eyebrow": "AI assistant",
-      "title": "Operational answers in seconds",
-      "description": "Ask about schedules, pending visits, or metrics — the assistant knows your data.",
+      "title": "Operational intelligence built in",
+      "description": "Let AI help you plan smarter — detect conflicts, optimize labor and surface revenue insights from your data.",
       "bullets": [
-        "Natural language queries",
-        "Scheduling and coverage suggestions",
-        "Activity summaries by client or crew",
-        "Available 24/7 in the dashboard"
+        "Automatic planning suggestions",
+        "Schedule conflict detection",
+        "Labor utilization optimization",
+        "Revenue and margin insights"
       ],
       "screenshotAlt": "FeldOps AI assistant for operations"
+    },
+    "howItWorks": {
+      "eyebrow": "How it works",
+      "title": "One continuous flow from lead to invoice",
+      "description": "Every step connected — no retyping, no lost information between sales, operations and finance.",
+      "steps": ["Lead", "Client", "Quote", "Contract", "Planning", "Service", "Invoice"],
+      "footer": "FeldOps connects your commercial, operational and financial workflows in a single platform built for service businesses."
     },
     "industries": {
       "title": "Built for your industry",
@@ -2520,14 +2587,16 @@
       }
     },
     "cta": {
-      "title": "Ready to run your entire business in one place?",
-      "description": "Join hundreds of service companies that simplified operations, finance, and client relationships.",
-      "button": "Start free trial",
-      "secondary": "Talk to our team"
+      "title": "Ready to stop managing your business with spreadsheets?",
+      "description": "Start your free trial today. Join hundreds of cleaning, facility and service companies running on FeldOps.",
+      "button": "Start Free Trial",
+      "secondary": "Book a Demo"
     },
     "footer": {
       "tagline": "The operational platform for service businesses and facility management.",
       "product": "Product",
+      "workOrders": "Work orders",
+      "employeeApp": "Employee app",
       "company": "Company",
       "legal": "Legal",
       "gdpr": "GDPR compliant",
@@ -5171,6 +5240,37 @@
       "empty": { "title": "No requests", "description": "Register employee vacation requests." },
       "form": { "employee": "Employee", "start": "Start", "end": "End", "submit": "Submit" }
     },
+    "messages": {
+      "title": "Field messages",
+      "description": "Communicate with employees on the mobile PWA.",
+      "compose": "New message",
+      "composeTitle": "Send message",
+      "modeEmployee": "Employee",
+      "modeTeam": "Team",
+      "employee": "Employee",
+      "team": "Team",
+      "selectEmployee": "Select employee",
+      "selectTeam": "Select team",
+      "subject": "Subject",
+      "subjectPlaceholder": "Subject (optional)",
+      "message": "Message",
+      "messagePlaceholder": "Write your message…",
+      "attachmentOptional": "Attachment (optional)",
+      "attachment": "Open attachment",
+      "send": "Send",
+      "sent": "{count, plural, one {Message sent} other {# messages sent}}",
+      "replyPlaceholder": "Reply in thread…",
+      "sendReply": "Send reply",
+      "replySent": "Reply sent",
+      "noSubject": "No subject",
+      "emptyThreads": "No conversations yet",
+      "selectThreadTitle": "Select a conversation",
+      "selectThreadDescription": "Pick an employee on the left or send a new message.",
+      "filters": {
+        "all": "All",
+        "needs_reply": "Needs reply"
+      }
+    },
     "absences": {
       "title": "Absences",
       "description": "Sick leave, licenses and recorded absences.",
@@ -5355,15 +5455,146 @@
       "nav": {
         "home": "Home",
         "schedule": "Schedule",
+        "jobs": "Jobs",
+        "messages": "Messages",
         "hours": "Hours",
         "notifications": "Alerts",
         "profile": "Profile",
         "sidebarLabel": "Main navigation",
         "bottomLabel": "Bottom navigation",
-        "unreadBadge": "{count, plural, one {# unread alert} other {# unread alerts}}"
+        "unreadBadge": "{count, plural, one {# unread} other {# unread}}"
+      },
+      "home": {
+        "title": "Home",
+        "greeting": {
+          "morning": "Good morning",
+          "afternoon": "Good afternoon",
+          "evening": "Good evening"
+        },
+        "greetingName": "{name}",
+        "greetingFallback": "Team member",
+        "todaySummary": "Today's summary",
+        "todayJobs": "Today's jobs",
+        "currentJob": "Current job",
+        "nextJob": "Next job",
+        "seeAll": "See all",
+        "quickActions": "Quick actions",
+        "dailySummary": "Daily summary",
+        "priorityHigh": "High priority",
+        "kpis": {
+          "todayJobs": "Jobs today",
+          "hoursPlanned": "Hours planned",
+          "hoursWorked": "Hours worked",
+          "pendingTasks": "Pending"
+        },
+        "actions": {
+          "checkIn": "Check in",
+          "checkOut": "Check out",
+          "viewRoute": "Route",
+          "openJob": "Start service",
+          "messages": "Messages",
+          "more": "More"
+        }
+      },
+      "jobs": {
+        "title": "Jobs",
+        "subtitle": "All jobs assigned to you",
+        "emptyTitle": "No jobs",
+        "emptyDescription": "No jobs in this filter. Check your schedule.",
+        "viewSchedule": "View schedule",
+        "filters": {
+          "today": "Today",
+          "pending": "Pending",
+          "inProgress": "In progress",
+          "completed": "Completed",
+          "all": "All"
+        },
+        "actions": {
+          "open": "Open",
+          "navigate": "Navigate",
+          "start": "Start"
+        }
+      },
+      "messages": {
+        "title": "Messages",
+        "subtitle": "Team communication and alerts",
+        "tabs": {
+          "messages": "Team",
+          "alerts": "Alerts"
+        },
+        "emptyTitle": "No messages",
+        "emptyDescription": "Messages from your team and operations appear here.",
+        "fromOperations": "Operations",
+        "you": "You",
+        "reply": "Reply",
+        "replyPlaceholder": "Write your reply…",
+        "sendReply": "Send",
+        "cancel": "Cancel",
+        "replySent": "Reply sent",
+        "replyFailed": "Could not send reply",
+        "pendingSync": "Pending sync",
+        "markRead": "Mark as read",
+        "markAllRead": "Mark all read",
+        "markedAllRead": "All marked as read",
+        "openAlertsPage": "Open alerts page",
+        "newMessage": "New message",
+        "composeSubjectPlaceholder": "Subject (optional)",
+        "composePlaceholder": "Message to operations team…",
+        "sendMessage": "Send",
+        "composeSent": "Message sent",
+        "composeFailed": "Could not send message",
+        "attachment": "Open attachment",
+        "attachmentOffline": "Attachments require an internet connection"
+      },
+      "deviceLock": {
+        "title": "App locked",
+        "subtitle": "Enter your PIN to continue",
+        "wrongPin": "Incorrect PIN",
+        "useBiometric": "Use biometrics",
+        "biometricFailed": "Biometrics not recognized",
+        "settingsTitle": "Device lock",
+        "settingsDescription": "Protect the app with PIN and biometrics after inactivity",
+        "newPin": "New PIN (4–6 digits)",
+        "confirmPin": "Confirm PIN",
+        "pinLength": "PIN must be 4 to 6 digits",
+        "pinMismatch": "PINs do not match",
+        "enablePin": "Enable lock",
+        "pinEnabled": "PIN lock enabled",
+        "pinActive": "Lock active on this device",
+        "biometricLabel": "Biometric unlock",
+        "biometricEnabled": "Biometrics enabled",
+        "biometricDisabled": "Biometrics disabled",
+        "biometricSetupFailed": "Could not set up biometrics",
+        "lockNow": "Lock now",
+        "disable": "Disable",
+        "disabled": "Lock disabled"
+      },
+      "checklistConflicts": {
+        "title": "{count, plural, one {# checklist conflict} other {# checklist conflicts}}",
+        "description": "Server and device states differ. Choose which to keep.",
+        "serverState": "Server",
+        "localState": "Device",
+        "checked": "Checked",
+        "unchecked": "Unchecked",
+        "useServer": "Use server",
+        "useLocal": "Keep local",
+        "keptServer": "Local change discarded",
+        "keptLocal": "Will sync to server"
       },
       "schedule": {
-        "title": "Schedule"
+        "title": "Schedule",
+        "tabs": {
+          "today": "Today",
+          "week": "Week",
+          "month": "Month"
+        },
+        "legend": {
+          "completed": "Completed",
+          "scheduled": "Scheduled",
+          "inProgress": "In progress",
+          "overdue": "Overdue"
+        },
+        "emptyMonth": "No jobs this month."
       },
       "hours": {
         "title": "Hours",
@@ -5395,6 +5626,24 @@
         "mapUnavailable": "Location not available on map",
         "openNavigation": "Open navigation"
       },
+      "ai": {
+        "title": "AI Assistant",
+        "subtitle": "Suggestions for this job",
+        "analyzing": "Analyzing job…",
+        "providerAi": "OpenAI",
+        "providerRules": "Rules",
+        "actions": {
+          "checklist": "Checklist",
+          "materials": "Materials",
+          "notes": "Notes"
+        },
+        "checklistTitle": "Suggested steps",
+        "materialsTitle": "Recommended materials",
+        "notesTitle": "Service notes",
+        "copy": "Copy",
+        "copied": "Copied",
+        "copyFailed": "Could not copy"
+      },
       "checkIn": {
         "title": "On-site check-in",
         "action": "Start service with GPS",
@@ -5417,6 +5666,7 @@
         "offlinePending": "Offline · {count} pending action(s)",
         "pendingSync": "{count} action(s) to sync",
         "syncing": "Syncing…",
+        "actionQueued": "Saved offline — will sync automatically",
         "installTitle": "Install app",
         "installDescription": "Add FeldOps to your home screen",
         "installAction": "Install",
@@ -5485,6 +5735,12 @@
         "jobTitle": "Job title",
         "vacations": "Vacation requests",
         "vacationsHint": "Request and track time off",
+        "shortcutsTitle": "Shortcuts",
+        "settingsTitle": "Settings",
+        "language": "Language",
+        "theme": "Theme",
+        "documents": "Documents",
+        "signOut": "Sign out",
         "shortcuts": {
           "hours": "Hours",
           "reports": "Reports",

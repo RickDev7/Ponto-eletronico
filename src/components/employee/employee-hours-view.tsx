@@ -2,94 +2,85 @@
 
 import { useTranslations, useLocale } from "next-intl";
 import { Clock, TrendingDown, TrendingUp } from "lucide-react";
+import { ROUTES } from "@/config/constants";
 import type { EmployeeHoursSummary } from "@/lib/employee/load-employee-hours";
 import { formatEntryDate, formatMinutes } from "@/lib/employee/format-hours";
+import {
+  AppCard,
+  AppPageHeader,
+  AppScreen,
+  AppSummaryGrid,
+} from "@/components/mobile/app";
 import { cn } from "@/lib/utils";
 
 interface EmployeeHoursViewProps {
+  slug: string;
   summary: EmployeeHoursSummary;
 }
 
-export function EmployeeHoursView({ summary }: EmployeeHoursViewProps) {
+export function EmployeeHoursView({ slug, summary }: EmployeeHoursViewProps) {
   const t = useTranslations("employee.mobile.hours");
   const locale = useLocale();
   const { weekMinutes, weekBalanceMinutes, entries } = summary;
 
   return (
-    <div className="space-y-4 p-4">
-      <div>
-        <h1 className="text-lg font-semibold">{t("title")}</h1>
-        <p className="text-sm text-muted-foreground">{t("subtitle")}</p>
-      </div>
+    <AppScreen>
+      <AppPageHeader
+        title={t("title")}
+        subtitle={t("subtitle")}
+        backHref={ROUTES.mobileProfile(slug)}
+      />
 
-      <div className="grid gap-3 sm:grid-cols-2">
-        <div className="rounded-2xl border border-border/60 bg-card p-4 shadow-sm">
-          <div className="flex items-center gap-3">
-            <div className="flex size-10 items-center justify-center rounded-xl bg-primary/10 text-primary">
-              <Clock className="size-5" />
-            </div>
-            <div>
-              <p className="text-xs text-muted-foreground">{t("weekTotal")}</p>
-              <p className="text-2xl font-bold tabular-nums">{formatMinutes(weekMinutes, locale)}</p>
-            </div>
-          </div>
-        </div>
-
-        <div className="rounded-2xl border border-border/60 bg-card p-4 shadow-sm">
-          <div className="flex items-center gap-3">
-            <div
-              className={cn(
-                "flex size-10 items-center justify-center rounded-xl",
-                weekBalanceMinutes >= 0 ? "bg-emerald-500/10 text-emerald-600" : "bg-amber-500/10 text-amber-600",
-              )}
-            >
-              {weekBalanceMinutes >= 0 ? (
-                <TrendingUp className="size-5" />
-              ) : (
-                <TrendingDown className="size-5" />
-              )}
-            </div>
-            <div>
-              <p className="text-xs text-muted-foreground">{t("weekBalance")}</p>
-              <p className="text-2xl font-bold tabular-nums">
-                {formatMinutes(weekBalanceMinutes, locale)}
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
+      <AppSummaryGrid
+        items={[
+          {
+            label: t("weekTotal"),
+            value: formatMinutes(weekMinutes, locale),
+            icon: Clock,
+          },
+          {
+            label: t("weekBalance"),
+            value: formatMinutes(weekBalanceMinutes, locale),
+            icon: weekBalanceMinutes >= 0 ? TrendingUp : TrendingDown,
+          },
+        ]}
+      />
 
       {entries.length === 0 ? (
-        <div className="rounded-xl border border-dashed px-4 py-10 text-center">
-          <Clock className="mx-auto mb-2 size-8 text-muted-foreground/30" />
-          <p className="text-sm font-medium">{t("emptyTitle")}</p>
-          <p className="mt-1 text-xs text-muted-foreground">{t("empty")}</p>
-        </div>
+        <AppCard className="py-12 text-center">
+          <Clock className="mx-auto mb-3 size-12 text-[var(--mobile-secondary)]/40" />
+          <p className="font-semibold text-[var(--mobile-text)]">{t("emptyTitle")}</p>
+          <p className="mt-1 text-sm text-[var(--mobile-secondary)]">{t("empty")}</p>
+        </AppCard>
       ) : (
-        <ul className="divide-y rounded-xl border border-border/60 bg-card">
+        <ul className="space-y-3">
           {entries.map((row) => (
-            <li
-              key={row.entry_date}
-              className="flex items-center justify-between gap-3 px-4 py-3 text-sm"
-            >
-              <span className="text-muted-foreground">{formatEntryDate(row.entry_date, locale)}</span>
+            <AppCard key={row.entry_date} className="flex items-center justify-between gap-3 py-4">
+              <span className="text-sm text-[var(--mobile-secondary)]">
+                {formatEntryDate(row.entry_date, locale)}
+              </span>
               <div className="text-right">
-                <span className="font-medium tabular-nums">{formatMinutes(row.ist_minutes, locale)}</span>
+                <span className="text-lg font-bold tabular-nums text-[var(--mobile-text)]">
+                  {formatMinutes(row.ist_minutes, locale)}
+                </span>
                 {row.balance_delta_minutes !== 0 && (
                   <p
                     className={cn(
-                      "text-[10px] tabular-nums",
-                      row.balance_delta_minutes >= 0 ? "text-emerald-600" : "text-amber-600",
+                      "text-xs tabular-nums",
+                      row.balance_delta_minutes >= 0
+                        ? "text-[var(--mobile-success)]"
+                        : "text-[var(--mobile-warning)]",
                     )}
                   >
+                    {row.balance_delta_minutes >= 0 ? "+" : ""}
                     {formatMinutes(row.balance_delta_minutes, locale)}
                   </p>
                 )}
               </div>
-            </li>
+            </AppCard>
           ))}
         </ul>
       )}
-    </div>
+    </AppScreen>
   );
 }

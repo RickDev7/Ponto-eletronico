@@ -6,6 +6,8 @@ import { useRouter } from "@/i18n/navigation";
 import { CheckCircle2, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { acceptInvite } from "@/actions/invites/actions";
+import { ROUTES } from "@/config/constants";
+import { sanitizeAppHref } from "@/lib/navigation/sanitize-href";
 import { LegalConsent } from "@/components/marketing/legal-consent";
 
 interface AcceptInviteFormProps {
@@ -32,7 +34,7 @@ export function AcceptInviteForm({ inviteId }: AcceptInviteFormProps) {
         toast.error(result.error);
         return;
       }
-      router.push(result.data.redirectTo);
+      router.push(sanitizeAppHref(result.data.redirectTo, ROUTES.onboarding));
       router.refresh();
     });
   }

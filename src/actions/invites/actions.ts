@@ -58,7 +58,7 @@ export async function acceptInvite(
   }
 
   const user = await getSession();
-  if (!user) redirectTo("/login");
+  if (!user) await redirectTo("/login");
 
   const supabase = await createClient();
 
@@ -69,10 +69,10 @@ export async function acceptInvite(
     .maybeSingle();
 
   if (!invite || invite.accepted_at) {
-    redirectTo("/onboarding?error=invite_invalid");
+    await redirectTo("/onboarding?error=invite_invalid");
   }
   if (new Date(invite.expires_at as string) < new Date()) {
-    redirectTo("/onboarding?error=invite_expired");
+    await redirectTo("/onboarding?error=invite_expired");
   }
 
   const { data: existing } = await supabase
@@ -97,7 +97,7 @@ export async function acceptInvite(
       .select("id")
       .single();
 
-    if (memberError || !member) redirectTo("/onboarding?error=accept_failed");
+    if (memberError || !member) await redirectTo("/onboarding?error=accept_failed");
     memberId = member.id as string;
   } else {
     memberId = existing.id as string;

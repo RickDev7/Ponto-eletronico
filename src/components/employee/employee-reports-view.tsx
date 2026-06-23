@@ -5,8 +5,14 @@ import { useTranslations, useLocale } from "next-intl";
 import { FileText, Loader2 } from "lucide-react";
 import { openServiceReportAction } from "@/actions/field-execution/actions";
 import { toast } from "sonner";
+import { ROUTES } from "@/config/constants";
 import type { EmployeeServiceReportRow } from "@/lib/employee/load-employee-reports";
-import { StatusBadge } from "@/components/shared";
+import {
+  AppBadge,
+  AppCard,
+  AppPageHeader,
+  AppScreen,
+} from "@/components/mobile/app";
 import { Button } from "@/components/ui/button";
 
 interface EmployeeReportsViewProps {
@@ -29,20 +35,21 @@ export function EmployeeReportsView({ slug, reports }: EmployeeReportsViewProps)
   }
 
   return (
-    <div className="space-y-4 p-4">
-      <div>
-        <h1 className="text-lg font-semibold">{t("title")}</h1>
-        <p className="text-sm text-muted-foreground">{t("subtitle")}</p>
-      </div>
+    <AppScreen>
+      <AppPageHeader
+        title={t("title")}
+        subtitle={t("subtitle")}
+        backHref={ROUTES.mobileProfile(slug)}
+      />
 
       {reports.length === 0 ? (
-        <div className="flex min-h-[40vh] flex-col items-center justify-center rounded-2xl border border-dashed px-6 py-12 text-center">
-          <FileText className="mb-3 size-10 text-muted-foreground/30" />
-          <p className="font-medium">{t("emptyTitle")}</p>
-          <p className="mt-1 max-w-xs text-sm text-muted-foreground">{t("emptyDescription")}</p>
-        </div>
+        <AppCard className="flex min-h-[40vh] flex-col items-center justify-center py-12 text-center">
+          <FileText className="mb-3 size-10 text-[var(--mobile-secondary)]/40" />
+          <p className="text-base font-semibold text-[var(--mobile-text)]">{t("emptyTitle")}</p>
+          <p className="mt-1 max-w-xs text-sm text-[var(--mobile-secondary)]">{t("emptyDescription")}</p>
+        </AppCard>
       ) : (
-        <ul className="divide-y rounded-2xl border border-border/60 bg-card">
+        <ul className="space-y-3">
           {reports.map((report) => {
             const task = report.task;
             const addr = task?.address
@@ -59,11 +66,13 @@ export function EmployeeReportsView({ slug, reports }: EmployeeReportsViewProps)
             const canOpen = Boolean(report.storage_path);
 
             return (
-              <li key={report.id} className="p-4">
+              <AppCard key={report.id} className="space-y-3">
                 <div className="flex items-start justify-between gap-3">
                   <div className="min-w-0 flex-1">
-                    <p className="truncate font-medium">{task?.title ?? t("untitled")}</p>
-                    <p className="mt-0.5 text-xs text-muted-foreground">
+                    <p className="truncate text-base font-semibold text-[var(--mobile-text)]">
+                      {task?.title ?? t("untitled")}
+                    </p>
+                    <p className="mt-0.5 text-sm text-[var(--mobile-secondary)]">
                       {client?.name ?? report.client_name ?? "—"}
                       {date &&
                         ` · ${new Date(date).toLocaleDateString(locale, {
@@ -73,32 +82,30 @@ export function EmployeeReportsView({ slug, reports }: EmployeeReportsViewProps)
                         })}`}
                     </p>
                   </div>
-                  <StatusBadge
-                    status={report.status === "generated" ? "success" : "info"}
-                    label={tStatus(report.status === "generated" ? "completed" : "scheduled")}
-                  />
+                  <AppBadge variant={report.status === "generated" ? "success" : "primary"}>
+                    {tStatus(report.status === "generated" ? "completed" : "scheduled")}
+                  </AppBadge>
                 </div>
                 {canOpen && (
                   <Button
                     variant="outline"
-                    size="sm"
-                    className="mt-3 w-full"
+                    className="mobile-touch-target h-12 w-full rounded-[var(--mobile-radius-button)] text-base"
                     disabled={pending}
                     onClick={() => openReport(report.id)}
                   >
                     {pending ? (
-                      <Loader2 className="mr-2 size-3.5 animate-spin" />
+                      <Loader2 className="size-5 animate-spin" />
                     ) : (
-                      <FileText className="mr-2 size-3.5" />
+                      <FileText className="size-5" />
                     )}
                     {t("openPdf")}
                   </Button>
                 )}
-              </li>
+              </AppCard>
             );
           })}
         </ul>
       )}
-    </div>
+    </AppScreen>
   );
 }

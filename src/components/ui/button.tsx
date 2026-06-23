@@ -3,6 +3,7 @@
 import * as React from "react"
 import { Button as ButtonPrimitive } from "@base-ui/react/button"
 import { cva, type VariantProps } from "class-variance-authority"
+import { Loader2 } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 
@@ -48,13 +49,27 @@ function Button({
   variant = "default",
   size = "default",
   asChild = false,
+  loading = false,
   children,
+  disabled,
   ...props
 }: ButtonPrimitive.Props &
   VariantProps<typeof buttonVariants> & {
     asChild?: boolean;
+    /** Shows spinner and disables interaction. */
+    loading?: boolean;
   }) {
   const classes = cn(buttonVariants({ variant, size, className }));
+  const isDisabled = disabled || loading;
+
+  const content = loading ? (
+    <>
+      <Loader2 className="size-4 animate-spin" aria-hidden />
+      {children}
+    </>
+  ) : (
+    children
+  );
 
   if (asChild && React.isValidElement(children)) {
     return (
@@ -62,6 +77,7 @@ function Button({
         suppressHydrationWarning
         data-slot="button"
         className={classes}
+        disabled={isDisabled}
         render={children}
         nativeButton={false}
         {...props}
@@ -74,9 +90,11 @@ function Button({
       suppressHydrationWarning
       data-slot="button"
       className={classes}
+      disabled={isDisabled}
+      aria-busy={loading || undefined}
       {...props}
     >
-      {children}
+      {content}
     </ButtonPrimitive>
   );
 }

@@ -19,8 +19,8 @@ import {
 } from "@/components/ui/tooltip";
 import { useSidebarLayout } from "./sidebar-provider";
 
-const SIDEBAR_WIDTH = "15rem";
-const SIDEBAR_WIDTH_ICON = "3rem";
+const SIDEBAR_WIDTH = "16rem";
+const SIDEBAR_WIDTH_ICON = "3.25rem";
 
 function SidebarRoot({
   className,
@@ -140,7 +140,7 @@ function SidebarGroup({
   return (
     <div className={cn("space-y-0.5", className)} {...props}>
       {label && !effectiveCollapsed && (
-        <p className="mb-1 px-2.5 text-[10px] font-medium uppercase tracking-wider text-muted-foreground/80">
+        <p className="mb-1.5 mt-3 px-2.5 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground/70 first:mt-0">
           {label}
         </p>
       )}
@@ -216,14 +216,14 @@ function SidebarNavGroup({
         suppressHydrationWarning
         onClick={() => setOpen((v) => !v)}
         className={cn(
-          "flex w-full items-center gap-2 rounded-md px-2 py-0.5 text-left transition-colors",
+          "flex w-full items-center gap-2.5 rounded-lg px-2.5 py-1.5 text-left transition-colors ds-transition",
           isGroupActive
-            ? "bg-muted/50 font-medium text-foreground"
-            : "text-muted-foreground hover:bg-muted/50 hover:text-foreground",
+            ? "bg-sidebar-accent/80 font-medium text-foreground"
+            : "text-muted-foreground hover:bg-sidebar-accent/60 hover:text-foreground",
         )}
       >
         <Icon className="size-3.5 shrink-0" />
-        <span className="flex-1 truncate text-xs">{label}</span>
+        <span className="flex-1 truncate text-[13px]">{label}</span>
         <ChevronRight
           className={cn(
             "size-3 shrink-0 transition-transform",
@@ -246,10 +246,10 @@ function SidebarNavGroup({
                   if (isMobile) setMobileOpen(false);
                 }}
                 className={cn(
-                  "block rounded-md px-2 py-1 text-xs transition-colors",
+                  "block rounded-md px-2.5 py-1.5 text-[13px] transition-colors ds-transition",
                   isActive
-                    ? "bg-muted/80 font-medium text-foreground"
-                    : "text-muted-foreground hover:bg-muted/50 hover:text-foreground",
+                    ? "bg-sidebar-accent font-medium text-foreground"
+                    : "text-muted-foreground hover:bg-sidebar-accent/60 hover:text-foreground",
                 )}
               >
                 {child.label}
@@ -275,11 +275,11 @@ function SidebarNavItem({
   const showCollapsed = effectiveCollapsed && !isMobile;
 
   const className = cn(
-    "group/nav relative flex items-center gap-2 rounded-md transition-colors",
-    effectiveCollapsed ? "mx-auto size-7 justify-center p-0" : "px-2 py-0.5",
+    "group/nav relative flex items-center gap-2.5 rounded-lg transition-colors ds-transition",
+    effectiveCollapsed ? "mx-auto size-8 justify-center p-0" : "px-2.5 py-1.5",
     isActive
-      ? "bg-muted/80 font-medium text-foreground"
-      : "text-muted-foreground hover:bg-muted/50 hover:text-foreground",
+      ? "bg-sidebar-accent font-medium text-sidebar-accent-foreground"
+      : "text-muted-foreground hover:bg-sidebar-accent/60 hover:text-foreground",
   );
 
   const content = (
@@ -296,12 +296,17 @@ function SidebarNavItem({
       )}
       {!effectiveCollapsed && (
         <>
-          <span className="flex-1 truncate text-xs">{label}</span>
+          <span className="flex-1 truncate text-[13px]">{label}</span>
           {badge}
         </>
       )}
-      {isActive && !effectiveCollapsed && (
-        <span className="absolute inset-y-1 left-0 w-px rounded-full bg-primary" />
+      {isActive && (
+        <span
+          className={cn(
+            "absolute inset-y-1.5 left-0 w-0.5 rounded-full bg-primary",
+            effectiveCollapsed && "inset-y-1",
+          )}
+        />
       )}
     </>
   );

@@ -1,43 +1,16 @@
 /**
- * Design tokens are defined as CSS variables in src/app/globals.css
- * and exposed to Tailwind via @theme inline.
+ * Design tokens live in src/app/globals.css (@theme inline).
+ * TS reference: src/config/design-tokens.ts
  *
- * Utilities: bg-ds-background, text-ds-primary, rounded-ds-md,
- * shadow-ds-soft, p-ds-16, text-display, text-h1, etc.
+ * Utilities: bg-background, text-foreground, bg-card, border-border,
+ * bg-ds-background, shadow-ds-soft, text-h1, p-ds-16, etc.
  */
-const config = {
+import type { Config } from "tailwindcss";
+
+const config: Config = {
   content: ["./src/**/*.{js,ts,jsx,tsx,mdx}"],
 };
 
 export default config;
 
-/**
- * Token reference (source of truth: globals.css)
- */
-export const designTokens = {
-  colors: {
-    background: "#0A0A0A",
-    surface: "#111111",
-    border: "#1F1F1F",
-    primary: "#2563EB",
-    success: "#10B981",
-    warning: "#F59E0B",
-    danger: "#EF4444",
-  },
-  radius: {
-    sm: "0.25rem",
-    md: "0.5rem",
-    lg: "0.75rem",
-    xl: "1rem",
-  },
-  spacing: {
-    4: "0.25rem",
-    8: "0.5rem",
-    12: "0.75rem",
-    16: "1rem",
-    24: "1.5rem",
-    32: "2rem",
-    48: "3rem",
-    64: "4rem",
-  },
-} as const;
+export { designTokens } from "./src/config/design-tokens";

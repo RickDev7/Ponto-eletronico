@@ -2,10 +2,21 @@
 
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
-import { ChevronRight, LogIn, MapPin, Navigation } from "lucide-react";
+import { ChevronRight, MapPin, Navigation } from "lucide-react";
 import { ROUTES } from "@/config/constants";
 import { buildMapsRouteUrl } from "@/lib/maps";
 import type { ScheduleTaskRow } from "@/lib/field-execution/field-execution-types";
+import { AppServiceCard } from "@/components/mobile/app";
+import {
+  formatJobTimeRange,
+  getJobAddressLine,
+  getJobClientName,
+  getJobMapsUrl,
+  getJobPrimaryHref,
+  getJobStartHref,
+  taskStatusToMobileVariant,
+} from "@/lib/employee/mobile-job-ui";
+import type { TaskStatus } from "@/types";
 import { cn } from "@/lib/utils";
 
 interface FieldScheduleViewProps {
@@ -18,6 +29,7 @@ interface FieldScheduleViewProps {
   activeTaskId: string | null;
   locale: string;
   variant?: "field" | "mobile";
+  hideHeader?: boolean;
 }
 
 function getTaskAddress(task: ScheduleTaskRow) {
@@ -39,20 +51,49 @@ export function FieldScheduleView({
   activeTaskId,
   locale,
   variant = "field",
+  hideHeader = false,
 }: FieldScheduleViewProps) {
   const t = useTranslations("fieldExecution.schedule");
+  const tStatus = useTranslations("status");
   const dateLocale = locale === "en" ? "en-US" : "pt-BR";
-  const serviceHref = (taskId: string) =>
-    variant === "mobile" ? ROUTES.mobileService(slug, taskId) : ROUTES.fieldExecute(slug, taskId);
+  const isMobile = variant === "mobile";
 
-  function TaskCard({ task, highlight }: { task: ScheduleTaskRow; highlight?: boolean }) {
+  function MobileTaskCard({ task, highlight }: { task: ScheduleTaskRow; highlight?: boolean }) {
+    const isActive = task.id === activeTaskId;
+    return (
+      <AppServiceCard
+        clientName={getJobClientName(task) ?? task.title}
+        serviceType={task.title}
+        timeRange={formatJobTimeRange(task) ?? "—"}
+        address={getJobAddressLine(task) ?? undefined}
+        statusLabel={tStatus(task.status as TaskStatus)}
+        statusVariant={taskStatusToMobileVariant(task.status)}
+        href={getJobPrimaryHref(slug, task.id, {
+          isActive,
+          hasOpenCheckIn: Boolean(openCheckIn && openCheckIn.task_id === task.id),
+        })}
+        mapsUrl={getJobMapsUrl(task)}
+        onStart={
+          task.status !== "completed"
+            ? getJobStartHref(slug, task.id, {
+                isActive,
+                hasOpenCheckIn: Boolean(openCheckIn && openCheckIn.task_id === task.id),
+              })
+            : undefined
+        }
+        className={highlight || isActive ? "ring-2 ring-[var(--mobile-primary)]/30" : undefined}
+      />
+    );
+  }
+
+  function DesktopTaskCard({ task, highlight }: { task: ScheduleTaskRow; highlight?: boolean }) {
     const addr = getTaskAddress(task);
     const address = formatAddressLine(addr);
     const mapsUrl = buildMapsRouteUrl(addr);
 
     return (
       <Link
-        href={serviceHref(task.id)}
+        href={ROUTES.fieldExecute(slug, task.id)}
         className={cn(
           "flex items-start gap-3 rounded-2xl border p-4 transition-colors active:scale-[0.99]",
           highlight ? "border-primary bg-primary/5" : "border-border bg-card hover:bg-muted/30",
@@ -71,12 +112,6 @@ export function FieldScheduleView({
               <MapPin className="size-3 shrink-0" />
               <span className="truncate">{address}</span>
             </p>
-          )}
-          {highlight && (
-            <span className="inline-flex items-center gap-1 rounded-full bg-primary/10 px-2 py-0.5 text-[10px] font-medium text-primary">
-              <LogIn className="size-3" />
-              {t("activeSession")}
-            </span>
           )}
         </div>
         <div className="flex shrink-0 flex-col items-end gap-2">
@@ -98,25 +133,29 @@ export function FieldScheduleView({
     );
   }
 
+  const TaskCard = isMobile ? MobileTaskCard : DesktopTaskCard;
+
   return (
-    <div className="space-y-5 pb-24">
-      <header className="space-y-1">
-        <h1 className="text-xl font-bold tracking-tight">{t("title")}</h1>
-        <p className="text-sm text-muted-foreground">
-          {new Date(today + "T12:00:00").toLocaleDateString(dateLocale, {
-            weekday: "long",
-            day: "numeric",
-            month: "long",
-          })}
-        </p>
-      </header>
+    <div className={cn("space-y-5", isMobile ? "pb-4" : "pb-24")}>
+      {!hideHeader && (
+        <header className="space-y-1">
+          <h1 className="text-xl font-bold tracking-tight">{t("title")}</h1>
+          <p className="text-sm text-muted-foreground">
+            {new Date(today + "T12:00:00").toLocaleDateString(dateLocale, {
+              weekday: "long",
+              day: "numeric",
+              month: "long",
+            })}
+          </p>
+        </header>
+      )}
 
       {openCheckIn && activeTaskId && (
         <section className="space-y-2">
           <h2 className="text-xs font-semibold uppercase tracking-wide text-primary">{t("continue")}</h2>
           {todayTasks
-            .filter((t) => t.id === activeTaskId)
-            .concat(upcomingTasks.filter((t) => t.id === activeTaskId))
+            .filter((task) => task.id === activeTaskId)
+            .concat(upcomingTasks.filter((task) => task.id === activeTaskId))
             .slice(0, 1)
             .map((task) => (
               <TaskCard key={task.id} task={task} highlight />
@@ -127,7 +166,9 @@ export function FieldScheduleView({
       <section className="space-y-2">
         <h2 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">{t("today")}</h2>
         {todayTasks.length === 0 ? (
-          <p className="rounded-xl border border-dashed p-6 text-center text-sm text-muted-foreground">{t("emptyToday")}</p>
+          <p className="rounded-xl border border-dashed p-6 text-center text-sm text-muted-foreground">
+            {t("emptyToday")}
+          </p>
         ) : (
           <div className="space-y-2">
             {todayTasks.map((task) => (
@@ -139,7 +180,9 @@ export function FieldScheduleView({
 
       {upcomingTasks.length > 0 && (
         <section className="space-y-2">
-          <h2 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">{t("upcoming")}</h2>
+          <h2 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+            {t("upcoming")}
+          </h2>
           <div className="space-y-2">
             {upcomingTasks.slice(0, 8).map((task) => (
               <TaskCard key={task.id} task={task} />
@@ -150,7 +193,9 @@ export function FieldScheduleView({
 
       {weekTasks.length > 0 && (
         <section className="space-y-3">
-          <h2 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">{t("thisWeek")}</h2>
+          <h2 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+            {t("thisWeek")}
+          </h2>
           {weekTasks.map(({ date, tasks }) => (
             <div key={date} className="space-y-2">
               <p className="text-xs font-medium text-muted-foreground">

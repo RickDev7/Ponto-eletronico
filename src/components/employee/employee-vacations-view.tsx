@@ -19,8 +19,15 @@ import type {
   EmployeeVacationRow,
   EmployeeVacationSummary,
 } from "@/lib/employee/load-employee-vacations";
-import { StatusBadge } from "@/components/shared";
-import { Button } from "@/components/ui/button";
+import {
+  AppBadge,
+  AppCard,
+  AppPageHeader,
+  AppScreen,
+  AppSummaryGrid,
+  AppButton,
+} from "@/components/mobile/app";
+import { ROUTES } from "@/config/constants";
 import {
   Dialog,
   DialogContent,
@@ -38,12 +45,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 
-const STATUS_TONE: Record<string, "success" | "info" | "warning" | "neutral"> = {
-  pending: "warning",
-  approved: "success",
-  rejected: "neutral",
-  cancelled: "neutral",
-};
+import { Button } from "@/components/ui/button";
 
 interface EmployeeVacationsViewProps {
   slug: string;
@@ -94,44 +96,49 @@ export function EmployeeVacationsView({ slug, requests, summary }: EmployeeVacat
   }
 
   return (
-    <div className="space-y-4 p-4 pb-6">
+    <AppScreen>
       <div className="flex items-start justify-between gap-3">
-        <div>
-          <h1 className="text-lg font-semibold">{t("title")}</h1>
-          <p className="text-sm text-muted-foreground">{t("subtitle")}</p>
-        </div>
-        <Button size="sm" onClick={() => setOpen(true)}>
-          <Plus className="mr-1.5 size-3.5" />
-          {t("new")}
+        <AppPageHeader
+          title={t("title")}
+          subtitle={t("subtitle")}
+          backHref={ROUTES.mobileProfile(slug)}
+        />
+        <Button
+          className="mt-1 h-11 shrink-0 rounded-[var(--mobile-radius-button)] bg-[var(--mobile-primary)]"
+          onClick={() => setOpen(true)}
+        >
+          <Plus className="size-4" />
         </Button>
       </div>
 
-      <div className="grid grid-cols-3 gap-2">
-        <SummaryCard label={t("summary.pending")} value={summary.pending} />
-        <SummaryCard label={t("summary.upcoming")} value={summary.approvedUpcoming} />
-        <SummaryCard label={t("summary.daysApproved")} value={summary.totalDaysApproved} />
-      </div>
+      <AppSummaryGrid
+        items={[
+          { label: t("summary.pending"), value: String(summary.pending), icon: Palmtree },
+          { label: t("summary.upcoming"), value: String(summary.approvedUpcoming), icon: Palmtree },
+          { label: t("summary.daysApproved"), value: String(summary.totalDaysApproved), icon: Palmtree },
+        ]}
+      />
 
       {requests.length === 0 ? (
-        <div className="flex min-h-[40vh] flex-col items-center justify-center rounded-2xl border border-dashed px-6 py-12 text-center">
-          <Palmtree className="mb-3 size-10 text-muted-foreground/30" />
-          <p className="font-medium">{t("emptyTitle")}</p>
-          <p className="mt-1 max-w-xs text-sm text-muted-foreground">{t("emptyDescription")}</p>
-          <Button className="mt-4" size="sm" onClick={() => setOpen(true)}>
-            <Plus className="mr-1.5 size-3.5" />
+        <AppCard className="flex min-h-[40vh] flex-col items-center justify-center py-12 text-center">
+          <Palmtree className="mb-3 size-10 text-[var(--mobile-secondary)]/40" />
+          <p className="text-base font-semibold text-[var(--mobile-text)]">{t("emptyTitle")}</p>
+          <p className="mt-1 max-w-xs text-sm text-[var(--mobile-secondary)]">{t("emptyDescription")}</p>
+          <AppButton className="mt-4 w-auto px-6" onClick={() => setOpen(true)}>
+            <Plus className="size-4" />
             {t("new")}
-          </Button>
-        </div>
+          </AppButton>
+        </AppCard>
       ) : (
-        <ul className="divide-y rounded-2xl border border-border/60 bg-card">
+        <ul className="space-y-3">
           {requests.map((req) => (
-            <li key={req.id} className="space-y-2 p-4">
+            <AppCard key={req.id} className="space-y-2">
               <div className="flex items-start justify-between gap-3">
                 <div>
-                  <p className="font-medium">
+                  <p className="text-base font-semibold text-[var(--mobile-text)]">
                     {formatDateRange(req.start_date, req.end_date, locale)}
                   </p>
-                  <p className="text-xs text-muted-foreground">
+                  <p className="text-sm text-[var(--mobile-secondary)]">
                     {t("submitted")}{" "}
                     {new Date(req.created_at).toLocaleDateString(locale, {
                       day: "numeric",
@@ -140,25 +147,32 @@ export function EmployeeVacationsView({ slug, requests, summary }: EmployeeVacat
                     })}
                   </p>
                 </div>
-                <StatusBadge
-                  status={STATUS_TONE[req.status] ?? "neutral"}
-                  label={tStatus(req.status as "pending")}
-                />
+                <AppBadge
+                  variant={
+                    req.status === "approved"
+                      ? "success"
+                      : req.status === "pending"
+                        ? "warning"
+                        : "default"
+                  }
+                >
+                  {tStatus(req.status as "pending")}
+                </AppBadge>
               </div>
               {req.notes && (
-                <p className="text-sm text-muted-foreground">{req.notes}</p>
+                <p className="text-sm text-[var(--mobile-secondary)]">{req.notes}</p>
               )}
               {req.status === "pending" && (
                 <Button
                   variant="outline"
-                  size="sm"
+                  className="h-11 rounded-[var(--mobile-radius-button)]"
                   disabled={pending}
                   onClick={() => handleCancel(req.id)}
                 >
                   {t("cancel")}
                 </Button>
               )}
-            </li>
+            </AppCard>
           ))}
         </ul>
       )}
@@ -217,16 +231,7 @@ export function EmployeeVacationsView({ slug, requests, summary }: EmployeeVacat
           </Form>
         </DialogContent>
       </Dialog>
-    </div>
-  );
-}
-
-function SummaryCard({ label, value }: { label: string; value: number }) {
-  return (
-    <div className="rounded-xl border border-border/60 bg-card px-3 py-2.5 text-center">
-      <p className="text-lg font-bold tabular-nums">{value}</p>
-      <p className="text-[10px] text-muted-foreground">{label}</p>
-    </div>
+    </AppScreen>
   );
 }
 

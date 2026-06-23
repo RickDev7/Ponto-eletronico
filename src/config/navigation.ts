@@ -37,19 +37,31 @@ export interface NavGroup {
   children: NavGroupChild[];
 }
 
-export type NavEntry = NavItem | NavGroup;
+export interface NavSection {
+  type: "section";
+  titleKey: string;
+}
+
+export type NavEntry = NavItem | NavGroup | NavSection;
 
 export function isNavGroup(entry: NavEntry): entry is NavGroup {
   return entry.type === "group";
 }
 
+export function isNavSection(entry: NavEntry): entry is NavSection {
+  return entry.type === "section";
+}
+
 const NAV_DEFINITIONS: Array<
+  | { type: "section"; titleKey: string }
   | { type: "item"; titleKey: string; href: (s: string) => string; icon: LucideIcon; minRole: MemberRole }
   | { type: "group"; titleKey: string; icon: LucideIcon; minRole: MemberRole; basePath: (s: string) => string; children: Array<{ titleKey: string; href: (s: string) => string }> }
 > = [
+  { type: "section", titleKey: "sectionOverview" },
   { type: "item", titleKey: "dashboard", href: (s) => `/${s}`, icon: LayoutDashboard, minRole: "employee" },
   { type: "item", titleKey: "myTasks", href: (s) => `/${s}/mobile`, icon: UserCircle2, minRole: "employee" },
   { type: "item", titleKey: "tasks", href: (s) => `/${s}/tasks`, icon: ClipboardList, minRole: "employee" },
+  { type: "section", titleKey: "sectionCommercial" },
   {
     type: "group",
     titleKey: "crm",
@@ -66,6 +78,7 @@ const NAV_DEFINITIONS: Array<
       { titleKey: "crmContracts", href: (s) => `/${s}/finance/contracts` },
     ],
   },
+  { type: "section", titleKey: "sectionOperations" },
   {
     type: "group",
     titleKey: "operations",
@@ -81,6 +94,7 @@ const NAV_DEFINITIONS: Array<
       { titleKey: "operationsRoutes", href: (s) => `/${s}/operations/routes` },
     ],
   },
+  { type: "section", titleKey: "sectionWorkforce" },
   {
     type: "group",
     titleKey: "workforce",
@@ -94,11 +108,13 @@ const NAV_DEFINITIONS: Array<
       { titleKey: "workforceSkills", href: (s) => `/${s}/workforce/skills` },
       { titleKey: "workforceAvailability", href: (s) => `/${s}/workforce/availability` },
       { titleKey: "workforceVacations", href: (s) => `/${s}/workforce/vacations` },
+      { titleKey: "workforceMessages", href: (s) => `/${s}/workforce/messages` },
       { titleKey: "workforceAbsences", href: (s) => `/${s}/workforce/absences` },
       { titleKey: "workforceDocuments", href: (s) => `/${s}/workforce/documents` },
       { titleKey: "workforceTimeAccount", href: (s) => `/${s}/workforce/time-account` },
     ],
   },
+  { type: "section", titleKey: "sectionResources" },
   {
     type: "group",
     titleKey: "assets",
@@ -112,6 +128,7 @@ const NAV_DEFINITIONS: Array<
       { titleKey: "operationsMaterials", href: (s) => `/${s}/operations/materials` },
     ],
   },
+  { type: "section", titleKey: "sectionFinance" },
   {
     type: "group",
     titleKey: "finance",
@@ -129,6 +146,7 @@ const NAV_DEFINITIONS: Array<
       { titleKey: "financeForecast", href: (s) => `/${s}/finance/forecast` },
     ],
   },
+  { type: "section", titleKey: "sectionInsights" },
   {
     type: "group",
     titleKey: "analytics",
@@ -145,6 +163,7 @@ const NAV_DEFINITIONS: Array<
   { type: "item", titleKey: "reports", href: (s) => `/${s}/reports`, icon: FileText, minRole: "supervisor" },
   { type: "item", titleKey: "automations", href: (s) => `/${s}/automations`, icon: Zap, minRole: "supervisor" },
   { type: "item", titleKey: "aiAssistant", href: (s) => `/${s}/assistant`, icon: Sparkles, minRole: "supervisor" },
+  { type: "section", titleKey: "sectionSystem" },
   { type: "item", titleKey: "settings", href: (s) => `/${s}/settings`, icon: Settings, minRole: "supervisor" },
 ];
 
@@ -155,6 +174,9 @@ export function getDashboardNav(slug: string): NavItem[] {
 
 export function getDashboardNavEntries(slug: string): NavEntry[] {
   return NAV_DEFINITIONS.map((def) => {
+    if (def.type === "section") {
+      return { type: "section" as const, titleKey: def.titleKey };
+    }
     if (def.type === "group") {
       return {
         type: "group" as const,

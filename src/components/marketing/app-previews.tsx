@@ -59,8 +59,8 @@ export function WorkforcePreview({ className }: { className?: string }) {
         <div className="h-6 w-16 rounded-md bg-[#2563EB]/10" />
       </div>
       <div className="grid grid-cols-7 gap-1 text-center">
-        {["S", "M", "T", "W", "T", "F", "S"].map((day) => (
-          <span key={day} className="text-[8px] font-medium text-[#64748B]">
+        {["S", "M", "T", "W", "T", "F", "S"].map((day, index) => (
+          <span key={index} className="text-[8px] font-medium text-[#64748B]">
             {day}
           </span>
         ))}
@@ -185,16 +185,53 @@ export function PortalPreview({ className }: { className?: string }) {
 export function AiPreview({ className }: { className?: string }) {
   return (
     <div className={cn("space-y-2 p-3", className)}>
-      <div className="rounded-lg border border-[#E2E8F0] bg-white p-2.5">
-        <p className="text-[9px] text-[#64748B]">Você</p>
-        <p className="mt-1 text-[10px] text-[#0F172A]">Quais equipas estão disponíveis amanhã?</p>
+      <div className="rounded-lg border border-border bg-card p-2.5">
+        <p className="text-[9px] text-muted-foreground">You</p>
+        <p className="mt-1 text-[10px] text-foreground">Which crews are available tomorrow?</p>
       </div>
-      <div className="rounded-lg border border-[#2563EB]/20 bg-[#EFF6FF] p-2.5">
-        <p className="text-[9px] font-medium text-[#2563EB]">Assistente FeldOps</p>
-        <p className="mt-1 text-[10px] leading-relaxed text-[#0F172A]">
-          3 equipas disponíveis: Norte A, Centro B e Sul C. Quer que eu sugira uma escala?
+      <div className="rounded-lg border border-primary/20 bg-primary/5 p-2.5">
+        <p className="text-[9px] font-medium text-primary">FeldOps AI</p>
+        <p className="mt-1 text-[10px] leading-relaxed text-foreground">
+          3 crews available: North A, Central B, South C. Want me to suggest a schedule?
         </p>
       </div>
+    </div>
+  );
+}
+
+export function MobilePreview({ className }: { className?: string }) {
+  return (
+    <div className={cn("space-y-2 p-3", className)}>
+      <div className="flex items-center justify-between rounded-lg border border-border bg-card p-2">
+        <PreviewBar width="45%" />
+        <div className="size-6 rounded-full bg-success/20" />
+      </div>
+      <div className="rounded-lg border border-border bg-card p-2.5">
+        <div className="mb-2 flex items-center gap-2">
+          <div className="size-8 rounded-lg bg-primary/10" />
+          <div className="flex-1 space-y-1">
+            <PreviewBar width="65%" />
+            <PreviewBar width="40%" />
+          </div>
+        </div>
+        <div className="mt-2 grid grid-cols-2 gap-1.5">
+          <div className="rounded-md bg-primary py-2 text-center text-[8px] font-semibold text-primary-foreground">
+            Check-in
+          </div>
+          <div className="rounded-md border border-border py-2 text-center text-[8px] font-medium text-muted-foreground">
+            Check-out
+          </div>
+        </div>
+      </div>
+      <div className="flex gap-2">
+        {[1, 2, 3].map((i) => (
+          <div key={i} className="h-14 flex-1 rounded-lg border border-border bg-muted/30" />
+        ))}
+      </div>
+      <PreviewRow>
+        <div className="size-2 rounded-full bg-success" />
+        <span className="text-[9px] text-muted-foreground">GPS verified · 2h 15m logged</span>
+      </PreviewRow>
     </div>
   );
 }

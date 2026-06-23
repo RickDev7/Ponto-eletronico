@@ -6,7 +6,7 @@ export default function MarketingLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="min-h-svh bg-[#F8FAFC] text-[#0F172A]">
+    <div className="min-h-svh bg-background text-foreground">
       <div className="flex min-h-svh flex-col">
         <MarketingHeader />
         <main className="flex-1">{children}</main>

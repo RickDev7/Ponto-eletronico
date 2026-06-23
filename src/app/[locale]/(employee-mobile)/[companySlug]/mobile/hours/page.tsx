@@ -18,5 +18,5 @@ export default async function MobileHoursPage({ params }: PageProps) {
   const ctx = await requireEmployeeContext(companySlug);
   const summary = await loadEmployeeHours(ctx.company.id, ctx.employee.id);
 
-  return <EmployeeHoursView summary={summary} />;
+  return <EmployeeHoursView slug={companySlug} summary={summary} />;
 }

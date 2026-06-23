@@ -6,6 +6,8 @@ export interface EmptyStateProps extends WithClassName, WithIcon {
   description?: string;
   /** Primary action slot (button, link, etc.). */
   action?: React.ReactNode;
+  /** Secondary action below primary. */
+  secondaryAction?: React.ReactNode;
   /** Additional content below the action. */
   children?: React.ReactNode;
   size?: SharedSize;
@@ -35,6 +37,7 @@ export function EmptyState({
   title,
   description,
   action,
+  secondaryAction,
   children,
   size = "md",
   className,
@@ -51,13 +54,13 @@ export function EmptyState({
       {Icon && (
         <div
           className={cn(
-            "mb-3 flex items-center justify-center rounded-lg border border-border/60 bg-muted/20",
+            "mb-4 flex items-center justify-center rounded-xl border border-border bg-muted/30",
             iconBoxSize[size],
           )}
         >
           <Icon
             className={cn(
-              "text-muted-foreground/60",
+              "text-muted-foreground/70",
               iconSize[size],
               iconClassName,
             )}
@@ -65,14 +68,19 @@ export function EmptyState({
           />
         </div>
       )}
-      <p className="text-[13px] font-medium text-foreground">{title}</p>
+      <p className="text-sm font-medium text-foreground">{title}</p>
       {description && (
-        <p className="mt-1 max-w-sm text-[12px] leading-relaxed text-muted-foreground">
+        <p className="mt-1.5 max-w-sm text-sm leading-relaxed text-muted-foreground">
           {description}
         </p>
       )}
-      {action && <div className="mt-3">{action}</div>}
-      {children && <div className="mt-2">{children}</div>}
+      {(action || secondaryAction) && (
+        <div className="mt-5 flex flex-col items-center gap-2 sm:flex-row">
+          {action}
+          {secondaryAction}
+        </div>
+      )}
+      {children && <div className="mt-3">{children}</div>}
     </div>
   );
 }

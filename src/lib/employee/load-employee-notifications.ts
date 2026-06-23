@@ -39,16 +39,24 @@ export async function loadEmployeeNotifications(
   return { notifications, unreadCount };
 }
 
-export async function loadEmployeeUnreadCount(companyId: string, employeeId: string) {
+export async function loadEmployeeInboxUnreadCount(companyId: string, employeeId: string) {
   const supabase = await createClient();
-  const { count, error } = await supabase
-    .from("employee_notifications")
-    .select("id", { count: "exact", head: true })
-    .eq("company_id", companyId)
-    .eq("employee_id", employeeId)
-    .is("read_at", null);
 
-  if (error) return 0;
+  const [notifRes, msgRes] = await Promise.all([
+    supabase
+      .from("employee_notifications")
+      .select("id", { count: "exact", head: true })
+      .eq("company_id", companyId)
+      .eq("employee_id", employeeId)
+      .is("read_at", null),
+    supabase
+      .from("employee_messages")
+      .select("id", { count: "exact", head: true })
+      .eq("company_id", companyId)
+      .eq("recipient_employee_id", employeeId)
+      .is("read_at", null)
+      .is("sender_employee_id", null),
+  ]);
 
-  return count ?? 0;
+  return (notifRes.count ?? 0) + (msgRes.count ?? 0);
 }

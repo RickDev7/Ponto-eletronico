@@ -20,7 +20,10 @@ export function MobileAccessView({ slug, reason, mobilePath }: MobileAccessViewP
 
   async function handleSignOut() {
     await signOut();
-    router.push(`${ROUTES.login}?redirect=${encodeURIComponent(mobilePath)}`);
+    router.push({
+      pathname: ROUTES.login,
+      query: { redirect: mobilePath },
+    });
     router.refresh();
   }
 

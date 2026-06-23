@@ -3,5 +3,6 @@ export {
   signUp,
   signOut,
   createCompany,
-  type ActionResult,
 } from "./actions";
+
+export type { ActionResult } from "./actions";

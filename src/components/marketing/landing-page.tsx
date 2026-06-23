@@ -5,324 +5,291 @@ import {
   AiPreview,
   DashboardPreview,
   FinancePreview,
+  MobilePreview,
   OperationsPreview,
   PortalPreview,
   WorkforcePreview,
 } from "@/components/marketing/app-previews";
-import { DeviceFrame } from "@/components/marketing/device-frame";
+import { DeviceFrame, MobileFrame } from "@/components/marketing/device-frame";
 import { MARKETING_SCREENSHOTS } from "@/lib/marketing/screenshots";
 import {
-  FeatureList,
-  IconBox,
+  FeatureShowcase,
+  FloatingKpiCard,
+  IndustryPills,
   MarketingCard,
   MarketingSection,
+  MetricStrip,
   PrimaryCta,
+  ProblemCompareCard,
   SecondaryCta,
   SectionHeader,
+  WorkflowPipeline,
 } from "@/components/marketing/marketing-ui";
 import {
-  Building2,
+  CalendarRange,
   CheckCircle2,
   ClipboardList,
-  Globe,
-  Quote,
-  Sparkles,
-  Wrench,
+  Eye,
+  FileSpreadsheet,
+  MessageCircle,
+  TrendingUp,
+  Users,
+  Zap,
 } from "lucide-react";
 
-const BENEFIT_KEYS = ["visibility", "efficiency", "trust", "scale"] as const;
-const FEATURE_KEYS = [
-  "scheduling",
-  "mobile",
-  "reporting",
-  "compliance",
-  "integrations",
-  "security",
-] as const;
 const PLAN_KEYS = ["starter", "professional", "enterprise"] as const;
 const FAQ_KEYS = ["whatIs", "industries", "trial", "data", "support", "migration"] as const;
-
-const INDUSTRY_ICONS = {
-  cleaning: Building2,
-  facility: Wrench,
-  maintenance: ClipboardList,
-  services: Globe,
-} as const;
+const PROBLEM_KEYS = ["excel", "paper", "whatsapp", "scheduling"] as const;
 
 export async function LandingPageContent() {
   const t = await getTranslations("landing");
 
+  const kpiCards = [
+    { key: "todayServices" as const, value: "24", tone: "primary" as const },
+    { key: "employeesScheduled" as const, value: "18", tone: "success" as const },
+    { key: "revenueMonth" as const, value: "€42k", tone: "default" as const },
+    { key: "openTasks" as const, value: "7", tone: "warning" as const },
+  ];
+
+  const problemIcons = {
+    excel: FileSpreadsheet,
+    paper: ClipboardList,
+    whatsapp: MessageCircle,
+    scheduling: CalendarRange,
+  } as const;
+
+  const solutionIcons = {
+    excel: Zap,
+    paper: Eye,
+    whatsapp: Users,
+    scheduling: TrendingUp,
+  } as const;
+
   return (
     <>
-      {/* 1. Hero */}
-      <section className="border-b border-[#E2E8F0] bg-white">
-        <div className="mx-auto grid max-w-6xl gap-12 px-4 py-20 sm:px-6 lg:grid-cols-2 lg:items-center lg:py-28">
-          <div>
-            <p className="mb-4 inline-flex items-center rounded-full border border-[#E2E8F0] bg-[#F8FAFC] px-3 py-1 text-xs font-medium text-[#64748B]">
+      {/* 1 — Hero */}
+      <section className="relative overflow-hidden border-b border-border bg-background">
+        <div
+          className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_70%_-10%,var(--accent),transparent_55%)]"
+          aria-hidden
+        />
+        <div className="mx-auto grid max-w-6xl gap-14 px-4 py-20 sm:px-6 lg:grid-cols-2 lg:items-center lg:py-28">
+          <div className="relative z-10">
+            <p className="mb-4 inline-flex items-center rounded-full border border-border bg-card px-3 py-1 text-xs font-medium text-muted-foreground">
               {t("hero.badge")}
             </p>
-            <h1 className="text-4xl font-semibold leading-[1.1] tracking-tight text-[#0F172A] sm:text-5xl lg:text-[3.25rem]">
+            <h1 className="text-4xl font-semibold leading-[1.08] tracking-tight text-foreground sm:text-5xl lg:text-[3.5rem]">
               {t("hero.title")}
             </h1>
-            <p className="mt-6 text-lg leading-relaxed text-[#64748B] sm:text-xl">
+            <p className="mt-6 text-lg leading-relaxed text-muted-foreground sm:text-xl">
               {t("hero.description")}
             </p>
+            <div className="mt-6">
+              <IndustryPills items={t.raw("hero.industries") as string[]} />
+            </div>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <PrimaryCta href={ROUTES.register}>{t("hero.ctaPrimary")}</PrimaryCta>
               <SecondaryCta href={ROUTES.demo}>{t("hero.ctaSecondary")}</SecondaryCta>
             </div>
-            <p className="mt-4 text-sm text-[#64748B]">{t("hero.footnote")}</p>
+            <p className="mt-4 text-sm text-muted-foreground">{t("hero.footnote")}</p>
           </div>
-          <DeviceFrame
-            label="app.feldops.com"
-            className="lg:ml-auto lg:max-w-lg"
-            imageSrc={MARKETING_SCREENSHOTS.dashboard}
-            imageAlt={t("hero.screenshotAlt")}
-          >
-            <DashboardPreview />
-          </DeviceFrame>
+
+          <div className="relative z-10 lg:ml-auto lg:max-w-lg">
+            <DeviceFrame
+              label="app.feldops.com"
+              imageSrc={MARKETING_SCREENSHOTS.dashboard}
+              imageAlt={t("hero.screenshotAlt")}
+            >
+              <DashboardPreview />
+            </DeviceFrame>
+            <FloatingKpiCard
+              label={t("hero.kpis.todayServices")}
+              value={kpiCards[0].value}
+              tone={kpiCards[0].tone}
+              animate
+              className="auth-kpi-float absolute -right-2 top-6 w-36"
+            />
+            <FloatingKpiCard
+              label={t("hero.kpis.employeesScheduled")}
+              value={kpiCards[1].value}
+              tone={kpiCards[1].tone}
+              className="auth-kpi-float-delayed absolute -left-4 bottom-20 w-40"
+            />
+            <FloatingKpiCard
+              label={t("hero.kpis.revenueMonth")}
+              value={kpiCards[2].value}
+              className="auth-kpi-float absolute right-8 -bottom-4 w-36"
+            />
+            <FloatingKpiCard
+              label={t("hero.kpis.openTasks")}
+              value={kpiCards[3].value}
+              tone={kpiCards[3].tone}
+              className="auth-kpi-float-delayed absolute left-12 top-4 w-32"
+            />
+          </div>
         </div>
       </section>
 
-      {/* 2. Trusted By */}
+      {/* 2 — Trusted by */}
       <MarketingSection variant="muted" id="trusted">
-        <p className="mb-8 text-center text-sm font-medium uppercase tracking-wider text-[#64748B]">
+        <p className="mb-8 text-center text-sm font-semibold uppercase tracking-wider text-muted-foreground">
           {t("trustedBy.title")}
         </p>
-        <div className="flex flex-wrap items-center justify-center gap-x-10 gap-y-4">
+        <div className="flex flex-wrap items-center justify-center gap-x-12 gap-y-6">
           {(t.raw("trustedBy.logos") as string[]).map((name) => (
             <span
               key={name}
-              className="text-base font-semibold tracking-tight text-[#94A3B8] sm:text-lg"
+              className="text-lg font-semibold tracking-tight text-muted-foreground/70 sm:text-xl"
             >
               {name}
             </span>
           ))}
         </div>
-        <p className="mx-auto mt-8 max-w-2xl text-center text-sm text-[#64748B]">
-          {t("trustedBy.subtitle")}
-        </p>
+        <div className="mt-12 rounded-2xl border border-border bg-card p-8 shadow-ds-soft">
+          <MetricStrip
+            metrics={(
+              t.raw("trustedBy.metrics") as Array<{ value: string; label: string }>
+            ).map((m) => ({ value: m.value, label: m.label }))}
+          />
+        </div>
       </MarketingSection>
 
-      {/* 3. Benefits */}
-      <MarketingSection id="benefits">
+      {/* 3 — Problems we solve */}
+      <MarketingSection id="problems">
         <SectionHeader
-          eyebrow={t("benefits.eyebrow")}
-          title={t("benefits.title")}
-          description={t("benefits.description")}
+          eyebrow={t("problems.eyebrow")}
+          title={t("problems.title")}
+          description={t("problems.description")}
         />
         <div className="grid gap-6 sm:grid-cols-2">
-          {BENEFIT_KEYS.map((key) => (
-            <MarketingCard key={key}>
-              <h3 className="mb-2 text-lg font-semibold text-[#0F172A]">
-                {t(`benefits.items.${key}.title`)}
-              </h3>
-              <p className="leading-relaxed text-[#64748B]">
-                {t(`benefits.items.${key}.description`)}
-              </p>
-            </MarketingCard>
-          ))}
-        </div>
-      </MarketingSection>
-
-      {/* 4. Features */}
-      <MarketingSection variant="card" id="features">
-        <SectionHeader
-          eyebrow={t("features.eyebrow")}
-          title={t("features.title")}
-          description={t("features.description")}
-        />
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {FEATURE_KEYS.map((key) => (
-            <MarketingCard key={key} className="p-6">
-              <IconBox>
-                <Sparkles className="size-5" strokeWidth={1.75} />
-              </IconBox>
-              <h3 className="mb-2 font-semibold text-[#0F172A]">
-                {t(`features.items.${key}.title`)}
-              </h3>
-              <p className="text-sm leading-relaxed text-[#64748B]">
-                {t(`features.items.${key}.description`)}
-              </p>
-            </MarketingCard>
-          ))}
-        </div>
-        <div className="mt-10 text-center">
-          <Link
-            href={ROUTES.features}
-            className="text-sm font-medium text-[#2563EB] hover:text-[#1D4ED8]"
-          >
-            {t("features.viewAll")} →
-          </Link>
-        </div>
-      </MarketingSection>
-
-      {/* 5. Workforce Planning */}
-      <MarketingSection id="workforce">
-        <div className="grid items-center gap-12 lg:grid-cols-2">
-          <div>
-            <SectionHeader
-              eyebrow={t("workforce.eyebrow")}
-              title={t("workforce.title")}
-              description={t("workforce.description")}
-              align="left"
-              className="mb-8"
-            />
-            <FeatureList items={t.raw("workforce.bullets") as string[]} />
-          </div>
-          <DeviceFrame
-            imageSrc={MARKETING_SCREENSHOTS.workforce}
-            imageAlt={t("workforce.screenshotAlt")}
-          >
-            <WorkforcePreview />
-          </DeviceFrame>
-        </div>
-      </MarketingSection>
-
-      {/* 6. Operations Management */}
-      <MarketingSection variant="muted" id="operations">
-        <div className="grid items-center gap-12 lg:grid-cols-2">
-          <DeviceFrame
-            className="order-2 lg:order-1"
-            imageSrc={MARKETING_SCREENSHOTS.operations}
-            imageAlt={t("operations.screenshotAlt")}
-          >
-            <OperationsPreview />
-          </DeviceFrame>
-          <div className="order-1 lg:order-2">
-            <SectionHeader
-              eyebrow={t("operations.eyebrow")}
-              title={t("operations.title")}
-              description={t("operations.description")}
-              align="left"
-              className="mb-8"
-            />
-            <FeatureList items={t.raw("operations.bullets") as string[]} />
-          </div>
-        </div>
-      </MarketingSection>
-
-      {/* 7. Finance */}
-      <MarketingSection id="finance">
-        <div className="grid items-center gap-12 lg:grid-cols-2">
-          <div>
-            <SectionHeader
-              eyebrow={t("finance.eyebrow")}
-              title={t("finance.title")}
-              description={t("finance.description")}
-              align="left"
-              className="mb-8"
-            />
-            <FeatureList items={t.raw("finance.bullets") as string[]} />
-          </div>
-          <DeviceFrame
-            imageSrc={MARKETING_SCREENSHOTS.finance}
-            imageAlt={t("finance.screenshotAlt")}
-          >
-            <FinancePreview />
-          </DeviceFrame>
-        </div>
-      </MarketingSection>
-
-      {/* 8. Client Portal */}
-      <MarketingSection variant="muted" id="portal">
-        <div className="grid items-center gap-12 lg:grid-cols-2">
-          <DeviceFrame
-            className="order-2 lg:order-1"
-            imageSrc={MARKETING_SCREENSHOTS.portal}
-            imageAlt={t("clientPortal.screenshotAlt")}
-          >
-            <PortalPreview />
-          </DeviceFrame>
-          <div className="order-1 lg:order-2">
-            <SectionHeader
-              eyebrow={t("clientPortal.eyebrow")}
-              title={t("clientPortal.title")}
-              description={t("clientPortal.description")}
-              align="left"
-              className="mb-8"
-            />
-            <FeatureList items={t.raw("clientPortal.bullets") as string[]} />
-          </div>
-        </div>
-      </MarketingSection>
-
-      {/* 9. AI Assistant */}
-      <MarketingSection id="ai">
-        <div className="grid items-center gap-12 lg:grid-cols-2">
-          <div>
-            <SectionHeader
-              eyebrow={t("aiAssistant.eyebrow")}
-              title={t("aiAssistant.title")}
-              description={t("aiAssistant.description")}
-              align="left"
-              className="mb-8"
-            />
-            <FeatureList items={t.raw("aiAssistant.bullets") as string[]} />
-          </div>
-          <DeviceFrame
-            imageSrc={MARKETING_SCREENSHOTS.ai}
-            imageAlt={t("aiAssistant.screenshotAlt")}
-          >
-            <AiPreview />
-          </DeviceFrame>
-        </div>
-      </MarketingSection>
-
-      {/* Industries strip */}
-      <MarketingSection variant="card">
-        <SectionHeader
-          title={t("industries.title")}
-          description={t("industries.description")}
-        />
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {(["cleaning", "facility", "maintenance", "services"] as const).map((key) => {
-            const Icon = INDUSTRY_ICONS[key];
+          {PROBLEM_KEYS.map((key) => {
+            const ReplaceIcon = problemIcons[key];
+            const WithIcon = solutionIcons[key];
             return (
-              <MarketingCard key={key} className="p-6 text-center">
-                <IconBox className="mx-auto">
-                  <Icon className="size-5" strokeWidth={1.75} />
-                </IconBox>
-                <h3 className="font-semibold text-[#0F172A]">
-                  {t(`industries.items.${key}.title`)}
-                </h3>
-                <p className="mt-2 text-sm text-[#64748B]">
-                  {t(`industries.items.${key}.description`)}
-                </p>
-              </MarketingCard>
+              <ProblemCompareCard
+                key={key}
+                replaceTag={t("problems.replaceTag")}
+                withTag={t("problems.withTag")}
+                replace={t(`problems.items.${key}.replace`)}
+                withLabel={t(`problems.items.${key}.with`)}
+                replaceIcon={<ReplaceIcon className="size-5" strokeWidth={1.75} />}
+                withIcon={<WithIcon className="size-5" strokeWidth={1.75} />}
+              />
             );
           })}
         </div>
       </MarketingSection>
 
-      {/* 10. Testimonials */}
-      <MarketingSection variant="muted" id="testimonials">
+      {/* 4 — Workforce planning */}
+      <FeatureShowcase
+        id="workforce"
+        eyebrow={t("workforce.eyebrow")}
+        title={t("workforce.title")}
+        description={t("workforce.description")}
+        bullets={t.raw("workforce.bullets") as string[]}
+        variant="muted"
+      >
+        <DeviceFrame
+          imageSrc={MARKETING_SCREENSHOTS.workforce}
+          imageAlt={t("workforce.screenshotAlt")}
+        >
+          <WorkforcePreview />
+        </DeviceFrame>
+      </FeatureShowcase>
+
+      {/* 5 — Work orders */}
+      <FeatureShowcase
+        id="work-orders"
+        eyebrow={t("workOrders.eyebrow")}
+        title={t("workOrders.title")}
+        description={t("workOrders.description")}
+        bullets={t.raw("workOrders.bullets") as string[]}
+        reverse
+      >
+        <DeviceFrame
+          imageSrc={MARKETING_SCREENSHOTS.operations}
+          imageAlt={t("workOrders.screenshotAlt")}
+        >
+          <OperationsPreview />
+        </DeviceFrame>
+      </FeatureShowcase>
+
+      {/* 6 — Employee app */}
+      <FeatureShowcase
+        id="employee-app"
+        eyebrow={t("employeeApp.eyebrow")}
+        title={t("employeeApp.title")}
+        description={t("employeeApp.description")}
+        bullets={t.raw("employeeApp.bullets") as string[]}
+        variant="muted"
+      >
+        <MobileFrame imageAlt={t("employeeApp.screenshotAlt")}>
+          <MobilePreview />
+        </MobileFrame>
+      </FeatureShowcase>
+
+      {/* 7 — Client portal */}
+      <FeatureShowcase
+        id="portal"
+        eyebrow={t("clientPortal.eyebrow")}
+        title={t("clientPortal.title")}
+        description={t("clientPortal.description")}
+        bullets={t.raw("clientPortal.bullets") as string[]}
+        reverse
+      >
+        <DeviceFrame
+          imageSrc={MARKETING_SCREENSHOTS.portal}
+          imageAlt={t("clientPortal.screenshotAlt")}
+        >
+          <PortalPreview />
+        </DeviceFrame>
+      </FeatureShowcase>
+
+      {/* 8 — Finance */}
+      <FeatureShowcase
+        id="finance"
+        eyebrow={t("finance.eyebrow")}
+        title={t("finance.title")}
+        description={t("finance.description")}
+        bullets={t.raw("finance.bullets") as string[]}
+        variant="muted"
+      >
+        <DeviceFrame
+          imageSrc={MARKETING_SCREENSHOTS.finance}
+          imageAlt={t("finance.screenshotAlt")}
+        >
+          <FinancePreview />
+        </DeviceFrame>
+      </FeatureShowcase>
+
+      {/* 9 — AI assistant */}
+      <FeatureShowcase
+        id="ai"
+        eyebrow={t("aiAssistant.eyebrow")}
+        title={t("aiAssistant.title")}
+        description={t("aiAssistant.description")}
+        bullets={t.raw("aiAssistant.bullets") as string[]}
+        reverse
+      >
+        <DeviceFrame imageSrc={MARKETING_SCREENSHOTS.ai} imageAlt={t("aiAssistant.screenshotAlt")}>
+          <AiPreview />
+        </DeviceFrame>
+      </FeatureShowcase>
+
+      {/* 10 — How it works */}
+      <MarketingSection variant="white" id="how-it-works">
         <SectionHeader
-          eyebrow={t("testimonials.eyebrow")}
-          title={t("testimonials.title")}
-          description={t("testimonials.description")}
+          eyebrow={t("howItWorks.eyebrow")}
+          title={t("howItWorks.title")}
+          description={t("howItWorks.description")}
         />
-        <div className="grid gap-6 lg:grid-cols-3">
-          {(["one", "two", "three"] as const).map((key) => (
-            <MarketingCard key={key}>
-              <Quote className="mb-4 size-5 text-[#2563EB]" />
-              <p className="mb-6 leading-relaxed text-[#0F172A]">
-                &ldquo;{t(`testimonials.items.${key}.quote`)}&rdquo;
-              </p>
-              <div>
-                <p className="font-semibold text-[#0F172A]">
-                  {t(`testimonials.items.${key}.name`)}
-                </p>
-                <p className="text-sm text-[#64748B]">
-                  {t(`testimonials.items.${key}.role`)}
-                </p>
-              </div>
-            </MarketingCard>
-          ))}
-        </div>
+        <WorkflowPipeline steps={t.raw("howItWorks.steps") as string[]} />
+        <p className="mx-auto mt-10 max-w-2xl text-center text-sm text-muted-foreground">
+          {t("howItWorks.footer")}
+        </p>
       </MarketingSection>
 
-      {/* 11. Pricing */}
+      {/* 11 — Pricing */}
       <MarketingSection id="pricing">
         <SectionHeader
           eyebrow={t("pricing.eyebrow")}
@@ -339,23 +306,23 @@ export async function LandingPageContent() {
             return (
               <MarketingCard key={planKey} highlight={highlight} className="flex flex-col">
                 {highlight ? (
-                  <span className="mb-4 inline-flex w-fit rounded-full bg-[#EFF6FF] px-3 py-1 text-xs font-medium text-[#2563EB]">
+                  <span className="mb-4 inline-flex w-fit rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-primary">
                     {t("pricing.popular")}
                   </span>
                 ) : null}
-                <p className="text-sm font-medium text-[#64748B]">
+                <p className="text-sm font-medium text-muted-foreground">
                   {t(`pricing.plans.${planKey}.name`)}
                 </p>
-                <p className="mt-2 text-4xl font-semibold tracking-tight text-[#0F172A]">
+                <p className="mt-2 text-4xl font-semibold tracking-tight text-foreground">
                   {t(`pricing.plans.${planKey}.price`)}
                 </p>
-                <p className="text-sm text-[#64748B]">
+                <p className="text-sm text-muted-foreground">
                   {t(`pricing.plans.${planKey}.period`)}
                 </p>
                 <ul className="my-8 flex-1 space-y-3">
                   {features.map((feature) => (
-                    <li key={feature} className="flex items-start gap-2 text-sm text-[#64748B]">
-                      <CheckCircle2 className="mt-0.5 size-4 shrink-0 text-[#2563EB]" />
+                    <li key={feature} className="flex items-start gap-2 text-sm text-muted-foreground">
+                      <CheckCircle2 className="mt-0.5 size-4 shrink-0 text-primary" />
                       {feature}
                     </li>
                   ))}
@@ -364,8 +331,8 @@ export async function LandingPageContent() {
                   href={checkoutHref}
                   className={
                     highlight
-                      ? "block w-full rounded-xl bg-[#2563EB] py-3 text-center text-sm font-semibold text-white transition-colors hover:bg-[#1D4ED8]"
-                      : "block w-full rounded-xl border border-[#E2E8F0] py-3 text-center text-sm font-semibold text-[#0F172A] transition-colors hover:bg-[#F8FAFC]"
+                      ? "block w-full rounded-xl bg-primary py-3 text-center text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90"
+                      : "block w-full rounded-xl border border-border py-3 text-center text-sm font-semibold text-foreground transition-colors hover:bg-muted/50"
                   }
                 >
                   {t(`pricing.plans.${planKey}.cta`)}
@@ -375,32 +342,29 @@ export async function LandingPageContent() {
           })}
         </div>
         <div className="mt-8 text-center">
-          <Link
-            href={ROUTES.pricing}
-            className="text-sm font-medium text-[#2563EB] hover:text-[#1D4ED8]"
-          >
+          <Link href={ROUTES.pricing} className="text-sm font-medium text-primary hover:text-primary/80">
             {t("pricing.viewPlans")} →
           </Link>
         </div>
       </MarketingSection>
 
-      {/* 12. FAQ */}
+      {/* 12 — FAQ */}
       <MarketingSection variant="muted" id="faq">
         <SectionHeader
           eyebrow={t("faq.eyebrow")}
           title={t("faq.title")}
           description={t("faq.description")}
         />
-        <div className="mx-auto max-w-3xl divide-y divide-[#E2E8F0] rounded-2xl border border-[#E2E8F0] bg-white">
+        <div className="mx-auto max-w-3xl divide-y divide-border rounded-2xl border border-border bg-card shadow-ds-soft">
           {FAQ_KEYS.map((key) => (
             <details key={key} className="group px-6 py-5">
-              <summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-medium text-[#0F172A] marker:content-none [&::-webkit-details-marker]:hidden">
+              <summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-medium text-foreground marker:content-none [&::-webkit-details-marker]:hidden">
                 {t(`faq.items.${key}.question`)}
-                <span className="text-[#64748B] transition-transform group-open:rotate-45">
+                <span className="text-xl text-muted-foreground transition-transform group-open:rotate-45">
                   +
                 </span>
               </summary>
-              <p className="mt-3 pr-8 text-sm leading-relaxed text-[#64748B]">
+              <p className="mt-3 pr-8 text-sm leading-relaxed text-muted-foreground">
                 {t(`faq.items.${key}.answer`)}
               </p>
             </details>
@@ -408,16 +372,22 @@ export async function LandingPageContent() {
         </div>
       </MarketingSection>
 
-      {/* 13. CTA */}
+      {/* 13 — Final CTA */}
       <MarketingSection>
-        <div className="rounded-3xl border border-[#E2E8F0] bg-white px-6 py-16 text-center sm:px-12">
-          <h2 className="text-3xl font-semibold tracking-tight text-[#0F172A] sm:text-4xl">
-            {t("cta.title")}
-          </h2>
-          <p className="mx-auto mt-4 max-w-xl text-lg text-[#64748B]">{t("cta.description")}</p>
-          <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
-            <PrimaryCta href={ROUTES.register}>{t("cta.button")}</PrimaryCta>
-            <SecondaryCta href={ROUTES.contact}>{t("cta.secondary")}</SecondaryCta>
+        <div className="relative overflow-hidden rounded-3xl border border-border bg-card px-6 py-16 text-center shadow-ds-medium sm:px-12">
+          <div
+            className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,var(--accent),transparent_60%)]"
+            aria-hidden
+          />
+          <div className="relative">
+            <h2 className="text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
+              {t("cta.title")}
+            </h2>
+            <p className="mx-auto mt-4 max-w-xl text-lg text-muted-foreground">{t("cta.description")}</p>
+            <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
+              <PrimaryCta href={ROUTES.register}>{t("cta.button")}</PrimaryCta>
+              <SecondaryCta href={ROUTES.demo}>{t("cta.secondary")}</SecondaryCta>
+            </div>
           </div>
         </div>
       </MarketingSection>

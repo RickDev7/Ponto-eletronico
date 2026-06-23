@@ -1,14 +1,17 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { cookies } from "next/headers";
 import { ROUTES } from "@/config/constants";
+import { redirectTo } from "@/i18n/server-redirect";
+import { LOCALE_STORAGE_KEY, type AppLocale } from "@/i18n/routing";
 import { createClient } from "@/lib/supabase/server";
 import { getUserCompanies, getUserProfile } from "@/lib/auth/session";
 import { resolvePostAuthRedirect } from "@/lib/auth/post-auth-redirect";
 import { linkPendingEmployeeMembership } from "@/lib/auth/link-pending-employee";
 import { actionError } from "@/lib/i18n/action-error";
 import { seedCompanySubscription } from "@/lib/billing/enforcement";
-import type { AppLocale } from "@/i18n/routing";
+import { isInvalidAppHref } from "@/lib/navigation/sanitize-href";
 import {
   createCompanySchema,
   loginSchema,
@@ -25,8 +28,10 @@ export type ActionResult<T = void> =
 
 export async function signIn(
   input: SignInInput,
-): Promise<ActionResult<{ redirectTo: string; preferredLocale: AppLocale }>> {
-  const { redirect: explicitRedirect, ...credentials } = input;
+): Promise<ActionResult> {
+  const { redirect: rawRedirect, ...credentials } = input;
+  const explicitRedirect =
+    rawRedirect && !isInvalidAppHref(rawRedirect) ? rawRedirect : null;
   const parsed = loginSchema.safeParse(credentials);
   if (!parsed.success) {
     return { success: false, error: await actionError("invalidInput") };
@@ -62,12 +67,22 @@ export async function signIn(
   const preferredLocale: AppLocale = profile?.locale === "en" ? "en" : "pt";
 
   const companies = await getUserCompanies(user.id);
-  const redirectTo = await resolvePostAuthRedirect(user.id, companies, {
+  const destination = await resolvePostAuthRedirect(user.id, companies, {
     explicitRedirect,
   });
 
+  const cookieStore = await cookies();
+  cookieStore.set(LOCALE_STORAGE_KEY, preferredLocale, {
+    path: "/",
+    maxAge: 60 * 60 * 24 * 365,
+    sameSite: "lax",
+  });
+
+  // Ensure refreshed session cookies are written before navigation.
+  await supabase.auth.getUser();
+
   revalidatePath("/", "layout");
-  return { success: true, data: { redirectTo, preferredLocale } };
+  await redirectTo(destination, preferredLocale);
 }
 
 export async function signUp(

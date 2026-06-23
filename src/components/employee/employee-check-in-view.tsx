@@ -5,7 +5,6 @@ import { useRouter } from "@/i18n/navigation";
 import { useTranslations, useLocale } from "next-intl";
 import { toast } from "sonner";
 import {
-  ArrowLeft,
   Calendar,
   CheckCircle2,
   Loader2,
@@ -21,14 +20,20 @@ import {
   isLikelyNetworkError,
   registerBackgroundSync,
 } from "@/lib/pwa/offline-queue";
+import { offlineCacheKey, saveOfflineCache } from "@/lib/pwa/offline-cache";
 import type { ExecutionContext } from "@/lib/field-execution/field-execution-types";
 import { GPS_CHECK_IN_RADIUS_M, formatDistance, haversineMeters } from "@/lib/employee/gps";
 import { useGeolocation } from "@/hooks/employee/use-geolocation";
 import { ServiceMap } from "@/components/employee/service-map";
-import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import {
+  AppCard,
+  AppDarkHeader,
+  AppScreen,
+  AppButton,
+} from "@/components/mobile/app";
 
 interface EmployeeCheckInViewProps {
   slug: string;
@@ -68,21 +73,56 @@ export function EmployeeCheckInView({ slug, taskId, context }: EmployeeCheckInVi
     !requiresGps || (geoStatus === "ready" && position != null && inRange);
   const canSubmit = !openCheckIn && !pending && geoStatus !== "loading" && geoOk;
 
-  async function performCheckIn() {
+  async function queueOfflineCheckIn() {
+    const localSessionKey = crypto.randomUUID();
     const payload = {
       latitude: position?.latitude,
       longitude: position?.longitude,
       notes: notes || undefined,
+      localSessionKey,
     };
 
+    await enqueueOfflineAction({
+      type: "check_in",
+      slug,
+      taskId,
+      payload,
+      sessionKey: localSessionKey,
+    });
+    await registerBackgroundSync();
+
+    const executionCache = {
+      ...context,
+      openCheckIn: {
+        id: `offline:${localSessionKey}`,
+        check_in_at: new Date().toISOString(),
+        check_in_notes: notes || null,
+      },
+    };
+    await saveOfflineCache(offlineCacheKey("execution", slug, taskId), executionCache);
+
+    toast.success(t("offlineQueued"));
+    router.push(ROUTES.mobileServiceExecute(slug, taskId));
+  }
+
+  async function performCheckIn() {
     if (!navigator.onLine) {
-      await enqueueOfflineAction({ type: "check_in", slug, taskId, payload });
-      await registerBackgroundSync();
-      toast.success(t("offlineQueued"));
+      await queueOfflineCheckIn();
       return;
     }
 
-    const result = await checkIn(slug, taskId, payload);
+    const payload = {
+      latitude: position?.latitude,
+      longitude: position?.longitude,
+      notes: notes || undefined,
+      localSessionKey: crypto.randomUUID(),
+    };
+
+    const result = await checkIn(slug, taskId, {
+      latitude: payload.latitude,
+      longitude: payload.longitude,
+      notes: payload.notes,
+    });
     if (!result.success) {
       toast.error(result.error);
       return;
@@ -101,18 +141,7 @@ export function EmployeeCheckInView({ slug, taskId, context }: EmployeeCheckInVi
         await performCheckIn();
       } catch (error) {
         if (isLikelyNetworkError(error)) {
-          await enqueueOfflineAction({
-            type: "check_in",
-            slug,
-            taskId,
-            payload: {
-              latitude: position?.latitude,
-              longitude: position?.longitude,
-              notes: notes || undefined,
-            },
-          });
-          await registerBackgroundSync();
-          toast.success(t("offlineQueued"));
+          await queueOfflineCheckIn();
         } else {
           toast.error(t("failed"));
         }
@@ -122,100 +151,92 @@ export function EmployeeCheckInView({ slug, taskId, context }: EmployeeCheckInVi
 
   if (openCheckIn) {
     return (
-      <div className="flex min-h-[calc(100svh-3.5rem)] flex-col">
-        <div className="flex items-center gap-2 border-b px-4 py-3">
-          <Link
-            href={ROUTES.mobileService(slug, taskId)}
-            className="inline-flex size-9 items-center justify-center rounded-full border"
-          >
-            <ArrowLeft className="size-4" />
-          </Link>
-          <div className="min-w-0 flex-1">
-            <p className="truncate font-semibold">{task.title}</p>
-            <p className="text-xs text-emerald-600">{t("alreadyActive")}</p>
-          </div>
-        </div>
-        <div className="flex flex-1 flex-col items-center justify-center gap-4 p-6 text-center">
-          <CheckCircle2 className="size-12 text-emerald-500" />
-          <p className="text-sm text-muted-foreground">{t("continueHint")}</p>
-          <Button asChild className="h-12 w-full max-w-sm">
-            <Link href={ROUTES.mobileServiceExecute(slug, taskId)}>{t("continueExecution")}</Link>
-          </Button>
-        </div>
-      </div>
+      <AppScreen immersive className="flex min-h-svh flex-col justify-center text-center">
+        <AppDarkHeader
+          title={task.title}
+          subtitle={t("alreadyActive")}
+          backHref={ROUTES.mobileService(slug, taskId)}
+        />
+        <CheckCircle2 className="mx-auto size-16 text-[var(--mobile-success)]" />
+        <p className="mt-4 px-6 text-base text-[var(--mobile-secondary)]">{t("continueHint")}</p>
+        <Link
+          href={ROUTES.mobileServiceExecute(slug, taskId)}
+          className="mobile-pressable mx-auto mt-8 flex h-[52px] w-[min(100%,20rem)] items-center justify-center gap-2 rounded-[var(--mobile-radius-button)] bg-[var(--mobile-primary)] px-6 font-semibold text-white"
+        >
+          <Navigation className="size-5" />
+          {t("continueExecution")}
+        </Link>
+      </AppScreen>
     );
   }
 
   return (
-    <div className="flex min-h-[calc(100svh-3.5rem)] flex-col">
-      <div className="flex items-center gap-2 border-b px-4 py-3">
-        <Link
-          href={ROUTES.mobileService(slug, taskId)}
-          className="inline-flex size-9 items-center justify-center rounded-full border"
-        >
-          <ArrowLeft className="size-4" />
-        </Link>
-        <div className="min-w-0 flex-1">
-          <p className="truncate font-semibold">{task.title}</p>
-          <p className="text-xs text-muted-foreground">{t("title")}</p>
-        </div>
-      </div>
-
-      <div className="flex-1 space-y-4 overflow-y-auto p-4 pb-32">
-        <ServiceMap latitude={destLat} longitude={destLng} height={220} className="shadow-sm" />
-
-        <div className="space-y-2 rounded-2xl border bg-card p-4">
-          {clientName && <p className="text-sm font-medium">{clientName}</p>}
-          {addr && (
-            <p className="flex items-start gap-2 text-sm text-muted-foreground">
-              <MapPin className="mt-0.5 size-4 shrink-0" />
-              {addr.street}
-              {addr.house_number ? ` ${addr.house_number}` : ""}, {addr.city}
-            </p>
-          )}
-          <p className="flex items-center gap-2 text-xs text-muted-foreground">
-            <Calendar className="size-3.5" />
-            {new Date(`${task.scheduled_date}T12:00:00`).toLocaleDateString(locale, {
-              weekday: "long",
-              day: "numeric",
-              month: "long",
-            })}
-          </p>
-        </div>
-
-        <GpsStatusCard
-          geoStatus={geoStatus}
-          distanceM={distanceM}
-          inRange={inRange}
-          requiresGps={requiresGps}
-          onRefresh={refresh}
-          t={t}
+    <>
+      <AppScreen immersive className="space-y-0 px-0 pt-0 pb-32">
+        <AppDarkHeader
+          title={clientName ?? task.title}
+          subtitle={t("title")}
+          backHref={ROUTES.mobileService(slug, taskId)}
         />
+        <div className="space-y-5 px-[var(--mobile-page-px)] pt-4">
+          <div className="overflow-hidden rounded-[var(--mobile-radius-card)] shadow-[var(--mobile-shadow-card)]">
+            <ServiceMap latitude={destLat} longitude={destLng} height={220} />
+          </div>
 
-        <div>
-          <Label className="text-xs">{tCommon("notesOptional")}</Label>
-          <Textarea
-            value={notes}
-            onChange={(e) => setNotes(e.target.value)}
-            rows={3}
-            className="mt-1.5 text-sm"
-            placeholder={t("notesPlaceholder")}
+          <AppCard className="space-y-2">
+            {clientName && <p className="font-semibold text-[var(--mobile-text)]">{clientName}</p>}
+            {addr && (
+              <p className="flex items-start gap-2 text-sm text-[var(--mobile-secondary)]">
+                <MapPin className="mt-0.5 size-4 shrink-0" />
+                {addr.street}
+                {addr.house_number ? ` ${addr.house_number}` : ""}, {addr.city}
+              </p>
+            )}
+            <p className="flex items-center gap-2 text-xs text-[var(--mobile-secondary)]">
+              <Calendar className="size-3.5" />
+              {new Date(`${task.scheduled_date}T12:00:00`).toLocaleDateString(locale, {
+                weekday: "long",
+                day: "numeric",
+                month: "long",
+              })}
+            </p>
+          </AppCard>
+
+          <GpsStatusCard
+            geoStatus={geoStatus}
+            distanceM={distanceM}
+            inRange={inRange}
+            requiresGps={requiresGps}
+            onRefresh={refresh}
+            t={t}
           />
-        </div>
-      </div>
 
-      <div className="fixed bottom-0 left-0 right-0 z-30 border-t bg-background/95 p-4 backdrop-blur-sm">
-        <Button
-          className="h-14 w-full text-base font-semibold"
+          <div>
+            <label className="text-sm font-medium text-[var(--mobile-text)]">{tCommon("notesOptional")}</label>
+            <Textarea
+              value={notes}
+              onChange={(e) => setNotes(e.target.value)}
+              rows={3}
+              className="mt-2 rounded-[var(--mobile-radius-button)] border-[var(--mobile-border)] text-base"
+              placeholder={t("notesPlaceholder")}
+            />
+          </div>
+        </div>
+      </AppScreen>
+
+      <div className="fixed inset-x-0 bottom-0 z-40 border-t border-[var(--mobile-border)] bg-[var(--mobile-card)]/95 p-4 backdrop-blur-xl safe-area-pb">
+        <button
+          type="button"
+          className="mobile-pressable mx-auto flex h-[52px] w-full max-w-md items-center justify-center gap-2 rounded-[var(--mobile-radius-button)] bg-[var(--mobile-primary)] text-base font-semibold text-white disabled:opacity-50"
           disabled={!canSubmit}
           onClick={handleCheckIn}
         >
-          {(pending || geoStatus === "loading") && <Loader2 className="mr-2 size-5 animate-spin" />}
-          <Navigation className="mr-2 size-5" />
+          {(pending || geoStatus === "loading") && <Loader2 className="size-5 animate-spin" />}
+          <Navigation className="size-5" />
           {t("action")}
-        </Button>
+        </button>
       </div>
-    </div>
+    </>
   );
 }
 

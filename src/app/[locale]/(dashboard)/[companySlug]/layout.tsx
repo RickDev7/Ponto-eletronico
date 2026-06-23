@@ -3,10 +3,15 @@ import { requireCompanyContext } from "@/lib/auth/guards";
 import { isPlatformAdmin } from "@/lib/auth/platform-guards";
 import { resolveMembershipCompany } from "@/lib/auth/resolve-company";
 import { getSession, getUserCompanies } from "@/lib/auth/session";
-import { RESERVED_COMPANY_SLUGS, ROUTES } from "@/config/constants";
+import {
+  isEmployeeDesktopExemptPath,
+  RESERVED_COMPANY_SLUGS,
+  ROUTES,
+} from "@/config/constants";
 import { isClientRole } from "@/types/enums";
 import { DashboardShell } from "@/components/layout/dashboard-shell";
 import { AiAssistantDock } from "@/components/features/ai/ai-assistant-dock";
+import { headers } from "next/headers";
 
 interface DashboardLayoutProps {
   children: React.ReactNode;
@@ -51,7 +56,15 @@ export default async function DashboardLayout({
   }
 
   if (ctx.membership.role === "employee") {
-    await redirectTo(ROUTES.mobile(companySlug));
+    const headerList = await headers();
+    const requestPath =
+      headerList.get("x-pathname") ??
+      headerList.get("x-url")?.split("?")[0]?.replace(/^https?:\/\/[^/]+/, "") ??
+      "";
+    const normalizedPath = requestPath.startsWith("/") ? requestPath : `/${requestPath}`;
+    if (!isEmployeeDesktopExemptPath(normalizedPath, companySlug)) {
+      await redirectTo(ROUTES.mobile(companySlug));
+    }
   }
 
   if (isClientRole(ctx.membership.role)) {

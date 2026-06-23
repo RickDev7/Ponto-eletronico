@@ -27,6 +27,14 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
+import { useOfflineFieldActions } from "@/hooks/employee/use-offline-field-actions";
+import { ChecklistConflictPanel } from "@/components/features/field-execution/checklist-conflict-panel";
+import {
+  AppDarkHeader,
+  AppCard,
+  AppScreen,
+  AppSegmentTabs,
+} from "@/components/mobile/app";
 
 type Step = "checkin" | "checklist" | "photos" | "sign" | "checkout";
 
@@ -37,6 +45,11 @@ interface FieldExecutionViewProps {
   variant?: "field" | "mobile";
   /** Mobile execute flow — skips check-in step (handled on /mobile/check-in). */
   mode?: "full" | "execute";
+  offlineSupport?: {
+    enabled: boolean;
+    checkInId?: string;
+    localSessionKey?: string;
+  };
 }
 
 async function getGeo() {
@@ -59,10 +72,20 @@ export function FieldExecutionView({
   context,
   variant = "field",
   mode = "full",
+  offlineSupport,
 }: FieldExecutionViewProps) {
   const t = useTranslations("fieldExecution");
+  const tPwa = useTranslations("employee.mobile.pwa");
+  const tCommon = useTranslations("common");
   const router = useRouter();
   const isMobileExecute = variant === "mobile" && mode === "execute";
+  const offlineEnabled = offlineSupport?.enabled ?? false;
+  const offlineActions = useOfflineFieldActions({
+    slug,
+    taskId,
+    checkInId: offlineSupport?.checkInId ?? context.openCheckIn?.id,
+    localSessionKey: offlineSupport?.localSessionKey,
+  });
   const scheduleHref =
     variant === "mobile"
       ? isMobileExecute
@@ -96,42 +119,90 @@ export function FieldExecutionView({
     setGeoLoading(false);
 
     startTransition(async () => {
-      const result = openCheckIn
-        ? await checkOut(slug, openCheckIn.id, { ...geo, notes: notes || undefined })
-        : await checkIn(slug, taskId, { ...geo, notes: notes || undefined });
+      if (openCheckIn) {
+        const isOfflineSession = openCheckIn.id.startsWith("offline:");
 
+        if (isOfflineSession || !navigator.onLine) {
+          await offlineActions.enqueueCheckOut({ ...geo, notes: notes || undefined });
+          toast.success(tPwa("actionQueued"));
+          router.push(homeAfterCheckout);
+          return;
+        }
+
+        const status = await offlineActions.tryOnlineOrEnqueue(
+          () => checkOut(slug, openCheckIn.id, { ...geo, notes: notes || undefined }),
+          () => offlineActions.enqueueCheckOut({ ...geo, notes: notes || undefined }),
+        );
+
+        if (status === "failed") {
+          toast.error(tCommon("error"));
+          return;
+        }
+        if (status === "queued") {
+          toast.success(tPwa("actionQueued"));
+          router.push(homeAfterCheckout);
+          return;
+        }
+
+        toast.success(t("checkout.done"));
+        router.refresh();
+        router.push(homeAfterCheckout);
+        return;
+      }
+
+      const result = await checkIn(slug, taskId, { ...geo, notes: notes || undefined });
       if (!result.success) {
         toast.error(result.error);
         return;
       }
 
-      if (openCheckIn) {
-        toast.success(t("checkout.done"));
-        router.refresh();
-        router.push(homeAfterCheckout);
-      } else {
-        toast.success(t("checkin.done"));
-        setStep("checklist");
-        router.refresh();
-      }
+      toast.success(t("checkin.done"));
+      setStep("checklist");
+      router.refresh();
     });
   }
 
   function handlePhotoUpload() {
     const file = fileRef.current?.files?.[0];
-    if (!file) return;
-    const fd = new FormData();
-    fd.set("file", file);
-    fd.set("photoType", photoType);
-    if (openCheckIn) fd.set("checkInId", openCheckIn.id);
+    if (!file || !openCheckIn) return;
 
     startTransition(async () => {
-      const result = await uploadTaskPhoto(slug, taskId, fd);
-      if (result.success) {
-        toast.success(t("photos.uploaded"));
+      const isOfflineSession = openCheckIn.id.startsWith("offline:");
+
+      const uploadOnline = async () => {
+        const fd = new FormData();
+        fd.set("file", file);
+        fd.set("photoType", photoType);
+        if (!isOfflineSession) fd.set("checkInId", openCheckIn.id);
+        return uploadTaskPhoto(slug, taskId, fd);
+      };
+
+      if (offlineEnabled && (isOfflineSession || !navigator.onLine)) {
+        await offlineActions.enqueuePhoto(file, photoType);
+        toast.success(tPwa("actionQueued"));
         if (fileRef.current) fileRef.current.value = "";
-        router.refresh();
-      } else toast.error(result.error);
+        return;
+      }
+
+      if (offlineEnabled) {
+        const status = await offlineActions.tryOnlineOrEnqueue(
+          uploadOnline,
+          () => offlineActions.enqueuePhoto(file, photoType),
+        );
+        if (status === "failed") {
+          toast.error(tCommon("error"));
+          return;
+        }
+        if (status === "queued") toast.success(tPwa("actionQueued"));
+        else toast.success(t("photos.uploaded"));
+      } else {
+        const result = await uploadOnline();
+        if (result.success) toast.success(t("photos.uploaded"));
+        else toast.error(result.error);
+      }
+
+      if (fileRef.current) fileRef.current.value = "";
+      router.refresh();
     });
   }
 
@@ -140,17 +211,42 @@ export function FieldExecutionView({
       toast.error(t("sign.required"));
       return;
     }
-    const fd = new FormData();
-    fd.set("clientName", clientName.trim());
-    fd.set("checkInId", openCheckIn.id);
-    fd.set("signature", new File([signatureBlob], "signature.png", { type: "image/png" }));
 
     startTransition(async () => {
-      const result = await signServiceReportAction(slug, taskId, fd);
-      if (result.success) {
-        toast.success(t("sign.done"));
-        router.refresh();
-      } else toast.error(result.error);
+      const isOfflineSession = openCheckIn.id.startsWith("offline:");
+
+      const signOnline = async () => {
+        const fd = new FormData();
+        fd.set("clientName", clientName.trim());
+        if (!isOfflineSession) fd.set("checkInId", openCheckIn.id);
+        fd.set("signature", new File([signatureBlob], "signature.png", { type: "image/png" }));
+        return signServiceReportAction(slug, taskId, fd);
+      };
+
+      if (offlineEnabled && (isOfflineSession || !navigator.onLine)) {
+        await offlineActions.enqueueSign(clientName.trim(), signatureBlob);
+        toast.success(tPwa("actionQueued"));
+        return;
+      }
+
+      if (offlineEnabled) {
+        const status = await offlineActions.tryOnlineOrEnqueue(
+          signOnline,
+          () => offlineActions.enqueueSign(clientName.trim(), signatureBlob),
+        );
+        if (status === "failed") {
+          toast.error(tCommon("error"));
+          return;
+        }
+        if (status === "queued") toast.success(tPwa("actionQueued"));
+        else toast.success(t("sign.done"));
+      } else {
+        const result = await signOnline();
+        if (result.success) toast.success(t("sign.done"));
+        else toast.error(result.error);
+      }
+
+      router.refresh();
     });
   }
 
@@ -164,23 +260,43 @@ export function FieldExecutionView({
   }
 
   return (
-    <div className="mx-auto max-w-lg space-y-4 pb-28">
-      <div className="flex items-center gap-2">
-        <Link
-          href={scheduleHref}
-          className="inline-flex size-9 items-center justify-center rounded-full border"
-        >
-          <ArrowLeft className="size-4" />
-        </Link>
-        <div className="min-w-0 flex-1">
-          <h1 className="truncate text-lg font-bold">{task.title}</h1>
-          <p className="truncate text-xs text-muted-foreground">
-            {addr ? `${addr.street}, ${addr.city}` : task.scheduled_date}
-          </p>
+    <AppScreen immersive className={cn("space-y-0 px-0 pt-0", isMobileExecute ? "pb-28" : "pb-28")}>
+      {isMobileExecute ? (
+        <AppDarkHeader
+          title={task.title}
+          subtitle={addr ? `${addr.street}, ${addr.city}` : task.scheduled_date}
+          backHref={scheduleHref}
+          progress={stepIndex + 1}
+          total={steps.length}
+        />
+      ) : (
+        <div className="flex items-center gap-2 px-[var(--mobile-page-px)] pt-4">
+          <Link
+            href={scheduleHref}
+            className="mobile-touch-target mobile-pressable inline-flex items-center justify-center rounded-full border border-[var(--mobile-border)]"
+          >
+            <ArrowLeft className="size-5" />
+          </Link>
+          <div className="min-w-0 flex-1">
+            <h1 className="truncate text-lg font-bold">{task.title}</h1>
+            <p className="truncate text-sm text-[var(--mobile-secondary)]">
+              {addr ? `${addr.street}, ${addr.city}` : task.scheduled_date}
+            </p>
+          </div>
         </div>
-      </div>
+      )}
 
-      <nav className="flex gap-1 overflow-x-auto pb-1">
+      <div className="space-y-4 px-[var(--mobile-page-px)] pt-4">
+      {isMobileExecute && (
+        <AppSegmentTabs
+          value={step}
+          onChange={(s) => openCheckIn && setStep(s as Step)}
+          options={steps.map((s) => ({ key: s, label: t(`steps.${s}`) }))}
+        />
+      )}
+
+      {!isMobileExecute && (
+      <nav className="flex gap-2 overflow-x-auto pb-1 scrollbar-thin">
         {steps.map((s, i) => (
           <button
             key={s}
@@ -188,7 +304,7 @@ export function FieldExecutionView({
             disabled={!openCheckIn && s !== "checkin"}
             onClick={() => openCheckIn && setStep(s)}
             className={cn(
-              "shrink-0 rounded-full px-3 py-1 text-[11px] font-medium transition-colors",
+              "mobile-touch-target mobile-pressable shrink-0 rounded-full px-4 py-2 text-sm font-medium transition-colors",
               step === s ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground",
               i <= stepIndex && openCheckIn && "ring-1 ring-primary/20",
             )}
@@ -197,6 +313,7 @@ export function FieldExecutionView({
           </button>
         ))}
       </nav>
+      )}
 
       {step === "checkin" && !isMobileExecute && (
         <section className="space-y-4 rounded-2xl border bg-card p-4">
@@ -230,8 +347,33 @@ export function FieldExecutionView({
       )}
 
       {step === "checklist" && openCheckIn && (
-        <section className="rounded-2xl border bg-card p-4">
-          <TaskChecklist slug={slug} taskId={taskId} items={context.checklist} canEdit={false} />
+        <section className="space-y-3">
+          {offlineEnabled && (
+            <ChecklistConflictPanel
+              slug={slug}
+              taskId={taskId}
+              serverItems={context.checklist}
+              onResolved={() => router.refresh()}
+            />
+          )}
+          <div className="rounded-2xl border bg-card p-4">
+            <TaskChecklist
+            slug={slug}
+            taskId={taskId}
+            items={context.checklist}
+            canEdit={false}
+            offlineSupport={
+              offlineEnabled
+                ? {
+                    onToggleOffline: async (itemId, checked) => {
+                      await offlineActions.enqueueChecklistToggle(itemId, checked);
+                      toast.success(tPwa("actionQueued"));
+                    },
+                  }
+                : undefined
+            }
+          />
+          </div>
         </section>
       )}
 
@@ -332,24 +474,25 @@ export function FieldExecutionView({
       {openCheckIn && step !== "checkin" && (
         <div
           className={cn(
-            "fixed left-0 right-0 z-30 border-t bg-background/95 p-3 backdrop-blur-sm",
+            "fixed left-0 right-0 z-30 border-t bg-background/95 p-3 backdrop-blur-sm safe-area-pb",
             variant === "mobile" ? "bottom-0" : "bottom-16 lg:hidden",
           )}
         >
           <div className="mx-auto flex max-w-lg gap-2">
             {stepIndex > 0 && (
-              <Button variant="outline" className="flex-1" onClick={() => setStep(steps[stepIndex - 1]!)}>
+              <Button variant="outline" className="mobile-touch-target h-12 flex-1 rounded-xl text-base" onClick={() => setStep(steps[stepIndex - 1]!)}>
                 {t("nav.back")}
               </Button>
             )}
             {stepIndex < steps.length - 1 && (
-              <Button className="flex-1" onClick={() => setStep(steps[stepIndex + 1]!)}>
+              <Button className="mobile-touch-target h-12 flex-1 rounded-xl text-base" onClick={() => setStep(steps[stepIndex + 1]!)}>
                 {t("nav.next")}
               </Button>
             )}
           </div>
         </div>
       )}
-    </div>
+      </div>
+    </AppScreen>
   );
 }

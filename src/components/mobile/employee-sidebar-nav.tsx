@@ -40,7 +40,7 @@ export function EmployeeSidebarNav({ slug }: EmployeeSidebarNavProps) {
             >
               <item.icon className="size-5 shrink-0" />
               <span className="truncate">{t(item.labelKey)}</span>
-              {item.labelKey === "notifications" && unreadCount > 0 && (
+              {item.badgeKey === "messages" && unreadCount > 0 && (
                 <span
                   className="ml-auto flex h-5 min-w-5 items-center justify-center rounded-full bg-destructive px-1.5 text-[10px] font-bold text-destructive-foreground"
                   aria-label={t("unreadBadge", { count: unreadCount })}

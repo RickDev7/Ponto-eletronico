@@ -24,7 +24,7 @@ export default async function MobileAccessPage({ params, searchParams }: PagePro
   const accessReason = reason === "profile_missing" ? "profile_missing" : "admin";
 
   return (
-    <AppShellPage size="narrow">
+    <AppShellPage size="default">
       <MobileAccessView slug={companySlug} reason={accessReason} mobilePath={mobilePath} />
     </AppShellPage>
   );

@@ -6,10 +6,11 @@ import { useRouter, Link } from "@/i18n/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
-import { Loader2 } from "lucide-react";
 
 import { signUp } from "@/actions/auth";
 import { createRegisterSchema, type RegisterInput } from "@/lib/validations/auth";
+import { ROUTES } from "@/config/constants";
+import { sanitizeAppHref } from "@/lib/navigation/sanitize-href";
 import { LegalConsent } from "@/components/marketing/legal-consent";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -52,7 +53,7 @@ export function RegisterForm() {
       return;
     }
     toast.success(tToasts("accountCreated"));
-    router.push(result.data.redirectTo);
+    router.push(sanitizeAppHref(result.data.redirectTo, ROUTES.onboarding));
     router.refresh();
   }
 
@@ -152,13 +153,7 @@ export function RegisterForm() {
           )}
         />
 
-        <Button
-          type="submit"
-          className="w-full"
-          size="lg"
-          disabled={isPending}
-        >
-          {isPending && <Loader2 className="animate-spin" />}
+        <Button type="submit" className="w-full" size="lg" loading={isPending}>
           {t("submit")}
         </Button>
 

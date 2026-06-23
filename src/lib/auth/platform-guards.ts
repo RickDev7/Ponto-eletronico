@@ -41,19 +41,19 @@ async function loadPlatformContext(userId: string, email?: string | null) {
 export async function requirePlatformAdmin(): Promise<PlatformContext> {
   const user = await getSession();
   if (!user) {
-    redirectTo(ROUTES.login);
+    await redirectTo(ROUTES.login);
   }
 
   const isAdmin = await isPlatformAdmin(user.id);
   if (!isAdmin) {
     const memberships = await getUserCompanies(user.id);
     const fallback = await resolvePostAuthRedirect(user.id, memberships);
-    redirectTo(fallback);
+    await redirectTo(fallback);
   }
 
   const ctx = await loadPlatformContext(user.id, user.email);
   if (!ctx) {
-    redirectTo(ROUTES.login);
+    await redirectTo(ROUTES.login);
   }
 
   return ctx;

@@ -1,4 +1,4 @@
-import { type NextRequest, NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import createIntlMiddleware from "next-intl/middleware";
 import {
   AUTH_PUBLIC_PATHS,
@@ -9,6 +9,7 @@ import {
 } from "@/config/constants";
 import { routing, LOCALE_STORAGE_KEY } from "@/i18n/routing";
 import { updateSession } from "@/lib/supabase/middleware";
+import { isInvalidAppHref } from "@/lib/navigation/sanitize-href";
 
 const intlMiddleware = createIntlMiddleware(routing);
 
@@ -60,10 +61,62 @@ function isPublicPath(pathname: string): boolean {
   );
 }
 
+function getSafeRedirectPath(barePath: string): string | null {
+  if (barePath === "/" || isInvalidAppHref(barePath)) return null;
+  return barePath;
+}
+
 function isProtectedPath(pathname: string): boolean {
   if (isStaticAsset(pathname)) return false;
   if (isPublicPath(pathname)) return false;
   return true;
+}
+
+function isServerActionRequest(request: NextRequest): boolean {
+  return (
+    request.method === "POST" &&
+    (request.headers.has("Next-Action") || request.headers.has("next-action"))
+  );
+}
+
+function withForwardedPath(request: NextRequest, barePath: string): NextRequest {
+  const headers = new Headers(request.headers);
+  headers.set("x-pathname", barePath);
+
+  if (request.method === "GET" || request.method === "HEAD") {
+    return new NextRequest(request.url, { headers, method: request.method });
+  }
+
+  return new NextRequest(request.url, {
+    headers,
+    method: request.method,
+    body: request.body,
+    // Required when forwarding a readable request body (Server Actions POST).
+    duplex: "half",
+  } as RequestInit);
+}
+
+function applySessionCookies(
+  target: NextResponse,
+  supabaseResponse: NextResponse,
+): NextResponse {
+  supabaseResponse.cookies.getAll().forEach((cookie) => {
+    target.cookies.set(cookie.name, cookie.value, cookie);
+  });
+  return target;
+}
+
+function withPathHeader(response: NextResponse, barePath: string): NextResponse {
+  response.headers.set("x-pathname", barePath);
+  return response;
+}
+
+function finalizeResponse(
+  response: NextResponse,
+  barePath: string,
+  supabaseResponse: NextResponse,
+): NextResponse {
+  return applySessionCookies(withPathHeader(response, barePath), supabaseResponse);
 }
 
 async function checkPlatformAdmin(
@@ -110,58 +163,49 @@ export async function middleware(request: NextRequest) {
     }
   }
 
-  const intlResponse = intlMiddleware(request);
-  const { supabaseResponse, user, supabase } = await updateSession(request);
-
-  const mergeCookies = (target: NextResponse) => {
-    supabaseResponse.cookies.getAll().forEach((cookie) => {
-      target.cookies.set(cookie.name, cookie.value);
-    });
-    if (user) {
-      target.headers.set("x-user-id", user.id);
-    }
-    return target;
-  };
-
   const locale = getLocaleFromPathname(pathname);
   const barePath = stripLocale(pathname);
+  const forwardedRequest = isServerActionRequest(request)
+    ? request
+    : withForwardedPath(request, barePath);
+
+  const intlResponse = intlMiddleware(forwardedRequest);
+  const { supabaseResponse, user, supabase } = await updateSession(forwardedRequest);
 
   // Legacy /platform and alias /admin → canonical /super-admin
   if (isSuperAdminPath(barePath) && barePath !== ROUTES.superAdmin && !barePath.startsWith(`${ROUTES.superAdmin}/`)) {
     const url = request.nextUrl.clone();
     url.pathname = `/${locale}${toCanonicalSuperAdminPath(barePath)}`;
-    return mergeCookies(NextResponse.redirect(url));
+    return applySessionCookies(NextResponse.redirect(url), supabaseResponse);
   }
 
   if (PUBLIC_PATHS.has(barePath)) {
-    return mergeCookies(intlResponse);
+    return finalizeResponse(intlResponse, barePath, supabaseResponse);
   }
 
   if (!user && isProtectedPath(pathname)) {
     const url = request.nextUrl.clone();
     url.pathname = `/${locale}${ROUTES.login}`;
-    url.searchParams.set("redirect", barePath === "/" ? "" : barePath);
-    if (!url.searchParams.get("redirect")) {
-      url.searchParams.delete("redirect");
+    const safeRedirect = getSafeRedirectPath(barePath);
+    if (safeRedirect) {
+      url.searchParams.set("redirect", safeRedirect);
     }
-    return mergeCookies(NextResponse.redirect(url));
+    return applySessionCookies(NextResponse.redirect(url), supabaseResponse);
   }
 
   if (user) {
     const isSuperAdmin = await checkPlatformAdmin(supabase, user.id);
 
-    // Super Admin paths: allow only platform_admins; never fall through to tenant
     if (isSuperAdminPath(barePath)) {
       if (!isSuperAdmin) {
         const url = request.nextUrl.clone();
         url.pathname = `/${locale}${ROUTES.login}`;
         url.searchParams.set("error", "platform_access_denied");
-        return mergeCookies(NextResponse.redirect(url));
+        return applySessionCookies(NextResponse.redirect(url), supabaseResponse);
       }
-      return mergeCookies(intlResponse);
+      return finalizeResponse(intlResponse, barePath, supabaseResponse);
     }
 
-    // Super Admin must never enter tenant workspace
     if (
       isSuperAdmin &&
       (isTenantWorkspacePath(barePath) ||
@@ -170,11 +214,11 @@ export async function middleware(request: NextRequest) {
     ) {
       const url = request.nextUrl.clone();
       url.pathname = `/${locale}${ROUTES.superAdmin}`;
-      return mergeCookies(NextResponse.redirect(url));
+      return applySessionCookies(NextResponse.redirect(url), supabaseResponse);
     }
   }
 
-  return mergeCookies(intlResponse);
+  return finalizeResponse(intlResponse, barePath, supabaseResponse);
 }
 
 export const config = {

@@ -1,8 +1,8 @@
 /* eslint-disable no-restricted-globals */
-/** FeldOps Employee PWA — Service Worker v3 */
+/** FeldOps Employee PWA — Service Worker v5 */
 
-const SHELL_CACHE = "feldops-shell-v4";
-const RUNTIME_CACHE = "feldops-runtime-v4";
+const SHELL_CACHE = "feldops-shell-v5";
+const RUNTIME_CACHE = "feldops-runtime-v5";
 const SYNC_TAG = "employee-offline-sync";
 
 const SHELL_URLS = ["/offline", "/icons/employee-192.svg", "/icons/employee-512.svg"];
