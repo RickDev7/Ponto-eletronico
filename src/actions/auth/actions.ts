@@ -83,6 +83,7 @@ export async function signIn(
 
   revalidatePath("/", "layout");
   await redirectTo(destination, preferredLocale);
+  return { success: true, data: undefined };
 }
 
 export async function signUp(

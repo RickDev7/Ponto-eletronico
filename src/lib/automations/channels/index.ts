@@ -1,3 +1,5 @@
+import "server-only";
+
 import type { SupabaseClient } from "@supabase/supabase-js";
 import type { ChannelAdapter } from "@/lib/automations/channels/types";
 import { emailChannelAdapter } from "@/lib/automations/channels/email";

@@ -4,7 +4,6 @@ import { useMemo, useTransition } from "react";
 import { useTranslations } from "next-intl";
 import { Link, useRouter } from "@/i18n/navigation";
 import { toast } from "sonner";
-import { toast } from "sonner";
 import { FileDown, Pencil, RefreshCw, Receipt } from "lucide-react";
 import { ROUTES } from "@/config/constants";
 import { formatDate, formatMoney } from "@/lib/finance/utils";

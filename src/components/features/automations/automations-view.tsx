@@ -28,7 +28,7 @@ import { useState, useTransition } from "react";
 import { toast } from "sonner";
 import { seedExampleAutomationsAction } from "@/actions/automations/actions";
 import { useRouter } from "@/i18n/navigation";
-import { listChannelAdapters } from "@/lib/automations/channels";
+import { listClientChannelAdapters } from "@/lib/automations/channels/client-status";
 import { AiDomainWidget } from "@/components/features/ai/ai-domain-widget";
 
 const fadeUp = {
@@ -56,7 +56,7 @@ export function AutomationsView({ slug, data, canWrite }: AutomationsViewProps) 
   const [editRule, setEditRule] = useState<AutomationRuleRow | null>(null);
   const [pending, startTransition] = useTransition();
 
-  const channelStatus = useMemo(() => listChannelAdapters(), []);
+  const channelStatus = useMemo(() => listClientChannelAdapters(), []);
 
   function openCreate() {
     setEditRule(null);

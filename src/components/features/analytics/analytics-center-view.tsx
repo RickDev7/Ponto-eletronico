@@ -2,7 +2,7 @@
 
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
-import { ArrowRight, Briefcase, LineChart, PieChart } from "lucide-react";
+import { ArrowRight, Briefcase, LineChart as LineChartIcon, PieChart } from "lucide-react";
 import { ROUTES } from "@/config/constants";
 import type { AnalyticsCenterData } from "@/lib/analytics/analytics-center-types";
 import { AnalyticsShell } from "@/components/features/analytics/analytics-shell";
@@ -52,7 +52,7 @@ const DASHBOARDS = [
   {
     key: "financial",
     href: (s: string) => ROUTES.analyticsFinancial(s),
-    icon: LineChart,
+    icon: LineChartIcon,
     gradient: "from-emerald-500/10",
   },
 ] as const;
